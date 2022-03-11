@@ -163,3 +163,4 @@ C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\obj\Debug\Windows_11_Manu
 C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\obj\Debug\Windows_11_Manual_Installer_2._0.VersionDetector.resources
 C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\obj\Debug\Windows_11_Manual_Installer_2._0.wmiform.resources
 C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\obj\Debug\Windows 11 Manual Installer 2.0.vbproj.GenerateResource.Cache
+C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\bin\Debug\prog_bin\regtweak.bat
