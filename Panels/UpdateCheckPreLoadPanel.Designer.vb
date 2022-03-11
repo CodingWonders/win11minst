@@ -181,9 +181,9 @@ Partial Class UpdateCheckPreLoadPanel
         Me.Label4.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.Location = New System.Drawing.Point(21, 181)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(162, 20)
+        Me.Label4.Size = New System.Drawing.Size(209, 20)
         Me.Label4.TabIndex = 16
-        Me.Label4.Text = "Version channel: debug"
+        Me.Label4.Text = "Version channel: hummingbird"
         '
         'Label2
         '
