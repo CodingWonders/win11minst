@@ -1,4 +1,4 @@
-:: Windows 11 Manual Installer, version 2.0.0100 (dbg)                                            |
+:: Windows 11 Manual Installer, version 2.0.0100 (hummingbird)                                    |
 :: -----------------------------------------------------------------------------------------------|
 ::  File name: regtweak.bat						File version: 1.2                                 |
 ::                                                                                                |
