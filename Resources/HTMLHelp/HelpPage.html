@@ -1,0 +1,167 @@
+﻿<!DOCTYPE html>
+<!-- Yeah, I'm the one who has both VMware and VirtualBox on the same computer -->
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Windows 11 Manual Installer</title>
+    <style type="text/css">
+        .auto-style1 {
+            height: 23px;
+        }
+        .auto-style2 {
+            height: 23px;
+            }
+        .auto-style4 {
+            height: 23px;
+            width: 539px;
+        }
+        .auto-style5 {
+            height: 22px;
+            width: 539px;
+        }
+        .auto-style6 {
+            height: 22px;
+        }
+    </style>
+    <style>
+        body {
+            background-color: rgb(249,249,249);
+        }
+    </style>
+</head>
+<body>
+    <img src="./Resources/helpbanner.gif" class="center"/>
+    <style>
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+    <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: center">Help documentation</h3>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left:40px">
+        Help Documentation edition: Dec. 1, 2021 (v2.0.0100)</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left:40px">
+        Version 2.0.0100</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left:40px; font-style:italic">
+        This software uses 7-Zip. Copyright (C) 2021 Igor Pavlov. This software uses OSCDIMG. Copyright (C) 1993, 2012 Microsoft Corporation. This software uses DISM. Copyright (C) Microsoft Corporation.</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; font-weight: bold;">
+        Contents:</p>
+    <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px;">
+        1. Changelog</h3>
+    <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px;">
+        2. Instructions</h3>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px;">
+        2.1. Getting the ISO images</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px;">
+        2.2. Installer creation</p>
+    <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px;">
+        3. (Special) Thanks</h3>
+    <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px;">
+        4. Miscellaneous (but important) files</h3>
+    <h2 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; ">
+        Changelog</h2>
+    <table style="width: 100%; font-family: Arial, Helvetica, sans-serif;">
+        <tr>
+            <td class="auto-style2" style="border-spacing: 1px; text-align: center; font-family: Arial, Helvetica, sans-serif; font-weight: bold;">Version</td>
+            <td class="auto-style4" style="border-spacing: 1px; text-align: center; font-family: Arial, Helvetica, sans-serif; font-weight: bold;">Changes</td>
+            <td class="auto-style1" style="border-spacing: 1px; text-align: center; font-family: Arial, Helvetica, sans-serif; font-weight: bold;">Build Date</td>
+        </tr>
+        <tr>
+            <td class="auto-style2" style="border-spacing: 1px; text-align: center; font-family: Arial, Helvetica, sans-serif;">2.0.0100</td>
+            <td class="auto-style4" style="border-spacing: 1px;  font-family: Arial, Helvetica, sans-serif;">- Refined design, resembling a WinUI 3 application<br />
+                - Added installer history, an easier way to view your created installers <br />
+                - Added an ISO file scanner, allowing for easier installer searches <br />
+                - Added a new installer creation method: REGTWEAK <br />
+                Bugfixes: <br />
+                - The UEFI mode confirmation mode no longer shows twice</td>
+            <td class="auto-style1" style="border-spacing: 1px; text-align: center; font-family: Arial, Helvetica, sans-serif;">TBD</td>
+        </tr>
+        <tr>
+            <td class="auto-style2" style="border-spacing: 1px; text-align: center; font-family: Arial, Helvetica, sans-serif;">1.0.0136</td>
+            <td class="auto-style4" style="border-spacing: 1px;  font-family: Arial, Helvetica, sans-serif;">- Added a new design that resembles WinUI 3<br />
+                - Added ability to switch to both designs</td>
+            <td class="auto-style1" style="border-spacing: 1px; text-align: center; font-family: Arial, Helvetica, sans-serif;">Oct. 31, 2021</td>
+        </tr>
+        <tr>
+            <td class="auto-style2" style="font-family: Arial, Helvetica, sans-serif; text-align: center" rowspan="2">1.0.0135</td>
+            <td class="auto-style4">- Added ability to set a custom label for the installer<br />
+                - Added ability to use UEFI for platform compatibility<br />
+                - Updated help documentation</td>
+            <td class="auto-style1" style="text-align: center">Oct. 14, 2021</td>
+        </tr>
+        <tr>
+            <td class="auto-style5">Revision 1:<br />
+                - Fixed a bug where OSCDIMG would launch twice</td>
+            <td class="auto-style6" style="text-align: center">Oct. 15, 2021</td>
+        </tr>
+        <tr>
+            <td class="auto-style2" style="font-family: Arial, Helvetica, sans-serif; text-align: center" rowspan="2">1.0.0134</td>
+            <td class="auto-style4">- Added disclaimer notice<br />
+                - Added build date column to the documentation<br />
+                - Integrated more functionality</td>
+            <td class="auto-style1" style="text-align: center">Oct. 2, 2021</td>
+        </tr>
+        <tr>
+            <td class="auto-style4">Revision 1:<br />
+                - Added Spanish translations</td>
+            <td class="auto-style1" style="text-align: center">Oct. 6, 2021</td>
+        </tr>
+        <tr>
+            <td class="auto-style2" style="font-family: Arial, Helvetica, sans-serif; text-align: center">1.0.0133</td>
+            <td class="auto-style4">- Initial version</td>
+            <td class="auto-style1" style="text-align: center">Sep. 7, 2021</td>
+        </tr>
+        <tr>
+            <td class="auto-style1" style="font-family: Arial, Helvetica, sans-serif; text-align: left; font-weight: bold;" colspan="3">Bugs:<br />
+                - When using REGTWEAK as the installer creation method, and testing the custom installer on VMware, Setup will still block your system. In this case, please use one of the other methods. This is due to Setup still detecting components (if you&#39;re using builds 22000.194 or higher; or Nickel builds from 22458 onwards) on a hypervisor. This was tested on the leaked build (21996.1), 
+                in VirtualBox, and in a real PC; and this doesn&#39t happen.<img src="./Resources/HelpDoc_Win11_21996_REGTWEAK.png" class="center"/><p style="font-family: 'Times New Roman'; font-weight: normal; font-style: italic">Windows 11 custom installer done using REGTWEAK with CMD and REGEDIT open on VMware. Do note that this is the leaked build</p>
+    <img src="./Resources/HelpDoc_Win11_REGTWEAK.png" class="center"/><p style="font-family: 'Times New Roman'; font-weight: normal; font-style: italic">Windows 11 custom installer done using REGTWEAK with CMD and REGEDIT open on VMware. Do note that, although the registry entries were added, Setup will still block the VM</p>
+    <img src="./Resources/HelpDoc_Win11_REGTWEAK_VirtualBox.png" class="center"/><p style="font-family: 'Times New Roman'; font-weight: normal; font-style: italic">Windows 11 custom installer done using REGTWEAK with CMD and REGEDIT open on VirtualBox</p>
+                <br />
+                - Sometimes the model label will be blank. Do note that this method uses WMIC, which is being deprecated soon.<br />
+                </td>
+        </tr>
+    </table>
+    &nbsp;
+    <p style="font-family: Arial, Helvetica, sans-serif">
+        Here is a list of things to be added in the future:<br />
+        - support for &quot;wimlib-imagex&quot; (by default, the program will use the built-in &quot;DISM/IMAGEX&quot; tools in Windows</p>
+    <h2 style="font-family: Arial, Helvetica, sans-serif">
+        Features of this version:</h2>
+    <h4 style="font-family: Arial, Helvetica, sans-serif">
+        Redesigned user interface</h4>
+    <p style="font-family: Arial, Helvetica, sans-serif; margin-left: 40px;">
+        The user interface in this version got updated to resemble a WinUI 3 application, with simplified menus and carefully crafted panels and colors to obtain the look and feel of a WinUI 3 application.</p>
+    <h2 style="font-family: Arial, Helvetica, sans-serif">
+        Instructions</h2>
+    <p style="font-family: Arial, Helvetica, sans-serif">
+        1. Download the images (Windows 11 and Windows 10 images)</p>
+    <p style="font-family: Arial, Helvetica, sans-serif">
+        2. Click &#39;Create a modified WIndows 11 installer&#39;</p>
+    <p style="font-family: Arial, Helvetica, sans-serif">
+        3. Specify the two Windows images</p>
+    <p style="font-family: Arial, Helvetica, sans-serif">
+        4. Specify where you want to save the custom image</p>
+    <p style="font-family: Arial, Helvetica, sans-serif">
+        5. Let the program do the magic</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; font-weight: bold;">
+        That&#39;s it!</p>
+    <h2 style="font-family: Arial, Helvetica, sans-serif">
+        (Special) Thanks</h2>
+    <p style="font-family: Arial, Helvetica, sans-serif">
+        - Microsoft, for making me write this tool</p>
+    <p style="font-family: Arial, Helvetica, sans-serif">
+        - My family and friends</p>
+    <h2 style="font-family: Arial, Helvetica, sans-serif">
+        Miscellaneous (but important) files</h2>
+    <p style="font-family: Arial, Helvetica, sans-serif">
+        These files are crucial for the installer creation:</p>
+    <p style="font-family: Arial, Helvetica, sans-serif">
+        - 7z.exe: the main ISO extractor</p>
+    <p style="font-family: Arial, Helvetica, sans-serif">
+        - 7z.dll: a critical component to 7-Zip</p>
+    <p style="font-family: Arial, Helvetica, sans-serif">
+        - OSCDIMG: the ISO creator</p>
+    </body>
+</html>

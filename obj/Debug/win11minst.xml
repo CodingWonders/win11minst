@@ -1,0 +1,456 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+win11minst
+</name>
+</assembly>
+<members>
+<member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.ResourceManager">
+	<summary>
+  Devuelve la instancia de ResourceManager almacenada en caché utilizada por esta clase.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.Culture">
+	<summary>
+  Reemplaza la propiedad CurrentUICulture del subproceso actual para todas las
+  búsquedas de recursos mediante esta clase de recurso fuertemente tipado.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.back_arrow">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.back_arrow_dark">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.back_arrow_disabled">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.blackPanelBack">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.check">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.check_dark">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.checkBoxTBSwitch">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.closebox">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.closebox_dark">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.closebox_dark_down">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.closebox_down">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.closebox_focus">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.comp_dark">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.comp_light">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.components">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.debug_dark">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.debug_light">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.file_create_fluent">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.file_fluent">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.functionality">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.functionality_icon">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.functionality_icon_dark">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.help">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.help_dark">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.help_dark_filled">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.help_filled">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.helpbanner">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.helpbanner_dark">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.HelpDoc_Win11_21996_REGTWEAK">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.HelpDoc_Win11_REGTWEAK">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.HelpDoc_Win11_REGTWEAK_VirtualBox">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.home">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.home_dark">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.home_dark_filled">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.home_filled">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.icon3">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Icon similar a (Icono).
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.info">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.info_dark">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.info_dark_filled">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.info_filled">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.inst_create">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.inst_create_dark">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.inst_create_dark_filled">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.inst_create_filled">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.instructions">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.instructions_dark">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.instructions_dark_filled">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.instructions_filled">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.isofile_optn">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.log_del">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.log_del_dark">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.logo">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.maxbox">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.maxbox_dark">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.maxbox_dark_down">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.maxbox_dark_focus">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.maxbox_down">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.maxbox_focus">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.minBox">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.minBox_dark">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.minBox_dark_down">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.minBox_dark_focus">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.minBox_down">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.minBox_focus">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.miniMode_TBRes">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.monitor">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.NavBar_LeftPos_Dark">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.NavBar_LeftPos_Light">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.NavBar_TopPos_Dark">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.NavBar_TopPos_Light">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.NotifyIconRes_Dark">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Icon similar a (Icono).
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.NotifyIconRes_Light">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Icon similar a (Icono).
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.panel_corner_black">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.panel_corner_white">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.panel_indicator_dark">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.panel_indicator_dark_top_navbar">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.panel_indicator_light">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.panel_indicator_light_top_navbar">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.personalization">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.personalization_icon">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.personalization_icon_dark">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.pref_reset">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.pref_reset_dark">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.progressring_indeterminate">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.question_mark">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.restdownbox">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.restdownbox_dark">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.restdownbox_dark_down">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.restdownbox_dark_focus">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.restdownbox_down">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.restdownbox_focus">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.settings">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.settings_dark">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.settings_dark_filled">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.settings_filled">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.SysTray_Capture">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.taskbarIconRightClick">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.taskbarMenuOpen">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.unknown_drive">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.update_screen_dark">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.update_screen_light">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.whitePanelBack">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.win10inst_pic">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.Win11">
+	<summary>
+  Busca un recurso adaptado de tipo System.IO.UnmanagedMemoryStream similar a System.IO.MemoryStream.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.Win11_LogoDark">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.Win11_LogoWhite">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.win11inst_pic">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.wmi_error">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="T:Windows_11_Manual_Installer_2._0.My.Resources.Resources">
+	<summary>
+  Clase de recurso fuertemente tipado, para buscar cadenas traducidas, etc.
+</summary>
+</member>
+</members>
+</doc>

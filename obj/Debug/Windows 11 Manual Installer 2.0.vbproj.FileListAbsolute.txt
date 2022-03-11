@@ -1,0 +1,120 @@
+C:\Users\cpnie\AppData\Local\Temporary Projects\Windows 11 Manual Installer 2.0\bin\Debug\Windows 11 Manual Installer 2.0.exe.config
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.Resources.resources
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows 11 Manual Installer 2.0.vbproj.GenerateResource.Cache
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\win11minst.exe.config
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\win11minst.exe
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\win11minst.pdb
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\win11minst.xml
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\win11minst.exe
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\win11minst.xml
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\win11minst.pdb
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Win11MINST_2\Windows 11 Manual Installer 2.0\bin\Debug\win11minst.exe.config
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Win11MINST_2\Windows 11 Manual Installer 2.0\obj\Debug\win11minst.exe
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Win11MINST_2\Windows 11 Manual Installer 2.0\obj\Debug\win11minst.xml
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Win11MINST_2\Windows 11 Manual Installer 2.0\obj\Debug\win11minst.pdb
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Win11MINST_2\Windows 11 Manual Installer 2.0\obj\Debug\Windows 11 Manual Installer 2.0.vbproj.GenerateResource.Cache
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Win11MINST_2\Windows 11 Manual Installer 2.0\bin\Debug\win11minst.exe
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Win11MINST_2\Windows 11 Manual Installer 2.0\bin\Debug\win11minst.pdb
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Win11MINST_2\Windows 11 Manual Installer 2.0\bin\Debug\win11minst.xml
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Win11MINST_2\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.Resources.resources
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Win11MINST_2\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.MainForm.resources
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Win11MINST_2\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.BackSubPanel.resources
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Win11MINST_2\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.DisclaimerPanel.resources
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Win11MINST_2\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.wmiform.resources
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Win11MINST_2\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.InstHistPanel.resources
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Win11MINST_2\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.ISOFileScanPanel.resources
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Win11MINST_2\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.MiniModeDialog.resources
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.MiniModeDialog.resources
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.MainForm.resources
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.BackSubPanel.resources
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.DisclaimerPanel.resources
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.InstHistPanel.resources
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.ISOFileScanPanel.resources
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.wmiform.resources
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.PrefResetPanel.resources
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\win11minst.exe.config
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\win11minst.exe
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\win11minst.xml
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\win11minst.pdb
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\win11minst.exe
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\win11minst.pdb
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\win11minst.xml
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.MiniModeDialog.resources
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.MainForm.resources
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.Resources.resources
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.BackSubPanel.resources
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.DisclaimerPanel.resources
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.InstHistPanel.resources
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.ISOFileScanPanel.resources
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.PrefResetPanel.resources
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.wmiform.resources
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows 11 Manual Installer 2.0.vbproj.GenerateResource.Cache
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.InstCreateAbortPanel.resources
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.FileCopyPanel.resources
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.FileNotFoundPanel.resources
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.VolumeConnectPanel.resources
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.LogExistsPanel.resources
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.LogMigratePanel.resources
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.logOpen.resources
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.logOpen.resources
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.VolumeConnectPanel.resources
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.FileCopyPanel.resources
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.FileNotFoundPanel.resources
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.InstCreateAbortPanel.resources
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.LogExistsPanel.resources
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.LogMigratePanel.resources
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.DebugPanel.resources
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.UpdateCheckPreLoadPanel.resources
+C:\Users\cpnie\Desktop\STORAGE\VS2012\Win11MINST\Windows 11 Manual Installer 2.0\bin\Debug\win11minst.exe.config
+C:\Users\cpnie\Desktop\STORAGE\VS2012\Win11MINST\Windows 11 Manual Installer 2.0\obj\Debug\win11minst.exe
+C:\Users\cpnie\Desktop\STORAGE\VS2012\Win11MINST\Windows 11 Manual Installer 2.0\obj\Debug\win11minst.xml
+C:\Users\cpnie\Desktop\STORAGE\VS2012\Win11MINST\Windows 11 Manual Installer 2.0\obj\Debug\win11minst.pdb
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.MissingComponentsDialog.resources
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\Resources\HTMLHelp\HelpPage.html
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\Resources\HTMLHelp\Resources\HelpDoc_Win11_REGTWEAK_VirtualBox.png
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\Resources\HTMLHelp\Resources\HelpDoc_Win11_REGTWEAK.png
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\Resources\HTMLHelp\Resources\HelpDoc_Win11_21996_REGTWEAK.png
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\Resources\HTMLHelp\Resources\helpbanner.gif
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.VersionDetector.resources
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\Microsoft.VisualBasic.PowerPacks.Vs.dll
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\System.dll
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\System.Drawing.dll
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\System.Windows.Forms.dll
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\System.Xml.dll
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\System.Xml.Linq.dll
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\Microsoft.VisualBasic.PowerPacks.Vs.xml
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\es\Microsoft.VisualBasic.PowerPacks.Vs.resources.dll
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.InstProjectReuseDialog.resources
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\settings.ini
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.SettingLoadForm.resources
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\Resources\HTMLHelp\HelpPage.html
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\settings.ini
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\Resources\HTMLHelp\Resources\HelpDoc_RectifyBug.png
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\Resources\HTMLHelp\Resources\HelpDoc_Win11_REGTWEAK_VirtualBox.png
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\Resources\HTMLHelp\Resources\HelpDoc_Win11_REGTWEAK.png
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\Resources\HTMLHelp\Resources\HelpDoc_Win11_21996_REGTWEAK.png
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\Resources\HTMLHelp\Resources\helpbanner.gif
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\Microsoft.VisualBasic.PowerPacks.Vs.dll
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\System.dll
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\System.Drawing.dll
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\System.Windows.Forms.dll
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\System.Xml.dll
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\System.Xml.Linq.dll
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\es\Microsoft.VisualBasic.PowerPacks.Vs.resources.dll
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.InstProjectReuseDialog.resources
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.DebugPanel.resources
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.MissingComponentsDialog.resources
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.UpdateCheckPreLoadPanel.resources
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.SettingLoadForm.resources
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.VersionDetector.resources
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\Win10Inst.ini
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\Win11Inst.ini
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\Win10Inst.ini
+C:\Users\mpnie\OneDrive\Documentos\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\Win11Inst.ini
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\bin\Debug\InstName.ini
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.AdvancedOptionsPanel.resources
+C:\Users\cpnie\Desktop\STORAGE\Visual Studio 2012\Projects\Windows 11 Manual Installer 2.0\Windows 11 Manual Installer 2.0\obj\Debug\Windows_11_Manual_Installer_2._0.UpdateChoicePanel.resources
+C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\bin\Debug\win11minst.exe.config
+C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\obj\Debug\win11minst.exe
+C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\obj\Debug\win11minst.xml
+C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\obj\Debug\win11minst.pdb
