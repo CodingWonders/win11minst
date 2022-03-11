@@ -1,0 +1,551 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{401F6B7C-D704-433F-9C02-AA4D89E983CE}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>Windows_11_Manual_Installer_2._0.My.MyApplication</StartupObject>
+    <RootNamespace>Windows_11_Manual_Installer_2._0</RootNamespace>
+    <AssemblyName>win11minst</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <PublishUrl>publicar\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>win11minst.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>win11minst.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon3.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Core">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="Microsoft.VisualBasic.PowerPacks" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Dialogs\InstProjectReuseDialog.Designer.vb">
+      <DependentUpon>InstProjectReuseDialog.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\InstProjectReuseDialog.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\MiniModeDialog.Designer.vb">
+      <DependentUpon>MiniModeDialog.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\MiniModeDialog.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.vb">
+      <DependentUpon>MainForm.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="logOpen.Designer.vb">
+      <DependentUpon>logOpen.vb</DependentUpon>
+    </Compile>
+    <Compile Include="logOpen.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Panels\AdvancedOptionsPanel.Designer.vb">
+      <DependentUpon>AdvancedOptionsPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\AdvancedOptionsPanel.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Panels\BackSubPanel.Designer.vb">
+      <DependentUpon>BackSubPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\BackSubPanel.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Panels\DebugPanel.Designer.vb">
+      <DependentUpon>DebugPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\DebugPanel.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Panels\DisclaimerPanel.Designer.vb">
+      <DependentUpon>DisclaimerPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\DisclaimerPanel.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Panels\ExceptionPrevention\VolumeConnectPanel.Designer.vb">
+      <DependentUpon>VolumeConnectPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\ExceptionPrevention\VolumeConnectPanel.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Panels\FileCopyPanel.Designer.vb">
+      <DependentUpon>FileCopyPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\FileCopyPanel.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Panels\ExceptionPrevention\FileNotFoundPanel.Designer.vb">
+      <DependentUpon>FileNotFoundPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\ExceptionPrevention\FileNotFoundPanel.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Panels\InstCreateAbortPanel.Designer.vb">
+      <DependentUpon>InstCreateAbortPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\InstCreateAbortPanel.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Panels\InstHistPanel.Designer.vb">
+      <DependentUpon>InstHistPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\InstHistPanel.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Panels\ISOFileScanPanel.Designer.vb">
+      <DependentUpon>ISOFileScanPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\ISOFileScanPanel.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Panels\LogExistsPanel.Designer.vb">
+      <DependentUpon>LogExistsPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\LogExistsPanel.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Panels\LogMigratePanel.Designer.vb">
+      <DependentUpon>LogMigratePanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\LogMigratePanel.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\MissingComponentsDialog.Designer.vb">
+      <DependentUpon>MissingComponentsDialog.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\MissingComponentsDialog.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Panels\PrefResetPanel.Designer.vb">
+      <DependentUpon>PrefResetPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\PrefResetPanel.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Panels\UpdateCheckPreLoadPanel.Designer.vb">
+      <DependentUpon>UpdateCheckPreLoadPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\UpdateCheckPreLoadPanel.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Panels\UpdateChoicePanel.Designer.vb">
+      <DependentUpon>UpdateChoicePanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\UpdateChoicePanel.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingLoadForm.Designer.vb">
+      <DependentUpon>SettingLoadForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SettingLoadForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Settings\progset.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>progset.settings</DependentUpon>
+    </Compile>
+    <Compile Include="VersionDetection\VersionDetector.Designer.vb">
+      <DependentUpon>VersionDetector.vb</DependentUpon>
+    </Compile>
+    <Compile Include="VersionDetection\VersionDetector.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="wmiform.Designer.vb">
+      <DependentUpon>wmiform.vb</DependentUpon>
+    </Compile>
+    <Compile Include="wmiform.vb">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Dialogs\InstProjectReuseDialog.resx">
+      <DependentUpon>InstProjectReuseDialog.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\MiniModeDialog.resx">
+      <DependentUpon>MiniModeDialog.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="logOpen.resx">
+      <DependentUpon>logOpen.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\AdvancedOptionsPanel.resx">
+      <DependentUpon>AdvancedOptionsPanel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\BackSubPanel.resx">
+      <DependentUpon>BackSubPanel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\DebugPanel.resx">
+      <DependentUpon>DebugPanel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\DisclaimerPanel.resx">
+      <DependentUpon>DisclaimerPanel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\ExceptionPrevention\VolumeConnectPanel.resx">
+      <DependentUpon>VolumeConnectPanel.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\FileCopyPanel.resx">
+      <DependentUpon>FileCopyPanel.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\ExceptionPrevention\FileNotFoundPanel.resx">
+      <DependentUpon>FileNotFoundPanel.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\InstCreateAbortPanel.resx">
+      <DependentUpon>InstCreateAbortPanel.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\InstHistPanel.resx">
+      <DependentUpon>InstHistPanel.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\ISOFileScanPanel.resx">
+      <DependentUpon>ISOFileScanPanel.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\LogExistsPanel.resx">
+      <DependentUpon>LogExistsPanel.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\LogMigratePanel.resx">
+      <DependentUpon>LogMigratePanel.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\MissingComponentsDialog.resx">
+      <DependentUpon>MissingComponentsDialog.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\PrefResetPanel.resx">
+      <DependentUpon>PrefResetPanel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\UpdateCheckPreLoadPanel.resx">
+      <DependentUpon>UpdateCheckPreLoadPanel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\UpdateChoicePanel.resx">
+      <DependentUpon>UpdateChoicePanel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SettingLoadForm.resx">
+      <DependentUpon>SettingLoadForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VersionDetection\VersionDetector.resx">
+      <DependentUpon>VersionDetector.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wmiform.resx">
+      <DependentUpon>wmiform.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="InstName.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="My Project\app.manifest" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="App.config" />
+    <None Include="prog_bin\regtweak.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="settings.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Settings\progset.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>progset.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="TargetInstaller.ini" />
+    <None Include="Win10Inst.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Win11Inst.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="icon3.ico" />
+    <None Include="Resources\update_screen_light.jpg" />
+    <None Include="Resources\update_screen_dark.jpg" />
+    <None Include="Resources\question_mark.png" />
+    <None Include="Resources\unknown_drive.png" />
+    <None Include="Resources\wmi_error.png" />
+    <None Include="Resources\NavBar_TopPos_Light.png" />
+    <None Include="Resources\NavBar_TopPos_Dark.png" />
+    <None Include="Resources\NavBar_LeftPos_Light.png" />
+    <None Include="Resources\NavBar_LeftPos_Dark.png" />
+    <None Include="Resources\panel_indicator_light_top_navbar.png" />
+    <None Include="Resources\panel_indicator_dark_top_navbar.png" />
+    <None Include="Resources\back_arrow_dark_disabled.png" />
+    <None Include="Resources\back_arrow_disabled.png" />
+    <Content Include="Resources\HTMLHelp\HelpPage.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\HTMLHelp\Resources\helpbanner_dark.gif" />
+    <None Include="Resources\HTMLHelp\Resources\HelpDoc_Win11_REGTWEAK_VirtualBox.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\HTMLHelp\Resources\HelpDoc_Win11_REGTWEAK.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\HTMLHelp\Resources\HelpDoc_Win11_21996_REGTWEAK.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\HTMLHelp\Resources\helpbanner.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\progressring_indeterminate.gif" />
+    <None Include="Resources\NotifyIconRes_Light.ico" />
+    <None Include="Resources\NotifyIconRes_Dark.ico" />
+    <None Include="Resources\comp_dark.svg" />
+    <None Include="Resources\comp_light.svg" />
+    <None Include="Resources\comp_dark.png" />
+    <None Include="Resources\comp_light.png" />
+    <None Include="Resources\check.png" />
+    <None Include="Resources\check_dark.png" />
+    <None Include="Resources\debug_dark.png" />
+    <None Include="Resources\debug_light.png" />
+    <None Include="Resources\components.png" />
+    <None Include="Resources\panel_indicator_light.png" />
+    <None Include="Resources\panel_indicator_dark.png" />
+    <None Include="Resources\isofile_optn.png" />
+    <None Include="Resources\win11inst_pic.png" />
+    <None Include="Resources\win10inst_pic.png" />
+    <None Include="Resources\SysTray_Capture.png" />
+    <None Include="Resources\win11.wav" />
+    <None Include="Resources\logo.png" />
+    <None Include="Resources\miniMode_TBRes.png" />
+    <None Include="Resources\taskbarMenuOpen.png" />
+    <None Include="Resources\taskbarIconRightClick.png" />
+    <None Include="Resources\checkBoxTBSwitch.png" />
+    <None Include="Resources\pref_reset_dark.png" />
+    <None Include="Resources\pref_reset.png" />
+    <None Include="Resources\log_del_dark.png" />
+    <None Include="Resources\log_del.png" />
+    <None Include="Resources\personalization_icon_dark.png" />
+    <None Include="Resources\personalization_icon.png" />
+    <None Include="Resources\functionality_icon_dark.png" />
+    <None Include="Resources\functionality_icon.png" />
+    <None Include="Resources\whitePanelBack.png" />
+    <None Include="Resources\blackPanelBack.png" />
+    <None Include="Resources\functionality.png" />
+    <None Include="Resources\personalization.png" />
+    <None Include="Resources\back_arrow_dark.png" />
+    <None Include="Resources\back_arrow.png" />
+    <None Include="Resources\update.png" />
+    <None Include="Resources\Win11_dark.png" />
+    <None Include="Resources\Win11.png" />
+    <None Include="Resources\restdownbox_down.png" />
+    <None Include="Resources\restdownbox_dark_down.png" />
+    <None Include="Resources\minBox_down.png" />
+    <None Include="Resources\minBox_dark_down.png" />
+    <None Include="Resources\maxbox_down.png" />
+    <None Include="Resources\maxbox_dark_down.png" />
+    <None Include="Resources\closebox_down.png" />
+    <None Include="Resources\closebox_dark_down.png" />
+    <None Include="Resources\file_create_fluent.png" />
+    <None Include="Resources\file_fluent.png" />
+    <None Include="Resources\monitor.png" />
+    <None Include="logo.png" />
+    <None Include="Resources\settings_filled.png" />
+    <None Include="Resources\settings_dark_filled.png" />
+    <None Include="Resources\settings_dark.png" />
+    <None Include="Resources\settings.png" />
+    <None Include="Resources\restdownbox_dark_focus.png" />
+    <None Include="Resources\restdownbox_dark.png" />
+    <None Include="Resources\panel_corner_black.png" />
+    <None Include="Resources\minBox_dark_focus.png" />
+    <None Include="Resources\minBox_dark.png" />
+    <None Include="Resources\maxbox_dark_focus.png" />
+    <None Include="Resources\maxbox_dark.png" />
+    <None Include="Resources\instructions_filled.png" />
+    <None Include="Resources\instructions_dark_filled.png" />
+    <None Include="Resources\instructions_dark.png" />
+    <None Include="Resources\instructions.png" />
+    <None Include="Resources\inst_create_filled.png" />
+    <None Include="Resources\inst_create_dark_filled.png" />
+    <None Include="Resources\inst_create_dark.png" />
+    <None Include="Resources\info_filled.png" />
+    <None Include="Resources\info_dark_filled.png" />
+    <None Include="Resources\info_dark.png" />
+    <None Include="Resources\info.png" />
+    <None Include="Resources\home_filled.png" />
+    <None Include="Resources\home_dark_filled.png" />
+    <None Include="Resources\home_dark.png" />
+    <None Include="Resources\home.png" />
+    <None Include="Resources\help_filled.png" />
+    <None Include="Resources\help_dark_filled.png" />
+    <None Include="Resources\help_dark.png" />
+    <None Include="Resources\help.png" />
+    <None Include="Resources\closebox_dark.png" />
+    <None Include="Resources\inst_create.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\panel_corner_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\minBox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\maxbox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\closebox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\closebox_focus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\minBox_focus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\maxbox_focus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\restdownbox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\restdownbox_focus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

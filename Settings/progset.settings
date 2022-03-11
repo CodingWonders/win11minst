@@ -1,0 +1,15 @@
+﻿<?xml version='1.0'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="" GeneratedClassName="progset">
+  <Profiles />
+  <Settings>
+    <Setting Name="ProgColMode" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Auto</Value>
+    </Setting>
+    <Setting Name="InstCreateMode" Type="System.String" Scope="User">
+      <Value Profile="(Default)">WIMR</Value>
+    </Setting>
+    <Setting Name="UseBIOSPTCompat" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
