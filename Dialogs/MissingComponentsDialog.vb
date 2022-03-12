@@ -177,13 +177,6 @@ Public Class MissingComponentsDialog
         End If
         File.Delete(".\oscdimg.zip")
         CheckedCount = CheckedCount + 1
-        '' Code nicely taken from someone (which took it from someone else?)
-        '' Removed "IO." because System.IO was imported
-        'Dim sc As New Shell32.Shell()
-
-        'Dim output As Shell32.Folder = sc.NameSpace(".\prog_bin")
-        'Dim input As Shell32.Folder = sc.NameSpace(".\prog_bin\oscdimg.zip")
-        'output.CopyHere(input.Items, 4)
     End Sub
 
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
@@ -267,6 +260,8 @@ Public Class MissingComponentsDialog
             Button3.Visible = False
             CheckPic3.Visible = True
         End If
+        File.Copy("\Program Files\7-Zip\7z.exe", ".\prog_bin\7z.exe")
+        File.Copy("\Program Files\7-Zip\7z.dll", ".\prog_bin\7z.dll")
         CheckedCount = CheckedCount + 1
     End Sub
 
