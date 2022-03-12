@@ -8,7 +8,7 @@ Public Class MissingComponentsDialog
     Private mouseOffset As Point
     Dim WebSite As String
     Dim TargetFile As String
-    Dim TargetPath As String = ".\bin"
+    Dim TargetPath As String = ".\prog_bin"
     Dim CheckedCount As Integer = 0
     Dim CheckCount As Integer = 3
     Private Sub OK_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
@@ -74,8 +74,8 @@ Public Class MissingComponentsDialog
             CheckPic2.Image = New Bitmap(My.Resources.check_dark)
             CheckPic3.Image = New Bitmap(My.Resources.check_dark)
         End If
-        If Not Directory.Exists(".\bin") Then
-            Directory.CreateDirectory(".\bin")
+        If Not Directory.Exists(".\prog_bin") Then
+            Directory.CreateDirectory(".\prog_bin")
         End If
         If Environment.Is64BitOperatingSystem = True Then
             If Not File.Exists("\Program Files\7-Zip\7z.exe") Then
@@ -157,9 +157,9 @@ Public Class MissingComponentsDialog
             OSCDIMG.DownloadFile(WebSite, TargetPath & "\" & TargetFile)
         End Using
         Label11.Visible = True
-        Process.Start(".\bin\oscdimg.zip")
-        Do Until File.Exists(".\bin\oscdimg.exe")
-            If Not File.Exists(".\bin\oscdimg.exe") Then
+        Process.Start(".\prog_bin\oscdimg.zip")
+        Do Until File.Exists(".\prog_bin\oscdimg.exe")
+            If Not File.Exists(".\prog_bin\oscdimg.exe") Then
                 Button3.Visible = True
                 CheckPic3.Visible = False
             Else
@@ -168,7 +168,7 @@ Public Class MissingComponentsDialog
             End If
         Loop
         Label11.Visible = False
-        If Not File.Exists(".\bin\oscdimg.exe") Then
+        If Not File.Exists(".\prog_bin\oscdimg.exe") Then
             Button3.Visible = True
             CheckPic3.Visible = False
         Else
@@ -181,8 +181,8 @@ Public Class MissingComponentsDialog
         '' Removed "IO." because System.IO was imported
         'Dim sc As New Shell32.Shell()
 
-        'Dim output As Shell32.Folder = sc.NameSpace(".\bin")
-        'Dim input As Shell32.Folder = sc.NameSpace(".\bin\oscdimg.zip")
+        'Dim output As Shell32.Folder = sc.NameSpace(".\prog_bin")
+        'Dim input As Shell32.Folder = sc.NameSpace(".\prog_bin\oscdimg.zip")
         'output.CopyHere(input.Items, 4)
     End Sub
 
@@ -246,10 +246,10 @@ Public Class MissingComponentsDialog
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
             SevenZipDownload.DownloadFile(WebSite, TargetPath & "\" & TargetFile)
         End Using
-        If File.Exists(".\bin\7z2107-x64.exe") Then
-            Process.Start(".\bin\7z2107-64.exe")
-        ElseIf File.Exists(".\bin\7z2107.exe") Then
-            Process.Start(".\bin\7z2107.exe")
+        If File.Exists(".\prog_bin\7z2107-x64.exe") Then
+            Process.Start(".\prog_bin\7z2107-64.exe")
+        ElseIf File.Exists(".\prog_bin\7z2107.exe") Then
+            Process.Start(".\prog_bin\7z2107.exe")
         End If
         Do Until File.Exists("\Program Files\7-Zip\7z.exe")
             If Not File.Exists("\Program Files\7-Zip\7z.exe") Then
