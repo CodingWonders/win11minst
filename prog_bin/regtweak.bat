@@ -164,7 +164,7 @@ echo [HKEY_CURRENT_USER\Control Panel\UnsupportedHardwareNotificationCache] >> "
 echo "SV2"=dword:00000000 >> ".\wimmount\disablesv2.reg"
 attrib ".\wimmount\disablesv2.reg" +h
 reg add "HKLM\ActiveSetupSoftware\Microsoft\Active Setup\Installed Components\DisableSV2" /v Version /t REG_SZ /d 1 /f > NUL
-reg add "HKLM\ActiveSetupSoftware\Microsoft\Active Setup\Installed Components\DisableSV2" /v StubPath /t REG_SZ /d "regedit /s \disablesv2.reg" /f > NUL
+reg add "HKLM\ActiveSetupSoftware\Microsoft\Active Setup\Installed Components\DisableSV2" /v StubPath /t REG_SZ /d regedit /s \disablesv2.reg /f > NUL
 echo [ OK ] Added SV2
 echo [    ] Unloading 'install.wim's SOFTWARE registry hive from computer's registry...
 reg unload HKLM\ActiveSetupSoftware > NUL
