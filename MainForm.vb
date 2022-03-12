@@ -38,11 +38,11 @@ Public Class MainForm
     Dim RegUnload As String
     Dim DismUnmount As String
     ' These _Local variables are used when the ISO files are copied to the local disk
-    Dim W11IWIMISOEx_Local As String = "echo off" & CrLf & ".\bin\7z e " & Quote & ".\Win11.iso" & Quote & " " & Quote & "sources\install.wim" & Quote & " -o."
-    Dim W10ISOEx_Local As String = "echo off" & CrLf & ".\bin\7z x " & Quote & ".\Win10.iso" & Quote & " " & Quote & "-o.\temp" & Quote
-    Dim W11ISOEx_Local As String = "echo off" & CrLf & ".\bin\7z x " & Quote & ".\Win11.iso" & Quote & " " & Quote & "-o.\temp" & Quote
-    Dim W10AR_ARRDLLEx_Local As String = "echo off" & CrLf & ".\bin\7z e " & Quote & ".\Win10.iso" & Quote & " " & Quote & "sources\appraiser.dll" & Quote & " -o."
-    Dim W10AR_ARRDLLEx_2_Local As String = "echo off" & CrLf & ".\bin\7z e " & Quote & ".\Win10.iso" & Quote & " " & Quote & "sources\appraiserres.dll" & Quote & " -o."
+    Dim W11IWIMISOEx_Local As String = "echo off" & CrLf & ".\prog_bin\7z e " & Quote & ".\Win11.iso" & Quote & " " & Quote & "sources\install.wim" & Quote & " -o."
+    Dim W10ISOEx_Local As String = "echo off" & CrLf & ".\prog_bin\7z x " & Quote & ".\Win10.iso" & Quote & " " & Quote & "-o.\temp" & Quote
+    Dim W11ISOEx_Local As String = "echo off" & CrLf & ".\prog_bin\7z x " & Quote & ".\Win11.iso" & Quote & " " & Quote & "-o.\temp" & Quote
+    Dim W10AR_ARRDLLEx_Local As String = "echo off" & CrLf & ".\prog_bin\7z e " & Quote & ".\Win10.iso" & Quote & " " & Quote & "sources\appraiser.dll" & Quote & " -o."
+    Dim W10AR_ARRDLLEx_2_Local As String = "echo off" & CrLf & ".\prog_bin\7z e " & Quote & ".\Win10.iso" & Quote & " " & Quote & "sources\appraiserres.dll" & Quote & " -o."
     ' These variables are used when deleting temporary files (as integers)
     Dim FileCount As Integer
     Dim DelFileCount As Integer
@@ -438,10 +438,10 @@ Public Class MainForm
             ComboBox1.SelectedItem = "Automatic"
         End If
 
-        If Not Directory.Exists(".\bin") Then
+        If Not Directory.Exists(".\prog_bin") Then
             MissingComponentsDialog.ShowDialog()
         Else
-            If Not File.Exists(".\bin\7z.exe") And Not File.Exists(".\bin\7z.dll") Or Not File.Exists(".\bin\oscdimg.exe") Then
+            If Not File.Exists(".\prog_bin\7z.exe") And Not File.Exists(".\prog_bin\7z.dll") Or Not File.Exists(".\prog_bin\oscdimg.exe") Then
                 MissingComponentsDialog.ShowDialog()
             End If
         End If
@@ -1893,17 +1893,17 @@ Public Class MainForm
         InstallerProgressBar.Value = 0
         CompPic.Visible = False
         ' The following lines of code set the reused variables (declared at the beginning of the file)
-        W11IWIMISOEx = "echo off" & CrLf & ".\bin\7z e " & Quote & TextBox1.Text & Quote & " " & Quote & "sources\install.wim" & Quote & " -o."
-        W10ISOEx = "echo off" & CrLf & ".\bin\7z x " & Quote & TextBox2.Text & Quote & " " & Quote & "-o.\temp" & Quote
-        W11ISOEx = "echo off" & CrLf & ".\bin\7z x " & Quote & TextBox1.Text & Quote & " " & Quote & "-o.\temp" & Quote
-        W10AR_ARRDLLEx = "echo off" & CrLf & ".\bin\7z e " & Quote & TextBox2.Text & Quote & " " & Quote & "sources\appraiser.dll" & Quote & " -o."
-        W10AR_ARRDLLEx_2 = "echo off" & CrLf & ".\bin\7z e " & Quote & TextBox2.Text & Quote & " " & Quote & "sources\appraiserres.dll" & Quote & " -o."
+        W11IWIMISOEx = "echo off" & CrLf & ".\prog_bin\7z e " & Quote & TextBox1.Text & Quote & " " & Quote & "sources\install.wim" & Quote & " -o."
+        W10ISOEx = "echo off" & CrLf & ".\prog_bin\7z x " & Quote & TextBox2.Text & Quote & " " & Quote & "-o.\temp" & Quote
+        W11ISOEx = "echo off" & CrLf & ".\prog_bin\7z x " & Quote & TextBox1.Text & Quote & " " & Quote & "-o.\temp" & Quote
+        W10AR_ARRDLLEx = "echo off" & CrLf & ".\prog_bin\7z e " & Quote & TextBox2.Text & Quote & " " & Quote & "sources\appraiser.dll" & Quote & " -o."
+        W10AR_ARRDLLEx_2 = "echo off" & CrLf & ".\prog_bin\7z e " & Quote & TextBox2.Text & Quote & " " & Quote & "sources\appraiserres.dll" & Quote & " -o."
         If TextBox4.Text.EndsWith("\") Then
-            OSCDIMG_CSM = ".\bin\oscdimg.exe -l" & LabelText.Text & " -m -u2 -b.\temp\boot\etfsboot.com .\temp " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
-            OSCDIMG_UEFI = ".\bin\oscdimg.exe -l" & LabelText.Text & " -m -u2 -b.\temp\boot\Efisys.bin -pEF .\temp " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
+            OSCDIMG_CSM = ".\prog_bin\oscdimg.exe -l" & LabelText.Text & " -m -u2 -b.\temp\boot\etfsboot.com .\temp " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
+            OSCDIMG_UEFI = ".\prog_bin\oscdimg.exe -l" & LabelText.Text & " -m -u2 -b.\temp\boot\Efisys.bin -pEF .\temp " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
         Else
-            OSCDIMG_CSM = ".\bin\oscdimg.exe -l" & LabelText.Text & " -m -u2 -b.\temp\boot\etfsboot.com .\temp " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote
-            OSCDIMG_UEFI = ".\bin\oscdimg.exe -l" & LabelText.Text & " -m -u2 -b.\temp\boot\Efisys.bin -pEF .\temp " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote
+            OSCDIMG_CSM = ".\prog_bin\oscdimg.exe -l" & LabelText.Text & " -m -u2 -b.\temp\boot\etfsboot.com .\temp " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote
+            OSCDIMG_UEFI = ".\prog_bin\oscdimg.exe -l" & LabelText.Text & " -m -u2 -b.\temp\boot\Efisys.bin -pEF .\temp " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote
         End If
         EmergencyFolderDelete = "echo off" & CrLf & "rd " & Quote & ".\temp" & Quote & " /s /q"
         Label84.ForeColor = Color.Gray
@@ -2175,10 +2175,18 @@ Public Class MainForm
             LogBox.AppendText(" Done" & CrLf & "Creating the WIM file mount point folder...")
             Directory.CreateDirectory(".\wimmount")
             LogBox.AppendText(" Done" & CrLf & "Launching the REGTWEAK script...")
-            If AdvancedOptionsPanel.CheckBox1.Checked = True Then   ' Prepare boot.wim (and install.wim) for surgery
-                Process.Start(".\bin\regtweak.bat", "/bypassnro").WaitForExit()
+            If AdvancedOptionsPanel.CheckBox1.Checked = True Then   ' Prepare boot.wim (and install.wim, if needed) for surgery
+                If AdvancedOptionsPanel.CheckBox2.Checked = True Then
+                    Process.Start(".\prog_bin\regtweak.bat", "/bypassnro /sv2").WaitForExit()
+                Else
+                    Process.Start(".\prog_bin\regtweak.bat", "/bypassnro").WaitForExit()
+                End If
             Else
-                Process.Start(".\bin\regtweak.bat").WaitForExit()
+                If AdvancedOptionsPanel.CheckBox2.Checked = True Then
+                    Process.Start(".\prog_bin\regtweak.bat", "/sv2").WaitForExit()
+                Else
+                    Process.Start(".\prog_bin\regtweak.bat").WaitForExit()
+                End If
             End If
 
             LogBox.AppendText(" Done" & CrLf & "Moving " & Quote & "boot.wim" & Quote & " to the Windows 11 installer...")
