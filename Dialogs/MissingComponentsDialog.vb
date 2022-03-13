@@ -88,6 +88,12 @@ Public Class MissingComponentsDialog
                     Button2.Visible = True
                 End If
             Else
+                If Not File.Exists(".\prog_bin\7z.exe") Then
+                    File.Copy("\Program Files\7-Zip\7z.exe", ".\prog_bin\7z.exe")
+                End If
+                If Not File.Exists(".\prog_bin\7z.dll") Then
+                    File.Copy("\Program Files\7-Zip\7z.dll", ".\prog_bin\7z.dll")
+                End If
                 CheckPic1.Visible = True
                 Button2.Visible = False
                 CheckedCount = CheckedCount + 1
@@ -102,6 +108,9 @@ Public Class MissingComponentsDialog
                     CheckPic3.Visible = False
                 End If
             Else
+                If Not File.Exists(".\prog_bin\oscdimg.exe") Then
+                    File.Copy("\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\x86\Oscdimg\oscdimg.exe", ".\prog_bin\oscdimg.exe")
+                End If
                 Button3.Visible = False
                 CheckPic3.Visible = True
                 CheckedCount = CheckedCount + 1
@@ -113,10 +122,17 @@ Public Class MissingComponentsDialog
                     Button2.Visible = False
                     CheckedCount = CheckedCount + 1
                 Else
+
                     CheckPic1.Visible = False
                     Button2.Visible = True
                 End If
             Else
+                If Not File.Exists(".\prog_bin\7z.exe") Then
+                    File.Copy("\Program Files\7-Zip\7z.exe", ".\prog_bin\7z.exe")
+                End If
+                If Not File.Exists(".\prog_bin\7z.dll") Then
+                    File.Copy("\Program Files\7-Zip\7z.dll", ".\prog_bin\7z.dll")
+                End If
                 CheckPic1.Visible = True
                 Button2.Visible = False
                 CheckedCount = CheckedCount + 1
@@ -131,6 +147,9 @@ Public Class MissingComponentsDialog
                     CheckPic3.Visible = False
                 End If
             Else
+                If Not File.Exists(".\prog_bin\oscdimg.exe") Then
+                    File.Copy("\Program Files\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\x86\Oscdimg\oscdimg.exe", ".\prog_bin\oscdimg.exe")
+                End If
                 Button3.Visible = False
                 CheckPic3.Visible = True
                 CheckedCount = CheckedCount + 1
@@ -196,11 +215,12 @@ Public Class MissingComponentsDialog
             Button3.Visible = True
             CheckPic3.Visible = False
         Else
+            File.Delete(".\oscdimg.zip")
+            CheckedCount = CheckedCount + 1
             Button3.Visible = False
             CheckPic3.Visible = True
         End If
-        File.Delete(".\oscdimg.zip")
-        CheckedCount = CheckedCount + 1
+
     End Sub
 
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
@@ -216,6 +236,12 @@ Public Class MissingComponentsDialog
                     Button2.Visible = True
                 End If
             Else
+                If Not File.Exists(".\prog_bin\7z.exe") Then
+                    File.Copy("\Program Files\7-Zip\7z.exe", ".\prog_bin\7z.exe")
+                End If
+                If Not File.Exists(".\prog_bin\7z.dll") Then
+                    File.Copy("\Program Files\7-Zip\7z.dll", ".\prog_bin\7z.dll")
+                End If
                 CheckPic1.Visible = True
                 Button2.Visible = False
                 CheckedCount = CheckedCount + 1
@@ -230,6 +256,9 @@ Public Class MissingComponentsDialog
                     CheckPic3.Visible = False
                 End If
             Else
+                If Not File.Exists(".\prog_bin\oscdimg.exe") Then
+                    File.Copy("\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\x86\Oscdimg\oscdimg.exe", ".\prog_bin\oscdimg.exe")
+                End If
                 Button3.Visible = False
                 CheckPic3.Visible = True
                 CheckedCount = CheckedCount + 1
@@ -245,11 +274,17 @@ Public Class MissingComponentsDialog
                     Button2.Visible = True
                 End If
             Else
+                If Not File.Exists(".\prog_bin\7z.exe") Then
+                    File.Copy("\Program Files\7-Zip\7z.exe", ".\prog_bin\7z.exe")
+                End If
+                If Not File.Exists(".\prog_bin\7z.dll") Then
+                    File.Copy("\Program Files\7-Zip\7z.dll", ".\prog_bin\7z.dll")
+                End If
                 CheckPic1.Visible = True
                 Button2.Visible = False
                 CheckedCount = CheckedCount + 1
             End If
-            If Not File.Exists("\Program Files\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\x86\Oscdimg\oscdimg.exe") Then
+            If Not File.Exists("\Program Files\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\x86\Oscdimg\oscdimg.exe") Then    ' This is for OSCDIMG 2.56. Version 2.54 also works, so I don't see the difference between these two
                 If File.Exists(".\prog_bin\oscdimg.exe") Then
                     Button3.Visible = False
                     CheckPic3.Visible = True
@@ -259,6 +294,9 @@ Public Class MissingComponentsDialog
                     CheckPic3.Visible = False
                 End If
             Else
+                If Not File.Exists(".\prog_bin\oscdimg.exe") Then
+                    File.Copy("\Program Files\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\x86\Oscdimg\oscdimg.exe", ".\prog_bin\oscdimg.exe")
+                End If
                 Button3.Visible = False
                 CheckPic3.Visible = True
                 CheckedCount = CheckedCount + 1
@@ -307,12 +345,14 @@ Public Class MissingComponentsDialog
             Button3.Visible = True
             CheckPic3.Visible = False
         Else
+            File.Copy("\Program Files\7-Zip\7z.exe", ".\prog_bin\7z.exe")
+            File.Copy("\Program Files\7-Zip\7z.dll", ".\prog_bin\7z.dll")
             Button3.Visible = False
             CheckPic3.Visible = True
+            CheckedCount = CheckedCount + 1
         End If
-        File.Copy("\Program Files\7-Zip\7z.exe", ".\prog_bin\7z.exe")
-        File.Copy("\Program Files\7-Zip\7z.dll", ".\prog_bin\7z.dll")
-        CheckedCount = CheckedCount + 1
+
+
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
