@@ -79,16 +79,28 @@ Public Class MissingComponentsDialog
         End If
         If Environment.Is64BitOperatingSystem = True Then
             If Not File.Exists("\Program Files\7-Zip\7z.exe") Then
-                CheckPic1.Visible = False
-                Button2.Visible = True
+                If File.Exists(".\prog_bin\7z.exe") And File.Exists(".\prog_bin\7z.dll") Then
+                    CheckPic1.Visible = True
+                    Button2.Visible = False
+                    CheckedCount = CheckedCount + 1
+                Else
+                    CheckPic1.Visible = False
+                    Button2.Visible = True
+                End If
             Else
                 CheckPic1.Visible = True
                 Button2.Visible = False
                 CheckedCount = CheckedCount + 1
             End If
             If Not File.Exists("\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\amd64\Oscdimg\oscdimg.exe") Then
-                Button3.Visible = True
-                CheckPic3.Visible = False
+                If File.Exists(".\prog_bin\oscdimg.exe") Then
+                    Button3.Visible = False
+                    CheckPic3.Visible = True
+                    CheckedCount = CheckedCount + 1
+                Else
+                    Button3.Visible = True
+                    CheckPic3.Visible = False
+                End If
             Else
                 Button3.Visible = False
                 CheckPic3.Visible = True
@@ -96,16 +108,28 @@ Public Class MissingComponentsDialog
             End If
         Else
             If Not File.Exists("\Program Files\7-Zip\7z.exe") Then
-                CheckPic1.Visible = False
-                Button2.Visible = True
+                If File.Exists(".\prog_bin\7z.exe") And File.Exists(".\prog_bin\7z.dll") Then
+                    CheckPic1.Visible = True
+                    Button2.Visible = False
+                    CheckedCount = CheckedCount + 1
+                Else
+                    CheckPic1.Visible = False
+                    Button2.Visible = True
+                End If
             Else
                 CheckPic1.Visible = True
                 Button2.Visible = False
                 CheckedCount = CheckedCount + 1
             End If
             If Not File.Exists("\Program Files\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\x86\Oscdimg\oscdimg.exe") Then
-                Button3.Visible = True
-                CheckPic3.Visible = False
+                If File.Exists(".\prog_bin\oscdimg.exe") Then
+                    Button3.Visible = False
+                    CheckPic3.Visible = True
+                    CheckedCount = CheckedCount + 1
+                Else
+                    Button3.Visible = True
+                    CheckPic3.Visible = False
+                End If
             Else
                 Button3.Visible = False
                 CheckPic3.Visible = True
@@ -183,16 +207,28 @@ Public Class MissingComponentsDialog
         CheckedCount = 0
         If Environment.Is64BitOperatingSystem = True Then
             If Not File.Exists("\Program Files\7-Zip\7z.exe") Then
-                CheckPic1.Visible = False
-                Button2.Visible = True
+                If File.Exists(".\prog_bin\7z.exe") And File.Exists(".\prog_bin\7z.dll") Then
+                    CheckPic1.Visible = True
+                    Button2.Visible = False
+                    CheckedCount = CheckedCount + 1
+                Else
+                    CheckPic1.Visible = False
+                    Button2.Visible = True
+                End If
             Else
                 CheckPic1.Visible = True
                 Button2.Visible = False
                 CheckedCount = CheckedCount + 1
             End If
             If Not File.Exists("\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\amd64\Oscdimg\oscdimg.exe") Then
-                Button3.Visible = True
-                CheckPic3.Visible = False
+                If File.Exists(".\prog_bin\oscdimg.exe") Then
+                    Button3.Visible = False
+                    CheckPic3.Visible = True
+                    CheckedCount = CheckedCount + 1
+                Else
+                    Button3.Visible = True
+                    CheckPic3.Visible = False
+                End If
             Else
                 Button3.Visible = False
                 CheckPic3.Visible = True
@@ -200,23 +236,37 @@ Public Class MissingComponentsDialog
             End If
         Else
             If Not File.Exists("\Program Files\7-Zip\7z.exe") Then
-                CheckPic1.Visible = False
-                Button2.Visible = True
+                If File.Exists(".\prog_bin\7z.exe") And File.Exists(".\prog_bin\7z.dll") Then
+                    CheckPic1.Visible = True
+                    Button2.Visible = False
+                    CheckedCount = CheckedCount + 1
+                Else
+                    CheckPic1.Visible = False
+                    Button2.Visible = True
+                End If
             Else
                 CheckPic1.Visible = True
                 Button2.Visible = False
                 CheckedCount = CheckedCount + 1
             End If
             If Not File.Exists("\Program Files\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\x86\Oscdimg\oscdimg.exe") Then
-                Button3.Visible = True
-                CheckPic3.Visible = False
+                If File.Exists(".\prog_bin\oscdimg.exe") Then
+                    Button3.Visible = False
+                    CheckPic3.Visible = True
+                    CheckedCount = CheckedCount + 1
+                Else
+                    Button3.Visible = True
+                    CheckPic3.Visible = False
+                End If
             Else
                 Button3.Visible = False
                 CheckPic3.Visible = True
+                CheckedCount = CheckedCount + 1
             End If
         End If
         If File.Exists("\Windows\system32\dism.exe") Then
             CheckPic2.Visible = True
+            CheckedCount = CheckedCount + 1
         Else
             CheckPic2.Visible = False
         End If
