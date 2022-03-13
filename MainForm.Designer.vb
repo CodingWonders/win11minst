@@ -3568,6 +3568,9 @@ Partial Class MainForm
         '
         'Label105
         '
+        Me.Label105.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label105.Location = New System.Drawing.Point(17, 17)
         Me.Label105.Name = "Label105"
         Me.Label105.Size = New System.Drawing.Size(817, 204)
