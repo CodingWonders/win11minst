@@ -225,6 +225,16 @@
         S2An4ZzzgFvg2LtzCzyIO1+QMSGEddALMoavjDGeUFXxAcyr9vFekLgMAAAAAElFTkSuQmCC
 </value>
   </data>
+  <data name="Label105.Text" xml:space="preserve">
+    <value>The source code of this program can be found on GitHub.
+
+- This project can be opened on Visual Studio 2012 and newer, without the need of conversion
+- The .NET Framework 4.6.2 Developer Pack must be installed to open this project
+
+Do you want to suggest a new feature to be included in a future version? Have you experienced a bug you want to report?
+
+Do you want to enjoy the latest features?</value>
+  </data>
   <data name="PictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABGdBTUEAALGPC/xhBQAAC0BJREFUeF7t

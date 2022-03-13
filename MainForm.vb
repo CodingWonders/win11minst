@@ -975,6 +975,7 @@ Public Class MainForm
             PictureBox16.Image = New Bitmap(My.Resources.functionality_icon_dark)
             PictureBox4.Image = New Bitmap(My.Resources.log_del_dark)
             PictureBox18.Image = New Bitmap(My.Resources.pref_reset_dark)
+            BranchPic.Image = New Bitmap(My.Resources.hummingbird_dark)
 
 
 
@@ -1105,6 +1106,7 @@ Public Class MainForm
             PictureBox16.Image = New Bitmap(My.Resources.functionality_icon)
             PictureBox4.Image = New Bitmap(My.Resources.log_del)
             PictureBox18.Image = New Bitmap(My.Resources.pref_reset)
+            BranchPic.Image = New Bitmap(My.Resources.hummingbird)
             PanelIndicatorPic.Image = New Bitmap(My.Resources.panel_indicator_light)
             CompPic.Image = New Bitmap(My.Resources.comp_light)
 
@@ -1249,6 +1251,7 @@ Public Class MainForm
                         PictureBox16.Image = New Bitmap(My.Resources.functionality_icon_dark)
                         PictureBox4.Image = New Bitmap(My.Resources.log_del_dark)
                         PictureBox18.Image = New Bitmap(My.Resources.pref_reset_dark)
+                        BranchPic.Image = New Bitmap(My.Resources.hummingbird_dark)
                         GroupBox2.ForeColor = Color.White
                         GroupBox3.ForeColor = Color.White
                         GroupBox4.ForeColor = Color.White
@@ -1363,6 +1366,7 @@ Public Class MainForm
                         PictureBox18.Image = New Bitmap(My.Resources.pref_reset)
                         PanelIndicatorPic.Image = New Bitmap(My.Resources.panel_indicator_light)
                         CompPic.Image = New Bitmap(My.Resources.comp_light)
+                        BranchPic.Image = New Bitmap(My.Resources.hummingbird)
                         If WelcomePanel.Visible = True Then
                             WelcomePic.Image = New Bitmap(My.Resources.home_filled)
                         Else
@@ -2722,6 +2726,15 @@ Public Class MainForm
             Notify.Text = "Instalador manual de Windows 11 - Listo"
             ' Labels
             Label1.Text = "Bienvenido"
+            Label100.Text = "Instrucciones"
+            Label101.Text = "Ayuda"
+            Label102.Text = "Acerca de"
+            Label104.Text = "Instrucciones"
+            Label105.Text = "El código fuente de este programa lo puede encontrar en GitHub." & CrLf & CrLf & "- Este proyecto puede ser abierto en Visual Studio 2012 y más reciente, sin necesidad de conversión" & CrLf & "- El Pack de Desarrolladores de .NET Framework 4.6.2 debe ser instalado para abrir este proyecto" & CrLf & CrLf & "¿Desea sugerir alguna nueva característica para ser incluida en una versión futura? ¿Ha notado algún error del que desea informar?" & CrLf & CrLf & "¿Desea disfrutar de las últimas características?"
+            Label106.Text = "Lanzamiento Hummingbird"
+            Label107.Text = "Disfrute de características semanales"
+            Label107.Left = Label106.Left + Label106.Width
+
             ' Label11 doesn't go here, as it's a ">". It will change its Left property instead.
 
             Label12.Text = "Personalización"
@@ -2777,7 +2790,7 @@ Public Class MainForm
             Label65.Text = "Imagen de Windows 11:"
             Label66.Text = "Imagen de Windows 10:"
             Label69.Text = "Método:"
-            Label7.Text = "versión 2.0.0100"
+            Label7.Text = "versión 2.0.0100_220313"
             Label71.Text = "¿Requerir que ambas imágenes tengan archivos *.wim?"
             If CheckBox1.Checked = True Then
                 Label72.Text = "Sí"
@@ -2835,6 +2848,12 @@ Public Class MainForm
             LinkLabel3.Text = "Buscar en Google"
             LinkLabel4.Text = "Buscar en DuckDuckGo"
             LinkLabel5.Text = "Cambiar nombre"
+            LinkLabel6.Text = "No se pudo obtener el modelo del equipo"
+            LinkLabel7.Text = "Hay actualizaciones disponibles"
+            LinkLabel8.Text = "Compruebe el proyecto"
+            LinkLabel9.Text = "Descargue el Pack de Desarrolladores"
+            LinkLabel10.Text = "Compruebe la página de Errores"
+            LinkLabel11.Text = "Compruebe la rama Hummingbird"
 
             ' GroupBoxes
             GroupBox2.Text = "Ayuda de métodos"
@@ -2927,6 +2946,12 @@ Public Class MainForm
             Label63.Left = Label62.Left + Label62.Width + 4
             Label81.Left = Label80.Left + Label80.Width + 6
             Label82.Left = Label81.Left + Label81.Width + 4
+
+            ' TabPages
+            TabPage1.Text = "General"
+            TabPage2.Text = "Información de componentes"
+            TabPage3.Text = "Código fuente"
+
         ElseIf ComboBox4.SelectedItem = "English" Then
 
         ElseIf ComboBox4.SelectedItem = "Automatic" Then
@@ -3045,5 +3070,21 @@ Public Class MainForm
         UpdateChoicePanel.Visible = True
         UpdateChoicePanel.Visible = False
         BringToFront()
+    End Sub
+
+    Private Sub LinkLabel8_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel8.LinkClicked
+        System.Diagnostics.Process.Start("https://www.github.com/CodingWonders/win11minst")
+    End Sub
+
+    Private Sub LinkLabel9_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel9.LinkClicked
+        System.Diagnostics.Process.Start("https://dotnet.microsoft.com/en-us/download/dotnet-framework/thank-you/net462-developer-pack-offline-installer")
+    End Sub
+
+    Private Sub LinkLabel10_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel10.LinkClicked
+        System.Diagnostics.Process.Start("https://github.com/CodingWonders/win11minst/issues")
+    End Sub
+
+    Private Sub LinkLabel11_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel11.LinkClicked
+        System.Diagnostics.Process.Start("https://github.com/CodingWonders/win11minst/tree/hummingbird")
     End Sub
 End Class
