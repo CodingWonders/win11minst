@@ -904,6 +904,7 @@ Partial Class MainForm
         'bodyPanel
         '
         Me.bodyPanel.BackColor = System.Drawing.Color.FromArgb(CType(CType(249, Byte), Integer), CType(CType(249, Byte), Integer), CType(CType(249, Byte), Integer))
+        Me.bodyPanel.Controls.Add(Me.InfoPanel)
         Me.bodyPanel.Controls.Add(Me.Panel_Border_Pic)
         Me.bodyPanel.Controls.Add(Me.WelcomePanel)
         Me.bodyPanel.Controls.Add(Me.ProgressPanel)
@@ -912,7 +913,6 @@ Partial Class MainForm
         Me.bodyPanel.Controls.Add(Me.SettingPanel)
         Me.bodyPanel.Controls.Add(Me.Settings_PersonalizationPanel)
         Me.bodyPanel.Controls.Add(Me.Settings_FunctionalityPanel)
-        Me.bodyPanel.Controls.Add(Me.InfoPanel)
         Me.bodyPanel.Controls.Add(Me.InstCreatePanel)
         Me.bodyPanel.Controls.Add(Me.SettingReviewPanel)
         Me.bodyPanel.Dock = System.Windows.Forms.DockStyle.Fill
@@ -2711,12 +2711,14 @@ Partial Class MainForm
         Me.LinkLabel7.AutoSize = True
         Me.LinkLabel7.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LinkLabel7.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
-        Me.LinkLabel7.Location = New System.Drawing.Point(517, 492)
+        Me.LinkLabel7.LinkColor = System.Drawing.Color.DodgerBlue
+        Me.LinkLabel7.Location = New System.Drawing.Point(55, 492)
         Me.LinkLabel7.Name = "LinkLabel7"
         Me.LinkLabel7.Size = New System.Drawing.Size(153, 20)
         Me.LinkLabel7.TabIndex = 17
         Me.LinkLabel7.TabStop = True
         Me.LinkLabel7.Text = "Updates are available"
+        Me.LinkLabel7.Visible = False
         '
         'TabControl1
         '
@@ -2917,9 +2919,9 @@ Partial Class MainForm
         Me.Label7.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label7.Location = New System.Drawing.Point(69, 117)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(114, 20)
+        Me.Label7.Size = New System.Drawing.Size(168, 20)
         Me.Label7.TabIndex = 1
-        Me.Label7.Text = "version 2.0.0100"
+        Me.Label7.Text = "version 2.0.0100_220313"
         '
         'Label6
         '

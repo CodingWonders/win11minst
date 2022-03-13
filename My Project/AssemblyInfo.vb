@@ -12,7 +12,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("Allows you to create a Windows 11 installer for unsupported systems")> 
 <Assembly: AssemblyCompany("")> 
 <Assembly: AssemblyProduct("Windows 11 Manual Installer")> 
-<Assembly: AssemblyCopyright("Copyright © 2022")> 
+<Assembly: AssemblyCopyright("Copyright © 2022 CodingWonders")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>

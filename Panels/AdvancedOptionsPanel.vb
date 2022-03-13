@@ -30,4 +30,17 @@ Public Class AdvancedOptionsPanel
             Panel1.BackColor = Color.FromArgb(32, 32, 32)
         End If
     End Sub
+
+    Private Sub CheckBox2_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox2.CheckedChanged
+        If CheckBox2.Checked = True Then
+            MsgBox("This option is experimental, and it doesn't work as intended. Please expect this to work in a future update.", vbOKOnly + vbInformation, "Experimental option")
+            If DialogResult.OK Then
+                CheckBox2.Checked = True
+            End If
+        End If
+    End Sub
+
+    Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
+        System.Diagnostics.Process.Start("https://github.com/CodingWonders/win11minst/issues/2")
+    End Sub
 End Class

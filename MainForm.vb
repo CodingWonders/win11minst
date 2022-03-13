@@ -797,9 +797,17 @@ Public Class MainForm
         InfoPanel.Visible = True
         If BackColor = Color.FromArgb(243, 243, 243) Then
             WelcomePic.Image = New Bitmap(My.Resources.home)
+            InstCreatePic.Image = New Bitmap(My.Resources.inst_create)
+            InstructionPic.Image = New Bitmap(My.Resources.instructions)
+            SettingsPic.Image = New Bitmap(My.Resources.settings)
+            HelpPic.Image = New Bitmap(My.Resources.help)
             InfoPic.Image = New Bitmap(My.Resources.info_filled)
         ElseIf BackColor = Color.FromArgb(32, 32, 32) Then
             WelcomePic.Image = New Bitmap(My.Resources.home_dark)
+            InstCreatePic.Image = New Bitmap(My.Resources.inst_create_dark)
+            InstructionPic.Image = New Bitmap(My.Resources.instructions_dark)
+            SettingsPic.Image = New Bitmap(My.Resources.settings_dark)
+            HelpPic.Image = New Bitmap(My.Resources.help_dark)
             InfoPic.Image = New Bitmap(My.Resources.info_dark_filled)
         End If
         PanelIndicatorPic.Top = InfoPic.Top + 2
