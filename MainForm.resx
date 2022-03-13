@@ -225,16 +225,6 @@
         S2An4ZzzgFvg2LtzCzyIO1+QMSGEddALMoavjDGeUFXxAcyr9vFekLgMAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="Label105.Text" xml:space="preserve">
-    <value>The source code of this program can be found on GitHub.
-
-- This project can be opened on Visual Studio 2012 and newer, without the need of conversion
-- The .NET Framework 4.6.2 Developer Pack must be installed to open this project
-
-Do you want to suggest a new feature to be included in a future version? Have you experienced a bug you want to report?
-
-Do you want to enjoy the latest features?</value>
-  </data>
   <data name="PictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABGdBTUEAALGPC/xhBQAAC0BJREFUeF7t
@@ -294,6 +284,16 @@ Do you want to enjoy the latest features?</value>
 DLLR: DLL-Replace - replaces "appraiser.dll" and "appraiserres.dll" from the Windows 11 installer with Windows 10' s
 REGTWEAK - makes registry tweaks to the Windows 11 installer. There is no need for a Windows 10 installer
 Do note that REGTWEAK is available under administrative privileges</value>
+  </data>
+  <data name="Label105.Text" xml:space="preserve">
+    <value>The source code of this program can be found on GitHub.
+
+- This project can be opened on Visual Studio 2012 and newer, without the need of conversion
+- The .NET Framework 4.6.2 Developer Pack must be installed to open this project
+
+Do you want to suggest a new feature to be included in a future version? Have you experienced a bug you want to report? Don't hesitate on reporting feedback (you'll need a GitHub account). Your feedback is critical.
+
+Do you want to enjoy the latest features? Check the Hummingbird branch! Weekly updates, new features and a sneak peek of the program's future</value>
   </data>
   <metadata name="Notify.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>

@@ -1529,6 +1529,14 @@ Public Class MainForm
         ProgramTitleLabel.Left = 102
         SettingPanel.Visible = False
         Settings_FunctionalityPanel.Visible = True
+        If My.User.IsInRole(ApplicationServices.BuiltInRole.Administrator) Then
+            If Not File.Exists(".\prog_bin\regtweak.bat") Then
+                ComboBox5.Items.Remove("REGTWEAK")
+                ComboBox5.SelectedItem = "WIMR"
+                REGTWEAKToolStripMenuItem.Visible = False
+                MsgBox("REGTWEAK is not available on this copy of the program. This can occur if the script isn't found. Make sure you have copied all essential files to the runtime directory.", vbOKOnly + vbExclamation, "A method is unavailable")
+            End If
+        End If
     End Sub
 
     Private Sub Notify_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles Notify.MouseDoubleClick
@@ -2730,7 +2738,7 @@ Public Class MainForm
             Label101.Text = "Ayuda"
             Label102.Text = "Acerca de"
             Label104.Text = "Instrucciones"
-            Label105.Text = "El código fuente de este programa lo puede encontrar en GitHub." & CrLf & CrLf & "- Este proyecto puede ser abierto en Visual Studio 2012 y más reciente, sin necesidad de conversión" & CrLf & "- El Pack de Desarrolladores de .NET Framework 4.6.2 debe ser instalado para abrir este proyecto" & CrLf & CrLf & "¿Desea sugerir alguna nueva característica para ser incluida en una versión futura? ¿Ha notado algún error del que desea informar?" & CrLf & CrLf & "¿Desea disfrutar de las últimas características?"
+            Label105.Text = "El código fuente de este programa lo puede encontrar en GitHub." & CrLf & CrLf & "- Este proyecto puede ser abierto en Visual Studio 2012 y más reciente, sin necesidad de conversión" & CrLf & "- El Pack de Desarrolladores de .NET Framework 4.6.2 debe ser instalado para abrir este proyecto" & CrLf & CrLf & "¿Desea sugerir alguna nueva característica para ser incluida en una versión futura? ¿Ha notado algún error del que desea informar? No dude en reportar errores (necesita una cuenta de GitHub). Sus opiniones son cruciales." & CrLf & CrLf & "¿Desea disfrutar de las últimas características? ¡Compruebe la rama Hummingbird! Actualizaciones semanales, características nuevas y una vista previa del futuro del programa"
             Label106.Text = "Lanzamiento Hummingbird"
             Label107.Text = "Disfrute de características semanales"
             Label107.Left = Label106.Left + Label106.Width
