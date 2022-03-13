@@ -113,6 +113,11 @@ if "%sv2%"=="1" (
 :: Thanks to BetaWiki for this registry tweak!
 :: Side note: you can also use ViVeTool
 :sv2
+echo This option is experimental and it does not work as intended. It is suggested to cancel this option.
+set /p sv2warnchoice=Do you want to continue? (yes/no) 
+if "%sv2warnchoice%"=="no" (
+	goto end
+)
 dism /English /Get-WimInfo /wimfile=".\temp\sources\install.wim"
 set /p wimindex=Which index do you want to mount? Index: 
 if "%wimindex%"=="all" (goto wimcount)
@@ -169,7 +174,7 @@ echo [HKEY_CURRENT_USER\Control Panel\UnsupportedHardwareNotificationCache] >> "
 echo "SV2"=dword:00000000 >> ".\wimmount\disablesv2.reg"
 attrib ".\wimmount\disablesv2.reg" +h
 reg add "HKLM\ActiveSetupSoftware\Microsoft\Active Setup\Installed Components\DisableSV2" /v Version /t REG_SZ /d 1 /f > NUL
-reg add "HKLM\ActiveSetupSoftware\Microsoft\Active Setup\Installed Components\DisableSV2" /v StubPath /t REG_SZ /d regedit /s \disablesv2.reg /f > NUL
+reg add "HKLM\ActiveSetupSoftware\Microsoft\Active Setup\Installed Components\DisableSV2" /v StubPath /t REG_SZ /d "\disablesv2.reg" /f > NUL
 echo [ OK ] Added SV2
 echo [    ] Unloading 'install.wim's SOFTWARE registry hive from computer's registry...
 reg unload HKLM\ActiveSetupSoftware > NUL
