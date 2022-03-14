@@ -2992,7 +2992,11 @@ Public Class MainForm
         End If
         ProgressRingPic.Visible = False
         Label91.Left = 57
-        Label91.Text = "To check for any program updates, click " & Quote & "Check for updates" & Quote & CrLf & "Last update check performed on: " & UpdateCheckDate
+        If UpdateCheckDate.Day.Equals(14) And UpdateCheckDate.Month.Equals(3) Then
+            Label91.Text = "To check for any program updates, click " & Quote & "Check for updates" & Quote & CrLf & "Last update check performed on: π day at " & UpdateCheckDate.ToLongTimeString
+        Else
+            Label91.Text = "To check for any program updates, click " & Quote & "Check for updates" & Quote & CrLf & "Last update check performed on: " & UpdateCheckDate
+        End If
     End Sub
 
     Private Sub Label103_Click(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles Label103.Click
