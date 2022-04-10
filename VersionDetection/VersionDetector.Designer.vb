@@ -31,6 +31,7 @@ Partial Class VersionDetector
         Me.TextBox1.Location = New System.Drawing.Point(0, 0)
         Me.TextBox1.Multiline = True
         Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.ReadOnly = True
         Me.TextBox1.Size = New System.Drawing.Size(284, 261)
         Me.TextBox1.TabIndex = 0
         '
@@ -39,9 +40,12 @@ Partial Class VersionDetector
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(284, 261)
-        Me.ControlBox = False
         Me.Controls.Add(Me.TextBox1)
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "VersionDetector"
+        Me.ShowIcon = False
+        Me.ShowInTaskbar = False
         Me.Text = "Version"
         Me.ResumeLayout(False)
         Me.PerformLayout()
