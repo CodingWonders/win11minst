@@ -442,4 +442,52 @@
   <data name="update_screen_light" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\update_screen_light.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="hummingbird" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\hummingbird.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="hummingbird_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\hummingbird_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Bloom_Dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Bloom_Dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Bloom_Light" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Bloom_Light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="context" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\context.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tb_Black" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tb_Black.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tb_White" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tb_White.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="file_download_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\file_download_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="file_download_light" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\file_download_light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="colormodes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\colormodes.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="language" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\language.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="inst_hist" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\inst_hist.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="quit" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\quit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dllr" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dllr.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="regtweak" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\regtweak.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wimr" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wimr.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
