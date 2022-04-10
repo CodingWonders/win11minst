@@ -1,4 +1,5 @@
 ﻿Imports System.Windows.Forms
+Imports Microsoft.VisualBasic.ControlChars
 
 Public Class AdvancedOptionsPanel
 
@@ -19,7 +20,29 @@ Public Class AdvancedOptionsPanel
         ' It's more efficient, and it works!
         CheckBox1.Enabled = My.User.IsInRole(ApplicationServices.BuiltInRole.Administrator)
         CheckBox2.Enabled = My.User.IsInRole(ApplicationServices.BuiltInRole.Administrator)
-
+        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then
+            CheckBox1.Text = "Bypass Microsoft Account sign-in and forced Internet connection setup (22557+)"
+            CheckBox2.Text = "Hide " & Quote & "System requirements not met" & Quote & " watermark (22557+)"
+            Label1.Text = "Advanced options"
+            Label2.Text = "Bypasses Microsoft Account sign-in and forced Internet connection setup on Windows 11 Pro (Nickel builds 22557 onwards)"
+            Label3.Text = "Note: the program must be run with administrative privileges"
+            Label4.Text = "Hides the " & Quote & "System requirements not met" & Quote & " watermark on Nickel builds 22557 onwards and Windows Server" & Quote & "Copper" & Quote & " builds 25057 onwards"
+            Label5.Text = "Enabling this option is not recommended yet, as it doesn't work as intended."
+            LinkLabel1.Text = "Read the full issue and a possible workaround"
+            OK_Button.Text = "OK"
+            Cancel_Button.Text = "Cancel"
+        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Then
+            CheckBox1.Text = "Omitir inicio de sesión con la cuenta de Microsoft y configuración forzada de Internet (22557+)"
+            CheckBox2.Text = "Ocultar la marca de agua " & Quote & "Requisitos de sistema no cumplidos" & Quote & " (22557+)"
+            Label1.Text = "Opciones avanzadas"
+            Label2.Text = "Omite el inicio de sesión con la cuenta de Microsoft y la configuración forzada de Internet en Windows 11 Pro (compilaciones de Nickel 22557 en adelante)"
+            Label3.Text = "Nota: el programa debe ejecutarse con privilegios administrativos"
+            Label4.Text = "Oculta la marca de agua " & Quote & "Requisitos de sistema no cumplidos" & Quote & " en compilaciones de Nickel 22557 en adelante y en compilaciones Windows Server " & Quote & "Copper" & Quote & " 25057 en adelante"
+            Label5.Text = "Todavía no es recomendable habilitar esta opción, ya que no funciona como se esperaba."
+            LinkLabel1.Text = "Lea la publicación completa y una posible solución"
+            OK_Button.Text = "Aceptar"
+            Cancel_Button.Text = "Cancelar"
+        End If
         If MainForm.BackColor = Color.FromArgb(243, 243, 243) Then
             Me.BackColor = Color.White
             Me.ForeColor = Color.Black

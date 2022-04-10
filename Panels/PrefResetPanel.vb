@@ -13,6 +13,26 @@ Public Class PrefResetPanel
     End Sub
 
     Private Sub PrefResetPanel_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then
+            Label1.Text = "Reset preferences?"
+            Label2.Text = "This will reset ALL preferences to their default values (e.g., language or color mode)"
+            Yes_Button.Text = "Yes"
+        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Then
+            Label1.Text = "¿Restablecer preferencias?"
+            Label2.Text = "Esto restablecerá TODAS las preferencias a sus valores predeterminados (p.ej., el idioma o el modo de color)"
+            Yes_Button.Text = "Sí"
+        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                Label1.Text = "Reset preferences?"
+                Label2.Text = "This will reset ALL preferences to their default values (e.g., language or color mode)"
+                Yes_Button.Text = "Yes"
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                Label1.Text = "¿Restablecer preferencias?"
+                Label2.Text = "Esto restablecerá TODAS las preferencias a sus valores predeterminados (p.ej., el idioma o el modo de color)"
+                Yes_Button.Text = "Sí"
+            End If
+        End If
+        Text = Label1.Text
         If MainForm.BackColor = Color.FromArgb(243, 243, 243) Then
             Me.BackColor = Color.White
             Me.ForeColor = Color.Black
@@ -37,15 +57,39 @@ Public Class PrefResetPanel
     Private Sub Yes_Button_Click(sender As Object, e As EventArgs) Handles Yes_Button.Click
         ' Begin resetting preferences
         Yes_Button.Visible = False
-        If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
-            No_Button.Text = "Aceptar"
-        ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
-            No_Button.Text = "OK"
+        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then
+            Label2.Text = "Resetting preferences. Please wait..."
+        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Then
+
+        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                No_Button.Text = "Aceptar"
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                No_Button.Text = "OK"
+            End If
         End If
         ProgressBar1.Value = 0
         ProgressBar1.Visible = True
         Label3.Visible = True
-        MainForm.ComboBox1.SelectedItem = "Automatic"
+
+        If MainForm.ComboBox1.Items.Contains("Automático") Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                MainForm.ComboBox1.Items.Add("Light" & _
+                                             "Dark" & _
+                                             "Automatic")
+                MainForm.ComboBox1.SelectedItem = "Automatic"
+                MainForm.ComboBox1.Items.Remove("Claro" & _
+                                                "Oscuro" & _
+                                                "Automático")
+                If MainForm.ComboBox1.Items.Count > 3 Then
+                    Do Until MainForm.ComboBox1.Items.Count = 3
+                        MainForm.ComboBox1.Items.RemoveAt(3)
+                    Loop
+                End If
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+
+            End If
+        End If
         If MainForm.BackColor = Color.FromArgb(243, 243, 243) Then
             BackColor = Color.White
             ForeColor = Color.Black

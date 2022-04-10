@@ -83,11 +83,10 @@ Partial Class LogExistsPanel
         '
         'Label2
         '
-        Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(71, 86)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(730, 20)
+        Me.Label2.Size = New System.Drawing.Size(730, 72)
         Me.Label2.TabIndex = 6
         Me.Label2.Text = "Do you want to append the current log contents to the log file, or do you want to" & _
     " delete the existing log file?"

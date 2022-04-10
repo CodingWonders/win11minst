@@ -88,7 +88,7 @@ Partial Class AdvancedOptionsPanel
         '
         Me.CheckBox1.AutoSize = True
         Me.CheckBox1.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CheckBox1.Location = New System.Drawing.Point(81, 96)
+        Me.CheckBox1.Location = New System.Drawing.Point(37, 96)
         Me.CheckBox1.Name = "CheckBox1"
         Me.CheckBox1.Size = New System.Drawing.Size(559, 24)
         Me.CheckBox1.TabIndex = 5
@@ -98,9 +98,9 @@ Partial Class AdvancedOptionsPanel
         'Label2
         '
         Me.Label2.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(98, 123)
+        Me.Label2.Location = New System.Drawing.Point(54, 123)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(542, 76)
+        Me.Label2.Size = New System.Drawing.Size(629, 76)
         Me.Label2.TabIndex = 6
         Me.Label2.Text = "Bypasses Microsoft Account sign-in and forced Internet connection setup on Window" & _
     "s 11 Pro (Nickel builds 22557 onwards)"
@@ -109,7 +109,7 @@ Partial Class AdvancedOptionsPanel
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(98, 163)
+        Me.Label3.Location = New System.Drawing.Point(54, 163)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(398, 20)
         Me.Label3.TabIndex = 6
@@ -119,7 +119,7 @@ Partial Class AdvancedOptionsPanel
         '
         Me.CheckBox2.AutoSize = True
         Me.CheckBox2.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CheckBox2.Location = New System.Drawing.Point(81, 202)
+        Me.CheckBox2.Location = New System.Drawing.Point(37, 202)
         Me.CheckBox2.Name = "CheckBox2"
         Me.CheckBox2.Size = New System.Drawing.Size(408, 24)
         Me.CheckBox2.TabIndex = 5
@@ -129,9 +129,9 @@ Partial Class AdvancedOptionsPanel
         'Label4
         '
         Me.Label4.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(97, 229)
+        Me.Label4.Location = New System.Drawing.Point(53, 229)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(542, 44)
+        Me.Label4.Size = New System.Drawing.Size(629, 44)
         Me.Label4.TabIndex = 6
         Me.Label4.Text = "Hides the ""System requirements not met"" watermark on Nickel builds 22557 onwards " & _
     "and Windows Server ""Copper"" builds 25057 onwards"
@@ -141,7 +141,7 @@ Partial Class AdvancedOptionsPanel
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.ForeColor = System.Drawing.Color.Crimson
-        Me.Label5.Location = New System.Drawing.Point(97, 273)
+        Me.Label5.Location = New System.Drawing.Point(53, 273)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(513, 20)
         Me.Label5.TabIndex = 6
@@ -153,7 +153,7 @@ Partial Class AdvancedOptionsPanel
         Me.LinkLabel1.Font = New System.Drawing.Font("Segoe UI", 11.25!)
         Me.LinkLabel1.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
         Me.LinkLabel1.LinkColor = System.Drawing.Color.DodgerBlue
-        Me.LinkLabel1.Location = New System.Drawing.Point(97, 293)
+        Me.LinkLabel1.Location = New System.Drawing.Point(53, 293)
         Me.LinkLabel1.Name = "LinkLabel1"
         Me.LinkLabel1.Size = New System.Drawing.Size(312, 20)
         Me.LinkLabel1.TabIndex = 7

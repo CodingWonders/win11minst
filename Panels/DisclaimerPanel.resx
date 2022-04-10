@@ -119,7 +119,7 @@
   </resheader>
   <data name="TextBox1.Text" xml:space="preserve">
     <value>You must only use this tool on a system that you don't use productively.
-Microsoft has recently warned that unsupported systems running Windows 11 might not recieve updates.
+Microsoft has recently warned that unsupported systems running Windows 11 might not recieve updates in the future.
 
 The modified installation images you create will also work on supported systems, but you can natively install Windows 11 on them, without performing modifications to the installation image.
 If you have an unsupported system, don't upgrade it to Windows 11. Instead, you can perform a dual-boot, or use another system (that would be the best option anyway)</value>
