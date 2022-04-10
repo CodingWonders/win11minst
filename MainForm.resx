@@ -235,6 +235,12 @@ Do you want to suggest a new feature to be included in a future version? Have yo
 
 Do you want to enjoy the latest features? Check the Hummingbird branch! Weekly updates, new features and a sneak peek of the program's future</value>
   </data>
+  <data name="Label21.Text" xml:space="preserve">
+    <value>WIMR: WIM-Replace - replaces "install.wim" of the Windows 10 installer with Windows 11' s
+DLLR: DLL-Replace - replaces "appraiser.dll" and "appraiserres.dll" from the Windows 11 installer with Windows 10' s
+REGTWEAK - makes registry tweaks to the Windows 11 installer. There is no need for a Windows 10 installer
+Do note that REGTWEAK is available under administrative privileges</value>
+  </data>
   <data name="PictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABGdBTUEAALGPC/xhBQAAC0BJREFUeF7t
@@ -289,12 +295,6 @@ Do you want to enjoy the latest features? Check the Hummingbird branch! Weekly u
         AwAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="Label21.Text" xml:space="preserve">
-    <value>WIMR: WIM-Replace - replaces "install.wim" of the Windows 10 installer with Windows 11' s
-DLLR: DLL-Replace - replaces "appraiser.dll" and "appraiserres.dll" from the Windows 11 installer with Windows 10' s
-REGTWEAK - makes registry tweaks to the Windows 11 installer. There is no need for a Windows 10 installer
-Do note that REGTWEAK is available under administrative privileges</value>
-  </data>
   <metadata name="Notify.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
@@ -321,10 +321,10 @@ Do note that REGTWEAK is available under administrative privileges</value>
     <value>568, 17</value>
   </metadata>
   <metadata name="ConglomerateToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>179, 56</value>
+    <value>893, 17</value>
   </metadata>
   <metadata name="AdditionalToolsCMS.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 56</value>
+    <value>731, 17</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>111</value>
