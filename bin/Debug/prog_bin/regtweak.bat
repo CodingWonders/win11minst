@@ -48,7 +48,7 @@ reg add HKLM\WIN11SYS\Setup\LabConfig /v BypassSecureBootCheck /t REG_DWORD /d 1
 echo [ OK ] Added registry keys
 echo [    ] Unloading 'boot.wim's SYSTEM registry hive from computer's registry...
 reg unload HKLM\WIN11SYS > NUL
-echo [ OK ] Unloaded 'boot.wim's SYSTEM registry hive from computer's registry...
+echo [ OK ] Unloaded 'boot.wim's SYSTEM registry hive from computer's registry
 echo [    ] Unmounting "boot.wim"...
 dism /English /unmount-wim /mountdir=".\wimmount" /commit
 echo [ OK ] Unmounted "boot.wim"
@@ -74,7 +74,7 @@ reg add HKLM\WIN11SYS\Setup\LabConfig /v BypassSecureBootCheck /t REG_DWORD /d 1
 echo [ OK ] Added registry keys
 echo [    ] Unloading 'boot.wim's SYSTEM registry hive from computer's registry...
 reg unload HKLM\WIN11SYS > NUL
-echo [ OK ] Unloaded 'boot.wim's SYSTEM registry hive from computer's registry...
+echo [ OK ] Unloaded 'boot.wim's SYSTEM registry hive from computer's registry
 echo [    ] Unmounting "boot.wim"...
 dism /English /unmount-wim /mountdir=".\wimmount" /commit
 if "%bypassnro%"=="1" (echo [ OK ] Unmounted index 2 of "boot.wim". && goto bypassnro)
@@ -113,6 +113,11 @@ if "%sv2%"=="1" (
 :: Thanks to BetaWiki for this registry tweak!
 :: Side note: you can also use ViVeTool
 :sv2
+echo This option is experimental and it does not work as intended. It is suggested to cancel this option.
+set /p sv2warnchoice=Do you want to continue? (yes/no) 
+if "%sv2warnchoice%"=="no" (
+	goto end
+)
 dism /English /Get-WimInfo /wimfile=".\temp\sources\install.wim"
 set /p wimindex=Which index do you want to mount? Index: 
 if "%wimindex%"=="all" (goto wimcount)
@@ -144,11 +149,16 @@ goto end
 :wimcount
 set wimindex=0
 set /p wimindexcount=How many indexes does this file have? Index count: 
-echo Mounting %wimindexcount% index(es) of "install.wim". This might take a LONG time...
+if %wimindexcount% equ 1 (
+	echo Mounting %wimindexcount% index of "install.wim". This might take A LONG time...
+)
+if %wimindexcount% gtr 1 (
+	echo Mounting %wimindexcount% indexes of "install.wim". This might take A LONG time...
+)
 goto instwimmount
 
 :instwimmount
-:: If an "install.wim" file contains more than 1 index, this must be ran in a loop until all conditions
+:: If an "install.wim" file contains more than 1 index, this must be ran in a loop until all indexes
 :: were worked on.
 set /a wimindex=%wimindex% + 1
 echo [    ] Mounting index %wimindex% of "install.wim"...
@@ -164,7 +174,7 @@ echo [HKEY_CURRENT_USER\Control Panel\UnsupportedHardwareNotificationCache] >> "
 echo "SV2"=dword:00000000 >> ".\wimmount\disablesv2.reg"
 attrib ".\wimmount\disablesv2.reg" +h
 reg add "HKLM\ActiveSetupSoftware\Microsoft\Active Setup\Installed Components\DisableSV2" /v Version /t REG_SZ /d 1 /f > NUL
-reg add "HKLM\ActiveSetupSoftware\Microsoft\Active Setup\Installed Components\DisableSV2" /v StubPath /t REG_SZ /d "regedit /s \disablesv2.reg" /f > NUL
+reg add "HKLM\ActiveSetupSoftware\Microsoft\Active Setup\Installed Components\DisableSV2" /v StubPath /t REG_SZ /d "\disablesv2.reg" /f > NUL
 echo [ OK ] Added SV2
 echo [    ] Unloading 'install.wim's SOFTWARE registry hive from computer's registry...
 reg unload HKLM\ActiveSetupSoftware > NUL
