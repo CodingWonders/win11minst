@@ -40,7 +40,7 @@ Prerequisites:
 
 > If you open the solution without installing the .NET Framework 4.6.2 Developer Pack, you will have an error loading the solution.
 
-2. Change the build target from *Debug* to *Release*
+2. Change the build target from *Debug* to ***Release***
 
 3. Click Build > Build solution
 
