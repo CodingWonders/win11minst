@@ -37,6 +37,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile>win11minst.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -113,6 +114,12 @@
       <DependentUpon>MiniModeDialog.vb</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\MiniModeDialog.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImageFileListDialog.Designer.vb">
+      <DependentUpon>ImageFileListDialog.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ImageFileListDialog.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.vb">
@@ -197,6 +204,12 @@
     <Compile Include="Panels\InstHistPanel.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Panels\ISOFileDownloadPanel.Designer.vb">
+      <DependentUpon>ISOFileDownloadPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\ISOFileDownloadPanel.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Panels\ISOFileScanPanel.Designer.vb">
       <DependentUpon>ISOFileScanPanel.vb</DependentUpon>
     </Compile>
@@ -250,6 +263,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>progset.settings</DependentUpon>
     </Compile>
+    <Compile Include="UserAgentChanger.vb" />
     <Compile Include="VersionDetection\VersionDetector.Designer.vb">
       <DependentUpon>VersionDetector.vb</DependentUpon>
     </Compile>
@@ -270,6 +284,9 @@
     <EmbeddedResource Include="Dialogs\MiniModeDialog.resx">
       <DependentUpon>MiniModeDialog.vb</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImageFileListDialog.resx">
+      <DependentUpon>ImageFileListDialog.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.vb</DependentUpon>
@@ -315,6 +332,9 @@
     <EmbeddedResource Include="Panels\InstHistPanel.resx">
       <DependentUpon>InstHistPanel.vb</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\ISOFileDownloadPanel.resx">
+      <DependentUpon>ISOFileDownloadPanel.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Panels\ISOFileScanPanel.resx">
       <DependentUpon>ISOFileScanPanel.vb</DependentUpon>
@@ -386,6 +406,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon3.ico" />
+    <None Include="Resources\regtweak.png" />
+    <None Include="Resources\wimr.png" />
+    <None Include="Resources\quit.png" />
+    <None Include="Resources\inst_hist.png" />
+    <None Include="Resources\language.png" />
+    <None Include="Resources\tb_White.png" />
+    <None Include="Resources\tb_Black.png" />
+    <None Include="Resources\hummingbird_dark.png" />
+    <None Include="Resources\hummingbird.png" />
     <None Include="Resources\update_screen_light.jpg" />
     <None Include="Resources\update_screen_dark.jpg" />
     <None Include="Resources\question_mark.png" />
@@ -399,6 +428,14 @@
     <None Include="Resources\panel_indicator_dark_top_navbar.png" />
     <None Include="Resources\back_arrow_dark_disabled.png" />
     <None Include="Resources\back_arrow_disabled.png" />
+    <None Include="Resources\Bloom_Dark.png" />
+    <None Include="Resources\Bloom_Light.png" />
+    <None Include="Resources\context.png" />
+    <None Include="Resources\file_download_dark.png" />
+    <None Include="Resources\file_download_light.png" />
+    <None Include="Resources\colormodes.png" />
+    <None Include="Resources\exit.png" />
+    <None Include="Resources\dllr.png" />
     <Content Include="Resources\HTMLHelp\HelpPage.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
