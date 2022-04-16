@@ -8,6 +8,8 @@ Imports System.Text.Encoding
 Public Class MainForm
     Private isMouseDown As Boolean = False
     Private mouseOffset As Point
+    Dim VerStr As String = "2.0.0100_220417"    ' Reported version
+    Dim AVerStr As String = My.Application.Info.Version.ToString()     ' Assembly version
     Dim OffEcho As String = "@echo off"
     Dim wmiget As String
     Dim StDebugTime As Date = Now
@@ -90,7 +92,7 @@ Public Class MainForm
         SaveSettingsFile()
         If CheckBox3.Checked = True Then
             ' The following code snippet determines the check state of "Don't show this again"
-            If MiniModeDialog.CheckBox1.Checked = False Then
+            If Not File.Exists(".\noshow") Then
                 MiniModeDialog.Show()
             End If
             If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
@@ -193,6 +195,7 @@ Public Class MainForm
 
     Private Sub closeBox_MouseEnter(sender As Object, e As EventArgs) Handles closeBox.MouseEnter
         closeBox.Image = New Bitmap(My.Resources.closebox_focus)
+        TopRightResizePanel.BackColor = Color.FromArgb(196, 43, 28)
     End Sub
 
     Private Sub closeBox_MouseLeave(sender As Object, e As EventArgs) Handles closeBox.MouseLeave
@@ -201,6 +204,7 @@ Public Class MainForm
         Else
             closeBox.Image = New Bitmap(My.Resources.closebox_dark)
         End If
+        TopRightResizePanel.BackColor = BackColor
     End Sub
 
     Private Sub minBox_Click(sender As Object, e As EventArgs) Handles minBox.Click
@@ -406,6 +410,7 @@ Public Class MainForm
     End Sub
 
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        VersionToolStripMenuItem.Text = "version " & VerStr & " (assembly version " & AVerStr & ")"
         Notify.Visible = False
         If My.Computer.Info.OSFullName.Contains("Windows 7") Or My.Computer.Info.OSFullName.Contains("Windows 8") Or My.Computer.Info.OSFullName.Contains("Windows Server 2008") Or My.Computer.Info.OSFullName.Contains("Windows Server 2012") Then      ' This is done to not show the "Not supported" dialog on Windows 7 and 8/8.1
             ComboBox1.Items.Clear()
@@ -499,6 +504,8 @@ Public Class MainForm
         ScanButton.FlatStyle = FlatStyle.System
         LabelSetButton.FlatStyle = FlatStyle.System
         SetDefaultButton.FlatStyle = FlatStyle.System
+
+        ' Set Parent properties for labels and pictureboxes
         Label44.Parent = PictureBox21
         Label43.Parent = PictureBox21
         PictureBox20.Parent = PictureBox21
@@ -553,6 +560,12 @@ Public Class MainForm
         PictureBox16.BackColor = Color.Transparent
         PictureBox4.BackColor = Color.Transparent
         PictureBox18.BackColor = Color.Transparent
+
+        ' This is for the top-right resize panel, to not make the
+        ' thought that someone has bitten the Close button (bite an apple, not a close button)
+        TopRightResizePanel.BackColor = BackColor
+        BottomRightResizePanel.BackColor = WelcomePanel.BackColor
+
         StatusTSI.Text = "No installers are being created at this time"
         Dim rkWallPaper As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", False)
         Dim WallpaperPath As String = rkWallPaper.GetValue("WallPaper").ToString()
@@ -842,10 +855,12 @@ Public Class MainForm
         Else
             closeBox.Image = New Bitmap(My.Resources.closebox_dark_down)
         End If
+        TopRightResizePanel.BackColor = Color.FromArgb(200, 60, 49)
     End Sub
 
     Private Sub closeBox_MouseUp(sender As Object, e As MouseEventArgs) Handles closeBox.MouseUp
         closeBox.Image = New Bitmap(My.Resources.closebox_focus)
+        TopRightResizePanel.BackColor = Color.FromArgb(196, 43, 28)
     End Sub
 
     Private Sub InfoPic_Click(sender As Object, e As EventArgs) Handles InfoPic.Click, PictureBox34.Click, Label102.Click
@@ -1564,6 +1579,9 @@ Public Class MainForm
                 End If
             End Try
         End If
+        ' These lines are ubiquitous
+        TopRightResizePanel.BackColor = BackColor
+        BottomRightResizePanel.BackColor = WelcomePanel.BackColor
     End Sub
 
     Private Sub SettingsPic_Click(sender As Object, e As EventArgs) Handles SettingsPic.Click, PictureBox7.Click
@@ -1642,6 +1660,11 @@ Public Class MainForm
         If Settings_FunctionalityPanel.Visible = True Then
             SettingPanel.Visible = True
             Settings_FunctionalityPanel.Visible = False
+        End If
+        If SettingReviewPanel.Visible = True Then
+            InstCreateInt = 0
+            SettingReviewPanel.Visible = False
+            InstCreatePanel.Visible = True
         End If
         DisableBackPic()
     End Sub
@@ -1870,6 +1893,7 @@ Public Class MainForm
                     Win11PresenceSTLabel.Text = "Estado de presencia: este archivo existe"
                 End If
             End If
+            TextBox1.ForeColor = ForeColor
             If File.Exists(TextBox2.Text) Then
                 Button6.Enabled = True
             Else
@@ -1887,6 +1911,7 @@ Public Class MainForm
                     Win11PresenceSTLabel.Text = "Estado de presencia: este archivo no existe"
                 End If
             End If
+            TextBox1.ForeColor = Color.Crimson
             Button6.Enabled = False
         End If
         If TextBox1.Text = "" Then
@@ -1903,6 +1928,18 @@ Public Class MainForm
             End If
             Button6.Enabled = False
         End If
+        If TextBox1.ForeColor = Color.Crimson Then
+            Label60.Visible = False
+            LinkLabel12.Visible = True
+        Else
+            If TextBox2.ForeColor = Color.Crimson Or TextBox3.ForeColor = Color.Crimson Or TextBox4.ForeColor = Color.Crimson Then
+                Label60.Visible = False
+                LinkLabel12.Visible = True
+            Else
+                Label60.Visible = True
+                LinkLabel12.Visible = False
+            End If
+        End If
     End Sub
 
     Private Sub TextBox2_TextChanged(sender As Object, e As EventArgs) Handles TextBox2.TextChanged
@@ -1918,6 +1955,7 @@ Public Class MainForm
                     Win10PresenceSTLabel.Text = "Estado de presencia: este archivo existe"
                 End If
             End If
+            TextBox2.ForeColor = ForeColor
             If File.Exists(TextBox1.Text) Then
                 Button6.Enabled = True
             Else
@@ -1935,6 +1973,7 @@ Public Class MainForm
                     Win10PresenceSTLabel.Text = "Estado de presencia: este archivo no existe"
                 End If
             End If
+            TextBox2.ForeColor = Color.Crimson
             Button6.Enabled = False
         End If
         If TextBox2.Text = "" Then
@@ -1950,6 +1989,18 @@ Public Class MainForm
                 End If
             End If
             Button6.Enabled = False
+        End If
+        If TextBox2.ForeColor = Color.Crimson Then
+            Label60.Visible = False
+            LinkLabel12.Visible = True
+        Else
+            If TextBox1.ForeColor = Color.Crimson Or TextBox3.ForeColor = Color.Crimson Or TextBox4.ForeColor = Color.Crimson Then
+                Label60.Visible = False
+                LinkLabel12.Visible = True
+            Else
+                Label60.Visible = True
+                LinkLabel12.Visible = False
+            End If
         End If
     End Sub
 
@@ -2124,6 +2175,78 @@ Public Class MainForm
         Else
             Button6.Enabled = True
         End If
+        If TextBox3.Text = "con" Or _
+            TextBox3.Text = "CON" Or _
+            TextBox3.Text = "aux" Or _
+            TextBox3.Text = "AUX" Or _
+            TextBox3.Text = "prn" Or _
+            TextBox3.Text = "PRN" Or _
+            TextBox3.Text = "nul" Or _
+            TextBox3.Text = "NUL" Or _
+            TextBox3.Text = "com1" Or _
+            TextBox3.Text = "com2" Or _
+            TextBox3.Text = "com3" Or _
+            TextBox3.Text = "com4" Or _
+            TextBox3.Text = "com5" Or _
+            TextBox3.Text = "com6" Or _
+            TextBox3.Text = "com7" Or _
+            TextBox3.Text = "com8" Or _
+            TextBox3.Text = "com9" Or _
+            TextBox3.Text = "COM1" Or _
+            TextBox3.Text = "COM2" Or _
+            TextBox3.Text = "COM3" Or _
+            TextBox3.Text = "COM4" Or _
+            TextBox3.Text = "COM5" Or _
+            TextBox3.Text = "COM6" Or _
+            TextBox3.Text = "COM7" Or _
+            TextBox3.Text = "COM8" Or _
+            TextBox3.Text = "COM9" Or _
+            TextBox3.Text = "lpt1" Or _
+            TextBox3.Text = "lpt2" Or _
+            TextBox3.Text = "lpt3" Or _
+            TextBox3.Text = "lpt4" Or _
+            TextBox3.Text = "lpt5" Or _
+            TextBox3.Text = "lpt6" Or _
+            TextBox3.Text = "lpt7" Or _
+            TextBox3.Text = "lpt8" Or _
+            TextBox3.Text = "lpt9" Or _
+            TextBox3.Text = "LPT1" Or _
+            TextBox3.Text = "LPT2" Or _
+            TextBox3.Text = "LPT3" Or _
+            TextBox3.Text = "LPT4" Or _
+            TextBox3.Text = "LPT5" Or _
+            TextBox3.Text = "LPT6" Or _
+            TextBox3.Text = "LPT7" Or _
+            TextBox3.Text = "LPT8" Or _
+            TextBox3.Text = "LPT9" Or _
+            TextBox3.Text.Contains("<") Or _
+            TextBox3.Text.Contains(">") Or _
+            TextBox3.Text.Contains(":") Or _
+            TextBox3.Text.Contains(Quote) Or _
+            TextBox3.Text.Contains("/") Or _
+            TextBox3.Text.Contains("\") Or _
+            TextBox3.Text.Contains("|") Or _
+            TextBox3.Text.Contains("?") Or _
+            TextBox3.Text.Contains("*") Then
+            ' This is to prevent installer creation issues. If the installer name contains "con" for example, and is not just "con", then the program will allow it
+            TextBox3.ForeColor = Color.Crimson
+            Button6.Enabled = False
+        Else
+            TextBox3.ForeColor = ForeColor
+            Button6.Enabled = True
+        End If
+        If TextBox3.ForeColor = Color.Crimson Then
+            Label60.Visible = False
+            LinkLabel12.Visible = True
+        Else
+            If TextBox2.ForeColor = Color.Crimson Or TextBox1.ForeColor = Color.Crimson Or TextBox4.ForeColor = Color.Crimson Then
+                Label60.Visible = False
+                LinkLabel12.Visible = True
+            Else
+                Label60.Visible = True
+                LinkLabel12.Visible = False
+            End If
+        End If
     End Sub
 
     Private Sub AdminLabel_MouseHover(sender As Object, e As EventArgs) Handles AdminLabel.MouseHover
@@ -2240,11 +2363,54 @@ Public Class MainForm
     End Sub
 
     Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
+        FileCount = 0
+        DelFileCount = 0
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+            Label82.Text = "Progress"
+            Label83.Text = "That' s all the information we need right now. The installer creation will take a few minutes, so please be patient."
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+            Label82.Text = "Progreso"
+            Label83.Text = "Ésta es toda la información que necesitamos en este momento. Esto tardará unos minutos, por lo que sea paciente, por favor."
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                Label82.Text = "Progress"
+                Label83.Text = "That' s all the information we need right now. The installer creation will take a few minutes, so please be patient."
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                Label82.Text = "Progreso"
+                Label83.Text = "Ésta es toda la información que necesitamos en este momento. Esto tardará unos minutos, por lo que sea paciente, por favor."
+            End If
+        End If
+        DisableBackPic()
         TableLayoutPanel3.Visible = False
         InstallerCreationMethodToolStripMenuItem.Enabled = False
         StInstCreateTime = Now
         InstCreateInt = 2
         SettingReviewPanel.Visible = False
+        Label84.Visible = True
+        Label85.Visible = True
+        Label86.Visible = True
+        Label87.Visible = True
+        Label88.Visible = True
+        Button9.Visible = True
+        GroupBox10.Visible = True
+        InstSTLabel.Visible = True
+        InstallerProgressBar.Visible = True
+        CheckBox4.Visible = False
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+            Button10.Text = "Cancel"
+            InstSTLabel.Text = "The installer might take some time to create"
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+            Button10.Text = "Cancelar"
+            InstSTLabel.Text = "El instalador podría tardar algo de tiempo para crearse"
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                Button10.Text = "Cancel"
+                InstSTLabel.Text = "The installer might take some time to create"
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                Button10.Text = "Cancelar"
+                InstSTLabel.Text = "El instalador podría tardar algo de tiempo para crearse"
+            End If
+        End If
         ProgressPanel.Visible = True
         ' The following lines of code reset the *Count variables (declared at the beginning of the file)
         ErrorCount = 0
@@ -2845,10 +3011,30 @@ Public Class MainForm
         Label88.Font = New Font("Segoe UI", 9.75)
         Label88.ForeColor = Color.Gray
         My.Computer.Audio.Play(My.Resources.Win11, AudioPlayMode.Background)
-        Label82.Text = "Finish"
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+            Label82.Text = "Finish"
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+            Label82.Text = "Final"
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                Label82.Text = "Finish"
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                Label82.Text = "Final"
+            End If
+        End If
         CompPic.Visible = True
         ' Button11.Visible = True
-        Label83.Text = "The custom installer was created at the specified location. Please read the details below."
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+            Label83.Text = "The custom installer was created at the specified location. Please read the details below."
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+            Label83.Text = "El instalador modificado fue creado en la ubicación especificada. Por favor, lea los detalles abajo."
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                Label83.Text = "The custom installer was created at the specified location. Please read the details below."
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                Label83.Text = "El instalador modificado fue creado en la ubicación especificada. Por favor, lea los detalles abajo."
+            End If
+        End If
         Label112.Text = TextBox3.Text & ".iso"
         TargetInstallerLinkLabel.Text = TextBox4.Text
         Label113.Text = EnInstCreateTime
@@ -2876,7 +3062,17 @@ Public Class MainForm
         Label89.Visible = False
         CheckBox4.Visible = True
         Button9.Visible = False
-        Button10.Text = "OK"
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+            Button10.Text = "OK"
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+            Button10.Text = "Aceptar"
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                Button10.Text = "OK"
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                Button10.Text = "Aceptar"
+            End If
+        End If
         If TextBox4.Text.EndsWith("\") Then
             InstHistPanel.InstallerListView.Items.Add(TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso").SubItems.Add(EnInstCreateTime)
         Else
@@ -2996,6 +3192,124 @@ Public Class MainForm
         Else
             Button6.Enabled = True
         End If
+        If TextBox4.Text.EndsWith("con") Or _
+            TextBox4.Text.EndsWith("CON") Or _
+            TextBox4.Text.EndsWith("aux") Or _
+            TextBox4.Text.EndsWith("AUX") Or _
+            TextBox4.Text.EndsWith("prn") Or _
+            TextBox4.Text.EndsWith("PRN") Or _
+            TextBox4.Text.EndsWith("nul") Or _
+            TextBox4.Text.EndsWith("NUL") Or _
+            TextBox4.Text.EndsWith("com1") Or _
+            TextBox4.Text.EndsWith("com2") Or _
+            TextBox4.Text.EndsWith("com3") Or _
+            TextBox4.Text.EndsWith("com4") Or _
+            TextBox4.Text.EndsWith("com5") Or _
+            TextBox4.Text.EndsWith("com6") Or _
+            TextBox4.Text.EndsWith("com7") Or _
+            TextBox4.Text.EndsWith("com8") Or _
+            TextBox4.Text.EndsWith("com9") Or _
+            TextBox4.Text.EndsWith("COM1") Or _
+            TextBox4.Text.EndsWith("COM2") Or _
+            TextBox4.Text.EndsWith("COM3") Or _
+            TextBox4.Text.EndsWith("COM4") Or _
+            TextBox4.Text.EndsWith("COM5") Or _
+            TextBox4.Text.EndsWith("COM6") Or _
+            TextBox4.Text.EndsWith("COM7") Or _
+            TextBox4.Text.EndsWith("COM8") Or _
+            TextBox4.Text.EndsWith("COM9") Or _
+            TextBox4.Text.EndsWith("lpt1") Or _
+            TextBox4.Text.EndsWith("lpt2") Or _
+            TextBox4.Text.EndsWith("lpt3") Or _
+            TextBox4.Text.EndsWith("lpt4") Or _
+            TextBox4.Text.EndsWith("lpt5") Or _
+            TextBox4.Text.EndsWith("lpt6") Or _
+            TextBox4.Text.EndsWith("lpt7") Or _
+            TextBox4.Text.EndsWith("lpt8") Or _
+            TextBox4.Text.EndsWith("lpt9") Or _
+            TextBox4.Text.EndsWith("LPT1") Or _
+            TextBox4.Text.EndsWith("LPT2") Or _
+            TextBox4.Text.EndsWith("LPT3") Or _
+            TextBox4.Text.EndsWith("LPT4") Or _
+            TextBox4.Text.EndsWith("LPT5") Or _
+            TextBox4.Text.EndsWith("LPT6") Or _
+            TextBox4.Text.EndsWith("LPT7") Or _
+            TextBox4.Text.EndsWith("LPT8") Or _
+            TextBox4.Text.EndsWith("LPT9") Or _
+            TextBox4.Text.EndsWith("<") Or _
+            TextBox4.Text.EndsWith(">") Or _
+            TextBox4.Text.EndsWith(Quote) Or _
+            TextBox4.Text.EndsWith("|") Or _
+            TextBox4.Text.EndsWith("?") Or _
+            TextBox4.Text.EndsWith("*") Or _
+            TextBox4.Text.EndsWith("con\") Or _
+            TextBox4.Text.EndsWith("CON\") Or _
+            TextBox4.Text.EndsWith("aux\") Or _
+            TextBox4.Text.EndsWith("AUX\") Or _
+            TextBox4.Text.EndsWith("prn\") Or _
+            TextBox4.Text.EndsWith("PRN\") Or _
+            TextBox4.Text.EndsWith("nul\") Or _
+            TextBox4.Text.EndsWith("NUL\") Or _
+            TextBox4.Text.EndsWith("com1\") Or _
+            TextBox4.Text.EndsWith("com2\") Or _
+            TextBox4.Text.EndsWith("com3\") Or _
+            TextBox4.Text.EndsWith("com4\") Or _
+            TextBox4.Text.EndsWith("com5\") Or _
+            TextBox4.Text.EndsWith("com6\") Or _
+            TextBox4.Text.EndsWith("com7\") Or _
+            TextBox4.Text.EndsWith("com8\") Or _
+            TextBox4.Text.EndsWith("com9\") Or _
+            TextBox4.Text.EndsWith("COM1\") Or _
+            TextBox4.Text.EndsWith("COM2\") Or _
+            TextBox4.Text.EndsWith("COM3\") Or _
+            TextBox4.Text.EndsWith("COM4\") Or _
+            TextBox4.Text.EndsWith("COM5\") Or _
+            TextBox4.Text.EndsWith("COM6\") Or _
+            TextBox4.Text.EndsWith("COM7\") Or _
+            TextBox4.Text.EndsWith("COM8\") Or _
+            TextBox4.Text.EndsWith("COM9\") Or _
+            TextBox4.Text.EndsWith("lpt1\") Or _
+            TextBox4.Text.EndsWith("lpt2\") Or _
+            TextBox4.Text.EndsWith("lpt3\") Or _
+            TextBox4.Text.EndsWith("lpt4\") Or _
+            TextBox4.Text.EndsWith("lpt5\") Or _
+            TextBox4.Text.EndsWith("lpt6\") Or _
+            TextBox4.Text.EndsWith("lpt7\") Or _
+            TextBox4.Text.EndsWith("lpt8\") Or _
+            TextBox4.Text.EndsWith("lpt9\") Or _
+            TextBox4.Text.EndsWith("LPT1\") Or _
+            TextBox4.Text.EndsWith("LPT2\") Or _
+            TextBox4.Text.EndsWith("LPT3\") Or _
+            TextBox4.Text.EndsWith("LPT4\") Or _
+            TextBox4.Text.EndsWith("LPT5\") Or _
+            TextBox4.Text.EndsWith("LPT6\") Or _
+            TextBox4.Text.EndsWith("LPT7\") Or _
+            TextBox4.Text.EndsWith("LPT8\") Or _
+            TextBox4.Text.EndsWith("LPT9\") Or _
+            TextBox4.Text.EndsWith("<\") Or _
+            TextBox4.Text.EndsWith(">\") Or _
+            TextBox4.Text.EndsWith(Quote & "\") Or _
+            TextBox4.Text.EndsWith("|\") Or _
+            TextBox4.Text.EndsWith("?\") Or _
+            TextBox4.Text.EndsWith("*\") Then   ' This is to prevent installer creation issues. If the installer path ends with "con" for example, or the absolute end ("con\"), then the program will block it. This is BY NO MEANS a pretty solution, but it is the most effective
+            TextBox4.ForeColor = Color.Crimson
+            Button6.Enabled = False
+        Else
+            TextBox4.ForeColor = ForeColor
+            Button6.Enabled = True
+        End If
+        If TextBox4.ForeColor = Color.Crimson Then
+            Label60.Visible = False
+            LinkLabel12.Visible = True
+        Else
+            If TextBox2.ForeColor = Color.Crimson Or TextBox3.ForeColor = Color.Crimson Or TextBox1.ForeColor = Color.Crimson Then
+                Label60.Visible = False
+                LinkLabel12.Visible = True
+            Else
+                Label60.Visible = True
+                LinkLabel12.Visible = False
+            End If
+        End If
     End Sub
 
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
@@ -3006,12 +3320,13 @@ Public Class MainForm
     End Sub
 
     Private Sub Button10_Click(sender As Object, e As EventArgs) Handles Button10.Click
-        If Button10.Text = "Cancel" Then
+        If Button10.Text = "Cancel" Or Button10.Text = "Cancelar" Then
 
-        ElseIf Button10.Text = "OK" Then
+        ElseIf Button10.Text = "OK" Or Button10.Text = "Aceptar" Then
             If CheckBox4.Checked = True Then
                 ' Leave the program
                 Notify.Visible = False
+                SaveSettingsFile()
                 End
             ElseIf CheckBox4.Checked = False Then
                 InstCreateInt = 0
@@ -3404,12 +3719,18 @@ Public Class MainForm
             Label101.Text = "Ayuda"
             Label102.Text = "Acerca de"
             Label104.Text = "Instrucciones"
-            Label105.Text = "El código fuente de este programa lo puede encontrar en GitHub." & CrLf & CrLf & "- Este proyecto puede ser abierto en Visual Studio 2012 y más reciente, sin necesidad de conversión" & CrLf & "- El Pack de Desarrolladores de .NET Framework 4.6.2 debe ser instalado para abrir este proyecto" & CrLf & CrLf & "¿Desea sugerir alguna nueva característica para ser incluida en una versión futura? ¿Ha notado algún error del que desea informar? No dude en reportar errores (necesita una cuenta de GitHub). Sus opiniones son cruciales." & CrLf & CrLf & "¿Desea disfrutar de las últimas características? ¡Compruebe la rama Hummingbird! Actualizaciones semanales, características nuevas y una vista previa del futuro del programa"
+            Label105.Text = "El código fuente de este programa lo puede encontrar en GitHub." & CrLf & CrLf & "- Este proyecto puede ser abierto en Visual Studio 2012 y más reciente, sin necesidad de conversión" & CrLf & "- El Pack de Desarrolladores de .NET Framework 4.8 debe ser instalado para abrir este proyecto" & CrLf & CrLf & "¿Desea sugerir alguna nueva característica para ser incluida en una versión futura? ¿Ha notado algún error del que desea informar? No dude en reportar errores (necesita una cuenta de GitHub). Sus opiniones son cruciales." & CrLf & CrLf & "¿Desea disfrutar de las últimas características? ¡Compruebe la rama Hummingbird! Actualizaciones semanales, características nuevas y una vista previa del futuro del programa"
             Label106.Text = "Lanzamiento Hummingbird"
-            Label107.Text = "Disfrute de características semanales"
+            Label107.Text = "Disfrute de características nuevas"
             Label107.Left = Label106.Left + Label106.Width
+            Label108.Text = "Instalador de destino:"
+            Label109.Text = "Ubicación del instalador de destino:"
 
             ' Label11 doesn't go here, as it's a ">". It will change its Left property instead.
+            Label110.Text = "Fecha de creación del instalador de destino:"
+            Label111.Text = "Advertencias y errores del instalador:"
+            Label114.Text = "Advertencias: " & WarnCount
+            Label115.Text = "Errores: " & ErrorCount
 
             Label12.Text = "Personalización"
 
@@ -3465,7 +3786,7 @@ Public Class MainForm
             Label65.Text = "Imagen de Windows 11:"
             Label66.Text = "Imagen de Windows 10:"
             Label69.Text = "Método:"
-            Label7.Text = "versión 2.0.0100_220410"
+            Label7.Text = "versión 2.0.0100_220417"
             ' Labels71 through 74 were deleted due to lack of functionality
             Label75.Text = "Compatibilidad de plataformas:"
             Label77.Text = "Etiqueta del instalador:"
@@ -3547,6 +3868,7 @@ Public Class MainForm
             LinkLabel9.Text = "Descargue el Pack de Desarrolladores"
             LinkLabel10.Text = "Compruebe la página de Errores"
             LinkLabel11.Text = "Compruebe la rama Hummingbird"
+            LinkLabel12.Text = "Hay algunas cosas que valen la pena revisar antes de continuar. Haga clic aquí para saber más."
 
             ' GroupBoxes
             GroupBox1.Text = "Posición de navegación"
@@ -3584,7 +3906,7 @@ Public Class MainForm
 
             ' MenuStrip items
             Windows11ManualInstallerToolStripMenuItem.Text = "Instalador manual de Windows 11"
-            VersionToolStripMenuItem.Text = "versión 2.0.0100"
+            VersionToolStripMenuItem.Text = "versión " & VerStr & " (versión de ensamblado " & AVerStr & ")"
             InstSTLabel.Text = "Estado del instalador"
             StatusTSI.Text = "No se está creando ningún instalador en este momento"
             LastInstallerCreatedAtToolStripMenuItem.Text = "Último instalador creado a las:"
@@ -3771,10 +4093,6 @@ Public Class MainForm
         End If
     End Sub
 
-    Private Sub Label103_Click(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles Label103.Click
-        AdditionalToolsCMS.Show(CType(sender, Control), e.Location)
-    End Sub
-
     Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
         BringToFront()
         BackSubPanel.Show()
@@ -3861,7 +4179,7 @@ Public Class MainForm
     End Sub
 
     Private Sub LinkLabel9_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel9.LinkClicked
-        System.Diagnostics.Process.Start("https://dotnet.microsoft.com/en-us/download/dotnet-framework/thank-you/net462-developer-pack-offline-installer")
+        System.Diagnostics.Process.Start("https://dotnet.microsoft.com/en-us/download/dotnet-framework/thank-you/net48-developer-pack-offline-installer")
     End Sub
 
     Private Sub LinkLabel10_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel10.LinkClicked
@@ -3881,7 +4199,17 @@ Public Class MainForm
             ISOFileDownloadPanel.Visible = False
             BringToFront()
         Else
-            MsgBox("No network is available. Please connect your system to the Internet to access file downloads.", vbOKOnly + vbInformation, "A network connection is unavailable")
+            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                MsgBox("No network is available. Please connect your system to the Internet to access file downloads.", vbOKOnly + vbInformation, "A network connection is unavailable")
+            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                MsgBox("No hay ninguna red disponible. Por favor, conecte su sistema a Internet para acceder a descargas de archivos.", vbOKOnly + vbInformation, "Una conexión de red no está disponible")
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                    MsgBox("No network is available. Please connect your system to the Internet to access file downloads.", vbOKOnly + vbInformation, "A network connection is unavailable")
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                    MsgBox("No hay ninguna red disponible. Por favor, conecte su sistema a Internet para acceder a descargas de archivos.", vbOKOnly + vbInformation, "Una conexión de red no está disponible")
+                End If
+            End If
         End If
     End Sub
 
@@ -3907,8 +4235,8 @@ Public Class MainForm
         Process.Start("\Windows\explorer.exe", TextBox4.Text)
     End Sub
 
-    Private Sub Label103_Click(sender As Object, e As EventArgs) Handles Label103.Click
-
+    Private Sub Label103_Click(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles Label103.Click
+        AdditionalToolsCMS.Show(CType(sender, Control), e.Location)
     End Sub
 
     Private Sub WIMRToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles WIMRToolStripMenuItem.Click
@@ -3930,5 +4258,633 @@ Public Class MainForm
         DLLRToolStripMenuItem.Checked = False
         REGTWEAKToolStripMenuItem.Checked = True
         ComboBox5.SelectedItem = "REGTWEAK"
+    End Sub
+
+    Sub ChangeColorInt()
+        If ColorInt = 0 Then
+            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                ComboBox1.SelectedItem = "Light"
+            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                ComboBox1.SelectedItem = "Claro"
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                    ComboBox1.SelectedItem = "Light"
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                    ComboBox1.SelectedItem = "Claro"
+                End If
+            End If
+        ElseIf ColorInt = 1 Then
+            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                ComboBox1.SelectedItem = "Dark"
+            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                ComboBox1.SelectedItem = "Oscuro"
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                    ComboBox1.SelectedItem = "Dark"
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                    ComboBox1.SelectedItem = "Oscuro"
+                End If
+            End If
+        ElseIf ColorInt = 2 Then
+            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                ComboBox1.SelectedItem = "Automatic"
+            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                ComboBox1.SelectedItem = "Automático"
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                    ComboBox1.SelectedItem = "Automatic"
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                    ComboBox1.SelectedItem = "Automático"
+                End If
+            End If
+        End If 
+    End Sub
+
+    Private Sub AutomaticToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AutomaticToolStripMenuItem.Click
+        AutomaticToolStripMenuItem.Checked = True
+        LightToolStripMenuItem.Checked = False
+        DarkToolStripMenuItem.Checked = False
+        ColorInt = 2
+        ChangeColorInt()
+    End Sub
+
+    Private Sub LightToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LightToolStripMenuItem.Click
+        AutomaticToolStripMenuItem.Checked = False
+        LightToolStripMenuItem.Checked = True
+        DarkToolStripMenuItem.Checked = False
+        ColorInt = 0
+        ChangeColorInt()
+    End Sub
+
+    Private Sub DarkToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DarkToolStripMenuItem.Click
+        AutomaticToolStripMenuItem.Checked = False
+        LightToolStripMenuItem.Checked = False
+        DarkToolStripMenuItem.Checked = True
+        ColorInt = 1
+        ChangeColorInt()
+    End Sub
+
+    Private Sub TopLeftResizePanel_MouseDown(sender As Object, e As MouseEventArgs) Handles TopLeftResizePanel.MouseDown
+        If e.Button = Windows.Forms.MouseButtons.Left Then
+            mouseOffset = New Point(-e.X, -e.Y)
+            isMouseDown = True
+        End If
+    End Sub
+
+    Private Sub TopLeftResizePanel_MouseMove(sender As Object, e As MouseEventArgs) Handles TopLeftResizePanel.MouseMove
+        If isMouseDown Then
+            Dim XOffset, YOffset As Integer
+            XOffset = MousePosition.X - Location.X
+            YOffset = MousePosition.Y - Location.Y
+            Size = New Size(Location.X + XOffset, Location.Y + YOffset)
+        End If
+    End Sub
+
+    Private Sub TopLeftResizePanel_MouseUp(sender As Object, e As MouseEventArgs) Handles TopLeftResizePanel.MouseUp
+        If e.Button = Windows.Forms.MouseButtons.Left Then
+            isMouseDown = False
+        End If
+    End Sub
+
+    Private Sub LinkLabel12_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel12.LinkClicked
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+            If TextBox1.ForeColor = Color.Crimson Then
+                If TextBox2.ForeColor = Color.Crimson Then
+                    If TextBox3.ForeColor = Color.Crimson Then
+                        If TextBox4.ForeColor = Color.Crimson Then
+                            MsgBox("You cannot create the installer unless you fix these issues:" & CrLf & _
+                                   "- The Windows 11 installer location you have provided does not exist. Please specify a file that exists." & CrLf & _
+                                   "- The Windows 10 installer location you have provided does not exist. Please specify a file that exists." & CrLf & _
+                                   "- There are invalid characters on the target installer name. It must not be: con, aux, prn, nul, com{1-9} or lpt{1-9}, or contain: <, >, :, " & Quote & ", /, \, |, ? or *, because these are names reserved by Windows" & CrLf & _
+                                   "- There are invalid characters on the target installer path. It must not contain: con, aux, prn, nul, com{1-9} or lpt{1-9}, or: <, >, " & Quote & ", |, ? or *, because these are names reserved by Windows" & CrLf & _
+                                   "For the third and fourth errors, if you are not sure about what are reserved names, please refer to Microsoft documentation on naming files, paths, and namespaces on:" & CrLf & _
+                                   "https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                   vbOKOnly + vbCritical, "Naming and path issues")
+                        Else
+                            MsgBox("You cannot create the installer unless you fix these issues:" & CrLf & _
+                                   "- The Windows 11 installer location you have provided does not exist. Please specify a file that exists." & CrLf & _
+                                   "- The Windows 10 installer location you have provided does not exist. Please specify a file that exists." & CrLf & _
+                                   "- There are invalid characters on the target installer name. It must not be: con, aux, prn, nul, com{1-9} or lpt{1-9}, or contain: <, >, :, " & Quote & ", /, \, |, ? or *, because these are names reserved by Windows" & CrLf & _
+                                   "For the third error, if you are not sure about what are reserved names, please refer to Microsoft documentation on naming files, paths, and namespaces on:" & CrLf & _
+                                   "https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                   vbOKOnly + vbCritical, "Naming and path issues")
+                        End If
+                    Else
+                        If TextBox4.ForeColor = Color.Crimson Then
+                            MsgBox("You cannot create the installer unless you fix these issues:" & CrLf & _
+                                   "- The Windows 11 installer location you have provided does not exist. Please specify a file that exists." & CrLf & _
+                                   "- The Windows 10 installer location you have provided does not exist. Please specify a file that exists." & CrLf & _
+                                   "- There are invalid characters on the target installer path. It must not contain: con, aux, prn, nul, com{1-9} or lpt{1-9}, or: <, >, " & Quote & ", |, ? or *, because these are names reserved by Windows" & CrLf & _
+                                   "For the third error, if you are not sure about what are reserved names, please refer to Microsoft documentation on naming files, paths, and namespaces on:" & CrLf & _
+                                   "https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                   vbOKOnly + vbCritical, "Naming and path issues")
+                        Else
+                            MsgBox("You cannot create the installer unless you fix these issues:" & CrLf & _
+                                   "- The Windows 11 installer location you have provided does not exist. Please specify a file that exists." & CrLf & _
+                                   "- The Windows 10 installer location you have provided does not exist. Please specify a file that exists.", _
+                                   vbOKOnly + vbCritical, "Path issues")
+                        End If
+                    End If
+                Else
+                    If TextBox3.ForeColor = Color.Crimson Then
+                        If TextBox4.ForeColor = Color.Crimson Then
+                            MsgBox("You cannot create the installer unless you fix these issues:" & CrLf & _
+                                   "- The Windows 11 installer location you have provided does not exist. Please specify a file that exists." & CrLf & _
+                                   "- There are invalid characters on the target installer name. It must not be: con, aux, prn, nul, com{1-9} or lpt{1-9}, or contain: <, >, :, " & Quote & ", /, \, |, ? or *, because these are names reserved by Windows" & CrLf & _
+                                   "- There are invalid characters on the target installer path. It must not contain: con, aux, prn, nul, com{1-9} or lpt{1-9}, or: <, >, " & Quote & ", |, ? or *, because these are names reserved by Windows" & CrLf & _
+                                   "For the second and third errors, if you are not sure about what are reserved names, please refer to Microsoft documentation on naming files, paths, and namespaces on:" & CrLf & _
+                                   "https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                   vbOKOnly + vbCritical, "Naming and path issues")
+                        Else
+                            MsgBox("You cannot create the installer unless you fix these issues:" & CrLf & _
+                                   "- The Windows 11 installer location you have provided does not exist. Please specify a file that exists." & CrLf & _
+                                   "- There are invalid characters on the target installer name. It must not be: con, aux, prn, nul, com{1-9} or lpt{1-9}, or contain: <, >, :, " & Quote & ", /, \, |, ? or *, because these are names reserved by Windows" & CrLf & _
+                                   "For the second error, if you are not sure about what are reserved names, please refer to Microsoft documentation on naming files, paths, and namespaces on:" & CrLf & _
+                                   "https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                   vbOKOnly + vbCritical, "Naming and path issues")
+                        End If
+                    Else
+                        If TextBox4.ForeColor = Color.Crimson Then
+                            MsgBox("You cannot create the installer unless you fix these issues:" & CrLf & _
+                                   "- The Windows 11 installer location you have provided does not exist. Please specify a file that exists." & CrLf & _
+                                   "- There are invalid characters on the target installer path. It must not contain: con, aux, prn, nul, com{1-9} or lpt{1-9}, or: <, >, " & Quote & ", |, ? or *, because these are names reserved by Windows" & CrLf & _
+                                   "For the second error, if you are not sure about what are reserved names, please refer to Microsoft documentation on naming files, paths, and namespaces on:" & CrLf & _
+                                   "https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                   vbOKOnly + vbCritical, "Naming and path issues")
+                        Else
+                            MsgBox("You cannot create the installer unless you fix these issues:" & CrLf & _
+                                   "- The Windows 11 installer location you have provided does not exist. Please specify a file that exists.", _
+                                   vbOKOnly + vbCritical, "Path issues")
+                        End If
+                    End If
+                End If
+            Else
+                If TextBox2.ForeColor = Color.Crimson Then
+                    If TextBox3.ForeColor = Color.Crimson Then
+                        If TextBox4.ForeColor = Color.Crimson Then
+                            MsgBox("You cannot create the installer unless you fix these issues:" & CrLf & _
+                                   "- The Windows 10 installer location you have provided does not exist. Please specify a file that exists." & CrLf & _
+                                   "- There are invalid characters on the target installer name. It must not be: con, aux, prn, nul, com{1-9} or lpt{1-9}, or contain: <, >, :, " & Quote & ", /, \, |, ? or *, because these are names reserved by Windows" & CrLf & _
+                                   "- There are invalid characters on the target installer path. It must not contain: con, aux, prn, nul, com{1-9} or lpt{1-9}, or: <, >, " & Quote & ", |, ? or *, because these are names reserved by Windows" & CrLf & _
+                                   "For the second and third errors, if you are not sure about what are reserved names, please refer to Microsoft documentation on naming files, paths, and namespaces on:" & CrLf & _
+                                   "https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                   vbOKOnly + vbCritical, "Naming and path issues")
+                        Else
+                            MsgBox("You cannot create the installer unless you fix these issues:" & CrLf & _
+                                   "- The Windows 10 installer location you have provided does not exist. Please specify a file that exists." & CrLf & _
+                                   "- There are invalid characters on the target installer name. It must not be: con, aux, prn, nul, com{1-9} or lpt{1-9}, or contain: <, >, :, " & Quote & ", /, \, |, ? or *, because these are names reserved by Windows" & CrLf & _
+                                   "For the second error, if you are not sure about what are reserved names, please refer to Microsoft documentation on naming files, paths, and namespaces on:" & CrLf & _
+                                   "https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                   vbOKOnly + vbCritical, "Naming and path issues")
+                        End If
+                    Else
+                        If TextBox4.ForeColor = Color.Crimson Then
+                            MsgBox("You cannot create the installer unless you fix these issues:" & CrLf & _
+                                   "- The Windows 10 installer location you have provided does not exist. Please specify a file that exists." & CrLf & _
+                                   "- There are invalid characters on the target installer path. It must not contain: con, aux, prn, nul, com{1-9} or lpt{1-9}, or: <, >, " & Quote & ", |, ? or *, because these are names reserved by Windows" & CrLf & _
+                                   "For the second error, if you are not sure about what are reserved names, please refer to Microsoft documentation on naming files, paths, and namespaces on:" & CrLf & _
+                                   "https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                   vbOKOnly + vbCritical, "Naming and path issues")
+                        Else
+                            MsgBox("You cannot create the installer unless you fix these issues:" & CrLf & _
+                                   "- The Windows 10 installer location you have provided does not exist. Please specify a file that exists.", _
+                                   vbOKOnly + vbCritical, "Path issues")
+                        End If
+                    End If
+                Else
+                    If TextBox3.ForeColor = Color.Crimson Then
+                        If TextBox4.ForeColor = Color.Crimson Then
+                            MsgBox("You cannot create the installer unless you fix these issues:" & CrLf & _
+                                   "- There are invalid characters on the target installer name. It must not be: con, aux, prn, nul, com{1-9} or lpt{1-9}, or contain: <, >, :, " & Quote & ", /, \, |, ? or *, because these are names reserved by Windows" & CrLf & _
+                                   "- There are invalid characters on the target installer path. It must not contain: con, aux, prn, nul, com{1-9} or lpt{1-9}, or: <, >, " & Quote & ", |, ? or *, because these are names reserved by Windows" & CrLf & _
+                                   "For these errors, if you are not sure about what are reserved names, please refer to Microsoft documentation on naming files, paths, and namespaces on:" & CrLf & _
+                                   "https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                   vbOKOnly + vbCritical, "Naming and path issues")
+                        Else
+                            MsgBox("You cannot create the installer unless you fix these issues:" & CrLf & _
+                                   "- There are invalid characters on the target installer name. It must not be: con, aux, prn, nul, com{1-9} or lpt{1-9}, or contain: <, >, :, " & Quote & ", /, \, |, ? or *, because these are names reserved by Windows" & CrLf & _
+                                   "For this error, if you are not sure about what are reserved names, please refer to Microsoft documentation on naming files, paths, and namespaces on:" & CrLf & _
+                                   "https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                   vbOKOnly + vbCritical, "Naming issues")
+                        End If
+                    Else
+                        If TextBox4.ForeColor = Color.Crimson Then
+                            MsgBox("You cannot create the installer unless you fix these issues:" & CrLf & _
+                                   "- There are invalid characters on the target installer path. It must not contain: con, aux, prn, nul, com{1-9} or lpt{1-9}, or: <, >, " & Quote & ", |, ? or *, because these are names reserved by Windows" & CrLf & _
+                                   "For this error, if you are not sure about what are reserved names, please refer to Microsoft documentation on naming files, paths, and namespaces on:" & CrLf & _
+                                   "https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                   vbOKOnly + vbCritical, "Path issues")
+                        Else
+                            ' Assume that everything is OK. If something does not work afterwards, notify a bug
+                            ' on my Issues page
+                        End If
+                    End If
+                End If
+            End If
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+            If TextBox1.ForeColor = Color.Crimson Then
+                If TextBox2.ForeColor = Color.Crimson Then
+                    If TextBox3.ForeColor = Color.Crimson Then
+                        If TextBox4.ForeColor = Color.Crimson Then
+                            MsgBox("No puede crear el instalador a menos de que corrija estos errores:" & CrLf & _
+                                   "- La ubicación proveída del instalador de Windows 11 no existe. Por favor, especifique un archivo que exista" & CrLf & _
+                                   "- La ubicación proveída del instalador de Windows 10 no existe. Por favor, especifique un archivo que exista" & CrLf & _
+                                   "- Hay caracteres inválidos en el nombre del instalador de destino. No puede ser: con, aux, prn, nul, com{1-9} o lpt{1-9}, o contener: <, >, :, " & Quote & ", /, \, |, ? o *, porque esos son nombres reservados por Windows" & CrLf & _
+                                   "- Hay caracteres inválidos en la ruta del instalador de destino. No puede contener: con, aux, prn, nul, com{1-9} o lpt{1-9}, o: <, >, " & Quote & ", |, ? o *, porque esos son nombres reservados por Windows" & CrLf & _
+                                   "Para los errores tercero y cuarto, si no está seguro de lo que son nombres reservados, por favor consulte la documentación de Microsoft para nombrar archivos, rutas y espacios de nombres en:" & CrLf & _
+                                   "https://docs.microsoft.com/es-es/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                   vbOKOnly + vbCritical, "Errores de ruta y nomenclatura")
+                        Else
+                            MsgBox("No puede crear el instalador a menos de que corrija estos errores:" & CrLf & _
+                                   "- La ubicación proveída del instalador de Windows 11 no existe. Por favor, especifique un archivo que exista" & CrLf & _
+                                   "- La ubicación proveída del instalador de Windows 10 no existe. Por favor, especifique un archivo que exista" & CrLf & _
+                                   "- Hay caracteres inválidos en el nombre del instalador de destino. No puede ser: con, aux, prn, nul, com{1-9} o lpt{1-9}, o contener: <, >, :, " & Quote & ", /, \, |, ? o *, porque esos son nombres reservados por Windows" & CrLf & _
+                                   "Para el tercer error, si no está seguro de lo que son nombres reservados, por favor consulte la documentación de Microsoft para nombrar archivos, rutas y espacios de nombres en:" & CrLf & _
+                                   "https://docs.microsoft.com/es-es/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                   vbOKOnly + vbCritical, "Errores de ruta y nomenclatura")
+                        End If
+                    Else
+                        If TextBox4.ForeColor = Color.Crimson Then
+                            MsgBox("No puede crear el instalador a menos de que corrija estos errores:" & CrLf & _
+                                   "- La ubicación proveída del instalador de Windows 11 no existe. Por favor, especifique un archivo que exista" & CrLf & _
+                                   "- La ubicación proveída del instalador de Windows 10 no existe. Por favor, especifique un archivo que exista" & CrLf & _
+                                   "- Hay caracteres inválidos en la ruta del instalador de destino. No puede contener: con, aux, prn, nul, com{1-9} o lpt{1-9}, o: <, >, " & Quote & ", |, ? o *, porque esos son nombres reservados por Windows" & CrLf & _
+                                   "Para el tercer error, si no está seguro de lo que son nombres reservados, por favor consulte la documentación de Microsoft para nombrar archivos, rutas y espacios de nombres en:" & CrLf & _
+                                   "https://docs.microsoft.com/es-es/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                   vbOKOnly + vbCritical, "Errores de ruta y nomenclatura")
+                        Else
+                            MsgBox("No puede crear el instalador a menos de que corrija estos errores:" & CrLf & _
+                                   "- La ubicación proveída del instalador de Windows 11 no existe. Por favor, especifique un archivo que exista" & CrLf & _
+                                   "- La ubicación proveída del instalador de Windows 10 no existe. Por favor, especifique un archivo que exista", _
+                                   vbOKOnly + vbCritical, "Errores de ruta")
+                        End If
+                    End If
+                Else
+                    If TextBox3.ForeColor = Color.Crimson Then
+                        If TextBox4.ForeColor = Color.Crimson Then
+                            MsgBox("No puede crear el instalador a menos de que corrija estos errores:" & CrLf & _
+                                   "- La ubicación proveída del instalador de Windows 11 no existe. Por favor, especifique un archivo que exista" & CrLf & _
+                                   "- Hay caracteres inválidos en el nombre del instalador de destino. No puede ser: con, aux, prn, nul, com{1-9} o lpt{1-9}, o contener: <, >, :, " & Quote & ", /, \, |, ? o *, porque esos son nombres reservados por Windows" & CrLf & _
+                                   "- Hay caracteres inválidos en la ruta del instalador de destino. No puede contener: con, aux, prn, nul, com{1-9} o lpt{1-9}, o: <, >, " & Quote & ", |, ? o *, porque esos son nombres reservados por Windows" & CrLf & _
+                                   "Para los errores segundo y tercero, si no está seguro de lo que son nombres reservados, por favor consulte la documentación de Microsoft para nombrar archivos, rutas y espacios de nombres en:" & CrLf & _
+                                   "https://docs.microsoft.com/es-es/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                   vbOKOnly + vbCritical, "Errores de ruta y nomenclatura")
+                        Else
+                            MsgBox("No puede crear el instalador a menos de que corrija estos errores:" & CrLf & _
+                                   "- La ubicación proveída del instalador de Windows 11 no existe. Por favor, especifique un archivo que exista" & CrLf & _
+                                   "- Hay caracteres inválidos en el nombre del instalador de destino. No puede ser: con, aux, prn, nul, com{1-9} o lpt{1-9}, o contener: <, >, :, " & Quote & ", /, \, |, ? o *, porque esos son nombres reservados por Windows" & CrLf & _
+                                   "Para el segundo error, si no está seguro de lo que son nombres reservados, por favor consulte la documentación de Microsoft para nombrar archivos, rutas y espacios de nombres en:" & CrLf & _
+                                   "https://docs.microsoft.com/es-es/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                   vbOKOnly + vbCritical, "Errores de ruta y nomenclatura")
+                        End If
+                    Else
+                        If TextBox4.ForeColor = Color.Crimson Then
+                            MsgBox("No puede crear el instalador a menos de que corrija estos errores:" & CrLf & _
+                                   "- La ubicación proveída del instalador de Windows 11 no existe. Por favor, especifique un archivo que exista" & CrLf & _
+                                   "- Hay caracteres inválidos en el nombre del instalador de destino. No puede ser: con, aux, prn, nul, com{1-9} o lpt{1-9}, o contener: <, >, :, " & Quote & ", /, \, |, ? o *, porque esos son nombres reservados por Windows" & CrLf & _
+                                   "Para el segundo error, si no está seguro de lo que son nombres reservados, por favor consulte la documentación de Microsoft para nombrar archivos, rutas y espacios de nombres en:" & CrLf & _
+                                   "https://docs.microsoft.com/es-es/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                   vbOKOnly + vbCritical, "Errores de ruta y nomenclatura")
+                        Else
+                            MsgBox("No puede crear el instalador a menos de que corrija estos errores:" & CrLf & _
+                                   "- La ubicación proveída del instalador de Windows 11 no existe. Por favor, especifique un archivo que exista", _
+                                   vbOKOnly + vbCritical, "Errores de ruta")
+                        End If
+                    End If
+                End If
+            Else
+                If TextBox2.ForeColor = Color.Crimson Then
+                    If TextBox3.ForeColor = Color.Crimson Then
+                        If TextBox4.ForeColor = Color.Crimson Then
+                            MsgBox("No puede crear el instalador a menos de que corrija estos errores:" & CrLf & _
+                                   "- La ubicación proveída del instalador de Windows 10 no existe. Por favor, especifique un archivo que exista" & CrLf & _
+                                   "- Hay caracteres inválidos en el nombre del instalador de destino. No puede ser: con, aux, prn, nul, com{1-9} o lpt{1-9}, o contener: <, >, :, " & Quote & ", /, \, |, ? o *, porque esos son nombres reservados por Windows" & CrLf & _
+                                   "- Hay caracteres inválidos en la ruta del instalador de destino. No puede contener: con, aux, prn, nul, com{1-9} o lpt{1-9}, o: <, >, " & Quote & ", |, ? o *, porque esos son nombres reservados por Windows" & CrLf & _
+                                   "Para los errores segundo y tercero, si no está seguro de lo que son nombres reservados, por favor consulte la documentación de Microsoft para nombrar archivos, rutas y espacios de nombres en:" & CrLf & _
+                                   "https://docs.microsoft.com/es-ss/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                   vbOKOnly + vbCritical, "Errores de ruta y nomenclatura")
+                        Else
+                            MsgBox("No puede crear el instalador a menos de que corrija estos errores:" & CrLf & _
+                                   "- La ubicación proveída del instalador de Windows 10 no existe. Por favor, especifique un archivo que exista" & CrLf & _
+                                   "- Hay caracteres inválidos en el nombre del instalador de destino. No puede ser: con, aux, prn, nul, com{1-9} o lpt{1-9}, o contener: <, >, :, " & Quote & ", /, \, |, ? o *, porque esos son nombres reservados por Windows" & CrLf & _
+                                   "Para el segundo error, si no está seguro de lo que son nombres reservados, por favor consulte la documentación de Microsoft para nombrar archivos, rutas y espacios de nombres en:" & CrLf & _
+                                   "https://docs.microsoft.com/es-es/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                   vbOKOnly + vbCritical, "Errores de ruta y nomenclatura")
+                        End If
+                    Else
+                        If TextBox4.ForeColor = Color.Crimson Then
+                            MsgBox("No puede crear el instalador a menos de que corrija estos errores:" & CrLf & _
+                                   "- La ubicación proveída del instalador de Windows 10 no existe. Por favor, especifique un archivo que exista" & CrLf & _
+                                   "- Hay caracteres inválidos en la ruta del instalador de destino. No puede contener: con, aux, prn, nul, com{1-9} o lpt{1-9}, o: <, >, " & Quote & ", |, ? o *, porque esos son nombres reservados por Windows" & CrLf & _
+                                   "Para el segundo error, si no está seguro de lo que son nombres reservados, por favor consulte la documentación de Microsoft para nombrar archivos, rutas y espacios de nombres en:" & CrLf & _
+                                   "https://docs.microsoft.com/es-es/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                   vbOKOnly + vbCritical, "Errores de ruta y nomenclatura")
+                        Else
+                            MsgBox("No puede crear el instalador a menos de que corrija estos errores:" & CrLf & _
+                                   "- La ubicación proveída del instalador de Windows 10 no existe. Por favor, especifique un archivo que exista", _
+                                   vbOKOnly + vbCritical, "Errores de ruta")
+                        End If
+                    End If
+                Else
+                    If TextBox3.ForeColor = Color.Crimson Then
+                        If TextBox4.ForeColor = Color.Crimson Then
+                            MsgBox("No puede crear el instalador a menos de que corrija estos errores:" & CrLf & _
+                                   "- Hay caracteres inválidos en el nombre del instalador de destino. No puede ser: con, aux, prn, nul, com{1-9} o lpt{1-9}, o contener: <, >, :, " & Quote & ", /, \, |, ? o *, porque esos son nombres reservados por Windows" & CrLf & _
+                                   "- Hay caracteres inválidos en la ruta del instalador de destino. No puede contener: con, aux, prn, nul, com{1-9} o lpt{1-9}, o: <, >, " & Quote & ", |, ? o *, porque esos son nombres reservados por Windows" & CrLf & _
+                                   "Para estos errores, si no está seguro de lo que son nombres reservados, por favor consulte la documentación de Microsoft para nombrar archivos, rutas y espacios de nombres en:" & CrLf & _
+                                   "https://docs.microsoft.com/es-es/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                   vbOKOnly + vbCritical, "Errores de ruta y nomenclatura")
+                        Else
+                            MsgBox("No puede crear el instalador a menos de que corrija estos errores:" & CrLf & _
+                                   "- Hay caracteres inválidos en el nombre del instalador de destino. No puede ser: con, aux, prn, nul, com{1-9} o lpt{1-9}, o contener: <, >, :, " & Quote & ", /, \, |, ? o *, porque esos son nombres reservados por Windows" & CrLf & _
+                                   "Para este error, si no está seguro de lo que son nombres reservados, por favor consulte la documentación de Microsoft para nombrar archivos, rutas y espacios de nombres en:" & CrLf & _
+                                   "https://docs.microsoft.com/es-es/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                   vbOKOnly + vbCritical, "Errores de nomenclatura")
+                        End If
+                    Else
+                        If TextBox4.ForeColor = Color.Crimson Then
+                            MsgBox("No puede crear el instalador a menos de que corrija estos errores:" & CrLf & _
+                                   "- Hay caracteres inválidos en la ruta del instalador de destino. No puede contener: con, aux, prn, nul, com{1-9} o lpt{1-9}, o: <, >, " & Quote & ", |, ? o *, porque esos son nombres reservados por Windows" & CrLf & _
+                                   "Para este error, si no está seguro de lo que son nombres reservados, por favor consulte la documentación de Microsoft para nombrar archivos, rutas y espacios de nombres en:" & CrLf & _
+                                   "https://docs.microsoft.com/es-es/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                   vbOKOnly + vbCritical, "Errores de ruta")
+                        Else
+                            ' Assume that everything is OK. If something does not work afterwards, notify a bug
+                            ' on my Issues page (https://github.com/CodingWonders/win11minst/issues)
+                        End If
+                    End If
+                End If
+            End If
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                If TextBox1.ForeColor = Color.Crimson Then
+                    If TextBox2.ForeColor = Color.Crimson Then
+                        If TextBox3.ForeColor = Color.Crimson Then
+                            If TextBox4.ForeColor = Color.Crimson Then
+                                MsgBox("You cannot create the installer unless you fix these issues:" & CrLf & _
+                                       "- The Windows 11 installer location you have provided does not exist. Please specify a file that exists." & CrLf & _
+                                       "- The Windows 10 installer location you have provided does not exist. Please specify a file that exists." & CrLf & _
+                                       "- There are invalid characters on the target installer name. It must not be: con, aux, prn, nul, com{1-9} or lpt{1-9}, or contain: <, >, :, " & Quote & ", /, \, |, ? or *, because these are names reserved by Windows" & CrLf & _
+                                       "- There are invalid characters on the target installer path. It must not contain: con, aux, prn, nul, com{1-9} or lpt{1-9}, or: <, >, " & Quote & ", |, ? or *, because these are names reserved by Windows" & CrLf & _
+                                       "For the third and fourth errors, if you are not sure about what are reserved names, please refer to Microsoft documentation on naming files, paths, and namespaces on:" & CrLf & _
+                                       "https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                       vbOKOnly + vbCritical, "Naming and path issues")
+                            Else
+                                MsgBox("You cannot create the installer unless you fix these issues:" & CrLf & _
+                                       "- The Windows 11 installer location you have provided does not exist. Please specify a file that exists." & CrLf & _
+                                       "- The Windows 10 installer location you have provided does not exist. Please specify a file that exists." & CrLf & _
+                                       "- There are invalid characters on the target installer name. It must not be: con, aux, prn, nul, com{1-9} or lpt{1-9}, or contain: <, >, :, " & Quote & ", /, \, |, ? or *, because these are names reserved by Windows" & CrLf & _
+                                       "For the third error, if you are not sure about what are reserved names, please refer to Microsoft documentation on naming files, paths, and namespaces on:" & CrLf & _
+                                       "https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                       vbOKOnly + vbCritical, "Naming and path issues")
+                            End If
+                        Else
+                            If TextBox4.ForeColor = Color.Crimson Then
+                                MsgBox("You cannot create the installer unless you fix these issues:" & CrLf & _
+                                       "- The Windows 11 installer location you have provided does not exist. Please specify a file that exists." & CrLf & _
+                                       "- The Windows 10 installer location you have provided does not exist. Please specify a file that exists." & CrLf & _
+                                       "- There are invalid characters on the target installer path. It must not contain: con, aux, prn, nul, com{1-9} or lpt{1-9}, or: <, >, " & Quote & ", |, ? or *, because these are names reserved by Windows" & CrLf & _
+                                       "For the third error, if you are not sure about what are reserved names, please refer to Microsoft documentation on naming files, paths, and namespaces on:" & CrLf & _
+                                       "https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                       vbOKOnly + vbCritical, "Naming and path issues")
+                            Else
+                                MsgBox("You cannot create the installer unless you fix these issues:" & CrLf & _
+                                       "- The Windows 11 installer location you have provided does not exist. Please specify a file that exists." & CrLf & _
+                                       "- The Windows 10 installer location you have provided does not exist. Please specify a file that exists.", _
+                                       vbOKOnly + vbCritical, "Path issues")
+                            End If
+                        End If
+                    Else
+                        If TextBox3.ForeColor = Color.Crimson Then
+                            If TextBox4.ForeColor = Color.Crimson Then
+                                MsgBox("You cannot create the installer unless you fix these issues:" & CrLf & _
+                                       "- The Windows 11 installer location you have provided does not exist. Please specify a file that exists." & CrLf & _
+                                       "- There are invalid characters on the target installer name. It must not be: con, aux, prn, nul, com{1-9} or lpt{1-9}, or contain: <, >, :, " & Quote & ", /, \, |, ? or *, because these are names reserved by Windows" & CrLf & _
+                                       "- There are invalid characters on the target installer path. It must not contain: con, aux, prn, nul, com{1-9} or lpt{1-9}, or: <, >, " & Quote & ", |, ? or *, because these are names reserved by Windows" & CrLf & _
+                                       "For the second and third errors, if you are not sure about what are reserved names, please refer to Microsoft documentation on naming files, paths, and namespaces on:" & CrLf & _
+                                       "https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                       vbOKOnly + vbCritical, "Naming and path issues")
+                            Else
+                                MsgBox("You cannot create the installer unless you fix these issues:" & CrLf & _
+                                       "- The Windows 11 installer location you have provided does not exist. Please specify a file that exists." & CrLf & _
+                                       "- There are invalid characters on the target installer name. It must not be: con, aux, prn, nul, com{1-9} or lpt{1-9}, or contain: <, >, :, " & Quote & ", /, \, |, ? or *, because these are names reserved by Windows" & CrLf & _
+                                       "For the second error, if you are not sure about what are reserved names, please refer to Microsoft documentation on naming files, paths, and namespaces on:" & CrLf & _
+                                       "https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                       vbOKOnly + vbCritical, "Naming and path issues")
+                            End If
+                        Else
+                            If TextBox4.ForeColor = Color.Crimson Then
+                                MsgBox("You cannot create the installer unless you fix these issues:" & CrLf & _
+                                       "- The Windows 11 installer location you have provided does not exist. Please specify a file that exists." & CrLf & _
+                                       "- There are invalid characters on the target installer path. It must not contain: con, aux, prn, nul, com{1-9} or lpt{1-9}, or: <, >, " & Quote & ", |, ? or *, because these are names reserved by Windows" & CrLf & _
+                                       "For the second error, if you are not sure about what are reserved names, please refer to Microsoft documentation on naming files, paths, and namespaces on:" & CrLf & _
+                                       "https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                       vbOKOnly + vbCritical, "Naming and path issues")
+                            Else
+                                MsgBox("You cannot create the installer unless you fix these issues:" & CrLf & _
+                                       "- The Windows 11 installer location you have provided does not exist. Please specify a file that exists.", _
+                                       vbOKOnly + vbCritical, "Path issues")
+                            End If
+                        End If
+                    End If
+                Else
+                    If TextBox2.ForeColor = Color.Crimson Then
+                        If TextBox3.ForeColor = Color.Crimson Then
+                            If TextBox4.ForeColor = Color.Crimson Then
+                                MsgBox("You cannot create the installer unless you fix these issues:" & CrLf & _
+                                       "- The Windows 10 installer location you have provided does not exist. Please specify a file that exists." & CrLf & _
+                                       "- There are invalid characters on the target installer name. It must not be: con, aux, prn, nul, com{1-9} or lpt{1-9}, or contain: <, >, :, " & Quote & ", /, \, |, ? or *, because these are names reserved by Windows" & CrLf & _
+                                       "- There are invalid characters on the target installer path. It must not contain: con, aux, prn, nul, com{1-9} or lpt{1-9}, or: <, >, " & Quote & ", |, ? or *, because these are names reserved by Windows" & CrLf & _
+                                       "For the second and third errors, if you are not sure about what are reserved names, please refer to Microsoft documentation on naming files, paths, and namespaces on:" & CrLf & _
+                                       "https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                       vbOKOnly + vbCritical, "Naming and path issues")
+                            Else
+                                MsgBox("You cannot create the installer unless you fix these issues:" & CrLf & _
+                                       "- The Windows 10 installer location you have provided does not exist. Please specify a file that exists." & CrLf & _
+                                       "- There are invalid characters on the target installer name. It must not be: con, aux, prn, nul, com{1-9} or lpt{1-9}, or contain: <, >, :, " & Quote & ", /, \, |, ? or *, because these are names reserved by Windows" & CrLf & _
+                                       "For the second error, if you are not sure about what are reserved names, please refer to Microsoft documentation on naming files, paths, and namespaces on:" & CrLf & _
+                                       "https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                       vbOKOnly + vbCritical, "Naming and path issues")
+                            End If
+                        Else
+                            If TextBox4.ForeColor = Color.Crimson Then
+                                MsgBox("You cannot create the installer unless you fix these issues:" & CrLf & _
+                                       "- The Windows 10 installer location you have provided does not exist. Please specify a file that exists." & CrLf & _
+                                       "- There are invalid characters on the target installer path. It must not contain: con, aux, prn, nul, com{1-9} or lpt{1-9}, or: <, >, " & Quote & ", |, ? or *, because these are names reserved by Windows" & CrLf & _
+                                       "For the second error, if you are not sure about what are reserved names, please refer to Microsoft documentation on naming files, paths, and namespaces on:" & CrLf & _
+                                       "https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                       vbOKOnly + vbCritical, "Naming and path issues")
+                            Else
+                                MsgBox("You cannot create the installer unless you fix these issues:" & CrLf & _
+                                       "- The Windows 10 installer location you have provided does not exist. Please specify a file that exists.", _
+                                       vbOKOnly + vbCritical, "Path issues")
+                            End If
+                        End If
+                    Else
+                        If TextBox3.ForeColor = Color.Crimson Then
+                            If TextBox4.ForeColor = Color.Crimson Then
+                                MsgBox("You cannot create the installer unless you fix these issues:" & CrLf & _
+                                       "- There are invalid characters on the target installer name. It must not be: con, aux, prn, nul, com{1-9} or lpt{1-9}, or contain: <, >, :, " & Quote & ", /, \, |, ? or *, because these are names reserved by Windows" & CrLf & _
+                                       "- There are invalid characters on the target installer path. It must not contain: con, aux, prn, nul, com{1-9} or lpt{1-9}, or: <, >, " & Quote & ", |, ? or *, because these are names reserved by Windows" & CrLf & _
+                                       "For these errors, if you are not sure about what are reserved names, please refer to Microsoft documentation on naming files, paths, and namespaces on:" & CrLf & _
+                                       "https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                       vbOKOnly + vbCritical, "Naming and path issues")
+                            Else
+                                MsgBox("You cannot create the installer unless you fix these issues:" & CrLf & _
+                                       "- There are invalid characters on the target installer name. It must not be: con, aux, prn, nul, com{1-9} or lpt{1-9}, or contain: <, >, :, " & Quote & ", /, \, |, ? or *, because these are names reserved by Windows" & CrLf & _
+                                       "For this error, if you are not sure about what are reserved names, please refer to Microsoft documentation on naming files, paths, and namespaces on:" & CrLf & _
+                                       "https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                       vbOKOnly + vbCritical, "Naming issues")
+                            End If
+                        Else
+                            If TextBox4.ForeColor = Color.Crimson Then
+                                MsgBox("You cannot create the installer unless you fix these issues:" & CrLf & _
+                                       "- There are invalid characters on the target installer path. It must not contain: con, aux, prn, nul, com{1-9} or lpt{1-9}, or: <, >, " & Quote & ", |, ? or *, because these are names reserved by Windows" & CrLf & _
+                                       "For this error, if you are not sure about what are reserved names, please refer to Microsoft documentation on naming files, paths, and namespaces on:" & CrLf & _
+                                       "https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                       vbOKOnly + vbCritical, "Path issues")
+                            Else
+                                ' Assume that everything is OK. If something does not work afterwards, notify a bug
+                                ' on my Issues page
+                            End If
+                        End If
+                    End If
+                End If
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                If TextBox1.ForeColor = Color.Crimson Then
+                    If TextBox2.ForeColor = Color.Crimson Then
+                        If TextBox3.ForeColor = Color.Crimson Then
+                            If TextBox4.ForeColor = Color.Crimson Then
+                                MsgBox("No puede crear el instalador a menos de que corrija estos errores:" & CrLf & _
+                                       "- La ubicación proveída del instalador de Windows 11 no existe. Por favor, especifique un archivo que exista" & CrLf & _
+                                       "- La ubicación proveída del instalador de Windows 10 no existe. Por favor, especifique un archivo que exista" & CrLf & _
+                                       "- Hay caracteres inválidos en el nombre del instalador de destino. No puede ser: con, aux, prn, nul, com{1-9} o lpt{1-9}, o contener: <, >, :, " & Quote & ", /, \, |, ? o *, porque esos son nombres reservados por Windows" & CrLf & _
+                                       "- Hay caracteres inválidos en la ruta del instalador de destino. No puede contener: con, aux, prn, nul, com{1-9} o lpt{1-9}, o: <, >, " & Quote & ", |, ? o *, porque esos son nombres reservados por Windows" & CrLf & _
+                                       "Para los errores tercero y cuarto, si no está seguro de lo que son nombres reservados, por favor consulte la documentación de Microsoft para nombrar archivos, rutas y espacios de nombres en:" & CrLf & _
+                                       "https://docs.microsoft.com/es-es/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                       vbOKOnly + vbCritical, "Errores de ruta y nomenclatura")
+                            Else
+                                MsgBox("No puede crear el instalador a menos de que corrija estos errores:" & CrLf & _
+                                       "- La ubicación proveída del instalador de Windows 11 no existe. Por favor, especifique un archivo que exista" & CrLf & _
+                                       "- La ubicación proveída del instalador de Windows 10 no existe. Por favor, especifique un archivo que exista" & CrLf & _
+                                       "- Hay caracteres inválidos en el nombre del instalador de destino. No puede ser: con, aux, prn, nul, com{1-9} o lpt{1-9}, o contener: <, >, :, " & Quote & ", /, \, |, ? o *, porque esos son nombres reservados por Windows" & CrLf & _
+                                       "Para el tercer error, si no está seguro de lo que son nombres reservados, por favor consulte la documentación de Microsoft para nombrar archivos, rutas y espacios de nombres en:" & CrLf & _
+                                       "https://docs.microsoft.com/es-es/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                       vbOKOnly + vbCritical, "Errores de ruta y nomenclatura")
+                            End If
+                        Else
+                            If TextBox4.ForeColor = Color.Crimson Then
+                                MsgBox("No puede crear el instalador a menos de que corrija estos errores:" & CrLf & _
+                                       "- La ubicación proveída del instalador de Windows 11 no existe. Por favor, especifique un archivo que exista" & CrLf & _
+                                       "- La ubicación proveída del instalador de Windows 10 no existe. Por favor, especifique un archivo que exista" & CrLf & _
+                                       "- Hay caracteres inválidos en la ruta del instalador de destino. No puede contener: con, aux, prn, nul, com{1-9} o lpt{1-9}, o: <, >, " & Quote & ", |, ? o *, porque esos son nombres reservados por Windows" & CrLf & _
+                                       "Para el tercer error, si no está seguro de lo que son nombres reservados, por favor consulte la documentación de Microsoft para nombrar archivos, rutas y espacios de nombres en:" & CrLf & _
+                                       "https://docs.microsoft.com/es-es/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                       vbOKOnly + vbCritical, "Errores de ruta y nomenclatura")
+                            Else
+                                MsgBox("No puede crear el instalador a menos de que corrija estos errores:" & CrLf & _
+                                       "- La ubicación proveída del instalador de Windows 11 no existe. Por favor, especifique un archivo que exista" & CrLf & _
+                                       "- La ubicación proveída del instalador de Windows 10 no existe. Por favor, especifique un archivo que exista", _
+                                       vbOKOnly + vbCritical, "Errores de ruta")
+                            End If
+                        End If
+                    Else
+                        If TextBox3.ForeColor = Color.Crimson Then
+                            If TextBox4.ForeColor = Color.Crimson Then
+                                MsgBox("No puede crear el instalador a menos de que corrija estos errores:" & CrLf & _
+                                       "- La ubicación proveída del instalador de Windows 11 no existe. Por favor, especifique un archivo que exista" & CrLf & _
+                                       "- Hay caracteres inválidos en el nombre del instalador de destino. No puede ser: con, aux, prn, nul, com{1-9} o lpt{1-9}, o contener: <, >, :, " & Quote & ", /, \, |, ? o *, porque esos son nombres reservados por Windows" & CrLf & _
+                                       "- Hay caracteres inválidos en la ruta del instalador de destino. No puede contener: con, aux, prn, nul, com{1-9} o lpt{1-9}, o: <, >, " & Quote & ", |, ? o *, porque esos son nombres reservados por Windows" & CrLf & _
+                                       "Para los errores segundo y tercero, si no está seguro de lo que son nombres reservados, por favor consulte la documentación de Microsoft para nombrar archivos, rutas y espacios de nombres en:" & CrLf & _
+                                       "https://docs.microsoft.com/es-es/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                       vbOKOnly + vbCritical, "Errores de ruta y nomenclatura")
+                            Else
+                                MsgBox("No puede crear el instalador a menos de que corrija estos errores:" & CrLf & _
+                                       "- La ubicación proveída del instalador de Windows 11 no existe. Por favor, especifique un archivo que exista" & CrLf & _
+                                       "- Hay caracteres inválidos en el nombre del instalador de destino. No puede ser: con, aux, prn, nul, com{1-9} o lpt{1-9}, o contener: <, >, :, " & Quote & ", /, \, |, ? o *, porque esos son nombres reservados por Windows" & CrLf & _
+                                       "Para el segundo error, si no está seguro de lo que son nombres reservados, por favor consulte la documentación de Microsoft para nombrar archivos, rutas y espacios de nombres en:" & CrLf & _
+                                       "https://docs.microsoft.com/es-es/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                       vbOKOnly + vbCritical, "Errores de ruta y nomenclatura")
+                            End If
+                        Else
+                            If TextBox4.ForeColor = Color.Crimson Then
+                                MsgBox("No puede crear el instalador a menos de que corrija estos errores:" & CrLf & _
+                                       "- La ubicación proveída del instalador de Windows 11 no existe. Por favor, especifique un archivo que exista" & CrLf & _
+                                       "- Hay caracteres inválidos en el nombre del instalador de destino. No puede ser: con, aux, prn, nul, com{1-9} o lpt{1-9}, o contener: <, >, :, " & Quote & ", /, \, |, ? o *, porque esos son nombres reservados por Windows" & CrLf & _
+                                       "Para el segundo error, si no está seguro de lo que son nombres reservados, por favor consulte la documentación de Microsoft para nombrar archivos, rutas y espacios de nombres en:" & CrLf & _
+                                       "https://docs.microsoft.com/es-es/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                       vbOKOnly + vbCritical, "Errores de ruta y nomenclatura")
+                            Else
+                                MsgBox("No puede crear el instalador a menos de que corrija estos errores:" & CrLf & _
+                                       "- La ubicación proveída del instalador de Windows 11 no existe. Por favor, especifique un archivo que exista", _
+                                       vbOKOnly + vbCritical, "Errores de ruta")
+                            End If
+                        End If
+                    End If
+                Else
+                    If TextBox2.ForeColor = Color.Crimson Then
+                        If TextBox3.ForeColor = Color.Crimson Then
+                            If TextBox4.ForeColor = Color.Crimson Then
+                                MsgBox("No puede crear el instalador a menos de que corrija estos errores:" & CrLf & _
+                                       "- La ubicación proveída del instalador de Windows 10 no existe. Por favor, especifique un archivo que exista" & CrLf & _
+                                       "- Hay caracteres inválidos en el nombre del instalador de destino. No puede ser: con, aux, prn, nul, com{1-9} o lpt{1-9}, o contener: <, >, :, " & Quote & ", /, \, |, ? o *, porque esos son nombres reservados por Windows" & CrLf & _
+                                       "- Hay caracteres inválidos en la ruta del instalador de destino. No puede contener: con, aux, prn, nul, com{1-9} o lpt{1-9}, o: <, >, " & Quote & ", |, ? o *, porque esos son nombres reservados por Windows" & CrLf & _
+                                       "Para los errores segundo y tercero, si no está seguro de lo que son nombres reservados, por favor consulte la documentación de Microsoft para nombrar archivos, rutas y espacios de nombres en:" & CrLf & _
+                                       "https://docs.microsoft.com/es-ss/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                       vbOKOnly + vbCritical, "Errores de ruta y nomenclatura")
+                            Else
+                                MsgBox("No puede crear el instalador a menos de que corrija estos errores:" & CrLf & _
+                                       "- La ubicación proveída del instalador de Windows 10 no existe. Por favor, especifique un archivo que exista" & CrLf & _
+                                       "- Hay caracteres inválidos en el nombre del instalador de destino. No puede ser: con, aux, prn, nul, com{1-9} o lpt{1-9}, o contener: <, >, :, " & Quote & ", /, \, |, ? o *, porque esos son nombres reservados por Windows" & CrLf & _
+                                       "Para el segundo error, si no está seguro de lo que son nombres reservados, por favor consulte la documentación de Microsoft para nombrar archivos, rutas y espacios de nombres en:" & CrLf & _
+                                       "https://docs.microsoft.com/es-es/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                       vbOKOnly + vbCritical, "Errores de ruta y nomenclatura")
+                            End If
+                        Else
+                            If TextBox4.ForeColor = Color.Crimson Then
+                                MsgBox("No puede crear el instalador a menos de que corrija estos errores:" & CrLf & _
+                                       "- La ubicación proveída del instalador de Windows 10 no existe. Por favor, especifique un archivo que exista" & CrLf & _
+                                       "- Hay caracteres inválidos en la ruta del instalador de destino. No puede contener: con, aux, prn, nul, com{1-9} o lpt{1-9}, o: <, >, " & Quote & ", |, ? o *, porque esos son nombres reservados por Windows" & CrLf & _
+                                       "Para el segundo error, si no está seguro de lo que son nombres reservados, por favor consulte la documentación de Microsoft para nombrar archivos, rutas y espacios de nombres en:" & CrLf & _
+                                       "https://docs.microsoft.com/es-es/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                       vbOKOnly + vbCritical, "Errores de ruta y nomenclatura")
+                            Else
+                                MsgBox("No puede crear el instalador a menos de que corrija estos errores:" & CrLf & _
+                                       "- La ubicación proveída del instalador de Windows 10 no existe. Por favor, especifique un archivo que exista", _
+                                       vbOKOnly + vbCritical, "Errores de ruta")
+                            End If
+                        End If
+                    Else
+                        If TextBox3.ForeColor = Color.Crimson Then
+                            If TextBox4.ForeColor = Color.Crimson Then
+                                MsgBox("No puede crear el instalador a menos de que corrija estos errores:" & CrLf & _
+                                       "- Hay caracteres inválidos en el nombre del instalador de destino. No puede ser: con, aux, prn, nul, com{1-9} o lpt{1-9}, o contener: <, >, :, " & Quote & ", /, \, |, ? o *, porque esos son nombres reservados por Windows" & CrLf & _
+                                       "- Hay caracteres inválidos en la ruta del instalador de destino. No puede contener: con, aux, prn, nul, com{1-9} o lpt{1-9}, o: <, >, " & Quote & ", |, ? o *, porque esos son nombres reservados por Windows" & CrLf & _
+                                       "Para estos errores, si no está seguro de lo que son nombres reservados, por favor consulte la documentación de Microsoft para nombrar archivos, rutas y espacios de nombres en:" & CrLf & _
+                                       "https://docs.microsoft.com/es-es/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                       vbOKOnly + vbCritical, "Errores de ruta")
+                            Else
+                                MsgBox("No puede crear el instalador a menos de que corrija estos errores:" & CrLf & _
+                                       "- Hay caracteres inválidos en el nombre del instalador de destino. No puede ser: con, aux, prn, nul, com{1-9} o lpt{1-9}, o contener: <, >, :, " & Quote & ", /, \, |, ? o *, porque esos son nombres reservados por Windows" & CrLf & _
+                                       "Para este error, si no está seguro de lo que son nombres reservados, por favor consulte la documentación de Microsoft para nombrar archivos, rutas y espacios de nombres en:" & CrLf & _
+                                       "https://docs.microsoft.com/es-es/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                       vbOKOnly + vbCritical, "Errores de nomenclatura")
+                            End If
+                        Else
+                            If TextBox4.ForeColor = Color.Crimson Then
+                                MsgBox("No puede crear el instalador a menos de que corrija estos errores:" & CrLf & _
+                                       "- Hay caracteres inválidos en la ruta del instalador de destino. No puede contener: con, aux, prn, nul, com{1-9} o lpt{1-9}, o: <, >, " & Quote & ", |, ? o *, porque esos son nombres reservados por Windows" & CrLf & _
+                                       "Para este error, si no está seguro de lo que son nombres reservados, por favor consulte la documentación de Microsoft para nombrar archivos, rutas y espacios de nombres en:" & CrLf & _
+                                       "https://docs.microsoft.com/es-es/windows/win32/fileio/naming-a-file#naming-conventions", _
+                                       vbOKOnly + vbCritical, "Errores de ruta")
+                            Else
+                                ' Assume that everything is OK. If something does not work afterwards, notify a bug
+                                ' on my Issues page (https://github.com/CodingWonders/win11minst/issues)
+                            End If
+                        End If
+                    End If
+                End If
+            End If
+        End If
     End Sub
 End Class
