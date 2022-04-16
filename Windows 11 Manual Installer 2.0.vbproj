@@ -11,7 +11,7 @@
     <AssemblyName>win11minst</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <PublishUrl>publicar\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -27,6 +27,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -406,6 +407,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon3.ico" />
+    <None Include="Resources\linux_ua.png" />
+    <None Include="Resources\lightmode.png" />
     <None Include="Resources\regtweak.png" />
     <None Include="Resources\wimr.png" />
     <None Include="Resources\quit.png" />
@@ -436,6 +439,9 @@
     <None Include="Resources\colormodes.png" />
     <None Include="Resources\exit.png" />
     <None Include="Resources\dllr.png" />
+    <None Include="Resources\automatic.png" />
+    <None Include="Resources\darkmode.png" />
+    <None Include="Resources\build_mode.png" />
     <Content Include="Resources\HTMLHelp\HelpPage.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
