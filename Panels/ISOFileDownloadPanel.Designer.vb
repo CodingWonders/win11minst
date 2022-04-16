@@ -42,12 +42,27 @@ Partial Class ISOFileDownloadPanel
         Me.WebComponent = New System.Windows.Forms.WebBrowser()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.UAToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BuildModeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BuildModePanel = New System.Windows.Forms.Panel()
+        Me.Button4 = New System.Windows.Forms.Button()
+        Me.BuildPB = New System.Windows.Forms.ProgressBar()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.Button3 = New System.Windows.Forms.Button()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
+        Me.BuildSTLabel = New System.Windows.Forms.Label()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
+        Me.BuildBW = New System.ComponentModel.BackgroundWorker()
         Me.Panel1.SuspendLayout()
         Me.WebComponentLoadPanel.SuspendLayout()
         Me.WebComponentLoadErrorPanel.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.WebComponentPanel.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
+        Me.BuildModePanel.SuspendLayout()
         Me.SuspendLayout()
         '
         'Label1
@@ -221,17 +236,145 @@ Partial Class ISOFileDownloadPanel
         'ContextMenuStrip1
         '
         Me.ContextMenuStrip1.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UAToolStripMenuItem})
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UAToolStripMenuItem, Me.BuildModeToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.ShowImageMargin = False
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(769, 28)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(794, 52)
         '
         'UAToolStripMenuItem
         '
+        Me.UAToolStripMenuItem.Image = Global.Windows_11_Manual_Installer_2._0.My.Resources.Resources.linux_ua
         Me.UAToolStripMenuItem.Name = "UAToolStripMenuItem"
-        Me.UAToolStripMenuItem.Size = New System.Drawing.Size(768, 24)
+        Me.UAToolStripMenuItem.Size = New System.Drawing.Size(793, 24)
         Me.UAToolStripMenuItem.Text = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96." & _
     "0.4664.45 Safari/537.36"
+        '
+        'BuildModeToolStripMenuItem
+        '
+        Me.BuildModeToolStripMenuItem.Image = Global.Windows_11_Manual_Installer_2._0.My.Resources.Resources.build_mode
+        Me.BuildModeToolStripMenuItem.Name = "BuildModeToolStripMenuItem"
+        Me.BuildModeToolStripMenuItem.Size = New System.Drawing.Size(793, 24)
+        Me.BuildModeToolStripMenuItem.Text = "Build mode"
+        '
+        'BuildModePanel
+        '
+        Me.BuildModePanel.Controls.Add(Me.Button4)
+        Me.BuildModePanel.Controls.Add(Me.BuildPB)
+        Me.BuildModePanel.Controls.Add(Me.Button2)
+        Me.BuildModePanel.Controls.Add(Me.Button3)
+        Me.BuildModePanel.Controls.Add(Me.TextBox1)
+        Me.BuildModePanel.Controls.Add(Me.ComboBox1)
+        Me.BuildModePanel.Controls.Add(Me.BuildSTLabel)
+        Me.BuildModePanel.Controls.Add(Me.Label9)
+        Me.BuildModePanel.Controls.Add(Me.Label8)
+        Me.BuildModePanel.Controls.Add(Me.Label7)
+        Me.BuildModePanel.Location = New System.Drawing.Point(43, 66)
+        Me.BuildModePanel.Name = "BuildModePanel"
+        Me.BuildModePanel.Size = New System.Drawing.Size(635, 256)
+        Me.BuildModePanel.TabIndex = 10
+        Me.BuildModePanel.Visible = False
+        '
+        'Button4
+        '
+        Me.Button4.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.Button4.Location = New System.Drawing.Point(531, 114)
+        Me.Button4.Name = "Button4"
+        Me.Button4.Size = New System.Drawing.Size(75, 23)
+        Me.Button4.TabIndex = 5
+        Me.Button4.Text = "Browse..."
+        Me.Button4.UseVisualStyleBackColor = True
+        '
+        'BuildPB
+        '
+        Me.BuildPB.Location = New System.Drawing.Point(32, 166)
+        Me.BuildPB.Name = "BuildPB"
+        Me.BuildPB.Size = New System.Drawing.Size(574, 23)
+        Me.BuildPB.TabIndex = 4
+        '
+        'Button2
+        '
+        Me.Button2.Enabled = False
+        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.Button2.Location = New System.Drawing.Point(256, 85)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(122, 23)
+        Me.Button2.TabIndex = 3
+        Me.Button2.Text = "Open link"
+        Me.Button2.UseMnemonic = False
+        Me.Button2.UseVisualStyleBackColor = True
+        '
+        'Button3
+        '
+        Me.Button3.Enabled = False
+        Me.Button3.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.Button3.Location = New System.Drawing.Point(256, 208)
+        Me.Button3.Name = "Button3"
+        Me.Button3.Size = New System.Drawing.Size(122, 23)
+        Me.Button3.TabIndex = 3
+        Me.Button3.Text = "Build"
+        Me.Button3.UseMnemonic = False
+        Me.Button3.UseVisualStyleBackColor = True
+        '
+        'TextBox1
+        '
+        Me.TextBox1.AllowDrop = True
+        Me.TextBox1.Enabled = False
+        Me.TextBox1.Location = New System.Drawing.Point(148, 114)
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Size = New System.Drawing.Size(377, 23)
+        Me.TextBox1.TabIndex = 2
+        '
+        'ComboBox1
+        '
+        Me.ComboBox1.FormattingEnabled = True
+        Me.ComboBox1.Items.AddRange(New Object() {"Public", "Release Preview", "Beta", "Dev"})
+        Me.ComboBox1.Location = New System.Drawing.Point(251, 56)
+        Me.ComboBox1.Name = "ComboBox1"
+        Me.ComboBox1.Size = New System.Drawing.Size(355, 23)
+        Me.ComboBox1.TabIndex = 1
+        '
+        'BuildSTLabel
+        '
+        Me.BuildSTLabel.AutoSize = True
+        Me.BuildSTLabel.Location = New System.Drawing.Point(29, 148)
+        Me.BuildSTLabel.Name = "BuildSTLabel"
+        Me.BuildSTLabel.Size = New System.Drawing.Size(39, 15)
+        Me.BuildSTLabel.TabIndex = 0
+        Me.BuildSTLabel.Text = "Status"
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Location = New System.Drawing.Point(29, 117)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(113, 15)
+        Me.Label9.TabIndex = 0
+        Me.Label9.Text = "Path to UUP ZIP file:"
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Location = New System.Drawing.Point(29, 59)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(216, 15)
+        Me.Label8.TabIndex = 0
+        Me.Label8.Text = "Channel (follows WIP channel naming):"
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Location = New System.Drawing.Point(29, 26)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(376, 15)
+        Me.Label7.TabIndex = 0
+        Me.Label7.Text = "In here you can specify the options to create a stock Windows installer"
+        '
+        'OpenFileDialog1
+        '
+        Me.OpenFileDialog1.Filter = "ZIP files|*.zip"
+        Me.OpenFileDialog1.Title = "Please specify the path to the UUP ZIP file..."
+        '
+        'BuildBW
+        '
         '
         'ISOFileDownloadPanel
         '
@@ -239,6 +382,7 @@ Partial Class ISOFileDownloadPanel
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(720, 420)
+        Me.Controls.Add(Me.BuildModePanel)
         Me.Controls.Add(Me.WebComponentPanel)
         Me.Controls.Add(Me.WebComponentLoadErrorPanel)
         Me.Controls.Add(Me.WebComponentLoadPanel)
@@ -263,6 +407,8 @@ Partial Class ISOFileDownloadPanel
         Me.GroupBox1.ResumeLayout(False)
         Me.WebComponentPanel.ResumeLayout(False)
         Me.ContextMenuStrip1.ResumeLayout(False)
+        Me.BuildModePanel.ResumeLayout(False)
+        Me.BuildModePanel.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -285,5 +431,19 @@ Partial Class ISOFileDownloadPanel
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents ContextMenuStrip1 As System.Windows.Forms.ContextMenuStrip
     Friend WithEvents UAToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents BuildModeToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents BuildModePanel As System.Windows.Forms.Panel
+    Friend WithEvents BuildPB As System.Windows.Forms.ProgressBar
+    Friend WithEvents Button2 As System.Windows.Forms.Button
+    Friend WithEvents Button3 As System.Windows.Forms.Button
+    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
+    Friend WithEvents ComboBox1 As System.Windows.Forms.ComboBox
+    Friend WithEvents BuildSTLabel As System.Windows.Forms.Label
+    Friend WithEvents Label9 As System.Windows.Forms.Label
+    Friend WithEvents Label8 As System.Windows.Forms.Label
+    Friend WithEvents Label7 As System.Windows.Forms.Label
+    Friend WithEvents Button4 As System.Windows.Forms.Button
+    Friend WithEvents OpenFileDialog1 As System.Windows.Forms.OpenFileDialog
+    Friend WithEvents BuildBW As System.ComponentModel.BackgroundWorker
 
 End Class
