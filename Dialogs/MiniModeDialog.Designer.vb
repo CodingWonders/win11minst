@@ -88,10 +88,11 @@ Partial Class MiniModeDialog
         '
         'backPic
         '
-        Me.backPic.Image = Global.Windows_11_Manual_Installer_2._0.My.Resources.Resources.Bloom_Light
-        Me.backPic.Location = New System.Drawing.Point(0, 0)
+        Me.backPic.Image = CType(resources.GetObject("backPic.Image"), System.Drawing.Image)
+        Me.backPic.Location = New System.Drawing.Point(-557, 0)
         Me.backPic.Name = "backPic"
-        Me.backPic.Size = New System.Drawing.Size(806, 546)
+        Me.backPic.Size = New System.Drawing.Size(1920, 546)
+        Me.backPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
         Me.backPic.TabIndex = 6
         Me.backPic.TabStop = False
         '

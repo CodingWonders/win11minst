@@ -1,8 +1,10 @@
-﻿Imports System.Windows.Forms
+﻿Imports System.IO
+Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.ControlChars
 
 Public Class MiniModeDialog
     Dim HideWnd As Boolean
+    Dim TrueLoc As Integer = 557
     Private Sub OK_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OK_Button.Click
         Me.DialogResult = System.Windows.Forms.DialogResult.OK
         Me.Close()
@@ -77,22 +79,42 @@ Public Class MiniModeDialog
         Label1.BackColor = Color.Transparent
         CheckBox1.BackColor = Color.Transparent
         OK_Button.BackColor = Color.Transparent
-        If MainForm.BackColor = Color.FromArgb(243, 243, 243) Then
-            backPic.Image = New Bitmap(My.Resources.Bloom_Light)
-            tbPic.Image = New Bitmap(My.Resources.tb_White)
-            CheckBox1.ForeColor = Color.Black
-        ElseIf MainForm.BackColor = Color.FromArgb(32, 32, 32) Then
-            backPic.Image = New Bitmap(My.Resources.Bloom_Dark)
-            tbPic.Image = New Bitmap(My.Resources.tb_Black)
-            CheckBox1.ForeColor = Color.White
-        End If
+        Try
+            tbPic.Left = TrueLoc
+            CheckBox1.Left = TrueLoc + 12
+            PictureBox2.Left = TrueLoc + 39
+            Label1.Left = TrueLoc + 104
+            OK_Button.Left = TrueLoc + 741
+            backPic.SizeMode = PictureBoxSizeMode.Zoom
+            backPic.Image = MainForm.backgroundPic.Image
+            If MainForm.BackColor = Color.FromArgb(243, 243, 243) Then
+                tbPic.Image = New Bitmap(My.Resources.tb_White)
+                CheckBox1.ForeColor = Color.Black
+            ElseIf MainForm.BackColor = Color.FromArgb(32, 32, 32) Then
+                tbPic.Image = New Bitmap(My.Resources.tb_Black)
+                CheckBox1.ForeColor = Color.White
+            End If
+        Catch ex As Exception
+            If MainForm.BackColor = Color.FromArgb(243, 243, 243) Then
+                backPic.Image = New Bitmap(My.Resources.Bloom_Light)
+                tbPic.Image = New Bitmap(My.Resources.tb_White)
+                CheckBox1.ForeColor = Color.Black
+            ElseIf MainForm.BackColor = Color.FromArgb(32, 32, 32) Then
+                backPic.Image = New Bitmap(My.Resources.Bloom_Dark)
+                tbPic.Image = New Bitmap(My.Resources.tb_Black)
+                CheckBox1.ForeColor = Color.White
+            End If
+        End Try
     End Sub
 
     Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
         If CheckBox1.Checked = True Then
-            HideWnd = True
+            File.Create(".\noshow")
+            File.SetAttributes(".\noshow", FileAttributes.Hidden)
         Else
-            HideWnd = False
+            If File.Exists(".\noshow") Then
+                File.Delete(".\noshow")
+            End If
         End If
     End Sub
 End Class
