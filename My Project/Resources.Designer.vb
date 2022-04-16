@@ -63,6 +63,16 @@ Namespace My.Resources
         '''<summary>
         '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         '''</summary>
+        Friend ReadOnly Property automatic() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("automatic", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        '''</summary>
         Friend ReadOnly Property back_arrow() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("back_arrow", resourceCulture)
@@ -116,6 +126,16 @@ Namespace My.Resources
         Friend ReadOnly Property Bloom_Light() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Bloom_Light", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property build_mode() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("build_mode", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -246,6 +266,16 @@ Namespace My.Resources
         Friend ReadOnly Property context() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("context", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property darkmode() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("darkmode", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -656,6 +686,26 @@ Namespace My.Resources
         Friend ReadOnly Property language() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("language", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property lightmode() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("lightmode", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property linux_ua() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("linux_ua", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
