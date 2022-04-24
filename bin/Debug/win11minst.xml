@@ -15,6 +15,10 @@ win11minst
   Reemplaza la propiedad CurrentUICulture del subproceso actual para todas las
   búsquedas de recursos mediante esta clase de recurso fuertemente tipado.
 </summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.automatic">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
 </member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.back_arrow">
 	<summary>
   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
@@ -36,6 +40,10 @@ win11minst
   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
 </summary>
 </member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.Bloom_Light">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.build_mode">
 	<summary>
   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
 </summary>
@@ -88,6 +96,10 @@ win11minst
   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
 </summary>
 </member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.context">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.darkmode">
 	<summary>
   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
 </summary>
@@ -252,6 +264,14 @@ win11minst
   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
 </summary>
 </member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.language">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.lightmode">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.linux_ua">
 	<summary>
   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
 </summary>
