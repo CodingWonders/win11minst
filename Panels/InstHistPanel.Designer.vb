@@ -46,7 +46,7 @@ Partial Class InstHistPanel
         'OK_Button
         '
         Me.OK_Button.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.OK_Button.BackColor = System.Drawing.Color.DodgerBlue
+        Me.OK_Button.BackColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(92, Byte), Integer), CType(CType(186, Byte), Integer))
         Me.OK_Button.FlatAppearance.BorderColor = System.Drawing.Color.DeepSkyBlue
         Me.OK_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.OK_Button.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))

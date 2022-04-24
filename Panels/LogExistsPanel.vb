@@ -31,10 +31,14 @@ Public Class LogExistsPanel
             Me.BackColor = Color.White
             Me.ForeColor = Color.Black
             Panel1.BackColor = Color.FromArgb(243, 243, 243)
+            Yes_Button.BackColor = Color.FromArgb(1, 92, 186)
+            Yes_Button.ForeColor = Color.White
         ElseIf MainForm.BackColor = Color.FromArgb(32, 32, 32) Then
             Me.BackColor = Color.FromArgb(43, 43, 43)
             Me.ForeColor = Color.White
             Panel1.BackColor = Color.FromArgb(32, 32, 32)
+            Yes_Button.BackColor = Color.FromArgb(76, 194, 255)
+            Yes_Button.ForeColor = Color.Black
         End If
     End Sub
 

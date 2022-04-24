@@ -38,23 +38,23 @@ Public Class DisclaimerPanel
             Label1.Text = "Disclaimer notice"
             OK_Button.Text = "OK"
             Exit_Button.Text = "Exit"
-            TextBox1.Text = "You must only use this tool on a system that you don't use productively." & CrLf & "Microsoft has recently warned that unsupported systems running Windows 11 might not recieve updates in the future." & CrLf & CrLf & "The modified installation images you create will also work on supported systems, but you can natively install Windows 11 on them, without performing modifications to the installation image." & CrLf & "If you have an unsupported system, don't upgrade it to Windows 11. Instead, you can perform a dual-boot, or use another system (that would be the best option anyway)"
+            TextBox1.Text = "You must only use this tool on a system that you don't use productively." & CrLf & "Microsoft has warned that unsupported systems running Windows 11 might not recieve updates in the future." & CrLf & CrLf & "The modified installation images you create will also work on supported systems, but you can natively install Windows 11 on them, without performing modifications to the installation image." & CrLf & "If you have an unsupported system, don't upgrade it to Windows 11. Instead, you can perform a dual-boot, or use another system (that would be the best option anyway)" & CrLf & CrLf & "This tool MUST NOT be used to pirate Windows images, and the program developer recommends you get Windows legally." & CrLf & "The components used by the program are covered by their license agreements. These specify the rules for their use and redistribution." & CrLf & CrLf & "If you agree to this disclaimer notice and want to continue using the software, click OK. Otherwise, click Exit."
         ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Then
             Label1.Text = "Descargo de responsabilidad"
             OK_Button.Text = "Aceptar"
             Exit_Button.Text = "Salir"
-            TextBox1.Text = "Usted solo debe utilizar esta herramienta en un sistema que no use productivamente." & CrLf & "Microsoft ha avisado recientemente de que sistemas no soportados ejecutando Windows 11 podrían no recibir actualizaciones en el futuro." & CrLf & CrLf & "Las imágenes de instalación modificadas que usted cree también funcionarán en sistemas soportados, pero usted puede instalar Windows 11 de forma nativa en ellos, sin realizar modificaciones a la imagen de instalación." & CrLf & "Si usted tiene un sistema no soportado, no lo actualice a Windows 11. En vez de eso, puede realizar un arranque dual, o usar otro sistema (ésta sería la mejor opción de todas formas)"
+            TextBox1.Text = "Usted solo debe utilizar esta herramienta en un sistema que no use productivamente." & CrLf & "Microsoft ha avisado de que sistemas no soportados ejecutando Windows 11 podrían no recibir actualizaciones en el futuro." & CrLf & CrLf & "Las imágenes de instalación modificadas que usted cree también funcionarán en sistemas soportados, pero usted puede instalar Windows 11 de forma nativa en ellos, sin realizar modificaciones a la imagen de instalación." & CrLf & "Si usted tiene un sistema no soportado, no lo actualice a Windows 11. En vez de eso, puede realizar un arranque dual, o usar otro sistema (ésta sería la mejor opción de todas formas)" & CrLf & CrLf & "Esta herramienta NO DEBE ser usada para piratear imágenes de Windows, y el desarrollador del programa le recomienda obtener Windows legalmente." & CrLf & "Los componentes utilizados por el programa están protegidos por sus acuerdos de licencia. Éstos especifican las reglas de su uso y redistribución." & CrLf & CrLf & "Si acepta este descargo de responsabilidad y quiere continuar usando el software, haga clic en Aceptar. En caso contrario, haga clic en Salir."
         ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 Label1.Text = "Disclaimer notice"
                 OK_Button.Text = "OK"
                 Exit_Button.Text = "Exit"
-                TextBox1.Text = "You must only use this tool on a system that you don't use productively." & CrLf & "Microsoft has recently warned that unsupported systems running Windows 11 might not recieve updates in the future." & CrLf & CrLf & "The modified installation images you create will also work on supported systems, but you can natively install Windows 11 on them, without performing modifications to the installation image." & CrLf & "If you have an unsupported system, don't upgrade it to Windows 11. Instead, you can perform a dual-boot, or use another system (that would be the best option anyway)"
+                TextBox1.Text = "You must only use this tool on a system that you don't use productively." & CrLf & "Microsoft has warned that unsupported systems running Windows 11 might not recieve updates in the future." & CrLf & CrLf & "The modified installation images you create will also work on supported systems, but you can natively install Windows 11 on them, without performing modifications to the installation image." & CrLf & "If you have an unsupported system, don't upgrade it to Windows 11. Instead, you can perform a dual-boot, or use another system (that would be the best option anyway)" & CrLf & CrLf & "This tool MUST NOT be used to pirate Windows images, and the program developer recommends you get Windows legally." & CrLf & "The components used by the program are covered by their license agreements. These specify the rules for their use and redistribution." & CrLf & CrLf & "If you agree to this disclaimer notice and want to continue using the software, click OK. Otherwise, click Exit."
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 Label1.Text = "Descargo de responsabilidad"
                 OK_Button.Text = "Aceptar"
                 Exit_Button.Text = "Salir"
-                TextBox1.Text = "Usted solo debe utilizar esta herramienta en un sistema que no use productivamente." & CrLf & "Microsoft ha avisado recientemente de que sistemas no soportados ejecutando Windows 11 podrían no recibir actualizaciones en el futuro." & CrLf & CrLf & "Las imágenes de instalación modificadas que usted cree también funcionarán en sistemas soportados, pero usted puede instalar Windows 11 de forma nativa en ellos, sin realizar modificaciones a la imagen de instalación." & CrLf & "Si usted tiene un sistema no soportado, no lo actualice a Windows 11. En vez de eso, puede realizar un arranque dual, o usar otro sistema (ésta sería la mejor opción de todas formas)"
+                TextBox1.Text = "Usted solo debe utilizar esta herramienta en un sistema que no use productivamente." & CrLf & "Microsoft ha avisado de que sistemas no soportados ejecutando Windows 11 podrían no recibir actualizaciones en el futuro." & CrLf & CrLf & "Las imágenes de instalación modificadas que usted cree también funcionarán en sistemas soportados, pero usted puede instalar Windows 11 de forma nativa en ellos, sin realizar modificaciones a la imagen de instalación." & CrLf & "Si usted tiene un sistema no soportado, no lo actualice a Windows 11. En vez de eso, puede realizar un arranque dual, o usar otro sistema (ésta sería la mejor opción de todas formas)" & CrLf & CrLf & "Esta herramienta NO DEBE ser usada para piratear imágenes de Windows, y el desarrollador del programa le recomienda obtener Windows legalmente." & CrLf & "Los componentes utilizados por el programa están protegidos por sus acuerdos de licencia. Éstos especifican las reglas de su uso y redistribución." & CrLf & CrLf & "Si acepta este descargo de responsabilidad y quiere continuar usando el software, haga clic en Aceptar. En caso contrario, haga clic en Salir."
             End If
         End If
         If MainForm.BackColor = Color.FromArgb(243, 243, 243) Then
@@ -63,12 +63,16 @@ Public Class DisclaimerPanel
             Panel1.BackColor = Color.FromArgb(243, 243, 243)
             TextBox1.BackColor = Color.White
             TextBox1.ForeColor = Color.Black
+            OK_Button.BackColor = Color.FromArgb(1, 92, 186)
+            OK_Button.ForeColor = Color.White
         ElseIf MainForm.BackColor = Color.FromArgb(32, 32, 32) Then
             Me.BackColor = Color.FromArgb(43, 43, 43)
             Me.ForeColor = Color.White
             Panel1.BackColor = Color.FromArgb(32, 32, 32)
             TextBox1.BackColor = Color.FromArgb(43, 43, 43)
             TextBox1.ForeColor = Color.White
+            OK_Button.BackColor = Color.FromArgb(76, 194, 255)
+            OK_Button.ForeColor = Color.Black
         End If
         Text = Label1.Text
     End Sub

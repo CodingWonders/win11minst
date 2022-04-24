@@ -56,7 +56,7 @@ Partial Class InstCreateAbortPanel
         'No_Button
         '
         Me.No_Button.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.No_Button.BackColor = System.Drawing.Color.DodgerBlue
+        Me.No_Button.BackColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(92, Byte), Integer), CType(CType(186, Byte), Integer))
         Me.No_Button.FlatAppearance.BorderColor = System.Drawing.Color.DeepSkyBlue
         Me.No_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.No_Button.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))

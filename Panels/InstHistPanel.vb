@@ -36,12 +36,16 @@ Public Class InstHistPanel
             Panel1.BackColor = Color.FromArgb(243, 243, 243)
             InstallerListView.ForeColor = Color.Black
             InstallerListView.BackColor = Color.White
+            OK_Button.BackColor = Color.FromArgb(1, 92, 186)
+            OK_Button.ForeColor = Color.White
         ElseIf MainForm.BackColor = Color.FromArgb(32, 32, 32) Then
             Me.BackColor = Color.FromArgb(43, 43, 43)
             Me.ForeColor = Color.White
             Panel1.BackColor = Color.FromArgb(32, 32, 32)
             InstallerListView.ForeColor = Color.White
             InstallerListView.BackColor = Color.FromArgb(43, 43, 43)
+            OK_Button.BackColor = Color.FromArgb(76, 194, 255)
+            OK_Button.ForeColor = Color.Black
         End If
         If InstallerListView.Items.Count = 0 Then
             If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then

@@ -330,6 +330,8 @@ Public Class ISOFileScanPanel
             ListBox1.ForeColor = Color.Black
             PictureBox1.Image = New Bitmap(My.Resources.pref_reset)
             Panel1.BackColor = Color.FromArgb(243, 243, 243)
+            OK_Button.BackColor = Color.FromArgb(1, 92, 186)
+            OK_Button.ForeColor = Color.White
         ElseIf MainForm.BackColor = Color.FromArgb(32, 32, 32) Then
             Me.BackColor = Color.FromArgb(43, 43, 43)
             TextBox1.BackColor = Color.FromArgb(43, 43, 43)
@@ -339,6 +341,8 @@ Public Class ISOFileScanPanel
             Me.ForeColor = Color.White
             PictureBox1.Image = New Bitmap(My.Resources.pref_reset_dark)
             Panel1.BackColor = Color.FromArgb(32, 32, 32)
+            OK_Button.BackColor = Color.FromArgb(76, 194, 255)
+            OK_Button.ForeColor = Color.Black
         End If
     End Sub
 

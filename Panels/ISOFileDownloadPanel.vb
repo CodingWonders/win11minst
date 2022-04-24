@@ -67,10 +67,14 @@ Public Class ISOFileDownloadPanel
             BackColor = Color.White
             ForeColor = Color.Black
             Panel1.BackColor = Color.FromArgb(243, 243, 243)
+            OK_Button.BackColor = Color.FromArgb(1, 92, 186)
+            OK_Button.ForeColor = Color.White
         ElseIf MainForm.BackColor = Color.FromArgb(32, 32, 32) Then
             BackColor = Color.FromArgb(43, 43, 43)
             ForeColor = Color.White
             Panel1.BackColor = Color.FromArgb(32, 32, 32)
+            OK_Button.BackColor = Color.FromArgb(76, 194, 255)
+            OK_Button.ForeColor = Color.Black
         End If
         Try
             If ModeSelectComboBox.SelectedItem = "Windows 11" Then
