@@ -206,12 +206,12 @@ Partial Class MissingComponentsDialog
         '
         'Label9
         '
-        Me.Label9.AutoSize = True
+        Me.Label9.AutoEllipsis = True
         Me.Label9.Location = New System.Drawing.Point(27, 297)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(331, 15)
+        Me.Label9.Size = New System.Drawing.Size(554, 41)
         Me.Label9.TabIndex = 26
-        Me.Label9.Text = "Point your mouse cursor over an entry to show its description"
+        Me.Label9.Text = "Point your mouse cursor over an entry to show its description."
         '
         'Label10
         '
@@ -284,6 +284,7 @@ Partial Class MissingComponentsDialog
         Me.Controls.Add(Me.closeBox)
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "MissingComponentsDialog"
