@@ -31,7 +31,7 @@ Let's break it down
 ## Building the software
 To make a build of this software, you need to do the following:
 Prerequisites:
-- [.NET Framework 4.6.2 Developer Pack][netfxdp]
+- [.NET Framework 4.8 Developer Pack][netfxdp]
 
 1. Open the *.sln* file on Visual Studio 2012 or newer
 
@@ -53,4 +53,4 @@ Prerequisites:
 
 You now have a working copy of the Windows 11 Manual Installer.
 
-[netfxdp]: https://dotnet.microsoft.com/en-us/download/dotnet-framework/thank-you/net462-developer-pack-offline-installer ".NET Framework 4.6.2 Developer Pack"
+[netfxdp]: https://dotnet.microsoft.com/en-us/download/dotnet-framework/thank-you/net48-developer-pack-offline-installer ".NET Framework 4.8 Developer Pack"
