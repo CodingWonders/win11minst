@@ -242,6 +242,12 @@
     <Compile Include="Dialogs\MissingComponentsDialog.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Panels\MethodHelpPanel.Designer.vb">
+      <DependentUpon>MethodHelpPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\MethodHelpPanel.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Panels\PrefResetPanel.Designer.vb">
       <DependentUpon>PrefResetPanel.vb</DependentUpon>
     </Compile>
@@ -359,6 +365,9 @@
     <EmbeddedResource Include="Dialogs\MissingComponentsDialog.resx">
       <DependentUpon>MissingComponentsDialog.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Panels\MethodHelpPanel.resx">
+      <DependentUpon>MethodHelpPanel.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Panels\PrefResetPanel.resx">
       <DependentUpon>PrefResetPanel.vb</DependentUpon>
     </EmbeddedResource>
@@ -414,6 +423,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon3.ico" />
+    <None Include="Resources\wimr_mh.png" />
+    <None Include="Resources\regtweak_mh.png" />
     <None Include="Resources\linux_ua.png" />
     <None Include="Resources\lightmode.png" />
     <None Include="Resources\regtweak.png" />
@@ -449,6 +460,7 @@
     <None Include="Resources\automatic.png" />
     <None Include="Resources\darkmode.png" />
     <None Include="Resources\build_mode.png" />
+    <None Include="Resources\dllr_mh.png" />
     <Content Include="Resources\HTMLHelp\HelpPage.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
