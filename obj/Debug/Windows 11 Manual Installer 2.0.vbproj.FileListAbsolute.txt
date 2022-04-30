@@ -50,3 +50,4 @@ C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\bin\Debug\win11minst.xml
 C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\obj\Debug\Windows_11_Manual_Installer_2._0.ISOFileDownloadPanel.resources
 C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\obj\Debug\Windows_11_Manual_Installer_2._0.ImageFileListDialog.resources
 C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\bin\Debug\Microsoft.VisualBasic.PowerPacks.Vs.xml
+C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\obj\Debug\Windows_11_Manual_Installer_2._0.MethodHelpPanel.resources
