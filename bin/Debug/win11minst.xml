@@ -115,6 +115,10 @@ win11minst
 	<summary>
   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
 </summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.dllr_mh">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
 </member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.file_create_fluent">
 	<summary>
   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
@@ -427,6 +431,10 @@ win11minst
 	<summary>
   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
 </summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.regtweak_mh">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
 </member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.restdownbox">
 	<summary>
   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
@@ -504,6 +512,10 @@ win11minst
   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
 </summary>
 </member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.wimr">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer_2._0.My.Resources.Resources.wimr_mh">
 	<summary>
   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
 </summary>
