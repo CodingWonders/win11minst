@@ -10,8 +10,9 @@ Imports System.Text.Encoding
 Public Class MainForm
     Private isMouseDown As Boolean = False
     Private mouseOffset As Point
-    Dim VerStr As String = "2.0.0100_220424"    ' Reported version
+    Dim VerStr As String = "2.0.0100_220501"    ' Reported version
     Dim AVerStr As String = My.Application.Info.Version.ToString()     ' Assembly version
+    Dim VDescStr As String = "Happy International Worker's day!"
     Dim OffEcho As String = "@echo off"
     Dim wmiget As String
     Dim StDebugTime As Date = Now
@@ -113,11 +114,15 @@ Public Class MainForm
                     Notify.BalloonTipText = "Haga clic en este mensaje para traerlo de vuelta."
                 End If
             End If
-            If NotifyNum = 0 Then
-                NotifyNum += 1
+            If CheckBox1.Checked = True And CheckBox1.Enabled = True Then
+                If NotifyNum = 0 Then
+                    NotifyNum += 1
+                    Notify.ShowBalloonTip(5)
+                ElseIf NotifyNum = 1 Then
+                    ' Do not show the notification
+                End If
+            Else
                 Notify.ShowBalloonTip(5)
-            ElseIf NotifyNum = 1 Then
-                ' Do not show the notification
             End If
             WindowState = FormWindowState.Minimized
             ShowInTaskbar = False
@@ -322,22 +327,25 @@ Public Class MainForm
     Sub LoadSettingsFile()
         If File.Exists(".\settings.ini") Then
             SettingLoadForm.TextBox1.Text = My.Computer.FileSystem.ReadAllText(".\settings.ini", UTF8)
-            If SettingLoadForm.TextBox1.Text.Contains("ColorMode=0") Then       ' This does color mode checkup
+            If SettingLoadForm.TextBox1.Text.Contains("ColorMode=2") Then       ' This does color mode checkup
                 ComboBox1.SelectedItem = "Light"
             ElseIf SettingLoadForm.TextBox1.Text.Contains("ColorMode=1") Then
                 ComboBox1.SelectedItem = "Dark"
-            ElseIf SettingLoadForm.TextBox1.Text.Contains("ColorMode=2") Then
+            ElseIf SettingLoadForm.TextBox1.Text.Contains("ColorMode=0") Then
                 If My.Computer.Info.OSFullName.Contains("Windows 7") Or My.Computer.Info.OSFullName.Contains("Windows 8") Or My.Computer.Info.OSFullName.Contains("Windows Server 2008") Or My.Computer.Info.OSFullName.Contains("Windows Server 2012") Then      ' If the program detects these settings, it will default to Light mode as a fallback mechanism
                     ComboBox1.SelectedItem = "Light"
                 Else
                     ComboBox1.SelectedItem = "Automatic"
                 End If
             End If
-            If SettingLoadForm.TextBox1.Text.Contains("Language=0") Then
+            If SettingLoadForm.TextBox1.Text.Contains("Language=1") Then
+                LangInt = 1
                 ComboBox4.SelectedItem = "English"
-            ElseIf SettingLoadForm.TextBox1.Text.Contains("Language=1") Then
-                ComboBox4.SelectedItem = "Spanish"
             ElseIf SettingLoadForm.TextBox1.Text.Contains("Language=2") Then
+                LangInt = 2
+                ComboBox4.SelectedItem = "Spanish"
+            ElseIf SettingLoadForm.TextBox1.Text.Contains("Language=0") Then
+                LangInt = 0
                 ComboBox4.SelectedItem = "Automatic"
             End If
             If SettingLoadForm.TextBox1.Text.Contains("NavBarPos=0") Then
@@ -345,9 +353,57 @@ Public Class MainForm
             ElseIf SettingLoadForm.TextBox1.Text.Contains("NavBarPos=1") Then
                 RadioButton3.Checked = False
             End If
+            ' Functionality
+            If SettingLoadForm.TextBox1.Text.Contains("AdminMode=1") Then
+                If Not My.User.IsInRole(ApplicationServices.BuiltInRole.Administrator) Then
+                    ComboBox5.Items.Clear()
+                    ComboBox5.Items.Add("WIMR")
+                    ComboBox5.Items.Add("DLLR")
+                    ComboBox5.SelectedItem = "WIMR"
+                    WIMRToolStripMenuItem.Checked = True
+                    REGTWEAKToolStripMenuItem.Visible = False
+                End If
+            ElseIf SettingLoadForm.TextBox1.Text.Contains("AdminMode=0") Then
+                If SettingLoadForm.TextBox1.Text.Contains("Method=REGTWEAK") Then
+                    ComboBox5.Items.Clear()
+                    ComboBox5.Items.Add("WIMR")
+                    ComboBox5.Items.Add("DLLR")
+                    ComboBox5.SelectedItem = "WIMR"
+                    WIMRToolStripMenuItem.Checked = True
+                    REGTWEAKToolStripMenuItem.Visible = False
+                End If
+            End If
+            If SettingLoadForm.TextBox1.Text.Contains("BiosCompat=1") Then
+                RadioButton1.Checked = True
+                RadioButton2.Checked = False
+            ElseIf SettingLoadForm.TextBox1.Text.Contains("BiosCompat=0") Then
+                RadioButton1.Checked = False
+                RadioButton2.Checked = True
+            End If
+            If SettingLoadForm.TextBox1.Text.Contains("HideSysTray=1") Then
+                CheckBox3.Checked = True
+            ElseIf SettingLoadForm.TextBox1.Text.Contains("HideSysTray=0") Then
+                CheckBox3.Checked = False
+            End If
+            If SettingLoadForm.TextBox1.Text.Contains("ExitProgramAfterFinish=1") Then
+                CheckBox4.Checked = True
+            ElseIf SettingLoadForm.TextBox1.Text.Contains("ExitProgramAfterFinish=0") Then
+                CheckBox4.Checked = False
+            End If
+            If SettingLoadForm.TextBox1.Text.Contains("ShowOnce=1") Then
+                If CheckBox3.Checked = True Then
+                    CheckBox1.Checked = True
+                Else
+                    CheckBox1.Enabled = False
+                    CheckBox1.Checked = False
+                End If
+            ElseIf SettingLoadForm.TextBox1.Text.Contains("ShowOnce=0") Then
+                CheckBox1.Checked = False
+            End If
             If SettingLoadForm.TextBox1.Text.Contains("ReuseSI=1") Then
                 InstProjectReuseDialog.ShowDialog()
             End If
+
         Else
             SaveSettingsFile()
         End If
@@ -360,18 +416,18 @@ Public Class MainForm
         SettingLoadForm.TextBox2.Clear()
         SettingLoadForm.TextBox2.AppendText("# Settings file for the Windows 11 Manual Installer" & CrLf & CrLf & "[Personalization]" & CrLf)
         If ComboBox1.SelectedItem = "Light" Or ComboBox1.SelectedItem = "Claro" Then
-            SettingLoadForm.TextBox2.AppendText("ColorMode=0")
+            SettingLoadForm.TextBox2.AppendText("ColorMode=2")
         ElseIf ComboBox1.SelectedItem = "Dark" Or ComboBox1.SelectedItem = "Oscuro" Then
             SettingLoadForm.TextBox2.AppendText("ColorMode=1")
         ElseIf ComboBox1.SelectedItem = "Automatic" Or ComboBox1.SelectedItem = "Automático" Then
-            SettingLoadForm.TextBox2.AppendText("ColorMode=2")
+            SettingLoadForm.TextBox2.AppendText("ColorMode=0")
         End If
         If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
-            SettingLoadForm.TextBox2.AppendText(CrLf & "Language=0")
-        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
             SettingLoadForm.TextBox2.AppendText(CrLf & "Language=1")
-        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
             SettingLoadForm.TextBox2.AppendText(CrLf & "Language=2")
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            SettingLoadForm.TextBox2.AppendText(CrLf & "Language=0")
         End If
         If RadioButton3.Checked = True Then
             SettingLoadForm.TextBox2.AppendText(CrLf & "NavBarPos=0")
@@ -405,6 +461,15 @@ Public Class MainForm
         Else
             SettingLoadForm.TextBox2.AppendText(CrLf & "ExitProgramAfterFinish=0")
         End If
+        If CheckBox1.Enabled = True Then
+            If CheckBox1.Checked = True Then
+                SettingLoadForm.TextBox2.AppendText(CrLf & "ShowOnce=1")
+            Else
+                SettingLoadForm.TextBox2.AppendText(CrLf & "ShowOnce=0")
+            End If
+        Else
+            SettingLoadForm.TextBox2.AppendText(CrLf & "ShowOnce=0")
+        End If
         SettingLoadForm.TextBox2.AppendText(CrLf & CrLf & "[ICOptn]" & CrLf)
 
         If SettingReviewPanel.Visible = True Then
@@ -422,6 +487,8 @@ Public Class MainForm
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         VersionToolStripMenuItem.Text = "version " & VerStr & " (assembly version " & AVerStr & ")"
         Label72.Text = "version " & VerStr & " (assembly version " & AVerStr & ")"
+        Label74.Text = VDescStr
+        Label7.Text = "version " & VerStr
         Notify.Visible = False
         If My.Computer.Info.OSFullName.Contains("Windows 7") Or My.Computer.Info.OSFullName.Contains("Windows 8") Or My.Computer.Info.OSFullName.Contains("Windows Server 2008") Or My.Computer.Info.OSFullName.Contains("Windows Server 2012") Then      ' This is done to not show the "Not supported" dialog on Windows 7 and 8/8.1
             ComboBox1.Items.Clear()
@@ -460,6 +527,7 @@ Public Class MainForm
                 ComboBox5.Items.Add("DLLR")
                 ComboBox5.SelectedItem = "WIMR"
                 ' Set the REGTWEAK CMS element invisible
+                WIMRToolStripMenuItem.Checked = True
                 REGTWEAKToolStripMenuItem.Visible = False
             End If
         End If
@@ -1093,7 +1161,7 @@ Public Class MainForm
 
             ' This is for the Group Box
             GroupBox1.ForeColor = Color.White
-            GroupBox2.ForeColor = Color.White
+            GroupBox12.ForeColor = Color.White
             GroupBox3.ForeColor = Color.White
             GroupBox4.ForeColor = Color.White
             GroupBox5.ForeColor = Color.White
@@ -1197,7 +1265,7 @@ Public Class MainForm
 
 
         ElseIf ComboBox1.SelectedItem = "Light" Or ComboBox1.SelectedItem = "Claro" Then
-            ColorInt = 0
+            ColorInt = 2
             If RadioButton3.Checked = True Then
                 PictureBox2.Image = New Bitmap(My.Resources.NavBar_LeftPos_Light)
             Else
@@ -1249,7 +1317,7 @@ Public Class MainForm
             CompPic.Image = New Bitmap(My.Resources.comp_light)
             PictureBox35.Image = New Bitmap(My.Resources.file_download_light)
             GroupBox1.ForeColor = Color.Black
-            GroupBox2.ForeColor = Color.Black
+            GroupBox12.ForeColor = Color.Black
             GroupBox3.ForeColor = Color.Black
             GroupBox4.ForeColor = Color.Black
             GroupBox5.ForeColor = Color.Black
@@ -1343,7 +1411,7 @@ Public Class MainForm
             LinkLabel14.LinkColor = Color.FromArgb(1, 92, 186)
             TargetInstallerLinkLabel.LinkColor = Color.FromArgb(1, 92, 186)
         ElseIf ComboBox1.SelectedItem = "Automatic" Or ComboBox1.SelectedItem = "Automático" Then
-            ColorInt = 2
+            ColorInt = 0
             Try
                 If My.Computer.Info.OSFullName.Contains("Windows 7") Or My.Computer.Info.OSFullName.Contains("Windows 8") Or My.Computer.Info.OSFullName.Contains("Windows Server 2008") Or My.Computer.Info.OSFullName.Contains("Windows Server 2012") Then
                     ' Don't do this again!!!
@@ -1415,7 +1483,7 @@ Public Class MainForm
                         PictureBox35.Image = New Bitmap(My.Resources.file_download_dark)
                         BranchPic.Image = New Bitmap(My.Resources.hummingbird_dark)
                         GroupBox1.ForeColor = Color.White
-                        GroupBox2.ForeColor = Color.White
+                        GroupBox12.ForeColor = Color.White
                         GroupBox3.ForeColor = Color.White
                         GroupBox4.ForeColor = Color.White
                         GroupBox5.ForeColor = Color.White
@@ -1572,7 +1640,7 @@ Public Class MainForm
                         CheckPic4.Image = New Bitmap(My.Resources.check)
                         CheckPic5.Image = New Bitmap(My.Resources.check)
                         GroupBox1.ForeColor = Color.Black
-                        GroupBox2.ForeColor = Color.Black
+                        GroupBox12.ForeColor = Color.Black
                         GroupBox3.ForeColor = Color.Black
                         GroupBox4.ForeColor = Color.Black
                         GroupBox5.ForeColor = Color.Black
@@ -3828,10 +3896,6 @@ Public Class MainForm
         ConglomerateToolTip.SetToolTip(GroupBox7, "Here you can specify the name and location of the target installer")
     End Sub
 
-    Private Sub GroupBox2_MouseHover(sender As Object, e As EventArgs) Handles GroupBox2.MouseHover
-        ConglomerateToolTip.SetToolTip(GroupBox2, "Here is a description of all the methods that can be used to create the installer")
-    End Sub
-
     Private Sub Label22_MouseHover(sender As Object, e As EventArgs) Handles Label22.MouseHover, RadioButton1.MouseHover, RadioButton2.MouseHover
         ConglomerateToolTip.SetToolTip(Label22, "Here you can set the platform compatibility for the target installer. If you set " & Quote & "BIOS/UEFI-CSM" & Quote & " the installer will be guaranteed for broader hardware compatibility. View the platform compatibility details for more information")
     End Sub
@@ -3840,7 +3904,7 @@ Public Class MainForm
         ConglomerateToolTip.SetToolTip(GroupBox3, "Here you can see the details of your selected platform compatibility option")
     End Sub
 
-    Private Sub GroupBox4_MouseHover(sender As Object, e As EventArgs) Handles GroupBox4.MouseHover, Label24.MouseHover
+    Private Sub GroupBox4_MouseHover(sender As Object, e As EventArgs) Handles GroupBox4.MouseHover, Label24.MouseHover, GroupBox12.MouseHover
         ConglomerateToolTip.SetToolTip(GroupBox4, "In this section you can specify the target installer's label. The maximum amount of characters you can set as the label is 32")    ' , so please be creative when putting a custom label!!!
     End Sub
 
@@ -3852,7 +3916,7 @@ Public Class MainForm
         ConglomerateToolTip.SetToolTip(LabelSetButton, "Click here to set this label")
     End Sub
 
-    Private Sub SetDefaultButton_MouseHover(sender As Object, e As EventArgs) Handles SetDefaultButton.MouseHover, Button13.MouseHover
+    Private Sub SetDefaultButton_MouseHover(sender As Object, e As EventArgs) Handles SetDefaultButton.MouseHover, Button13.MouseHover, Button11.MouseHover
         ConglomerateToolTip.SetToolTip(SetDefaultButton, "Click here to set the default label, " & Quote & "Windows11" & Quote & ", for the custom installer")
     End Sub
 
@@ -3896,7 +3960,7 @@ Public Class MainForm
 
     Private Sub ComboBox4_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox4.SelectedIndexChanged
         If ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
-            LangInt = 1
+            LangInt = 2
             If My.User.IsInRole(ApplicationServices.BuiltInRole.Administrator) Then
                 Text = "Instalador manual de Windows 11 (modo de administrador)"
             Else
@@ -3909,7 +3973,7 @@ Public Class MainForm
             Label101.Text = "Ayuda"
             Label102.Text = "Acerca de"
             Label104.Text = "Instrucciones"
-            Label105.Text = "El código fuente de este programa lo puede encontrar en GitHub." & CrLf & CrLf & "- Este proyecto puede ser abierto en Visual Studio 2012 y más reciente, sin necesidad de conversión" & CrLf & "- El Pack de Desarrolladores de .NET Framework 4.8 debe ser instalado para abrir este proyecto" & CrLf & CrLf & "¿Desea sugerir alguna nueva característica para ser incluida en una versión futura? ¿Ha notado algún error del que desea informar? No dude en reportar errores (necesita una cuenta de GitHub). Sus opiniones son cruciales." & CrLf & CrLf & "¿Desea disfrutar de las últimas características? ¡Compruebe la rama Hummingbird! Actualizaciones semanales, características nuevas y una vista previa del futuro del programa"
+            Label105.Text = "El código fuente de este programa lo puede encontrar en GitHub." & CrLf & CrLf & "- Este proyecto puede ser abierto en Visual Studio 2012 y más reciente, sin necesidad de conversión" & CrLf & "- El Pack de Desarrolladores de .NET Framework 4.8 debe ser instalado para abrir este proyecto" & CrLf & CrLf & "¿Desea sugerir alguna nueva característica para ser incluida en una versión futura? ¿Ha notado algún error del que desea informar? No dude en reportar errores o (incluso mejor) contribuye al proyecto (necesita una cuenta de GitHub). Sus opiniones son cruciales." & CrLf & CrLf & "¿Desea disfrutar de las últimas características? ¡Compruebe la rama Hummingbird! Actualizaciones semanales, características nuevas y una vista previa del futuro del programa"
             Label106.Text = "Lanzamiento Hummingbird"
             Label107.Text = "Disfrute de características nuevas"
             Label107.Left = Label106.Left + Label106.Width
@@ -3931,7 +3995,6 @@ Public Class MainForm
             Label19.Text = "Idioma:"
             Label2.Text = "Muestra información sobre el programa"
             Label20.Text = "Método de creación del instalador:"
-            Label21.Text = "WIMR: WIM-Replace - reemplaza " & Quote & "install.wim" & Quote & " del instalador de Windows 10 con el de Windows 11" & CrLf & "DLLR: DLL-Replace - reemplaza " & Quote & "appraiser.dll" & Quote & " y " & Quote & "appraiserres.dll" & Quote & " del instalador de Windows 11 con los de Windows 10" & CrLf & "REGTWEAK - hace cambios al registro del instalador de Windows 11. No se necesita un instalador de Windows 10" & CrLf & "Dese cuenta de que REGTWEAK está disponible con privilegios de administrador"
             Label22.Text = "Compatibilidad de plataformas:"
             ' Label23, 26 and 27 aren't affected in any matter
             Label24.Text = "Aquí puede asignar una etiqueta personalizada"
@@ -3972,11 +4035,11 @@ Public Class MainForm
             Label6.Text = "Instalador manual de Windows 11"
             Label60.Text = "Cuando esté listo, haga clic en " & Quote & "Crear" & Quote
             Label63.Text = "Revise sus configuraciones"
-            Label64.Text = "Ubicación y nombre"
+            Label64.Text = "Ubicación y nombre:"
             Label65.Text = "Imagen de Windows 11:"
             Label66.Text = "Imagen de Windows 10:"
             Label69.Text = "Método:"
-            Label7.Text = "versión 2.0.0100_220417"
+            Label7.Text = "versión " & VerStr
             ' Labels71 through 74 were deleted due to lack of functionality
             Label75.Text = "Compatibilidad de plataformas:"
             Label77.Text = "Etiqueta del instalador:"
@@ -3995,6 +4058,7 @@ Public Class MainForm
             Label97.Text = "Todos los componentes mostrados aquí son protegidos por sus propios términos de licencia, y este programa SOLO puede redistribuir componentes de código abierto."
             AdminLabel.Text = "MODO DE ADMINISTRADOR"
             ProgramTitleLabel.Text = "Instalador manual de Windows 11"
+            Last_Created_Inst_Label.Text = "Último instalador creado a las:"
 
 
             ' Labels that belong to main sections will adopt the text from the main panels
@@ -4029,7 +4093,7 @@ Public Class MainForm
             Else
                 Win10PresenceSTLabel.Text = "Estado de presencia: este archivo no existe"
             End If
-            If TextBox1.Text = "" Then
+            If TextBox2.Text = "" Then
                 Win10PresenceSTLabel.Text = "Estado de presencia: desconocido"
             End If
             If TextBox4.Text.EndsWith("\") Then
@@ -4062,7 +4126,7 @@ Public Class MainForm
 
             ' GroupBoxes
             GroupBox1.Text = "Posición de navegación"
-            GroupBox2.Text = "Ayuda de métodos"
+            GroupBox12.Text = "Opciones de bandeja del sistema"
             GroupBox3.Text = "Detalles de compatibilidad de plataformas"
             GroupBox4.Text = "Opciones de etiqueta"
             GroupBox5.Text = "Opciones de escala DPI"
@@ -4083,7 +4147,7 @@ Public Class MainForm
             Button8.Text = "Sí"
             Button9.Text = "Ocultar registro"
             Button10.Text = "Cancelar"
-            ' Button11.Text = "Ver en el Explorador"
+            Button11.Text = "Ayuda de métodos"
             Button12.Text = "Comprobar actualizaciones"
             Button13.Text = "Opciones avanzadas"
             ScanButton.Text = "Escanear..."
@@ -4091,6 +4155,7 @@ Public Class MainForm
             SetDefaultButton.Text = "Predeterminado"
 
             ' CheckBoxes
+            CheckBox1.Text = "Mostrar notificación de bandeja del sistema una vez"
             CheckBox3.Text = "Al cerrarse, ocultar en la bandeja del sistema"
             CheckBox4.Text = "Cerrar programa después de hacer clic en Aceptar"
 
@@ -4100,7 +4165,9 @@ Public Class MainForm
             InstSTLabel.Text = "Estado del instalador"
             StatusTSI.Text = "No se está creando ningún instalador en este momento"
             LastInstallerCreatedAtToolStripMenuItem.Text = "Último instalador creado a las:"
-            NoInstallerHistoryDataIsAvailableAtThisTimeToolStripMenuItem.Text = "No hay datos del historial del instalador en este momento"
+            If InstHistPanel.InstallerListView.Items.Count = 0 Then
+                IHDataToolStripMenuItem.Text = "No hay datos del historial del instalador en este momento"
+            End If
             ViewInstallerHistoryToolStripMenuItem.Text = "Ver historial del instalador"
             LanguageToolStripMenuItem.Text = "Idioma"
             AutomaticLanguageToolStripMenuItem.Text = "Automático"
@@ -4164,7 +4231,7 @@ Public Class MainForm
 
             ' Miscellaneous positioning and size
             ComboBox5.Left = 326
-            ComboBox5.Width = 542
+            ComboBox5.Width = 346
 
             ' ComboBox relabelling
             ComboBox1.Items.Clear()
@@ -4172,11 +4239,11 @@ Public Class MainForm
             ComboBox1.Items.Add("Claro")
             ComboBox1.Items.Add("Oscuro")
             If ColorInt = 0 Then
-                ComboBox1.SelectedItem = "Claro"
+                ComboBox1.SelectedItem = "Automático"
             ElseIf ColorInt = 1 Then
                 ComboBox1.SelectedItem = "Oscuro"
             ElseIf ColorInt = 2 Then
-                ComboBox1.SelectedItem = "Automático"
+                ComboBox1.SelectedItem = "Claro"
             End If
             ' This line of code freezes the program. Maybe because it's cold in Alaska now?
             'ComboBox4.Items.Clear()
@@ -4193,14 +4260,902 @@ Public Class MainForm
                 Loop
             End If
         ElseIf ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
-            LangInt = 0
+            LangInt = 1
+            If My.User.IsInRole(ApplicationServices.BuiltInRole.Administrator) Then
+                Text = "Windows 11 Manual Installer (administrator mode)"
+            Else
+                Text = "Windows 11 Manual Installer"
+            End If
+            Notify.Text = "Windows 11 Manual Installer - Ready"
+            ' Labels
+            Label1.Text = "Welcome"
+            Label100.Text = "Instructions"
+            Label101.Text = "Help"
+            Label102.Text = "About"
+            Label104.Text = "Instructions"
+            Label105.Text = "The source code of this program can be found on GitHub." & CrLf & CrLf & "- This project can be opened on Visual Studio 2012 and newer, without the need of conversion" & CrLf & "- The .NET Framework 4.8 Developer Pack must be installed to open this project" & CrLf & CrLf & "Do you want to suggest a new feature to be included in a future version? Have you experienced a bug you want to report? Don't hesitate on reporting feedback or (even better) contributing (you'll need a GitHub account). Your feedback is critical." & CrLf & CrLf & "Do you want to enjoy the latest features? Check the Hummingbird branch! Weekly updates, new features and a sneak peek of the program's future"
+            Label106.Text = "Hummingbird release"
+            Label107.Text = "Enjoy new features"
+            Label107.Left = Label106.Left + Label106.Width
+            Label108.Text = "Target installer:"
+            Label109.Text = "Target installer path:"
 
+            ' Label11 doesn't go here, as it's a ">". It will change its Left property instead.
+            Label110.Text = "Target installer creation date:"
+            Label111.Text = "Installer warnings and errors:"
+            Label114.Text = "Warnings: " & WarnCount
+            Label115.Text = "Errors: " & ErrorCount
+
+            Label12.Text = "Personalization"
+
+            Label13.Text = "Color mode:"
+            Label14.Text = "Here you can change the position of the navigation bar. Position:"
+            ' Label16 will also change its Left property
+            Label17.Text = "Functionality"
+            Label19.Text = "Language:"
+            Label2.Text = "Shows program information"
+            Label20.Text = "Installer creation method:"
+            Label22.Text = "Platform compatibility:"
+            ' Label23, 26 and 27 aren't affected in any matter
+            Label24.Text = "Here you can set a custom label for your image"
+            Label25.Text = "Label:"
+            Label28.Text = "DPI scale to be applied: " & TrackBar1.Value & "%"
+            Label3.Text = "At least one installer is about to be created"
+            Label30.Text = "Language: " & ComboBox4.SelectedItem
+            Label31.Text = "Color mode: " & ComboBox1.SelectedItem
+            Label33.Text = "Installer creation method: " & ComboBox5.SelectedItem
+            Label34.Text = "Label: " & LabelText.Text
+            LabelSetButton.PerformClick()
+            Label36.Text = "Change appearance settings, such as the language, the color mode, or the DPI scale"
+            Label38.Text = "Change settings related to how the program makes the custom installer"
+            Label39.Text = "Clears the installer history log, which is accessible by clicking " & Quote & "View installer history" & Quote & " on the main menu"
+            Label4.Text = "About"
+            Label40.Text = "Clear log"
+            Label41.Text = "Resets all the preferences to their default values"
+            Label42.Text = "Reset preferences"
+            Label43.Text = "Creates a modified installer to install Windows 11 on unsupported systems"
+            Label44.Text = "Create a custom installer"
+            Label45.Text = "Allows you to customize the program' s appearance or behavior"
+            Label47.Text = "Allows you to create a custom Windows 11 installer by yourself"
+            Label48.Text = "Instructions"
+            Label49.Text = "Learn how to use this program"
+            ' These lines of code affect Label5 and PictureBox11
+            Label5.Text = "Manual Installer"
+            Label5.Top = PictureBox11.Top + PictureBox11.Height
+            PictureBox11.Top = 14
+            Label50.Text = "Help"
+            Label51.Text = "About"
+            Label53.Text = "Windows 11 installer"
+            Label54.Text = "Windows 10 installer"
+            Label55.Text = "Windows 11 installer:"
+            Label56.Text = "Windows 10 installer:"
+            Label57.Text = "ISO file options"
+            Label58.Text = "ISO file name:"
+            Label59.Text = "ISO file location:"
+            Label6.Text = "Windows 11 Manual Installer"
+            Label60.Text = "When you are ready, click " & Quote & "Create" & Quote
+            Label63.Text = "Review your settings"
+            Label64.Text = "Location and name:"
+            Label65.Text = "Windows 11 image:"
+            Label66.Text = "Windows 10 image:"
+            Label69.Text = "Method:"
+            Label7.Text = "version " & VerStr
+            ' Labels71 through 74 were deleted due to lack of functionality
+            Label75.Text = "Platform compatibility:"
+            Label77.Text = "Installer label:"
+            Label79.Text = "Are these settings OK?"
+            Label82.Text = "Progress"
+            Label83.Text = "That' s all the information we need right now. The installer creation will take a few minutes, so please be patient."
+            Label84.Text = "Preparing the workspace"
+            Label85.Text = "Gathering instructions"
+            Label86.Text = "Extracting installer files"
+            Label87.Text = "Creating the installer"
+            Label88.Text = "Finishing up"
+            Label89.Text = "The action performed right now cannot be cancelled. Please wait."
+            Label9.Text = "Settings"
+            Label91.Text = "To check for any program updates, click " & Quote & "Check for updates" & Quote
+            Label92.Text = "Here is detailed information for components used by the program:"
+            Label97.Text = "All components shown herein are covered by their own license terms, and this program can ONLY redistribute open-source components."
+            AdminLabel.Text = "ADMINISTRATOR MODE"
+            ProgramTitleLabel.Text = "Windows 11 Manual Installer"
+            Last_Created_Inst_Label.Text = "Last installer created on:"
+
+            ' Labels that belong to main sections will adopt the text from the main panels
+            Label10.Text = Label9.Text
+            Label18.Text = Label9.Text
+            Label35.Text = Label12.Text
+            Label37.Text = Label17.Text
+            Label52.Text = Label50.Text
+            Label61.Text = Label44.Text
+            Label8.Text = Label44.Text
+            Label80.Text = Label44.Text
+            Label15.Text = Label1.Text
+
+            ' Miscelaneous labels
+            Label29.Text = Label12.Text
+            Label32.Text = Label17.Text
+            Label46.Text = Label9.Text
+            NameLabel.Text = "Name: " & TextBox3.Text
+            If InstHistPanel.InstallerListView.Items.Count = 0 Then
+                Last_Inst_Time_Label.Text = "No time data is available"
+            End If
+            If File.Exists(TextBox1.Text) Then
+                Win11PresenceSTLabel.Text = "Presence status: this file exists"
+            Else
+                Win11PresenceSTLabel.Text = "Presence status: this file does not exist"
+            End If
+            If TextBox1.Text = "" Then
+                Win11PresenceSTLabel.Text = "Presence status: unknown"
+            End If
+            If File.Exists(TextBox2.Text) Then
+                Win10PresenceSTLabel.Text = "Presence status: this file exists"
+            Else
+                Win10PresenceSTLabel.Text = "Presence status: this file does not exist"
+            End If
+            If TextBox2.Text = "" Then
+                Win10PresenceSTLabel.Text = "Presence status: unknown"
+            End If
+            If TextBox4.Text.EndsWith("\") Then
+                If TextBox4.Text.Contains(" ") Then
+                    ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Path will contain quotes"
+                Else
+                    ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
+                End If
+            Else
+                If TextBox4.Text.Contains(" ") Then
+                    ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote & ". Path will contain quotes"
+                Else
+                    ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote
+                End If
+            End If
+
+            ' LinkLabels
+            LinkLabel1.Text = "View installer history"
+            LinkLabel2.Text = "Continue installer creation"
+            LinkLabel3.Text = "Search on Google"
+            LinkLabel4.Text = "Search on DuckDuckGo"
+            LinkLabel5.Text = "Rename"
+            LinkLabel6.Text = "Could not get computer model"
+            LinkLabel7.Text = "Updates are available"
+            LinkLabel8.Text = "Check this program's project"
+            LinkLabel9.Text = "Download the Developer Pack"
+            LinkLabel10.Text = "Check the Issues page"
+            LinkLabel11.Text = "Check the Hummingbird branch"
+            LinkLabel12.Text = "There are some things that are worth revising before continuing. Click here to learn more."
+
+            ' GroupBoxes
+            GroupBox1.Text = "Navigation position"
+            GroupBox12.Text = "System tray options"
+            GroupBox3.Text = "Platform compatibility details"
+            GroupBox4.Text = "Label options"
+            GroupBox5.Text = "DPI scaling options"
+            GroupBox6.Text = "ISO files"
+            GroupBox7.Text = "Target image options"
+            GroupBox8.Text = "Images"
+            GroupBox9.Text = "Installer creation options"
+            GroupBox10.Text = "Log"
+            GroupBox11.Text = "Target image"
+
+            ' Buttons
+            Button1.Text = "Apply DPI scale"
+            Button2.Text = "Browse..."
+            Button3.Text = "Restore"
+            Button4.Text = "Browse..."
+            Button5.Text = "Browse..."
+            Button6.Text = "Create"
+            Button8.Text = "Yes"
+            Button9.Text = "Hide log"
+            Button10.Text = "Cancel"
+            Button11.Text = "Method help"
+            Button12.Text = "Check for updates"
+            Button13.Text = "Advanced options"
+            ScanButton.Text = "Scan..."
+            LabelSetButton.Text = "Set"
+            SetDefaultButton.Text = "Set default"
+
+            ' CheckBoxes
+            CheckBox1.Text = "Show system tray notification once"
+            CheckBox3.Text = "When closing, hide in system tray"
+            CheckBox4.Text = "Exit the program after I click OK"
+
+            ' MenuStrip items
+            Windows11ManualInstallerToolStripMenuItem.Text = "Windows 11 Manual Installer"
+            VersionToolStripMenuItem.Text = "version " & VerStr & " (assembly version " & AVerStr & ")"
+            InstSTLabel.Text = "Installer status"
+            StatusTSI.Text = "No installers are being created at this time"
+            LastInstallerCreatedAtToolStripMenuItem.Text = "Last installer created at:"
+            If InstHistPanel.InstallerListView.Items.Count = 0 Then
+                IHDataToolStripMenuItem.Text = "No installer history data is available at this time"
+            End If
+            ViewInstallerHistoryToolStripMenuItem.Text = "View installer history"
+            LanguageToolStripMenuItem.Text = "Language"
+            AutomaticLanguageToolStripMenuItem.Text = "Automatic"
+            AutomaticLanguageToolStripMenuItem.Checked = False
+            EnglishToolStripMenuItem.Text = "English"
+            EnglishToolStripMenuItem.Checked = True
+            SpanishToolStripMenuItem.Text = "Spanish"
+            SpanishToolStripMenuItem.Checked = False
+            ColorModeToolStripMenuItem.Text = "Color mode"
+            AutomaticToolStripMenuItem.Text = "Automatic"
+            LightToolStripMenuItem.Text = "Light"
+            DarkToolStripMenuItem.Text = "Dark"
+            If ComboBox1.SelectedItem = "Automatic" Or ComboBox1.SelectedItem = "Automático" Then
+                AutomaticToolStripMenuItem.Checked = True
+                LightToolStripMenuItem.Checked = False
+                DarkToolStripMenuItem.Checked = False
+            ElseIf ComboBox1.SelectedItem = "Light" Or ComboBox1.SelectedItem = "Claro" Then
+                AutomaticToolStripMenuItem.Checked = False
+                LightToolStripMenuItem.Checked = True
+                DarkToolStripMenuItem.Checked = False
+            ElseIf ComboBox1.SelectedItem = "Dark" Or ComboBox1.SelectedItem = "Oscuro" Then
+                AutomaticToolStripMenuItem.Checked = False
+                LightToolStripMenuItem.Checked = False
+                DarkToolStripMenuItem.Checked = True
+            End If
+            InstallerCreationMethodToolStripMenuItem.Text = "Installer creation method"
+            OpenToolStripMenuItem.Text = "Open"
+            ExitToolStripMenuItem.Text = "Exit"
+
+
+            ' Positioning
+            Label11.Left = Label10.Left + Label10.Width + 6
+            Label12.Left = Label11.Left + Label11.Width
+            Label16.Left = Label18.Left + Label18.Width + 6
+            Label17.Left = Label16.Left + Label16.Width
+            Label62.Left = Label61.Left + Label61.Width + 6
+            Label63.Left = Label62.Left + Label62.Width + 4
+            Label81.Left = Label80.Left + Label80.Width + 6
+            Label82.Left = Label81.Left + Label81.Width + 4
+
+            ' TabPages
+            TabPage1.Text = "Overview"
+            TabPage2.Text = "Component information"
+            TabPage3.Text = "Source code"
+
+            ' RadioButtons
+            RadioButton3.Text = "Left"
+            RadioButton4.Text = "Top"
+
+            ' TextBox positioning and size
+            TextBox1.Left = 200
+            TextBox1.Width = 380
+            TextBox2.Left = 200
+            TextBox2.Width = 380
+            TextBox3.Left = 157
+            TextBox3.Width = 521
+            TextBox4.Left = 167
+            TextBox4.Width = 545
+            LabelText.Left = 77
+            LabelText.Width = 256
+
+            ' Miscellaneous positioning and size
+            ComboBox5.Left = 268
+            ComboBox5.Width = 403
+
+            ' ComboBox relabelling
+            ComboBox1.Items.Clear()
+            ComboBox1.Items.Add("Automatic")
+            ComboBox1.Items.Add("Light")
+            ComboBox1.Items.Add("Dark")
+            If ColorInt = 0 Then
+                ComboBox1.SelectedItem = "Automatic"
+            ElseIf ColorInt = 1 Then
+                ComboBox1.SelectedItem = "Light"
+            ElseIf ColorInt = 2 Then
+                ComboBox1.SelectedItem = "Dark"
+            End If
+            ' This line of code freezes the program. Maybe because it's cold in Alaska now?
+            'ComboBox4.Items.Clear()
+            ComboBox4.Items.Add("Automatic")
+            ComboBox4.Items.Add("English")
+            ComboBox4.Items.Add("Spanish")
+            ComboBox4.SelectedItem = "English"
+            ComboBox4.Items.Remove("Automático")
+            ComboBox4.Items.Remove("Inglés")
+            ComboBox4.Items.Remove("Español")
+            If ComboBox4.Items.Count > 3 Then   ' There is a bug in this procedure where it would make duplicate items of the ComboBox. 
+                Do Until ComboBox4.Items.Count = 3  ' This fixes it
+                    ComboBox4.Items.RemoveAt(3)
+                Loop
+            End If
         ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
-            LangInt = 2
+            LangInt = 0
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                If My.User.IsInRole(ApplicationServices.BuiltInRole.Administrator) Then
+                    Text = "Instalador manual de Windows 11 (modo de administrador)"
+                Else
+                    Text = "Instalador manual de Windows 11"
+                End If
+                Notify.Text = "Instalador manual de Windows 11 - Listo"
+                ' Labels
+                Label1.Text = "Bienvenido"
+                Label100.Text = "Instrucciones"
+                Label101.Text = "Ayuda"
+                Label102.Text = "Acerca de"
+                Label104.Text = "Instrucciones"
+                Label105.Text = "El código fuente de este programa lo puede encontrar en GitHub." & CrLf & CrLf & "- Este proyecto puede ser abierto en Visual Studio 2012 y más reciente, sin necesidad de conversión" & CrLf & "- El Pack de Desarrolladores de .NET Framework 4.8 debe ser instalado para abrir este proyecto" & CrLf & CrLf & "¿Desea sugerir alguna nueva característica para ser incluida en una versión futura? ¿Ha notado algún error del que desea informar? No dude en reportar errores o (incluso mejor) contribuye al proyecto (necesita una cuenta de GitHub). Sus opiniones son cruciales." & CrLf & CrLf & "¿Desea disfrutar de las últimas características? ¡Compruebe la rama Hummingbird! Actualizaciones semanales, características nuevas y una vista previa del futuro del programa"
+                Label106.Text = "Lanzamiento Hummingbird"
+                Label107.Text = "Disfrute de características nuevas"
+                Label107.Left = Label106.Left + Label106.Width
+                Label108.Text = "Instalador de destino:"
+                Label109.Text = "Ubicación del instalador de destino:"
 
+                ' Label11 doesn't go here, as it's a ">". It will change its Left property instead.
+                Label110.Text = "Fecha de creación del instalador de destino:"
+                Label111.Text = "Advertencias y errores del instalador:"
+                Label114.Text = "Advertencias: " & WarnCount
+                Label115.Text = "Errores: " & ErrorCount
+
+                Label12.Text = "Personalización"
+
+                Label13.Text = "Modo de color:"
+                Label14.Text = "Aquí puede cambiar la posición de la barra de navegación. Posición:"
+                ' Label16 will also change its Left property
+                Label17.Text = "Funcionalidad"
+                Label19.Text = "Idioma:"
+                Label2.Text = "Muestra información sobre el programa"
+                Label20.Text = "Método de creación del instalador:"
+                Label22.Text = "Compatibilidad de plataformas:"
+                ' Label23, 26 and 27 aren't affected in any matter
+                Label24.Text = "Aquí puede asignar una etiqueta personalizada"
+                Label25.Text = "Etiqueta:"
+                Label28.Text = "Escala DPI a ser aplicada: " & TrackBar1.Value & "%"
+                Label3.Text = "Al menos un instalador está a punto de ser creado"
+                Label30.Text = "Idioma: " & ComboBox4.SelectedItem
+                Label31.Text = "Modo de color: " & ComboBox1.SelectedItem
+                Label33.Text = "Método de creación del instalador: " & ComboBox5.SelectedItem
+                Label34.Text = "Etiqueta: " & LabelText.Text
+                LabelSetButton.PerformClick()
+                Label36.Text = "Cambia las opciones de apariencia, como el idioma, el modo de color, o la escala DPI"
+                Label38.Text = "Cambia configuraciones relacionadas a la creación del instalador personalizado"
+                Label39.Text = "Limpia el registro del historial de instaladores, el cual es accesible haciendo clic en " & Quote & "Ver historial del instalador" & Quote & " en el menú principal"
+                Label4.Text = "Acerca de"
+                Label40.Text = "Limpiar registro"
+                Label41.Text = "Restablece todas las preferencias a los valores predeterminados"
+                Label42.Text = "Restablecer preferencias"
+                Label43.Text = "Crea un instalador modificado para instalar Windows 11 en sistemas no soportados"
+                Label44.Text = "Crear un instalador modificado"
+                Label45.Text = "Le ayuda a personalizar la apariencia y el comportamiento del programa"
+                Label47.Text = "Le ayuda a crear un instalador modificado de Windows 11 por usted mismo"
+                Label48.Text = "Instrucciones"
+                Label49.Text = "Aprenda a cómo usar este programa"
+                ' These lines of code affect Label5 and PictureBox11
+                Label5.Text = "Instalador manual de"
+                Label5.Top = 14
+                PictureBox11.Top = Label5.Top + Label5.Height
+                Label50.Text = "Ayuda"
+                Label51.Text = "Acerca de"
+                Label53.Text = "Instalador de Windows 11"
+                Label54.Text = "Instalador de Windows 10"
+                Label55.Text = "Instalador de Windows 11:"
+                Label56.Text = "Instalador de Windows 10:"
+                Label57.Text = "Opciones del archivo ISO"
+                Label58.Text = "Nombre del archivo ISO:"
+                Label59.Text = "Ubicación del archivo ISO:"
+                Label6.Text = "Instalador manual de Windows 11"
+                Label60.Text = "Cuando esté listo, haga clic en " & Quote & "Crear" & Quote
+                Label63.Text = "Revise sus configuraciones"
+                Label64.Text = "Ubicación y nombre:"
+                Label65.Text = "Imagen de Windows 11:"
+                Label66.Text = "Imagen de Windows 10:"
+                Label69.Text = "Método:"
+                Label7.Text = "versión " & VerStr
+                ' Labels71 through 74 were deleted due to lack of functionality
+                Label75.Text = "Compatibilidad de plataformas:"
+                Label77.Text = "Etiqueta del instalador:"
+                Label79.Text = "¿Estas configuraciones son las correctas?"
+                Label82.Text = "Progreso"
+                Label83.Text = "Ésta es toda la información que necesitamos en este momento. Esto tardará unos minutos, por lo que sea paciente, por favor."
+                Label84.Text = "Preparando el espacio de trabajo"
+                Label85.Text = "Obteniendo instrucciones"
+                Label86.Text = "Extrayendo archivos de los instaladores"
+                Label87.Text = "Creando el instalador"
+                Label88.Text = "Finalizando"
+                Label89.Text = "La acción realizada en este momento no puede ser cancelada. Por favor, espere."
+                Label9.Text = "Configuración"
+                Label91.Text = "Para detectar actualizaciones del programa, haga clic en " & Quote & "Comprobar actualizaciones" & Quote
+                Label92.Text = "Ésta es la información detallada de los componentes usados por el programa:"
+                Label97.Text = "Todos los componentes mostrados aquí son protegidos por sus propios términos de licencia, y este programa SOLO puede redistribuir componentes de código abierto."
+                AdminLabel.Text = "MODO DE ADMINISTRADOR"
+                ProgramTitleLabel.Text = "Instalador manual de Windows 11"
+                Last_Created_Inst_Label.Text = "Último instalador creado a las:"
+
+                ' Labels that belong to main sections will adopt the text from the main panels
+                Label10.Text = Label9.Text
+                Label18.Text = Label9.Text
+                Label35.Text = Label12.Text
+                Label37.Text = Label17.Text
+                Label52.Text = Label50.Text
+                Label61.Text = Label44.Text
+                Label8.Text = Label44.Text
+                Label80.Text = Label44.Text
+                Label15.Text = Label1.Text
+
+                ' Miscelaneous labels
+                Label29.Text = Label12.Text
+                Label32.Text = Label17.Text
+                Label46.Text = Label9.Text
+                NameLabel.Text = "Nombre: " & TextBox3.Text
+                If InstHistPanel.InstallerListView.Items.Count = 0 Then
+                    Last_Inst_Time_Label.Text = "Ningún dato temporal disponible"
+                End If
+                If File.Exists(TextBox1.Text) Then
+                    Win11PresenceSTLabel.Text = "Estado de presencia: este archivo existe"
+                Else
+                    Win11PresenceSTLabel.Text = "Estado de presencia: este archivo no existe"
+                End If
+                If TextBox1.Text = "" Then
+                    Win11PresenceSTLabel.Text = "Estado de presencia: desconocido"
+                End If
+                If File.Exists(TextBox2.Text) Then
+                    Win10PresenceSTLabel.Text = "Estado de presencia: este archivo existe"
+                Else
+                    Win10PresenceSTLabel.Text = "Estado de presencia: este archivo no existe"
+                End If
+                If TextBox2.Text = "" Then
+                    Win10PresenceSTLabel.Text = "Estado de presencia: desconocido"
+                End If
+                If TextBox4.Text.EndsWith("\") Then
+                    If TextBox4.Text.Contains(" ") Then
+                        ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". La ruta contendrá comillas"
+                    Else
+                        ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
+                    End If
+                Else
+                    If TextBox4.Text.Contains(" ") Then
+                        ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote & ". La ruta contendrá comillas"
+                    Else
+                        ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote
+                    End If
+                End If
+
+                ' LinkLabels
+                LinkLabel1.Text = "Ver historial del instalador"
+                LinkLabel2.Text = "Continuar creación del instalador"
+                LinkLabel3.Text = "Buscar en Google"
+                LinkLabel4.Text = "Buscar en DuckDuckGo"
+                LinkLabel5.Text = "Cambiar nombre"
+                LinkLabel6.Text = "No se pudo obtener el modelo del equipo"
+                LinkLabel7.Text = "Hay actualizaciones disponibles"
+                LinkLabel8.Text = "Compruebe el proyecto"
+                LinkLabel9.Text = "Descargue el Pack de Desarrolladores"
+                LinkLabel10.Text = "Compruebe la página de Errores"
+                LinkLabel11.Text = "Compruebe la rama Hummingbird"
+                LinkLabel12.Text = "Hay algunas cosas que valen la pena revisar antes de continuar. Haga clic aquí para saber más."
+
+                ' GroupBoxes
+                GroupBox1.Text = "Posición de navegación"
+                GroupBox12.Text = "Opciones de bandeja del sistema"
+                GroupBox3.Text = "Detalles de compatibilidad de plataformas"
+                GroupBox4.Text = "Opciones de etiqueta"
+                GroupBox5.Text = "Opciones de escala DPI"
+                GroupBox6.Text = "Archivos ISO"
+                GroupBox7.Text = "Opciones de imagen de destino"
+                GroupBox8.Text = "Imágenes"
+                GroupBox9.Text = "Opciones de creación del instalador"
+                GroupBox10.Text = "Registro"
+                GroupBox11.Text = "Imagen de destino"
+
+                ' Buttons
+                Button1.Text = "Aplicar escala DPI"
+                Button2.Text = "Examinar..."
+                Button3.Text = "Restablecer"
+                Button4.Text = "Examinar..."
+                Button5.Text = "Examinar..."
+                Button6.Text = "Crear"
+                Button8.Text = "Sí"
+                Button9.Text = "Ocultar registro"
+                Button10.Text = "Cancelar"
+                Button11.Text = "Ayuda de métodos"
+                Button12.Text = "Comprobar actualizaciones"
+                Button13.Text = "Opciones avanzadas"
+                ScanButton.Text = "Escanear..."
+                LabelSetButton.Text = "Establecer"
+                SetDefaultButton.Text = "Predeterminado"
+
+                ' CheckBoxes
+                CheckBox1.Text = "Mostrar notificación de bandeja del sistema una vez"
+                CheckBox3.Text = "Al cerrarse, ocultar en la bandeja del sistema"
+                CheckBox4.Text = "Cerrar programa después de hacer clic en Aceptar"
+
+                ' MenuStrip items
+                Windows11ManualInstallerToolStripMenuItem.Text = "Instalador manual de Windows 11"
+                VersionToolStripMenuItem.Text = "versión " & VerStr & " (versión de ensamblado " & AVerStr & ")"
+                InstSTLabel.Text = "Estado del instalador"
+                StatusTSI.Text = "No se está creando ningún instalador en este momento"
+                LastInstallerCreatedAtToolStripMenuItem.Text = "Último instalador creado a las:"
+                If InstHistPanel.InstallerListView.Items.Count = 0 Then
+                    IHDataToolStripMenuItem.Text = "No hay datos del historial del instalador en este momento"
+                End If
+                ViewInstallerHistoryToolStripMenuItem.Text = "Ver historial del instalador"
+                LanguageToolStripMenuItem.Text = "Idioma"
+                AutomaticLanguageToolStripMenuItem.Text = "Automático"
+                AutomaticLanguageToolStripMenuItem.Checked = True
+                EnglishToolStripMenuItem.Text = "Inglés"
+                EnglishToolStripMenuItem.Checked = False
+                SpanishToolStripMenuItem.Text = "Español"
+                SpanishToolStripMenuItem.Checked = False
+                ColorModeToolStripMenuItem.Text = "Modo del color"
+                AutomaticToolStripMenuItem.Text = "Automático"
+                LightToolStripMenuItem.Text = "Claro"
+                DarkToolStripMenuItem.Text = "Oscuro"
+                If ComboBox1.SelectedItem = "Automatic" Or ComboBox1.SelectedItem = "Automático" Then
+                    AutomaticToolStripMenuItem.Checked = True
+                    LightToolStripMenuItem.Checked = False
+                    DarkToolStripMenuItem.Checked = False
+                ElseIf ComboBox1.SelectedItem = "Light" Or ComboBox1.SelectedItem = "Claro" Then
+                    AutomaticToolStripMenuItem.Checked = False
+                    LightToolStripMenuItem.Checked = True
+                    DarkToolStripMenuItem.Checked = False
+                ElseIf ComboBox1.SelectedItem = "Dark" Or ComboBox1.SelectedItem = "Oscuro" Then
+                    AutomaticToolStripMenuItem.Checked = False
+                    LightToolStripMenuItem.Checked = False
+                    DarkToolStripMenuItem.Checked = True
+                End If
+                InstallerCreationMethodToolStripMenuItem.Text = "Método de creación del instalador"
+                OpenToolStripMenuItem.Text = "Abrir"
+                ExitToolStripMenuItem.Text = "Salir"
+
+
+                ' Positioning
+                Label11.Left = Label10.Left + Label10.Width + 6
+                Label12.Left = Label11.Left + Label11.Width
+                Label16.Left = Label18.Left + Label18.Width + 6
+                Label17.Left = Label16.Left + Label16.Width
+                Label62.Left = Label61.Left + Label61.Width + 6
+                Label63.Left = Label62.Left + Label62.Width + 4
+                Label81.Left = Label80.Left + Label80.Width + 6
+                Label82.Left = Label81.Left + Label81.Width + 4
+
+                ' TabPages
+                TabPage1.Text = "General"
+                TabPage2.Text = "Información de componentes"
+                TabPage3.Text = "Código fuente"
+
+                ' RadioButtons
+                RadioButton3.Text = "Izquierda"
+                RadioButton4.Text = "Arriba"
+
+                ' TextBox positioning and size
+                TextBox1.Left = 232
+                TextBox1.Width = 348
+                TextBox2.Left = 232
+                TextBox2.Width = 348
+                TextBox3.Left = 221
+                TextBox3.Width = 457
+                TextBox4.Left = 229
+                TextBox4.Width = 483
+                LabelText.Left = 93
+                LabelText.Width = 240
+
+                ' Miscellaneous positioning and size
+                ComboBox5.Left = 326
+                ComboBox5.Width = 346
+
+                ' ComboBox relabelling
+                ComboBox1.Items.Clear()
+                ComboBox1.Items.Add("Automático")
+                ComboBox1.Items.Add("Claro")
+                ComboBox1.Items.Add("Oscuro")
+                If ColorInt = 0 Then
+                    ComboBox1.SelectedItem = "Automático"
+                ElseIf ColorInt = 1 Then
+                    ComboBox1.SelectedItem = "Oscuro"
+                ElseIf ColorInt = 2 Then
+                    ComboBox1.SelectedItem = "Claro"
+                End If
+                ' This line of code freezes the program. Maybe because it's cold in Alaska now?
+                'ComboBox4.Items.Clear()
+                ComboBox4.Items.Add("Automático")
+                ComboBox4.Items.Add("Inglés")
+                ComboBox4.Items.Add("Español")
+                ComboBox4.SelectedItem = "Automático"
+                ComboBox4.Items.Remove("Automatic")
+                ComboBox4.Items.Remove("English")
+                ComboBox4.Items.Remove("Spanish")
+                If ComboBox4.Items.Count > 3 Then   ' There is a bug in this procedure where it would make duplicate items of the ComboBox. 
+                    Do Until ComboBox4.Items.Count = 3  ' This fixes it
+                        ComboBox4.Items.RemoveAt(3)
+                    Loop
+                End If
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                If My.User.IsInRole(ApplicationServices.BuiltInRole.Administrator) Then
+                    Text = "Windows 11 Manual Installer (administrator mode)"
+                Else
+                    Text = "Windows 11 Manual Installer"
+                End If
+                Notify.Text = "Windows 11 Manual Installer - Ready"
+                ' Labels
+                Label1.Text = "Welcome"
+                Label100.Text = "Instructions"
+                Label101.Text = "Help"
+                Label102.Text = "About"
+                Label104.Text = "Instructions"
+                Label105.Text = "The source code of this program can be found on GitHub." & CrLf & CrLf & "- This project can be opened on Visual Studio 2012 and newer, without the need of conversion" & CrLf & "- The .NET Framework 4.8 Developer Pack must be installed to open this project" & CrLf & CrLf & "Do you want to suggest a new feature to be included in a future version? Have you experienced a bug you want to report? Don't hesitate on reporting feedback or (even better) contributing (you'll need a GitHub account). Your feedback is critical." & CrLf & CrLf & "Do you want to enjoy the latest features? Check the Hummingbird branch! Weekly updates, new features and a sneak peek of the program's future"
+                Label106.Text = "Hummingbird release"
+                Label107.Text = "Enjoy new features"
+                Label107.Left = Label106.Left + Label106.Width
+                Label108.Text = "Target installer:"
+                Label109.Text = "Target installer path:"
 
+                ' Label11 doesn't go here, as it's a ">". It will change its Left property instead.
+                Label110.Text = "Target installer creation date:"
+                Label111.Text = "Installer warnings and errors:"
+                Label114.Text = "Warnings: " & WarnCount
+                Label115.Text = "Errors: " & ErrorCount
+
+                Label12.Text = "Personalization"
+
+                Label13.Text = "Color mode:"
+                Label14.Text = "Here you can change the position of the navigation bar. Position:"
+                ' Label16 will also change its Left property
+                Label17.Text = "Functionality"
+                Label19.Text = "Language:"
+                Label2.Text = "Shows program information"
+                Label20.Text = "Installer creation method:"
+                Label22.Text = "Platform compatibility:"
+                ' Label23, 26 and 27 aren't affected in any matter
+                Label24.Text = "Here you can set a custom label for your image"
+                Label25.Text = "Label:"
+                Label28.Text = "DPI scale to be applied: " & TrackBar1.Value & "%"
+                Label3.Text = "At least one installer is about to be created"
+                Label30.Text = "Language: " & ComboBox4.SelectedItem
+                Label31.Text = "Color mode: " & ComboBox1.SelectedItem
+                Label33.Text = "Installer creation method: " & ComboBox5.SelectedItem
+                Label34.Text = "Label: " & LabelText.Text
+                LabelSetButton.PerformClick()
+                Label36.Text = "Change appearance settings, such as the language, the color mode, or the DPI scale"
+                Label38.Text = "Change settings related to how the program makes the custom installer"
+                Label39.Text = "Clears the installer history log, which is accessible by clicking " & Quote & "View installer history" & Quote & " on the main menu"
+                Label4.Text = "About"
+                Label40.Text = "Clear log"
+                Label41.Text = "Resets all the preferences to their default values"
+                Label42.Text = "Reset preferences"
+                Label43.Text = "Creates a modified installer to install Windows 11 on unsupported systems"
+                Label44.Text = "Create a custom installer"
+                Label45.Text = "Allows you to customize the program' s appearance or behavior"
+                Label47.Text = "Allows you to create a custom Windows 11 installer by yourself"
+                Label48.Text = "Instructions"
+                Label49.Text = "Learn how to use this program"
+                ' These lines of code affect Label5 and PictureBox11
+                Label5.Text = "Manual Installer"
+                Label5.Top = PictureBox11.Top + PictureBox11.Height
+                PictureBox11.Top = 14
+                Label50.Text = "Help"
+                Label51.Text = "About"
+                Label53.Text = "Windows 11 installer"
+                Label54.Text = "Windows 10 installer"
+                Label55.Text = "Windows 11 installer:"
+                Label56.Text = "Windows 10 installer:"
+                Label57.Text = "ISO file options"
+                Label58.Text = "ISO file name:"
+                Label59.Text = "ISO file location:"
+                Label6.Text = "Windows 11 Manual Installer"
+                Label60.Text = "When you are ready, click " & Quote & "Create" & Quote
+                Label63.Text = "Review your settings"
+                Label64.Text = "Location and name:"
+                Label65.Text = "Windows 11 image:"
+                Label66.Text = "Windows 10 image:"
+                Label69.Text = "Method:"
+                Label7.Text = "version " & VerStr
+                ' Labels71 through 74 were deleted due to lack of functionality
+                Label75.Text = "Platform compatibility:"
+                Label77.Text = "Installer label:"
+                Label79.Text = "Are these settings OK?"
+                Label82.Text = "Progress"
+                Label83.Text = "That' s all the information we need right now. The installer creation will take a few minutes, so please be patient."
+                Label84.Text = "Preparing the workspace"
+                Label85.Text = "Gathering instructions"
+                Label86.Text = "Extracting installer files"
+                Label87.Text = "Creating the installer"
+                Label88.Text = "Finishing up"
+                Label89.Text = "The action performed right now cannot be cancelled. Please wait."
+                Label9.Text = "Settings"
+                Label91.Text = "To check for any program updates, click " & Quote & "Check for updates" & Quote
+                Label92.Text = "Here is detailed information for components used by the program:"
+                Label97.Text = "All components shown herein are covered by their own license terms, and this program can ONLY redistribute open-source components."
+                AdminLabel.Text = "ADMINISTRATOR MODE"
+                ProgramTitleLabel.Text = "Windows 11 Manual Installer"
+                Last_Created_Inst_Label.Text = "Last installer created on:"
+
+                ' Labels that belong to main sections will adopt the text from the main panels
+                Label10.Text = Label9.Text
+                Label18.Text = Label9.Text
+                Label35.Text = Label12.Text
+                Label37.Text = Label17.Text
+                Label52.Text = Label50.Text
+                Label61.Text = Label44.Text
+                Label8.Text = Label44.Text
+                Label80.Text = Label44.Text
+                Label15.Text = Label1.Text
+
+                ' Miscelaneous labels
+                Label29.Text = Label12.Text
+                Label32.Text = Label17.Text
+                Label46.Text = Label9.Text
+                NameLabel.Text = "Name: " & TextBox3.Text
+                If InstHistPanel.InstallerListView.Items.Count = 0 Then
+                    Last_Inst_Time_Label.Text = "No time data is available"
+                End If
+                If File.Exists(TextBox1.Text) Then
+                    Win11PresenceSTLabel.Text = "Presence status: this file exists"
+                Else
+                    Win11PresenceSTLabel.Text = "Presence status: this file does not exist"
+                End If
+                If TextBox1.Text = "" Then
+                    Win11PresenceSTLabel.Text = "Presence status: unknown"
+                End If
+                If File.Exists(TextBox2.Text) Then
+                    Win10PresenceSTLabel.Text = "Presence status: this file exists"
+                Else
+                    Win10PresenceSTLabel.Text = "Presence status: this file does not exist"
+                End If
+                If TextBox2.Text = "" Then
+                    Win10PresenceSTLabel.Text = "Presence status: unknown"
+                End If
+                If TextBox4.Text.EndsWith("\") Then
+                    If TextBox4.Text.Contains(" ") Then
+                        ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Path will contain quotes"
+                    Else
+                        ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
+                    End If
+                Else
+                    If TextBox4.Text.Contains(" ") Then
+                        ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote & ". Path will contain quotes"
+                    Else
+                        ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote
+                    End If
+                End If
+
+                ' LinkLabels
+                LinkLabel1.Text = "View installer history"
+                LinkLabel2.Text = "Continue installer creation"
+                LinkLabel3.Text = "Search on Google"
+                LinkLabel4.Text = "Search on DuckDuckGo"
+                LinkLabel5.Text = "Rename"
+                LinkLabel6.Text = "Could not get computer model"
+                LinkLabel7.Text = "Updates are available"
+                LinkLabel8.Text = "Check this program's project"
+                LinkLabel9.Text = "Download the Developer Pack"
+                LinkLabel10.Text = "Check the Issues page"
+                LinkLabel11.Text = "Check the Hummingbird branch"
+                LinkLabel12.Text = "There are some things that are worth revising before continuing. Click here to learn more."
+
+                ' GroupBoxes
+                GroupBox1.Text = "Navigation position"
+                GroupBox12.Text = "System tray options"
+                GroupBox3.Text = "Platform compatibility details"
+                GroupBox4.Text = "Label options"
+                GroupBox5.Text = "DPI scaling options"
+                GroupBox6.Text = "ISO files"
+                GroupBox7.Text = "Target image options"
+                GroupBox8.Text = "Images"
+                GroupBox9.Text = "Installer creation options"
+                GroupBox10.Text = "Log"
+                GroupBox11.Text = "Target image"
+
+                ' Buttons
+                Button1.Text = "Apply DPI scale"
+                Button2.Text = "Browse..."
+                Button3.Text = "Restore"
+                Button4.Text = "Browse..."
+                Button5.Text = "Browse..."
+                Button6.Text = "Create"
+                Button8.Text = "Yes"
+                Button9.Text = "Hide log"
+                Button10.Text = "Cancel"
+                Button11.Text = "Method help"
+                Button12.Text = "Check for updates"
+                Button13.Text = "Advanced options"
+                ScanButton.Text = "Scan..."
+                LabelSetButton.Text = "Set"
+                SetDefaultButton.Text = "Set default"
+
+                ' CheckBoxes
+                CheckBox1.Text = "Show system tray notification once"
+                CheckBox3.Text = "When closing, hide in system tray"
+                CheckBox4.Text = "Exit the program after I click OK"
+
+                ' MenuStrip items
+                Windows11ManualInstallerToolStripMenuItem.Text = "Windows 11 Manual Installer"
+                VersionToolStripMenuItem.Text = "version " & VerStr & " (assembly version " & AVerStr & ")"
+                InstSTLabel.Text = "Installer status"
+                StatusTSI.Text = "No installers are being created at this time"
+                LastInstallerCreatedAtToolStripMenuItem.Text = "Last installer created at:"
+                If InstHistPanel.InstallerListView.Items.Count = 0 Then
+                    IHDataToolStripMenuItem.Text = "No installer history data is available at this time"
+                End If
+                ViewInstallerHistoryToolStripMenuItem.Text = "View installer history"
+                LanguageToolStripMenuItem.Text = "Language"
+                AutomaticLanguageToolStripMenuItem.Text = "Automatic"
+                AutomaticLanguageToolStripMenuItem.Checked = True
+                EnglishToolStripMenuItem.Text = "English"
+                EnglishToolStripMenuItem.Checked = False
+                SpanishToolStripMenuItem.Text = "Spanish"
+                SpanishToolStripMenuItem.Checked = False
+                ColorModeToolStripMenuItem.Text = "Color mode"
+                AutomaticToolStripMenuItem.Text = "Automatic"
+                LightToolStripMenuItem.Text = "Light"
+                DarkToolStripMenuItem.Text = "Dark"
+                If ComboBox1.SelectedItem = "Automatic" Or ComboBox1.SelectedItem = "Automático" Then
+                    AutomaticToolStripMenuItem.Checked = True
+                    LightToolStripMenuItem.Checked = False
+                    DarkToolStripMenuItem.Checked = False
+                ElseIf ComboBox1.SelectedItem = "Light" Or ComboBox1.SelectedItem = "Claro" Then
+                    AutomaticToolStripMenuItem.Checked = False
+                    LightToolStripMenuItem.Checked = True
+                    DarkToolStripMenuItem.Checked = False
+                ElseIf ComboBox1.SelectedItem = "Dark" Or ComboBox1.SelectedItem = "Oscuro" Then
+                    AutomaticToolStripMenuItem.Checked = False
+                    LightToolStripMenuItem.Checked = False
+                    DarkToolStripMenuItem.Checked = True
+                End If
+                InstallerCreationMethodToolStripMenuItem.Text = "Installer creation method"
+                OpenToolStripMenuItem.Text = "Open"
+                ExitToolStripMenuItem.Text = "Exit"
+
+
+                ' Positioning
+                Label11.Left = Label10.Left + Label10.Width + 6
+                Label12.Left = Label11.Left + Label11.Width
+                Label16.Left = Label18.Left + Label18.Width + 6
+                Label17.Left = Label16.Left + Label16.Width
+                Label62.Left = Label61.Left + Label61.Width + 6
+                Label63.Left = Label62.Left + Label62.Width + 4
+                Label81.Left = Label80.Left + Label80.Width + 6
+                Label82.Left = Label81.Left + Label81.Width + 4
+
+                ' TabPages
+                TabPage1.Text = "Overview"
+                TabPage2.Text = "Component information"
+                TabPage3.Text = "Source code"
+
+                ' RadioButtons
+                RadioButton3.Text = "Left"
+                RadioButton4.Text = "Top"
+
+                ' TextBox positioning and size
+                TextBox1.Left = 200
+                TextBox1.Width = 380
+                TextBox2.Left = 200
+                TextBox2.Width = 380
+                TextBox3.Left = 157
+                TextBox3.Width = 521
+                TextBox4.Left = 167
+                TextBox4.Width = 545
+                LabelText.Left = 77
+                LabelText.Width = 256
+
+                ' Miscellaneous positioning and size
+                ComboBox5.Left = 268
+                ComboBox5.Width = 403
+
+                ' ComboBox relabelling
+                ComboBox1.Items.Clear()
+                ComboBox1.Items.Add("Automatic")
+                ComboBox1.Items.Add("Light")
+                ComboBox1.Items.Add("Dark")
+                If ColorInt = 0 Then
+                    ComboBox1.SelectedItem = "Automatic"
+                ElseIf ColorInt = 1 Then
+                    ComboBox1.SelectedItem = "Light"
+                ElseIf ColorInt = 2 Then
+                    ComboBox1.SelectedItem = "Dark"
+                End If
+                ' This line of code freezes the program. Maybe because it's cold in Alaska now?
+                'ComboBox4.Items.Clear()
+                ComboBox4.Items.Add("Automatic")
+                ComboBox4.Items.Add("English")
+                ComboBox4.Items.Add("Spanish")
+                ComboBox4.SelectedItem = "Automatic"
+                ComboBox4.Items.Remove("Automático")
+                ComboBox4.Items.Remove("Inglés")
+                ComboBox4.Items.Remove("Español")
+                If ComboBox4.Items.Count > 3 Then   ' There is a bug in this procedure where it would make duplicate items of the ComboBox. 
+                    Do Until ComboBox4.Items.Count = 3  ' This fixes it
+                        ComboBox4.Items.RemoveAt(3)
+                    Loop
+                End If
             End If
         End If
     End Sub
@@ -4460,7 +5415,7 @@ Public Class MainForm
     End Sub
 
     Sub ChangeColorInt()
-        If ColorInt = 0 Then
+        If ColorInt = 2 Then
             If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
                 ComboBox1.SelectedItem = "Light"
             ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
@@ -4484,7 +5439,7 @@ Public Class MainForm
                     ComboBox1.SelectedItem = "Oscuro"
                 End If
             End If
-        ElseIf ColorInt = 2 Then
+        ElseIf ColorInt = 0 Then
             If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
                 ComboBox1.SelectedItem = "Automatic"
             ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
@@ -4503,7 +5458,7 @@ Public Class MainForm
         AutomaticToolStripMenuItem.Checked = True
         LightToolStripMenuItem.Checked = False
         DarkToolStripMenuItem.Checked = False
-        ColorInt = 2
+        ColorInt = 0
         ChangeColorInt()
     End Sub
 
@@ -4511,7 +5466,7 @@ Public Class MainForm
         AutomaticToolStripMenuItem.Checked = False
         LightToolStripMenuItem.Checked = True
         DarkToolStripMenuItem.Checked = False
-        ColorInt = 0
+        ColorInt = 2
         ChangeColorInt()
     End Sub
 
@@ -5155,5 +6110,17 @@ Public Class MainForm
 
     Private Sub LinkLabel14_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel14.LinkClicked
         System.Diagnostics.Process.Start("https://icons8.com/icons/fluency")
+    End Sub
+
+    Private Sub CheckBox3_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox3.CheckedChanged
+        CheckBox1.Enabled = CheckBox3.Checked = True
+    End Sub
+
+    Private Sub Button11_Click(sender As Object, e As EventArgs) Handles Button11.Click
+        BackSubPanel.Show()
+        MethodHelpPanel.ShowDialog()
+        MethodHelpPanel.Visible = True
+        MethodHelpPanel.Visible = False
+        BringToFront()
     End Sub
 End Class
