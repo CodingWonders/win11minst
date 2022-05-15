@@ -22,6 +22,7 @@ Partial Class DebugPanel
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(DebugPanel))
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.OK_Button = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -32,11 +33,11 @@ Partial Class DebugPanel
         Me.Button1 = New System.Windows.Forms.Button()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.CheckBox2 = New System.Windows.Forms.CheckBox()
         Me.Panel3 = New System.Windows.Forms.Panel()
         Me.Label3 = New System.Windows.Forms.Label()
+        Me.CheckBox2 = New System.Windows.Forms.CheckBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.Panel1.SuspendLayout()
         Me.TabControl1.SuspendLayout()
         Me.TabPage2.SuspendLayout()
@@ -162,39 +163,6 @@ Partial Class DebugPanel
         Me.TabPage3.Text = "Debug options"
         Me.TabPage3.UseVisualStyleBackColor = True
         '
-        'CheckBox1
-        '
-        Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.Checked = True
-        Me.CheckBox1.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CheckBox1.Location = New System.Drawing.Point(34, 29)
-        Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(165, 24)
-        Me.CheckBox1.TabIndex = 0
-        Me.CheckBox1.Text = "Enable Debug mode"
-        Me.CheckBox1.UseVisualStyleBackColor = True
-        '
-        'Label2
-        '
-        Me.Label2.Location = New System.Drawing.Point(49, 56)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(581, 64)
-        Me.Label2.TabIndex = 1
-        Me.Label2.Text = "Debug mode was enabled because you ran it under Visual Studio, or used the -debug" & _
-    " flag"
-        '
-        'CheckBox2
-        '
-        Me.CheckBox2.AutoSize = True
-        Me.CheckBox2.Checked = True
-        Me.CheckBox2.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CheckBox2.Location = New System.Drawing.Point(34, 102)
-        Me.CheckBox2.Name = "CheckBox2"
-        Me.CheckBox2.Size = New System.Drawing.Size(168, 24)
-        Me.CheckBox2.TabIndex = 2
-        Me.CheckBox2.Text = "Log debug messages"
-        Me.CheckBox2.UseVisualStyleBackColor = True
-        '
         'Panel3
         '
         Me.Panel3.Controls.Add(Me.Label3)
@@ -214,6 +182,39 @@ Partial Class DebugPanel
         Me.Label3.Text = "To apply these changes, you need to restart the program with the debugger detache" & _
     "d."
         '
+        'CheckBox2
+        '
+        Me.CheckBox2.AutoSize = True
+        Me.CheckBox2.Checked = True
+        Me.CheckBox2.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CheckBox2.Location = New System.Drawing.Point(34, 102)
+        Me.CheckBox2.Name = "CheckBox2"
+        Me.CheckBox2.Size = New System.Drawing.Size(168, 24)
+        Me.CheckBox2.TabIndex = 2
+        Me.CheckBox2.Text = "Log debug messages"
+        Me.CheckBox2.UseVisualStyleBackColor = True
+        '
+        'Label2
+        '
+        Me.Label2.Location = New System.Drawing.Point(49, 56)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(581, 64)
+        Me.Label2.TabIndex = 1
+        Me.Label2.Text = "Debug mode was enabled because you ran it under Visual Studio, or used the -debug" & _
+    " flag"
+        '
+        'CheckBox1
+        '
+        Me.CheckBox1.AutoSize = True
+        Me.CheckBox1.Checked = True
+        Me.CheckBox1.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CheckBox1.Location = New System.Drawing.Point(34, 29)
+        Me.CheckBox1.Name = "CheckBox1"
+        Me.CheckBox1.Size = New System.Drawing.Size(165, 24)
+        Me.CheckBox1.TabIndex = 0
+        Me.CheckBox1.Text = "Enable Debug mode"
+        Me.CheckBox1.UseVisualStyleBackColor = True
+        '
         'DebugPanel
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -225,6 +226,7 @@ Partial Class DebugPanel
         Me.Controls.Add(Me.Panel1)
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "DebugPanel"

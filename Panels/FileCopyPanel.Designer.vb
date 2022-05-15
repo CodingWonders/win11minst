@@ -30,9 +30,9 @@ Partial Class FileCopyPanel
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
-        ' 
-        ' Panel1
-        ' 
+        '
+        'Panel1
+        '
         Me.Panel1.BackColor = System.Drawing.Color.FromArgb(CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer))
         Me.Panel1.Controls.Add(Me.OK_Button)
         Me.Panel1.Controls.Add(Me.Cancel_Button)
@@ -41,9 +41,9 @@ Partial Class FileCopyPanel
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(712, 80)
         Me.Panel1.TabIndex = 3
-        ' 
-        ' OK_Button
-        ' 
+        '
+        'OK_Button
+        '
         Me.OK_Button.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.OK_Button.BackColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(92, Byte), Integer), CType(CType(186, Byte), Integer))
         Me.OK_Button.FlatAppearance.BorderColor = System.Drawing.Color.DeepSkyBlue
@@ -56,9 +56,9 @@ Partial Class FileCopyPanel
         Me.OK_Button.TabIndex = 1
         Me.OK_Button.Text = "Yes"
         Me.OK_Button.UseVisualStyleBackColor = False
-        ' 
-        ' Cancel_Button
-        ' 
+        '
+        'Cancel_Button
+        '
         Me.Cancel_Button.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Cancel_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Cancel_Button.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -68,9 +68,9 @@ Partial Class FileCopyPanel
         Me.Cancel_Button.TabIndex = 3
         Me.Cancel_Button.Text = "No"
         Me.Cancel_Button.UseVisualStyleBackColor = True
-        ' 
-        ' Label1
-        ' 
+        '
+        'Label1
+        '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Segoe UI Variable Display Semib", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(26, 26)
@@ -78,18 +78,18 @@ Partial Class FileCopyPanel
         Me.Label1.Size = New System.Drawing.Size(87, 26)
         Me.Label1.TabIndex = 4
         Me.Label1.Text = "File copy"
-        ' 
-        ' Label2
-        ' 
+        '
+        'Label2
+        '
         Me.Label2.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(54, 78)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(604, 84)
         Me.Label2.TabIndex = 5
         Me.Label2.Text = resources.GetString("Label2.Text")
-        ' 
-        ' FileCopyPanel
-        ' 
+        '
+        'FileCopyPanel
+        '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
@@ -99,6 +99,7 @@ Partial Class FileCopyPanel
         Me.Controls.Add(Me.Panel1)
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "FileCopyPanel"

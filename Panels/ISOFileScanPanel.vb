@@ -31,7 +31,7 @@ Public Class ISOFileScanPanel
         End If
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click, Button2.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         ISOFolderScanner.ShowDialog()
         If DialogResult.OK Then
             Label3.Visible = True
@@ -260,10 +260,11 @@ Public Class ISOFileScanPanel
 
     Private Sub ISOFileScanPanel_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Button1.FlatStyle = FlatStyle.System
-        Button2.FlatStyle = FlatStyle.System
         If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then
             Label1.Text = "Scan for ISO images"
             Label2.Text = "Directory to scan:"
+            TextBox1.Left = 150
+            TextBox1.Width = 468
             Label3.Text = "Scanning directory for ISO files..."
             Label5.Text = "This is a"
             Label4.Visible = True
@@ -278,6 +279,8 @@ Public Class ISOFileScanPanel
         ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Then
             Label1.Text = "Escanear imágenes ISO"
             Label2.Text = "Directorio a escanear:"
+            TextBox1.Left = 171
+            TextBox1.Width = 447
             Label3.Text = "Escaneando directorio por archivos ISO..."
             Label5.Text = "Este es un instalador de"
             Label4.Visible = False
@@ -293,6 +296,8 @@ Public Class ISOFileScanPanel
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 Label1.Text = "Scan for ISO images"
                 Label2.Text = "Directory to scan:"
+                TextBox1.Left = 150
+                TextBox1.Width = 468
                 Label3.Text = "Scanning directory for ISO files..."
                 Label5.Text = "This is a"
                 Label4.Visible = True
@@ -307,6 +312,8 @@ Public Class ISOFileScanPanel
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 Label1.Text = "Escanear imágenes ISO"
                 Label2.Text = "Directorio a escanear:"
+                TextBox1.Left = 171
+                TextBox1.Width = 447
                 Label3.Text = "Escaneando directorio por archivos ISO..."
                 Label5.Text = "Este es un instalador de"
                 Label4.Visible = False

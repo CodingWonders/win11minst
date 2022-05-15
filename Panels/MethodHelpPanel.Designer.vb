@@ -25,6 +25,8 @@ Partial Class MethodHelpPanel
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MethodHelpPanel))
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Label23 = New System.Windows.Forms.Label()
+        Me.Label22 = New System.Windows.Forms.Label()
         Me.OK_Button = New System.Windows.Forms.Button()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
@@ -53,8 +55,6 @@ Partial Class MethodHelpPanel
         Me.Label19 = New System.Windows.Forms.Label()
         Me.Label20 = New System.Windows.Forms.Label()
         Me.Label21 = New System.Windows.Forms.Label()
-        Me.Label22 = New System.Windows.Forms.Label()
-        Me.Label23 = New System.Windows.Forms.Label()
         Me.Panel1.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
@@ -86,6 +86,25 @@ Partial Class MethodHelpPanel
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(800, 80)
         Me.Panel1.TabIndex = 6
+        '
+        'Label23
+        '
+        Me.Label23.AutoSize = True
+        Me.Label23.Location = New System.Drawing.Point(31, 41)
+        Me.Label23.Name = "Label23"
+        Me.Label23.Size = New System.Drawing.Size(365, 15)
+        Me.Label23.TabIndex = 2
+        Me.Label23.Text = "** The time may vary on the options specified on Additional options"
+        '
+        'Label22
+        '
+        Me.Label22.AutoSize = True
+        Me.Label22.Location = New System.Drawing.Point(31, 24)
+        Me.Label22.Name = "Label22"
+        Me.Label22.Size = New System.Drawing.Size(601, 15)
+        Me.Label22.TabIndex = 2
+        Me.Label22.Text = "* The time may vary on different hardware. Tests conducted on a SATA SSD with sou" & _
+    "rce installers on external HDD"
         '
         'OK_Button
         '
@@ -432,25 +451,6 @@ Partial Class MethodHelpPanel
         Me.Label21.Text = "5 minutes 33 seconds**"
         Me.Label21.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'Label22
-        '
-        Me.Label22.AutoSize = True
-        Me.Label22.Location = New System.Drawing.Point(31, 24)
-        Me.Label22.Name = "Label22"
-        Me.Label22.Size = New System.Drawing.Size(601, 15)
-        Me.Label22.TabIndex = 2
-        Me.Label22.Text = "* The time may vary on different hardware. Tests conducted on a SATA SSD with sou" & _
-    "rce installers on external HDD"
-        '
-        'Label23
-        '
-        Me.Label23.AutoSize = True
-        Me.Label23.Location = New System.Drawing.Point(31, 41)
-        Me.Label23.Name = "Label23"
-        Me.Label23.Size = New System.Drawing.Size(365, 15)
-        Me.Label23.TabIndex = 2
-        Me.Label23.Text = "** The time may vary on the options specified on Additional options"
-        '
         'MethodHelpPanel
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -463,6 +463,7 @@ Partial Class MethodHelpPanel
         Me.Controls.Add(Me.Label1)
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "MethodHelpPanel"

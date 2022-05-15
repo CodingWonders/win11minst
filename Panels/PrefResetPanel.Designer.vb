@@ -22,6 +22,7 @@ Partial Class PrefResetPanel
     ' No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(PrefResetPanel))
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Yes_Button = New System.Windows.Forms.Button()
         Me.No_Button = New System.Windows.Forms.Button()
@@ -31,9 +32,9 @@ Partial Class PrefResetPanel
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
-        ' 
-        ' Panel1
-        ' 
+        '
+        'Panel1
+        '
         Me.Panel1.BackColor = System.Drawing.Color.FromArgb(CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer))
         Me.Panel1.Controls.Add(Me.Yes_Button)
         Me.Panel1.Controls.Add(Me.No_Button)
@@ -42,9 +43,9 @@ Partial Class PrefResetPanel
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(729, 80)
         Me.Panel1.TabIndex = 2
-        ' 
-        ' Yes_Button
-        ' 
+        '
+        'Yes_Button
+        '
         Me.Yes_Button.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Yes_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Yes_Button.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -54,9 +55,9 @@ Partial Class PrefResetPanel
         Me.Yes_Button.TabIndex = 2
         Me.Yes_Button.Text = "Yes"
         Me.Yes_Button.UseVisualStyleBackColor = True
-        ' 
-        ' No_Button
-        ' 
+        '
+        'No_Button
+        '
         Me.No_Button.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.No_Button.BackColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(92, Byte), Integer), CType(CType(186, Byte), Integer))
         Me.No_Button.FlatAppearance.BorderColor = System.Drawing.Color.DeepSkyBlue
@@ -69,9 +70,9 @@ Partial Class PrefResetPanel
         Me.No_Button.TabIndex = 3
         Me.No_Button.Text = "No"
         Me.No_Button.UseVisualStyleBackColor = False
-        ' 
-        ' Label1
-        ' 
+        '
+        'Label1
+        '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Segoe UI Variable Display Semib", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(26, 26)
@@ -79,9 +80,9 @@ Partial Class PrefResetPanel
         Me.Label1.Size = New System.Drawing.Size(174, 26)
         Me.Label1.TabIndex = 4
         Me.Label1.Text = "Reset preferences?"
-        ' 
-        ' Label2
-        ' 
+        '
+        'Label2
+        '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(71, 82)
@@ -90,17 +91,17 @@ Partial Class PrefResetPanel
         Me.Label2.TabIndex = 5
         Me.Label2.Text = "This will reset ALL preferences to their default values (e.g., language or color " & _
     "mode)"
-        ' 
-        ' ProgressBar1
-        ' 
+        '
+        'ProgressBar1
+        '
         Me.ProgressBar1.Location = New System.Drawing.Point(75, 150)
         Me.ProgressBar1.Name = "ProgressBar1"
         Me.ProgressBar1.Size = New System.Drawing.Size(556, 23)
         Me.ProgressBar1.TabIndex = 6
         Me.ProgressBar1.Visible = False
-        ' 
-        ' Label3
-        ' 
+        '
+        'Label3
+        '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.Location = New System.Drawing.Point(71, 176)
@@ -109,9 +110,9 @@ Partial Class PrefResetPanel
         Me.Label3.TabIndex = 5
         Me.Label3.Text = "Resetting preferences..."
         Me.Label3.Visible = False
-        ' 
-        ' PrefResetPanel
-        ' 
+        '
+        'PrefResetPanel
+        '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
@@ -123,6 +124,7 @@ Partial Class PrefResetPanel
         Me.Controls.Add(Me.Panel1)
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "PrefResetPanel"

@@ -22,6 +22,7 @@ Partial Class InstCreateAbortPanel
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(InstCreateAbortPanel))
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Yes_Button = New System.Windows.Forms.Button()
         Me.No_Button = New System.Windows.Forms.Button()
@@ -99,6 +100,7 @@ Partial Class InstCreateAbortPanel
         Me.Controls.Add(Me.Panel1)
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "InstCreateAbortPanel"

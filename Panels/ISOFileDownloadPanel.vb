@@ -254,5 +254,6 @@ Public Class ISOFileDownloadPanel
             Process.Start(".\temp.bat").WaitForExit()
             File.Delete(".\temp.bat")
         End Try
+        MsgBox("ISO file built successfully. You can find it in the application runtime directory: " & Directory.GetCurrentDirectory(), vbOKOnly + vbInformation, "File build completion")
     End Sub
 End Class
