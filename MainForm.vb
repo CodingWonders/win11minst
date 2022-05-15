@@ -10,7 +10,7 @@ Imports System.Text.Encoding
 Public Class MainForm
     Private isMouseDown As Boolean = False
     Private mouseOffset As Point
-    Dim VerStr As String = "2.0.0100_220501"    ' Reported version
+    Dim VerStr As String = "2.0.0100_220515"    ' Reported version
     Dim AVerStr As String = My.Application.Info.Version.ToString()     ' Assembly version
     Dim VDescStr As String = "Happy International Worker's day!"
     Dim OffEcho As String = "@echo off"
@@ -65,6 +65,8 @@ Public Class MainForm
     Dim LangInt As Integer
 
     Dim NotifyNum As Integer
+
+    Dim isHummingbird As Boolean = True
 
     ' Left mouse button pressed
     Private Sub titlePanel_MouseDown(sender As Object, e As MouseEventArgs) Handles titlePanel.MouseDown, Label12.MouseDown, TitleBar.MouseDown
@@ -487,9 +489,19 @@ Public Class MainForm
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         VersionToolStripMenuItem.Text = "version " & VerStr & " (assembly version " & AVerStr & ")"
         Label72.Text = "version " & VerStr & " (assembly version " & AVerStr & ")"
+        Label74.Visible = False     ' There aren't any important days for May 15
         Label74.Text = VDescStr
         Label7.Text = "version " & VerStr
         Notify.Visible = False
+        If isHummingbird Then
+            BranchPic.Visible = True
+            Label106.Visible = True
+            Label107.Visible = True
+        Else
+            BranchPic.Visible = False
+            Label106.Visible = False
+            Label107.Visible = False
+        End If
         If My.Computer.Info.OSFullName.Contains("Windows 7") Or My.Computer.Info.OSFullName.Contains("Windows 8") Or My.Computer.Info.OSFullName.Contains("Windows Server 2008") Or My.Computer.Info.OSFullName.Contains("Windows Server 2012") Then      ' This is done to not show the "Not supported" dialog on Windows 7 and 8/8.1
             ComboBox1.Items.Clear()
             ComboBox1.Items.Add("Light")
@@ -510,7 +522,7 @@ Public Class MainForm
         If File.Exists(".\version") Then
             UpdateCheckPreLoadPanel.ShowDialog()
         Else
-            My.Computer.FileSystem.WriteAllText(".\version", "2.0.0100_220410", True, ASCII)
+            My.Computer.FileSystem.WriteAllText(".\version", "2.0.0100_220515", True, ASCII)
         End If
         ErrorCount = 0
         WarnCount = 0
@@ -854,19 +866,26 @@ Public Class MainForm
             End If
 
         End If
-        If My.Computer.Info.OSFullName.Contains("Windows Server") Then
-            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
-                MsgBox("This computer is running a Windows Server operating system. To achieve optimal results on incompatible servers, please create Copper or Nickel build installers of Windows Server.", vbOKOnly + vbInformation, "Windows Server detected")
-            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
-                MsgBox("Este ordenador está ejecutando un sistema operativo Windows Server. Para lograr resultados óptimos en servidores incompatibles, por favor, cree instaladores de compilaciones Nickel y Copper de Windows Server.", vbOKOnly + vbInformation, "Se ha detectado Windows Server")
-            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
-                If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
-                    MsgBox("This computer is running a Windows Server operating system. To achieve optimal results on incompatible servers, please create Copper or Nickel build installers of Windows Server.", vbOKOnly + vbInformation, "Windows Server detected")
-                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
-                    MsgBox("Este ordenador está ejecutando un sistema operativo Windows Server. Para lograr resultados óptimos en servidores incompatibles, por favor, cree instaladores de compilaciones Nickel y Copper de Windows Server.", vbOKOnly + vbInformation, "Se ha detectado Windows Server")
-                End If
-            End If
-        End If
+
+        ' Windows Server (Nickel) and Server (Copper) builds still don't check servers to meet system reqs (tested build 25083).
+        ' Hold this for a bit (do not remove this, use this in the future if M$ wants to block Windows Server Nickel or Copper
+        ' on unsupported servers, also, remove this comment if that happens)
+        'If My.Computer.Info.OSFullName.Contains("Windows Server") Then
+        '    If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+        '        MsgBox("This computer is running a Windows Server operating system. To achieve optimal results on incompatible servers, please create Copper or Nickel build installers of Windows Server.", vbOKOnly + vbInformation, "Windows Server detected")
+        '    ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+        '        MsgBox("Este ordenador está ejecutando un sistema operativo Windows Server. Para lograr resultados óptimos en servidores incompatibles, por favor, cree instaladores de compilaciones Nickel y Copper de Windows Server.", vbOKOnly + vbInformation, "Se ha detectado Windows Server")
+        '    ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+        '        If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+        '            MsgBox("This computer is running a Windows Server operating system. To achieve optimal results on incompatible servers, please create Copper or Nickel build installers of Windows Server.", vbOKOnly + vbInformation, "Windows Server detected")
+        '        ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+        '            MsgBox("Este ordenador está ejecutando un sistema operativo Windows Server. Para lograr resultados óptimos en servidores incompatibles, por favor, cree instaladores de compilaciones Nickel y Copper de Windows Server.", vbOKOnly + vbInformation, "Se ha detectado Windows Server")
+        '        End If
+        '    End If
+        'End If
+
+        ' It ALSO looks like, at the time of writing this comment (thx for reading), MS released build 25115 of WINDOWS 11 (Copper). Right now,
+        ' it does not add more system requirement blockades (but that does not mean they won't add them later)
         LineShape1.Visible = True
     End Sub
 
@@ -1211,10 +1230,10 @@ Public Class MainForm
             TextBox3.ForeColor = Color.White
             TextBox4.BackColor = Color.FromArgb(43, 43, 43)
             TextBox4.ForeColor = Color.White
-            TextBox5.BackColor = Color.FromArgb(43, 43, 43)
-            TextBox5.ForeColor = Color.White
-            TextBox6.BackColor = Color.FromArgb(43, 43, 43)
-            TextBox6.ForeColor = Color.White
+            WarningText.BackColor = Color.FromArgb(43, 43, 43)
+            WarningText.ForeColor = Color.White
+            ErrorText.BackColor = Color.FromArgb(43, 43, 43)
+            ErrorText.ForeColor = Color.White
             LogBox.BackColor = Color.FromArgb(43, 43, 43)
             LogBox.ForeColor = Color.White
             LabelText.BackColor = Color.FromArgb(43, 43, 43)
@@ -1261,6 +1280,7 @@ Public Class MainForm
             LinkLabel12.LinkColor = Color.FromArgb(76, 194, 255)
             LinkLabel13.LinkColor = Color.FromArgb(76, 194, 255)
             LinkLabel14.LinkColor = Color.FromArgb(76, 194, 255)
+            LinkLabel16.LinkColor = Color.FromArgb(76, 194, 255)
             TargetInstallerLinkLabel.LinkColor = Color.FromArgb(76, 194, 255)
 
 
@@ -1360,10 +1380,10 @@ Public Class MainForm
             TextBox3.ForeColor = Color.Black
             TextBox4.BackColor = Color.FromArgb(249, 249, 249)
             TextBox4.ForeColor = Color.Black
-            TextBox5.BackColor = Color.FromArgb(249, 249, 249)
-            TextBox5.ForeColor = Color.Black
-            TextBox6.BackColor = Color.FromArgb(249, 249, 249)
-            TextBox6.ForeColor = Color.Black
+            WarningText.BackColor = Color.FromArgb(249, 249, 249)
+            WarningText.ForeColor = Color.Black
+            ErrorText.BackColor = Color.FromArgb(249, 249, 249)
+            ErrorText.ForeColor = Color.Black
             LogBox.BackColor = Color.FromArgb(249, 249, 249)
             LogBox.ForeColor = Color.Black
             LabelText.BackColor = Color.FromArgb(249, 249, 249)
@@ -1409,6 +1429,7 @@ Public Class MainForm
             LinkLabel12.LinkColor = Color.FromArgb(1, 92, 186)
             LinkLabel13.LinkColor = Color.FromArgb(1, 92, 186)
             LinkLabel14.LinkColor = Color.FromArgb(1, 92, 186)
+            LinkLabel16.LinkColor = Color.FromArgb(1, 92, 186)
             TargetInstallerLinkLabel.LinkColor = Color.FromArgb(1, 92, 186)
         ElseIf ComboBox1.SelectedItem = "Automatic" Or ComboBox1.SelectedItem = "Automático" Then
             ColorInt = 0
@@ -1523,10 +1544,10 @@ Public Class MainForm
                         TextBox3.ForeColor = Color.White
                         TextBox4.BackColor = Color.FromArgb(43, 43, 43)
                         TextBox4.ForeColor = Color.White
-                        TextBox5.BackColor = Color.FromArgb(43, 43, 43)
-                        TextBox5.ForeColor = Color.White
-                        TextBox6.BackColor = Color.FromArgb(43, 43, 43)
-                        TextBox6.ForeColor = Color.White
+                        WarningText.BackColor = Color.FromArgb(43, 43, 43)
+                        WarningText.ForeColor = Color.White
+                        ErrorText.BackColor = Color.FromArgb(43, 43, 43)
+                        ErrorText.ForeColor = Color.White
                         LogBox.BackColor = Color.FromArgb(43, 43, 43)
                         LogBox.ForeColor = Color.White
                         LabelText.BackColor = Color.FromArgb(43, 43, 43)
@@ -1568,6 +1589,7 @@ Public Class MainForm
                         LinkLabel12.LinkColor = Color.FromArgb(76, 194, 255)
                         LinkLabel13.LinkColor = Color.FromArgb(76, 194, 255)
                         LinkLabel14.LinkColor = Color.FromArgb(76, 194, 255)
+                        LinkLabel16.LinkColor = Color.FromArgb(76, 194, 255)
                         TargetInstallerLinkLabel.LinkColor = Color.FromArgb(76, 194, 255)
                     ElseIf ColorStr = "1" Then
                         If RadioButton3.Checked = True Then
@@ -1658,10 +1680,10 @@ Public Class MainForm
                         TextBox3.ForeColor = Color.Black
                         TextBox4.BackColor = Color.FromArgb(249, 249, 249)
                         TextBox4.ForeColor = Color.Black
-                        TextBox5.BackColor = Color.FromArgb(249, 249, 249)
-                        TextBox5.ForeColor = Color.Black
-                        TextBox6.BackColor = Color.FromArgb(249, 249, 249)
-                        TextBox6.ForeColor = Color.Black
+                        WarningText.BackColor = Color.FromArgb(249, 249, 249)
+                        WarningText.ForeColor = Color.Black
+                        ErrorText.BackColor = Color.FromArgb(249, 249, 249)
+                        ErrorText.ForeColor = Color.Black
                         LogBox.BackColor = Color.FromArgb(249, 249, 249)
                         LogBox.ForeColor = Color.Black
                         LabelText.BackColor = Color.FromArgb(249, 249, 249)
@@ -1703,6 +1725,7 @@ Public Class MainForm
                         LinkLabel12.LinkColor = Color.FromArgb(1, 92, 186)
                         LinkLabel13.LinkColor = Color.FromArgb(1, 92, 186)
                         LinkLabel14.LinkColor = Color.FromArgb(1, 92, 186)
+                        LinkLabel16.LinkColor = Color.FromArgb(1, 92, 186)
                         TargetInstallerLinkLabel.LinkColor = Color.FromArgb(1, 92, 186)
                     End If
                 Else
@@ -2291,17 +2314,20 @@ Public Class MainForm
                 End If
             Loop
         End If
-        If TextBox2.Text = "" Then
-            Do Until Not TextBox2.Text = ""
-                Win10FileSpecDialog.ShowDialog()
-                If DialogResult.OK Then
-                    TextBox2.Text = Win10FileSpecDialog.FileName
-                    If Not File.Exists(TextBox2.Text) Then
-                        TextBox2.Text = ""
+        If Not ComboBox5.SelectedItem = "REGTWEAK" Then
+            If TextBox2.Text = "" Then
+                Do Until Not TextBox2.Text = ""
+                    Win10FileSpecDialog.ShowDialog()
+                    If DialogResult.OK Then
+                        TextBox2.Text = Win10FileSpecDialog.FileName
+                        If Not File.Exists(TextBox2.Text) Then
+                            TextBox2.Text = ""
+                        End If
                     End If
-                End If
-            Loop
+                Loop
+            End If
         End If
+
         If TextBox3.Text = "" Then
             If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
                 MsgBox("The file name cannot be nothing. Please specify a file name and try again.", vbOKOnly + vbInformation, "File name")
@@ -2622,6 +2648,8 @@ Public Class MainForm
     Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
         FileCount = 0
         DelFileCount = 0
+        WarningText.Clear()
+        ErrorText.Clear()
         If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
             Label82.Text = "Progress"
             Label83.Text = "That' s all the information we need right now. The installer creation will take a few minutes, so please be patient."
@@ -2699,6 +2727,7 @@ Public Class MainForm
             Catch ex As Exception
                 File.WriteAllText(".\temp.bat", OffEcho & CrLf & EmergencyFolderDelete, ASCII)
                 Process.Start(".\temp.bat").WaitForExit()
+                File.Delete(".\temp.bat")
             End Try
         End If
         If File.Exists(".\install.esd") Then
@@ -3090,6 +3119,7 @@ Public Class MainForm
                     If Win11ESD = 1 Then
                         LogBox.AppendText(CrLf & "WARNING: the program has detected ESD files on the Windows 11 image. Proceeding with normal options...")
                         WarnCount += 1
+                        WarningText.AppendText(Now & " - The program attempted to run the REGTWEAK script with advanced options, but one of the source images contains ESD files. These cannot be mounted by DISM")
                         AdvancedOptionsPanel.CheckBox1.Checked = False
                         AdvancedOptionsPanel.CheckBox2.Checked = False
                         Process.Start(".\prog_bin\regtweak.bat").WaitForExit()
@@ -3100,6 +3130,7 @@ Public Class MainForm
                     If Win11ESD = 1 Then
                         LogBox.AppendText(CrLf & "WARNING: the program has detected ESD files on the Windows 11 image. Proceeding with normal options...")
                         WarnCount += 1
+                        WarningText.AppendText(Now & " - The program attempted to run the REGTWEAK script with advanced options, but one of the source images contains ESD files. These cannot be mounted by DISM")
                         AdvancedOptionsPanel.CheckBox1.Checked = False
                         Process.Start(".\prog_bin\regtweak.bat").WaitForExit()
                     ElseIf Win11ESD = 0 Then
@@ -3111,6 +3142,7 @@ Public Class MainForm
                     If Win11ESD = 1 Then
                         LogBox.AppendText(CrLf & "WARNING: the program has detected ESD files on the Windows 11 image. Proceeding with normal options...")
                         WarnCount += 1
+                        WarningText.AppendText(Now & " - The program attempted to run the REGTWEAK script with advanced options, but one of the source images contains ESD files. These cannot be mounted by DISM")
                         AdvancedOptionsPanel.CheckBox2.Checked = False
                         Process.Start(".\prog_bin\regtweak.bat").WaitForExit()
                     ElseIf Win11ESD = 0 Then
@@ -3134,7 +3166,12 @@ Public Class MainForm
                 File.WriteAllText(".\temp.bat", OffEcho & CrLf & OSCDIMG_UEFI, ASCII)
             Else
                 LogBox.AppendText(CrLf & "WARNING: file: " & Quote & "\boot\Efisys.bin" & Quote & " is not present in the temporary installer. Using the fallback BIOS/UEFI-CSM method...")
-                WarnCount = WarnCount + 1
+                WarnCount += 1
+                If WarningText.Text = "" Then
+                    WarningText.AppendText(Now & " - To make installers compatible with modern systems (UEFI), the program needs " & Quote & "\boot\Efisys.bin" & Quote & ", which it could not find")
+                Else
+                    WarningText.AppendText(CrLf & Now & " - To make installers compatible with modern systems (UEFI), the program needs " & Quote & "\boot\Efisys.bin" & Quote & ", which it could not find")
+                End If
                 File.WriteAllText(".\temp.bat", OffEcho & CrLf & OSCDIMG_CSM, ASCII)
             End If
             Process.Start(".\temp.bat").WaitForExit()
@@ -3157,24 +3194,34 @@ Public Class MainForm
         End If
         Label88.Font = New Font("Segoe UI", 9.75, FontStyle.Bold)
         For Each fileGather In My.Computer.FileSystem.GetFiles(".\temp", FileIO.SearchOption.SearchAllSubDirectories)
-            FileCount = FileCount + 1
+            FileCount += 1
         Next
         For Each deletedFile In My.Computer.FileSystem.GetFiles(".\temp", FileIO.SearchOption.SearchAllSubDirectories)
-            DelFileCount = DelFileCount + 1
-            MessageCount = MessageCount + 1
+            DelFileCount += 1
+            MessageCount += 1
             Try
                 LogBox.AppendText(CrLf & "Deleted file: " & DelFileCount & "/" & FileCount)
                 File.Delete(deletedFile)
             Catch PTLEx As PathTooLongException
-                EmergencyFileDeleteCount = EmergencyFileDeleteCount + 1
-                WarnCount = WarnCount + 1
+                EmergencyFileDeleteCount += 1
+                WarnCount += 1
+                If WarningText.Text = "" Then
+                    WarningText.AppendText(Now & " - An exception ocurred while deleting files. The program has attempted an alternative file deletion method")
+                Else
+                    WarningText.AppendText(CrLf & Now & " - An exception ocurred while deleting files. The program has attempted an alternative file deletion method")
+                End If
                 File.WriteAllText(".\emergencydelete.bat", OffEcho & "del " & Quote & deletedFile & Quote & " /f /q", ASCII)
                 Process.Start(".\emergencydelete.bat").WaitForExit()
                 File.Delete(".\emergencydelete.bat")
                 LogBox.AppendText(CrLf & "Deleted file: " & DelFileCount & "/" & FileCount & ". Files that had to be deleted manually: " & EmergencyFileDeleteCount)
             Catch DNFDelEx As DirectoryNotFoundException
-                WarnCount = WarnCount + 1
-                EmergencyFileDeleteCount = EmergencyFileDeleteCount + 1
+                WarnCount += 1
+                If WarningText.Text = "" Then
+                    WarningText.AppendText(Now & " - An exception ocurred while deleting files. The program has attempted an alternative file deletion method")
+                Else
+                    WarningText.AppendText(CrLf & Now & " - An exception ocurred while deleting files. The program has attempted an alternative file deletion method")
+                End If
+                EmergencyFileDeleteCount += 1
                 File.WriteAllText(".\emergencydelete.bat", OffEcho & "del " & Quote & deletedFile & Quote & " /f /q", ASCII)
                 Process.Start(".\emergencydelete.bat").WaitForExit()
                 File.Delete(".\emergencydelete.bat")
@@ -3186,7 +3233,12 @@ Public Class MainForm
             Directory.Delete(".\temp")
         Catch IOEx As IOException
             LogBox.AppendText(CrLf & "Exception: 'IOException' caught at runtime, performing emergency method...")
-            WarnCount = WarnCount + 1
+            WarnCount += 1
+            If WarningText.Text = "" Then
+                WarningText.AppendText(Now & " - An exception ocurred while deleting the temporary directory. The program has attempted an alternative folder deletion method")
+            Else
+                WarningText.AppendText(CrLf & Now & " - An exception ocurred while deleting the temporary directory. The program has attempted an alternative folder deletion method")
+            End If
             File.WriteAllText(".\temp.bat", OffEcho & CrLf & EmergencyFolderDelete, ASCII)
             Process.Start(".\temp.bat").WaitForExit()
         End Try
@@ -3225,6 +3277,11 @@ Public Class MainForm
                         My.Computer.FileSystem.WriteAllText(".\inst.log", "----------------------------------------------------------------", True)
                         My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf, True)
                         My.Computer.FileSystem.WriteAllText(".\inst.log", LogBox.Text, True)
+                        If WarningText.Text = "" And ErrorText.Text = "" Then
+                            My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: none" & CrLf & CrLf & "Errors: none", True)
+                        Else
+                            My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: " & CrLf & WarningText.Text & CrLf & CrLf & "Errors: " & CrLf & ErrorText.Text, True)
+                        End If
                         File.Delete(".\inst.log.bak")
                     Else
                         File.Move(".\log.txt", ".\inst.log")
@@ -3232,12 +3289,22 @@ Public Class MainForm
                         My.Computer.FileSystem.WriteAllText(".\inst.log", "----------------------------------------------------------------", True)
                         My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf, True)
                         My.Computer.FileSystem.WriteAllText(".\inst.log", LogBox.Text, True)
+                        If WarningText.Text = "" And ErrorText.Text = "" Then
+                            My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: none" & CrLf & CrLf & "Errors: none", True)
+                        Else
+                            My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: " & CrLf & WarningText.Text & CrLf & CrLf & "Errors: " & CrLf & ErrorText.Text, True)
+                        End If
                     End If
                 ElseIf LogMigratePanel.DialogResult = Windows.Forms.DialogResult.No Then
                     My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf, True)
                     My.Computer.FileSystem.WriteAllText(".\inst.log", "----------------------------------------------------------------", True)
                     My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf, True)
                     My.Computer.FileSystem.WriteAllText(".\inst.log", LogBox.Text, True)
+                    If WarningText.Text = "" And ErrorText.Text = "" Then
+                        My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: none" & CrLf & CrLf & "Errors: none", True)
+                    Else
+                        My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: " & CrLf & WarningText.Text & CrLf & CrLf & "Errors: " & CrLf & ErrorText.Text, True)
+                    End If
                 End If
             Else
                 BringToFront()
@@ -3251,12 +3318,27 @@ Public Class MainForm
                     My.Computer.FileSystem.WriteAllText(".\inst.log", "----------------------------------------------------------------", True)
                     My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf, True)
                     My.Computer.FileSystem.WriteAllText(".\inst.log", LogBox.Text, True)
+                    If WarningText.Text = "" And ErrorText.Text = "" Then
+                        My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: none" & CrLf & CrLf & "Errors: none", True)
+                    Else
+                        My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: " & CrLf & WarningText.Text & CrLf & CrLf & "Errors: " & CrLf & ErrorText.Text, True)
+                    End If
                 Else
                     My.Computer.FileSystem.WriteAllText(".\inst.log", LogBox.Text, True)
+                    If WarningText.Text = "" And ErrorText.Text = "" Then
+                        My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: none" & CrLf & CrLf & "Errors: none", True)
+                    Else
+                        My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: " & CrLf & WarningText.Text & CrLf & CrLf & "Errors: " & CrLf & ErrorText.Text, True)
+                    End If
                 End If
             End If
         Else
             My.Computer.FileSystem.WriteAllText(".\inst.log", LogBox.Text, True)
+            If WarningText.Text = "" And ErrorText.Text = "" Then
+                My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: none" & CrLf & CrLf & "Errors: none", True)
+            Else
+                My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: " & CrLf & WarningText.Text & CrLf & CrLf & "Errors: " & CrLf & ErrorText.Text, True)
+            End If
         End If
         If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
             Notify.ShowBalloonTip(5, "Finished creating the custom installer", "Please read the details in the main window", ToolTipIcon.Info)
@@ -3862,15 +3944,81 @@ Public Class MainForm
     End Sub
 
     Private Sub PictureBox25_Click(sender As Object, e As EventArgs) Handles PictureBox25.Click, Label48.Click, Label47.Click, PictureBox24.Click
-
+        PanelIndicatorPic.Anchor = CType((AnchorStyles.Top Or AnchorStyles.Left), AnchorStyles)
     End Sub
 
     Private Sub PictureBox27_Click(sender As Object, e As EventArgs) Handles PictureBox27.Click, Label50.Click, Label49.Click, PictureBox26.Click
-
+        WelcomePanel.Visible = False
+        InstCreatePanel.Visible = False
+        SettingPanel.Visible = False
+        Settings_PersonalizationPanel.Visible = False
+        Settings_FunctionalityPanel.Visible = False
+        InstrPanel.Visible = False
+        HelpPanel.Visible = True
+        InfoPanel.Visible = False
+        SettingReviewPanel.Visible = False
+        ProgressPanel.Visible = False
+        PanelIndicatorPic.Top = HelpPic.Top + 2
+        PanelIndicatorPic.Anchor = CType((AnchorStyles.Top Or AnchorStyles.Left), AnchorStyles)
+        If BackColor = Color.FromArgb(243, 243, 243) Then
+            WelcomePic.Image = New Bitmap(My.Resources.home)
+            InstCreatePic.Image = New Bitmap(My.Resources.inst_create)
+            SettingsPic.Image = New Bitmap(My.Resources.settings)
+            InstructionPic.Image = New Bitmap(My.Resources.instructions)
+            HelpPic.Image = New Bitmap(My.Resources.help_filled)
+            InfoPic.Image = New Bitmap(My.Resources.info)
+        ElseIf BackColor = Color.FromArgb(32, 32, 32) Then
+            WelcomePic.Image = New Bitmap(My.Resources.home_dark)
+            InstCreatePic.Image = New Bitmap(My.Resources.inst_create_dark)
+            SettingsPic.Image = New Bitmap(My.Resources.settings_dark)
+            InstructionPic.Image = New Bitmap(My.Resources.instructions_dark)
+            HelpPic.Image = New Bitmap(My.Resources.help_dark_filled)
+            InfoPic.Image = New Bitmap(My.Resources.info_dark)
+        End If
+        WelcomeTopBarPic.Visible = False
+        InstCreateTopBarPic.Visible = False
+        InstructionsTopBarPic.Visible = False
+        HelpTopBarPic.Visible = True
+        AboutTopBarPic.Visible = False
+        SettingsTopBarPic.Visible = False
+        ApplyNavBarImages()
     End Sub
 
     Private Sub PictureBox29_Click(sender As Object, e As EventArgs) Handles PictureBox29.Click, Label2.Click, Label51.Click, PictureBox28.Click
-
+        WelcomePanel.Visible = False
+        InstCreatePanel.Visible = False
+        SettingReviewPanel.Visible = False
+        ProgressPanel.Visible = False
+        SettingPanel.Visible = False
+        Settings_PersonalizationPanel.Visible = False
+        Settings_FunctionalityPanel.Visible = False
+        InstrPanel.Visible = False
+        HelpPanel.Visible = False
+        InfoPanel.Visible = True
+        If BackColor = Color.FromArgb(243, 243, 243) Then
+            WelcomePic.Image = New Bitmap(My.Resources.home)
+            InstCreatePic.Image = New Bitmap(My.Resources.inst_create)
+            InstructionPic.Image = New Bitmap(My.Resources.instructions)
+            SettingsPic.Image = New Bitmap(My.Resources.settings)
+            HelpPic.Image = New Bitmap(My.Resources.help)
+            InfoPic.Image = New Bitmap(My.Resources.info_filled)
+        ElseIf BackColor = Color.FromArgb(32, 32, 32) Then
+            WelcomePic.Image = New Bitmap(My.Resources.home_dark)
+            InstCreatePic.Image = New Bitmap(My.Resources.inst_create_dark)
+            InstructionPic.Image = New Bitmap(My.Resources.instructions_dark)
+            SettingsPic.Image = New Bitmap(My.Resources.settings_dark)
+            HelpPic.Image = New Bitmap(My.Resources.help_dark)
+            InfoPic.Image = New Bitmap(My.Resources.info_dark_filled)
+        End If
+        PanelIndicatorPic.Top = InfoPic.Top + 2
+        PanelIndicatorPic.Anchor = CType((AnchorStyles.Bottom Or AnchorStyles.Left), AnchorStyles)
+        WelcomeTopBarPic.Visible = False
+        InstCreateTopBarPic.Visible = False
+        InstructionsTopBarPic.Visible = False
+        HelpTopBarPic.Visible = False
+        AboutTopBarPic.Visible = True
+        SettingsTopBarPic.Visible = False
+        ApplyNavBarImages()
     End Sub
 
     Private Sub SetDefaultButton_Click(sender As Object, e As EventArgs) Handles SetDefaultButton.Click
@@ -4071,6 +4219,7 @@ Public Class MainForm
             Label8.Text = Label44.Text
             Label80.Text = Label44.Text
             Label15.Text = Label1.Text
+            Label99.Text = Label44.Text
 
             ' Miscelaneous labels
             Label29.Text = Label12.Text
@@ -4370,6 +4519,7 @@ Public Class MainForm
             Label8.Text = Label44.Text
             Label80.Text = Label44.Text
             Label15.Text = Label1.Text
+            Label99.Text = Label44.Text
 
             ' Miscelaneous labels
             Label29.Text = Label12.Text
@@ -4670,6 +4820,7 @@ Public Class MainForm
                 Label8.Text = Label44.Text
                 Label80.Text = Label44.Text
                 Label15.Text = Label1.Text
+                Label99.Text = Label44.Text
 
                 ' Miscelaneous labels
                 Label29.Text = Label12.Text
@@ -4968,6 +5119,7 @@ Public Class MainForm
                 Label8.Text = Label44.Text
                 Label80.Text = Label44.Text
                 Label15.Text = Label1.Text
+                Label99.Text = Label44.Text
 
                 ' Miscelaneous labels
                 Label29.Text = Label12.Text
@@ -5304,11 +5456,11 @@ Public Class MainForm
         MsgBox("We could not get this computer's model" & CrLf & "This might be because, the component used to get the model (Windows Management Instrumentation, WMI), is missing from your system or has returned an error code." & CrLf & CrLf & "This is not critical, as it only affects the user experience.", vbOKOnly + vbExclamation, "Computer model gather process failure")
     End Sub
 
-    Private Sub MainForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
-        If InstCreateInt = 2 Then
-            e.Cancel = True
-        End If
-    End Sub
+    'Private Sub MainForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+    '    If InstCreateInt = 2 Then
+    '        e.Cancel = True
+    '    End If
+    'End Sub
 
     Private Sub Button13_Click(sender As Object, e As EventArgs) Handles Button13.Click
         BringToFront()
@@ -6112,6 +6264,10 @@ Public Class MainForm
         System.Diagnostics.Process.Start("https://icons8.com/icons/fluency")
     End Sub
 
+    Private Sub LinkLabel16_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel16.LinkClicked
+        System.Diagnostics.Process.Start("https://github.com/rcmaehl/whynotwin11")
+    End Sub
+
     Private Sub CheckBox3_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox3.CheckedChanged
         CheckBox1.Enabled = CheckBox3.Checked = True
     End Sub
@@ -6122,5 +6278,32 @@ Public Class MainForm
         MethodHelpPanel.Visible = True
         MethodHelpPanel.Visible = False
         BringToFront()
+    End Sub
+
+    Private Sub AutomaticLanguageToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AutomaticLanguageToolStripMenuItem.Click
+        LangInt = 0
+        If ComboBox4.Items.Contains("Automatic") Then
+            ComboBox4.SelectedItem = "Automatic"
+        ElseIf ComboBox4.Items.Contains("Automático") Then
+            ComboBox4.SelectedItem = "Automático"
+        End If
+    End Sub
+
+    Private Sub EnglishToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EnglishToolStripMenuItem.Click
+        LangInt = 1
+        If ComboBox4.Items.Contains("English") Then
+            ComboBox4.SelectedItem = "English"
+        ElseIf ComboBox4.Items.Contains("Inglés") Then
+            ComboBox4.SelectedItem = "Inglés"
+        End If
+    End Sub
+
+    Private Sub SpanishToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SpanishToolStripMenuItem.Click
+        LangInt = 2
+        If ComboBox4.Items.Contains("Spanish") Then
+            ComboBox4.SelectedItem = "Spanish"
+        ElseIf ComboBox4.Items.Contains("Español") Then
+            ComboBox4.SelectedItem = "Español"
+        End If
     End Sub
 End Class
