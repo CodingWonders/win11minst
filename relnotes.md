@@ -38,7 +38,8 @@ Example:
 
 Example log file:
 
-```Finished creating the installer. Details:
+```
+Finished creating the installer. Details:
 Began installer creation at: 14/05/2022 20:04:35
 Ended installer creation at: 14/05/2022 20:10:29
 Message(s): 946. Warning(s): 2. Error(s): 0.
