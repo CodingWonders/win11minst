@@ -64,14 +64,11 @@ C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\bin\Debug\win11minst.exe.
 C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\bin\Debug\win11minst.exe
 C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\bin\Debug\win11minst.pdb
 C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\bin\Debug\win11minst.xml
-C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\bin\Debug\Microsoft.VisualBasic.PowerPacks.Vs.dll
 C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\bin\Debug\System.dll
 C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\bin\Debug\System.Drawing.dll
 C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\bin\Debug\System.Windows.Forms.dll
 C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\bin\Debug\System.Xml.dll
 C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\bin\Debug\System.Xml.Linq.dll
-C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\bin\Debug\Microsoft.VisualBasic.PowerPacks.Vs.xml
-C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\bin\Debug\es\Microsoft.VisualBasic.PowerPacks.Vs.resources.dll
 C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\obj\Debug\Windows_11_Manual_Installer_2._0.InstProjectReuseDialog.resources
 C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\obj\Debug\Windows_11_Manual_Installer_2._0.MiniModeDialog.resources
 C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\obj\Debug\Windows_11_Manual_Installer_2._0.ImageFileListDialog.resources
