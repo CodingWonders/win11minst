@@ -514,4 +514,13 @@
   <data name="wimr_mh" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\wimr_mh.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="logo_wide" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\logo_wide.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="logo_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\logo_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="logo_light" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\logo_light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
