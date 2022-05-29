@@ -324,7 +324,6 @@ Public Class ISOFileScanPanel
                 Button1.Text = "Examinar..."
                 OK_Button.Text = "Aceptar"
                 Cancel_Button.Text = "Cancelar"
-
             End If
         End If
         Text = Label1.Text

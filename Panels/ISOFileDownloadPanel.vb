@@ -62,6 +62,11 @@ Public Class ISOFileDownloadPanel
             End If
         End If
         Text = Label1.Text
+        If My.User.IsInRole(ApplicationServices.BuiltInRole.Administrator) Then
+            BuildModeToolStripMenuItem.Visible = True
+        Else
+            BuildModeToolStripMenuItem.Visible = False
+        End If
         UserAgentChanger.SetUserAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36")
         If MainForm.BackColor = Color.FromArgb(243, 243, 243) Then
             BackColor = Color.White
@@ -229,7 +234,9 @@ Public Class ISOFileDownloadPanel
             File.WriteAllText(".\extract.bat", "@echo off" & CrLf & ".\prog_bin\7z x " & Quote & ".\uup\uup.zip" & Quote & " -o" & Quote & ".\uup" & Quote, ASCII)
             Process.Start(".\extract.bat").WaitForExit()
             File.Delete(".\extract.bat")
-            Process.Start(".\uup\uup_download_windows.cmd").WaitForExit()
+            File.WriteAllText(".\uup.bat", "@echo off" & CrLf & "echo 0 | .\uup\uup_download_windows.cmd", ASCII)
+            Process.Start(".\uup.bat").WaitForExit()
+            File.Delete(".\uup.bat")
         Catch Ex As Exception
             BuildBW.CancelAsync()
         End Try

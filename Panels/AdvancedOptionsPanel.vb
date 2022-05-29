@@ -67,6 +67,7 @@ Public Class AdvancedOptionsPanel
                 Cancel_Button.Text = "Cancelar"
             End If
         End If
+        Text = Label1.Text
         If MainForm.BackColor = Color.FromArgb(243, 243, 243) Then
             Me.BackColor = Color.White
             Me.ForeColor = Color.Black
