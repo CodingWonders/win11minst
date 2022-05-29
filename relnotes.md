@@ -1,9 +1,42 @@
 ## Windows 11 Manual Installer Release Notes
 
-Here you can see the feature list for each released version.
+---
+
+Here you can see the feature list for each released version since `2.0.0100_220515`. If you want to take a look at the release notes for an older release, please look at **that specific release**
+
+
+### 2.0.0100_220529
+---
+
+#### **Bugfixes**
+
+- Fixed a bug where restoring the window to its normal state would put it to the top left corner, `(0,0)`
+- Fixed a bug where the progress label would not change after switching languages to `Automatic`
+- Fixed a bug where the panel titles would not be localized
+- Fixed a bug where the installer creation method option in the context menu is still disabled after creating an installer
+- Fixed a bug where the navigation bar icons don't change correctly when changing color modes
+
+
+#### **New features**
+
+- The image download panel now detects administrative privileges
+    - If they are present, the build mode option is visible
+    - If they aren't present, the build mode option is hidden
+- The build mode is now automated and will not require you to type `0` after script completion
+- The update system is functional
+
+    > From this release aftwerwards, you can trigger an update by clicking `Check for updates` on the About screen or on program startup. Also, in new copies (those that didn't check for updates before), the program will suggest the user to do so
+
+- Updated the About screen
+- The log can now be viewed by clicking `View log file` after installer creation
+- When specifying additional REGTWEAK options, the script flags will be shown in the installer creation log (`LogBox`)
+
+#### **Removed/stripped down features**
+
+- Removed dependency: `Microsoft.VisualBasic.PowerPacks.Vs`. You don't need it anymore to launch the program, starting from this release
 
 ### 2.0.0100_220515
-
+---
 #### **Bugfixes**
 
 - Fixed item positioning and scale when switching languages
