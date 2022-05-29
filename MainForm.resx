@@ -193,24 +193,6 @@
         ADLSKiLp+735AAAAAElFTkSuQmCC
 </value>
   </data>
-  <metadata name="LineShape1.Bounds" type="System.Drawing.Rectangle, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>12, 482, 24, 0</value>
-  </metadata>
-  <metadata name="LineShape1.Location" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>12, 482</value>
-  </metadata>
-  <metadata name="LineShape1.Size" type="System.Drawing.Size, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>24, 0</value>
-  </metadata>
-  <metadata name="LineShape1.Bounds" type="System.Drawing.Rectangle, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>12, 482, 24, 0</value>
-  </metadata>
-  <metadata name="LineShape1.Location" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>12, 482</value>
-  </metadata>
-  <metadata name="LineShape1.Size" type="System.Drawing.Size, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>24, 0</value>
-  </metadata>
   <data name="Panel_Border_Pic.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAABgmlDQ1BJQ0MgcHJvZmlsZQAAKM+VkUso
@@ -224,16 +206,6 @@
         U22PSQoAIQwE/f9HVVTigmJOPbQHB8VDQ6Aqm2mt4U7OGSkleO9xCKUUOOcQY0StFb33XxARWGtXrao7
         S2An4ZzzgFvg2LtzCzyIO1+QMSGEddALMoavjDGeUFXxAcyr9vFekLgMAAAAAElFTkSuQmCC
 </value>
-  </data>
-  <data name="Label105.Text" xml:space="preserve">
-    <value>The source code of this program can be found on GitHub.
-
-- This project can be opened on Visual Studio 2012 and newer, without the need of conversion
-- The .NET Framework 4.8 Developer Pack must be installed to open this project
-
-Do you want to suggest a new feature to be included in a future version? Have you experienced a bug you want to report? Don't hesitate on reporting feedback or (even better) contributing (you'll need a GitHub account). Your feedback is critical.
-
-Do you want to enjoy the latest features? Check the Hummingbird branch! Weekly updates, new features and a sneak peek of the program's future</value>
   </data>
   <data name="PictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -288,6 +260,16 @@ Do you want to enjoy the latest features? Check the Hummingbird branch! Weekly u
         s+Ac53ypwYVSzatTonkvcvIlLnEKBMUBCmWu74i/ev03XDUSkYhEJCIRiUhEIhJRUVFR/wUiYn9TqKzA
         AwAAAABJRU5ErkJggg==
 </value>
+  </data>
+  <data name="scText.Text" xml:space="preserve">
+    <value>The source code of this program can be found on GitHub.
+
+- This project can be opened on Visual Studio 2012 and newer, without the need of conversion
+- The .NET Framework 4.8 Developer Pack must be installed to open this project
+
+Do you want to suggest a new feature to be included in a future version? Have you experienced a bug you want to report? Don't hesitate on reporting feedback or (even better) contributing (you'll need a GitHub account). Your feedback is critical.
+
+Do you want to enjoy the latest features? Check the Hummingbird branch! Weekly updates, new features and a sneak peek of the program's future</value>
   </data>
   <metadata name="Notify.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>

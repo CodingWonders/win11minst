@@ -5,14 +5,16 @@ Imports System.IO
 Imports Microsoft.VisualBasic.ControlChars
 Imports System.Windows.Forms.FlatStyle      ' This imports the various FlatStyle settings
 Imports System.Text.Encoding
+Imports System.Net
+Imports System.Threading
 
 
 Public Class MainForm
     Private isMouseDown As Boolean = False
     Private mouseOffset As Point
-    Dim VerStr As String = "2.0.0100_220515"    ' Reported version
+    Dim VerStr As String = "2.0.0100_220529"    ' Reported version
     Dim AVerStr As String = My.Application.Info.Version.ToString()     ' Assembly version
-    Dim VDescStr As String = "Happy International Worker's day!"
+    Dim VDescStr As String = "Building the leak!"
     Dim OffEcho As String = "@echo off"
     Dim wmiget As String
     Dim StDebugTime As Date = Now
@@ -57,16 +59,15 @@ Public Class MainForm
     Dim FileCount As Integer
     Dim DelFileCount As Integer
     Dim EmergencyFileDeleteCount As Integer
-
     Dim UpdateCheckDate As Date
     Dim DialogInt As Integer
-
     Dim ColorInt As Integer
     Dim LangInt As Integer
-
     Dim NotifyNum As Integer
-
     Dim isHummingbird As Boolean = True
+    Dim needsUpdates As Boolean
+    Dim WndLeft As Point
+    Dim WndTop As Point
 
     ' Left mouse button pressed
     Private Sub titlePanel_MouseDown(sender As Object, e As MouseEventArgs) Handles titlePanel.MouseDown, Label12.MouseDown, TitleBar.MouseDown
@@ -246,6 +247,8 @@ Public Class MainForm
 
     Private Sub maxBox_Click(sender As Object, e As EventArgs) Handles maxBox.Click
         If WindowState = FormWindowState.Normal Then
+            WndLeft = New Point(Left)
+            WndTop = New Point(Top)
             MaximumSize = Screen.FromControl(Me).WorkingArea.Size
             WindowState = FormWindowState.Maximized
             If BackColor = Color.FromArgb(243, 243, 243) Then
@@ -254,6 +257,10 @@ Public Class MainForm
                 maxBox.Image = New Bitmap(My.Resources.restdownbox_dark)
             End If
         ElseIf WindowState = FormWindowState.Maximized Then
+            If Left = 0 And Top = 0 Then
+                Left = WndLeft.X
+                Top = WndTop.Y
+            End If
             WindowState = FormWindowState.Normal
             If BackColor = Color.FromArgb(243, 243, 243) Then
                 maxBox.Image = New Bitmap(My.Resources.maxbox)
@@ -489,18 +496,15 @@ Public Class MainForm
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         VersionToolStripMenuItem.Text = "version " & VerStr & " (assembly version " & AVerStr & ")"
         Label72.Text = "version " & VerStr & " (assembly version " & AVerStr & ")"
-        Label74.Visible = False     ' There aren't any important days for May 15
+        Label74.Visible = True
         Label74.Text = VDescStr
-        Label7.Text = "version " & VerStr
         Notify.Visible = False
         If isHummingbird Then
             BranchPic.Visible = True
             Label106.Visible = True
-            Label107.Visible = True
         Else
             BranchPic.Visible = False
             Label106.Visible = False
-            Label107.Visible = False
         End If
         If My.Computer.Info.OSFullName.Contains("Windows 7") Or My.Computer.Info.OSFullName.Contains("Windows 8") Or My.Computer.Info.OSFullName.Contains("Windows Server 2008") Or My.Computer.Info.OSFullName.Contains("Windows Server 2012") Then      ' This is done to not show the "Not supported" dialog on Windows 7 and 8/8.1
             ComboBox1.Items.Clear()
@@ -520,9 +524,24 @@ Public Class MainForm
             End If
         End If
         If File.Exists(".\version") Then
+            needsUpdates = False
             UpdateCheckPreLoadPanel.ShowDialog()
         Else
-            My.Computer.FileSystem.WriteAllText(".\version", "2.0.0100_220515", True, ASCII)
+            needsUpdates = True
+            My.Computer.FileSystem.WriteAllText(".\version", VerStr, False, ASCII)
+        End If
+        If needsUpdates Then
+            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                Label91.Text = "Updates bring new features and bugfixes to this program. Click " & Quote & "Check for updates" & Quote & " to check for program updates."
+            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                Label91.Text = "Las actualizaciones aportan nuevas características y correcciones de errores al programa. Haga clic en " & Quote & "Comprobar actualizaciones" & Quote & " para comprobar actualizaciones del programa."
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                    Label91.Text = "Updates bring new features and bugfixes to this program. Click " & Quote & "Check for updates" & Quote & " to check for program updates."
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                    Label91.Text = "Las actualizaciones aportan nuevas características y correcciones de errores al programa. Haga clic en " & Quote & "Comprobar actualizaciones" & Quote & " para comprobar actualizaciones del programa."
+                End If
+            End If
         End If
         ErrorCount = 0
         WarnCount = 0
@@ -561,9 +580,6 @@ Public Class MainForm
         ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote
         ' This condition is used for debugging purposes
         If Debugger.IsAttached = True Then
-            ' Position changes
-            LineShape1.Y1 = 452
-            LineShape1.Y2 = 452
             SettingsPic.Top = 460
             InfoPic.Top = 490
             ' This will close the program during debugging and testing. This will not hide it to the
@@ -838,7 +854,6 @@ Public Class MainForm
         DisclaimerPanel.ShowDialog()
         DisclaimerPanel.Visible = True
         DisclaimerPanel.Visible = False
-
         If My.Computer.Info.OSFullName.Contains("Windows 11") Then
             If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
                 MsgBox("This computer (or device) is already running Windows 11. You will not be able to use this tool to upgrade to/install Windows 11 on your system, but you can still use it to upgrade to/install Windows 11 on other systems.", vbOKOnly + vbInformation, "Already running Windows 11")
@@ -886,7 +901,6 @@ Public Class MainForm
 
         ' It ALSO looks like, at the time of writing this comment (thx for reading), MS released build 25115 of WINDOWS 11 (Copper). Right now,
         ' it does not add more system requirement blockades (but that does not mean they won't add them later)
-        LineShape1.Visible = True
     End Sub
 
     Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
@@ -1053,6 +1067,45 @@ Public Class MainForm
     End Sub
 
     Sub ApplyNavBarImages()
+        If BackColor = Color.FromArgb(243, 243, 243) Then
+            If WelcomePanel.Visible = True Then
+                WelcomePic.Image = New Bitmap(My.Resources.home_filled)
+            End If
+            If InstCreatePanel.Visible = True Or SettingReviewPanel.Visible = True Or ProgressPanel.Visible = True Then
+                InstCreatePic.Image = New Bitmap(My.Resources.inst_create_filled)
+            End If
+            If SettingPanel.Visible = True Or Settings_PersonalizationPanel.Visible = True Or Settings_FunctionalityPanel.Visible = True Then
+                SettingsPic.Image = New Bitmap(My.Resources.settings_filled)
+            End If
+            If InstrPanel.Visible = True Then
+                InstructionPic.Image = New Bitmap(My.Resources.instructions_filled)
+            End If
+            If HelpPanel.Visible = True Then
+                HelpPic.Image = New Bitmap(My.Resources.help_filled)
+            End If
+            If InfoPanel.Visible = True Then
+                InfoPic.Image = New Bitmap(My.Resources.info_filled)
+            End If
+        ElseIf BackColor = Color.FromArgb(32, 32, 32) Then
+            If WelcomePanel.Visible = True Then
+                WelcomePic.Image = New Bitmap(My.Resources.home_dark_filled)
+            End If
+            If InstCreatePanel.Visible = True Or SettingReviewPanel.Visible = True Or ProgressPanel.Visible = True Then
+                InstCreatePic.Image = New Bitmap(My.Resources.inst_create_dark_filled)
+            End If
+            If SettingPanel.Visible = True Or Settings_PersonalizationPanel.Visible = True Or Settings_FunctionalityPanel.Visible = True Then
+                SettingsPic.Image = New Bitmap(My.Resources.settings_dark_filled)
+            End If
+            If InstrPanel.Visible = True Then
+                InstructionPic.Image = New Bitmap(My.Resources.instructions_dark_filled)
+            End If
+            If HelpPanel.Visible = True Then
+                HelpPic.Image = New Bitmap(My.Resources.help_dark_filled)
+            End If
+            If InfoPanel.Visible = True Then
+                InfoPic.Image = New Bitmap(My.Resources.info_dark_filled)
+            End If
+        End If
         PictureBox7.Image = SettingsPic.Image
         PictureBox8.Image = WelcomePic.Image
         PictureBox9.Image = InstCreatePic.Image
@@ -1132,7 +1185,7 @@ Public Class MainForm
             Else
                 PictureBox2.Image = New Bitmap(My.Resources.NavBar_TopPos_Dark)
             End If
-            PictureBox11.Image = New Bitmap(My.Resources.Win11_LogoDark)
+            PictureBox11.Image = New Bitmap(My.Resources.logo_dark)
             BackColor = Color.FromArgb(32, 32, 32)
             NavBar.ForeColor = Color.White
             Settings_PersonalizationPanel.BackColor = Color.FromArgb(39, 39, 39)
@@ -1155,7 +1208,7 @@ Public Class MainForm
             End If
             closeBox.Image = New Bitmap(My.Resources.closebox_dark)
             back_Pic.Image = New Bitmap(My.Resources.back_arrow_dark)
-            PictureBox11.Image = New Bitmap(My.Resources.Win11_LogoDark)
+            PictureBox11.Image = New Bitmap(My.Resources.logo_dark)
             PictureBox13.Image = New Bitmap(My.Resources.blackPanelBack)
             PictureBox14.Image = New Bitmap(My.Resources.blackPanelBack)
             PictureBox17.Image = New Bitmap(My.Resources.blackPanelBack)
@@ -1238,6 +1291,8 @@ Public Class MainForm
             LogBox.ForeColor = Color.White
             LabelText.BackColor = Color.FromArgb(43, 43, 43)
             LabelText.ForeColor = Color.White
+            scText.BackColor = Color.FromArgb(43, 43, 43)
+            scText.ForeColor = Color.White
 
             ' Check box PictureBoxes for the progress panel
             CheckPic1.Image = New Bitmap(My.Resources.check_dark)
@@ -1258,7 +1313,6 @@ Public Class MainForm
             ComboBox4.ForeColor = Color.White
             ComboBox5.ForeColor = Color.White
 
-            LineShape1.BorderColor = Color.FromArgb(50, 50, 50)
             TabPage1.BackColor = Color.FromArgb(39, 39, 39)
             TabPage2.BackColor = Color.FromArgb(39, 39, 39)
             TabPage3.BackColor = Color.FromArgb(39, 39, 39)
@@ -1282,6 +1336,7 @@ Public Class MainForm
             LinkLabel14.LinkColor = Color.FromArgb(76, 194, 255)
             LinkLabel16.LinkColor = Color.FromArgb(76, 194, 255)
             TargetInstallerLinkLabel.LinkColor = Color.FromArgb(76, 194, 255)
+            LogViewLink.LinkColor = Color.FromArgb(76, 194, 255)
 
 
         ElseIf ComboBox1.SelectedItem = "Light" Or ComboBox1.SelectedItem = "Claro" Then
@@ -1291,7 +1346,7 @@ Public Class MainForm
             Else
                 PictureBox2.Image = New Bitmap(My.Resources.NavBar_TopPos_Light)
             End If
-            PictureBox11.Image = New Bitmap(My.Resources.Win11_LogoWhite)
+            PictureBox11.Image = New Bitmap(My.Resources.logo_light)
             NavBar.ForeColor = Color.Black
             BackColor = Color.FromArgb(243, 243, 243)
             Settings_PersonalizationPanel.BackColor = Color.FromArgb(249, 249, 249)
@@ -1313,7 +1368,7 @@ Public Class MainForm
             End If
             closeBox.Image = New Bitmap(My.Resources.closebox)
             back_Pic.Image = New Bitmap(My.Resources.back_arrow)
-            PictureBox11.Image = New Bitmap(My.Resources.Win11_LogoWhite)
+            PictureBox11.Image = New Bitmap(My.Resources.logo_light)
             PictureBox13.Image = New Bitmap(My.Resources.whitePanelBack)
             PictureBox14.Image = New Bitmap(My.Resources.whitePanelBack)
             PictureBox17.Image = New Bitmap(My.Resources.whitePanelBack)
@@ -1388,6 +1443,8 @@ Public Class MainForm
             LogBox.ForeColor = Color.Black
             LabelText.BackColor = Color.FromArgb(249, 249, 249)
             LabelText.ForeColor = Color.Black
+            scText.BackColor = Color.FromArgb(249, 249, 249)
+            scText.ForeColor = Color.Black
 
             ComboBox1.BackColor = Color.FromArgb(249, 249, 249)
             ComboBox4.BackColor = Color.FromArgb(249, 249, 249)
@@ -1397,7 +1454,6 @@ Public Class MainForm
             ComboBox5.ForeColor = Color.Black
 
             Notify.Icon = My.Resources.NotifyIconRes_Light
-            LineShape1.BorderColor = Color.FromArgb(205, 205, 205)
             TabPage1.BackColor = Color.FromArgb(249, 249, 249)
             TabPage2.BackColor = Color.FromArgb(249, 249, 249)
             TabPage3.BackColor = Color.FromArgb(249, 249, 249)
@@ -1431,6 +1487,7 @@ Public Class MainForm
             LinkLabel14.LinkColor = Color.FromArgb(1, 92, 186)
             LinkLabel16.LinkColor = Color.FromArgb(1, 92, 186)
             TargetInstallerLinkLabel.LinkColor = Color.FromArgb(1, 92, 186)
+            LogViewLink.LinkColor = Color.FromArgb(1, 92, 186)
         ElseIf ComboBox1.SelectedItem = "Automatic" Or ComboBox1.SelectedItem = "Automático" Then
             ColorInt = 0
             Try
@@ -1482,7 +1539,7 @@ Public Class MainForm
                         End If
                         closeBox.Image = New Bitmap(My.Resources.closebox_dark)
                         back_Pic.Image = New Bitmap(My.Resources.back_arrow_dark)
-                        PictureBox11.Image = New Bitmap(My.Resources.Win11_LogoDark)
+                        PictureBox11.Image = New Bitmap(My.Resources.logo_dark)
                         PictureBox13.Image = New Bitmap(My.Resources.blackPanelBack)
                         PictureBox14.Image = New Bitmap(My.Resources.blackPanelBack)
                         PictureBox17.Image = New Bitmap(My.Resources.blackPanelBack)
@@ -1550,6 +1607,8 @@ Public Class MainForm
                         ErrorText.ForeColor = Color.White
                         LogBox.BackColor = Color.FromArgb(43, 43, 43)
                         LogBox.ForeColor = Color.White
+                        scText.BackColor = Color.FromArgb(43, 43, 43)
+                        scText.ForeColor = Color.White
                         LabelText.BackColor = Color.FromArgb(43, 43, 43)
                         LabelText.ForeColor = Color.White
                         ComboBox1.BackColor = Color.FromArgb(39, 39, 39)
@@ -1558,7 +1617,6 @@ Public Class MainForm
                         ComboBox1.ForeColor = Color.White
                         ComboBox4.ForeColor = Color.White
                         ComboBox5.ForeColor = Color.White
-                        LineShape1.BorderColor = Color.FromArgb(50, 50, 50)
                         TabPage1.BackColor = Color.FromArgb(39, 39, 39)
                         TabPage2.BackColor = Color.FromArgb(39, 39, 39)
                         TabPage3.BackColor = Color.FromArgb(39, 39, 39)
@@ -1591,6 +1649,7 @@ Public Class MainForm
                         LinkLabel14.LinkColor = Color.FromArgb(76, 194, 255)
                         LinkLabel16.LinkColor = Color.FromArgb(76, 194, 255)
                         TargetInstallerLinkLabel.LinkColor = Color.FromArgb(76, 194, 255)
+                        LogViewLink.LinkColor = Color.FromArgb(76, 194, 255)
                     ElseIf ColorStr = "1" Then
                         If RadioButton3.Checked = True Then
                             PictureBox2.Image = New Bitmap(My.Resources.NavBar_LeftPos_Light)
@@ -1618,7 +1677,7 @@ Public Class MainForm
                         maxBox.Image = New Bitmap(My.Resources.maxbox)
                         closeBox.Image = New Bitmap(My.Resources.closebox)
                         back_Pic.Image = New Bitmap(My.Resources.back_arrow)
-                        PictureBox11.Image = New Bitmap(My.Resources.Win11_LogoWhite)
+                        PictureBox11.Image = New Bitmap(My.Resources.logo_light)
                         PictureBox13.Image = New Bitmap(My.Resources.whitePanelBack)
                         PictureBox14.Image = New Bitmap(My.Resources.whitePanelBack)
                         PictureBox17.Image = New Bitmap(My.Resources.whitePanelBack)
@@ -1688,13 +1747,14 @@ Public Class MainForm
                         LogBox.ForeColor = Color.Black
                         LabelText.BackColor = Color.FromArgb(249, 249, 249)
                         LabelText.ForeColor = Color.Black
+                        scText.BackColor = Color.FromArgb(249, 249, 249)
+                        scText.ForeColor = Color.Black
                         ComboBox1.BackColor = Color.FromArgb(249, 249, 249)
                         ComboBox4.BackColor = Color.FromArgb(249, 249, 249)
                         ComboBox5.BackColor = Color.FromArgb(249, 249, 249)
                         ComboBox1.ForeColor = Color.Black
                         ComboBox4.ForeColor = Color.Black
                         ComboBox5.ForeColor = Color.Black
-                        LineShape1.BorderColor = Color.FromArgb(205, 205, 205)
                         TabPage1.BackColor = Color.FromArgb(249, 249, 249)
                         TabPage2.BackColor = Color.FromArgb(249, 249, 249)
                         TabPage3.BackColor = Color.FromArgb(249, 249, 249)
@@ -1727,6 +1787,7 @@ Public Class MainForm
                         LinkLabel14.LinkColor = Color.FromArgb(1, 92, 186)
                         LinkLabel16.LinkColor = Color.FromArgb(1, 92, 186)
                         TargetInstallerLinkLabel.LinkColor = Color.FromArgb(1, 92, 186)
+                        LogViewLink.LinkColor = Color.FromArgb(1, 92, 186)
                     End If
                 Else
                     If My.Computer.Info.OSFullName.Contains("Windows 7") Then
@@ -1751,6 +1812,7 @@ Public Class MainForm
                 End If
             End Try
         End If
+        ApplyNavBarImages()
         ' These lines are ubiquitous
         TopRightResizePanel.BackColor = BackColor
         BottomRightResizePanel.BackColor = WelcomePanel.BackColor
@@ -2681,6 +2743,7 @@ Public Class MainForm
         InstSTLabel.Visible = True
         InstallerProgressBar.Visible = True
         CheckBox4.Visible = False
+        LogViewLink.Visible = False
         If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
             Button10.Text = "Cancel"
             InstSTLabel.Text = "The installer might take some time to create"
@@ -2752,6 +2815,12 @@ Public Class MainForm
                 File.Delete(".\boot.wim")
             End If
         End If
+        If File.Exists(".\Win11.iso") Then
+            File.Delete(".\Win11.iso")
+        End If
+        If File.Exists(".\Win10.iso") Then
+            File.Delete(".\Win10.iso")
+        End If
         ' The following lines of code reset everything in this panel (ProgressPanel)
         CheckPic1.Visible = False
         CheckPic2.Visible = False
@@ -2813,6 +2882,12 @@ Public Class MainForm
             InstSTLabel.Text = "Ready to copy the files to the local disk"
         ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
             InstSTLabel.Text = "Preparados para copiar los archivos al disco local"
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                InstSTLabel.Text = "Ready to copy the files to the local disk"
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                InstSTLabel.Text = "Preparados para copiar los archivos al disco local"
+            End If
         End If
         BringToFront()
         BackSubPanel.Show()
@@ -2825,6 +2900,12 @@ Public Class MainForm
                 InstSTLabel.Text = "Copying the ISO files to the local disk..."
             ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
                 InstSTLabel.Text = "Copiando los archivos ISO al disco local..."
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                    InstSTLabel.Text = "Copying the ISO files to the local disk..."
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                    InstSTLabel.Text = "Copiando los archivos ISO al disco local..."
+                End If
             End If
             LogBox.AppendText(CrLf & "Copying the ISO files to the local disk...")
             Try
@@ -2843,6 +2924,12 @@ Public Class MainForm
                     InstSTLabel.Text = "Failed to copy the ISO files to the local disk."
                 ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
                     InstSTLabel.Text = "Falló la copia de los archivos ISO al disco local."
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                    If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                        InstSTLabel.Text = "Failed to copy the ISO files to the local disk."
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                        InstSTLabel.Text = "Falló la copia de los archivos ISO al disco local."
+                    End If
                 End If
                 BringToFront()
                 BackSubPanel.Show()
@@ -2879,6 +2966,12 @@ Public Class MainForm
                             InstSTLabel.Text = "Failed to copy the ISO files to the local disk."
                         ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
                             InstSTLabel.Text = "Falló la copia de los archivos ISO al disco local."
+                        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                                InstSTLabel.Text = "Failed to copy the ISO files to the local disk."
+                            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                                InstSTLabel.Text = "Falló la copia de los archivos ISO al disco local."
+                            End If
                         End If
                         BringToFront()
                         BackSubPanel.Show()
@@ -2892,6 +2985,12 @@ Public Class MainForm
                             InstSTLabel.Text = "Failed to copy the ISO files to the local disk."
                         ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
                             InstSTLabel.Text = "Falló la copia de los archivos ISO al disco local."
+                        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                                InstSTLabel.Text = "Failed to copy the ISO files to the local disk."
+                            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                                InstSTLabel.Text = "Falló la copia de los archivos ISO al disco local."
+                            End If
                         End If
                         BringToFront()
                         BackSubPanel.Show()
@@ -2907,6 +3006,12 @@ Public Class MainForm
                     InstSTLabel.Text = "Failed to copy the ISO files to the local disk."
                 ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
                     InstSTLabel.Text = "Falló la copia de los archivos ISO al disco local."
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                    If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                        InstSTLabel.Text = "Failed to copy the ISO files to the local disk."
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                        InstSTLabel.Text = "Falló la copia de los archivos ISO al disco local."
+                    End If
                 End If
                 BringToFront()
                 BackSubPanel.Show()
@@ -2943,6 +3048,12 @@ Public Class MainForm
                             InstSTLabel.Text = "Failed to copy the ISO files to the local disk."
                         ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
                             InstSTLabel.Text = "Falló la copia de los archivos ISO al disco local."
+                        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                                InstSTLabel.Text = "Failed to copy the ISO files to the local disk."
+                            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                                InstSTLabel.Text = "Falló la copia de los archivos ISO al disco local."
+                            End If
                         End If
                         BringToFront()
                         BackSubPanel.Show()
@@ -2956,6 +3067,12 @@ Public Class MainForm
                             InstSTLabel.Text = "Failed to copy the ISO files to the local disk."
                         ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
                             InstSTLabel.Text = "Falló la copia de los archivos ISO al disco local."
+                        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                                InstSTLabel.Text = "Failed to copy the ISO files to the local disk."
+                            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                                InstSTLabel.Text = "Falló la copia de los archivos ISO al disco local."
+                            End If
                         End If
                         BringToFront()
                         BackSubPanel.Show()
@@ -2971,6 +3088,12 @@ Public Class MainForm
                 InstSTLabel.Text = "Skipping file copy..."
             ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
                 InstSTLabel.Text = "Omitiendo la copia de archivos..."
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                    InstSTLabel.Text = "Skipping file copy..."
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                    InstSTLabel.Text = "Omitiendo la copia de archivos..."
+                End If
             End If
             ' This is done for testing if the source drive is still mounted
             If Directory.Exists(TextBox4.Text) Then
@@ -2998,6 +3121,12 @@ Public Class MainForm
             InstSTLabel.Text = "Gathering instructions..."
         ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
             InstSTLabel.Text = "Recopilando instrucciones..."
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                InstSTLabel.Text = "Gathering instructions..."
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                InstSTLabel.Text = "Recopilando instrucciones..."
+            End If
         End If
         LogBox.AppendText(CrLf & "Gathering instructions needed to create the installer...")
         LogBox.AppendText(" Done")
@@ -3005,6 +3134,12 @@ Public Class MainForm
             InstSTLabel.Text = "Instructions gathered"
         ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
             InstSTLabel.Text = "Instrucciones recopiladas"
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                InstSTLabel.Text = "Instructions gathered"
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                InstSTLabel.Text = "Instrucciones recopiladas"
+            End If
         End If
         InstallerProgressBar.Value = 15
         CheckPic2.Visible = True
@@ -3021,6 +3156,12 @@ Public Class MainForm
             InstSTLabel.Text = "Extracting the necessary files from the ISO images..."
         ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
             InstSTLabel.Text = "Extrayendo los archivos necesarios de las imágenes ISO..."
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                InstSTLabel.Text = "Extracting the necessary files from the ISO images..."
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                InstSTLabel.Text = "Extrayendo los archivos necesarios de las imágenes ISO..."
+            End If
         End If
         LogBox.AppendText(CrLf & "Extracting the necessary contents from the ISO images using the " & ComboBox5.SelectedItem & " method...")
         If ComboBox5.SelectedItem = "WIMR" Then
@@ -3060,6 +3201,12 @@ Public Class MainForm
             InstSTLabel.Text = "Necessary files extracted"
         ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
             InstSTLabel.Text = "Archivos necesarios extraídos"
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                InstSTLabel.Text = "Necessary files extracted"
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                InstSTLabel.Text = "Archivos necesarios extraídos"
+            End If
         End If
         LogBox.AppendText(CrLf & "Finished extracting files.")
         InstallerProgressBar.Value = 25
@@ -3076,6 +3223,12 @@ Public Class MainForm
             InstSTLabel.Text = "Creating the custom installer..."
         ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
             InstSTLabel.Text = "Creando el instalador personalizado..."
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                InstSTLabel.Text = "Creating the custom installer..."
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                InstSTLabel.Text = "Creando el instalador personalizado..."
+            End If
         End If
         LogBox.AppendText(CrLf & "Creating the custom installer using the " & ComboBox5.SelectedItem & " method...")
         If ComboBox5.SelectedItem = "WIMR" Then
@@ -3124,6 +3277,7 @@ Public Class MainForm
                         AdvancedOptionsPanel.CheckBox2.Checked = False
                         Process.Start(".\prog_bin\regtweak.bat").WaitForExit()
                     ElseIf Win11ESD = 0 Then
+                        LogBox.AppendText(" Additional flags: /bypassnro; /sv2")
                         Process.Start(".\prog_bin\regtweak.bat", "/bypassnro /sv2").WaitForExit()
                     End If
                 Else
@@ -3134,6 +3288,7 @@ Public Class MainForm
                         AdvancedOptionsPanel.CheckBox1.Checked = False
                         Process.Start(".\prog_bin\regtweak.bat").WaitForExit()
                     ElseIf Win11ESD = 0 Then
+                        LogBox.AppendText(" Additional flags: /bypassnro")
                         Process.Start(".\prog_bin\regtweak.bat", "/bypassnro").WaitForExit()
                     End If
                 End If
@@ -3146,6 +3301,7 @@ Public Class MainForm
                         AdvancedOptionsPanel.CheckBox2.Checked = False
                         Process.Start(".\prog_bin\regtweak.bat").WaitForExit()
                     ElseIf Win11ESD = 0 Then
+                        LogBox.AppendText(" Additional flags: /sv2")
                         Process.Start(".\prog_bin\regtweak.bat", "/sv2").WaitForExit()
                     End If
                 Else
@@ -3181,6 +3337,12 @@ Public Class MainForm
             InstSTLabel.Text = "Finished creating the installer. Now deleting temporary files..."
         ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
             InstSTLabel.Text = "Se finalizó la creación del instalador. Ahora se están eliminando los archivos temporales..."
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                InstSTLabel.Text = "Finished creating the installer. Now deleting temporary files..."
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                InstSTLabel.Text = "Se finalizó la creación del instalador. Ahora se están eliminando los archivos temporales..."
+            End If
         End If
         InstallerProgressBar.Value = 75
         CheckPic4.Visible = True
@@ -3344,6 +3506,12 @@ Public Class MainForm
             Notify.ShowBalloonTip(5, "Finished creating the custom installer", "Please read the details in the main window", ToolTipIcon.Info)
         ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
             Notify.ShowBalloonTip(5, "Se terminó la creación del instalador", "Por favor, lea los detalles en la ventana principal", ToolTipIcon.Info)
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                Notify.ShowBalloonTip(5, "Finished creating the custom installer", "Please read the details in the main window", ToolTipIcon.Info)
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                Notify.ShowBalloonTip(5, "Se terminó la creación del instalador", "Por favor, lea los detalles en la ventana principal", ToolTipIcon.Info)
+            End If
         End If
         CheckPic5.Visible = True
         InstCreateInt = 3
@@ -3383,6 +3551,14 @@ Public Class MainForm
         ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
             Label114.Text = "Advertencias: " & WarnCount
             Label115.Text = "Errores: " & ErrorCount
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                Label114.Text = "Warnings: " & WarnCount
+                Label115.Text = "Errors: " & ErrorCount
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                Label114.Text = "Advertencias: " & WarnCount
+                Label115.Text = "Errores: " & ErrorCount
+            End If
         End If
         TableLayoutPanel3.Visible = True
         CheckPic1.Visible = False
@@ -3401,6 +3577,8 @@ Public Class MainForm
         Label89.Visible = False
         CheckBox4.Visible = True
         Button9.Visible = False
+        LogViewLink.Visible = True
+        InstallerCreationMethodToolStripMenuItem.Enabled = True
         If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
             Button10.Text = "OK"
         ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
@@ -3421,6 +3599,12 @@ Public Class MainForm
             InstHistPanel.InstallerEntryLabel.Text = "Installer history entries: " & InstHistPanel.InstallerListView.Items.Count
         ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
             InstHistPanel.InstallerEntryLabel.Text = "Entradas en el historial del instalador: " & InstHistPanel.InstallerListView.Items.Count
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                InstHistPanel.InstallerEntryLabel.Text = "Installer history entries: " & InstHistPanel.InstallerListView.Items.Count
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                InstHistPanel.InstallerEntryLabel.Text = "Entradas en el historial del instalador: " & InstHistPanel.InstallerListView.Items.Count
+            End If
         End If
     End Sub
 
@@ -4121,10 +4305,8 @@ Public Class MainForm
             Label101.Text = "Ayuda"
             Label102.Text = "Acerca de"
             Label104.Text = "Instrucciones"
-            Label105.Text = "El código fuente de este programa lo puede encontrar en GitHub." & CrLf & CrLf & "- Este proyecto puede ser abierto en Visual Studio 2012 y más reciente, sin necesidad de conversión" & CrLf & "- El Pack de Desarrolladores de .NET Framework 4.8 debe ser instalado para abrir este proyecto" & CrLf & CrLf & "¿Desea sugerir alguna nueva característica para ser incluida en una versión futura? ¿Ha notado algún error del que desea informar? No dude en reportar errores o (incluso mejor) contribuye al proyecto (necesita una cuenta de GitHub). Sus opiniones son cruciales." & CrLf & CrLf & "¿Desea disfrutar de las últimas características? ¡Compruebe la rama Hummingbird! Actualizaciones semanales, características nuevas y una vista previa del futuro del programa"
+            scText.Text = "El código fuente de este programa lo puede encontrar en GitHub." & CrLf & CrLf & "- Este proyecto puede ser abierto en Visual Studio 2012 y más reciente, sin necesidad de conversión" & CrLf & "- El Pack de Desarrolladores de .NET Framework 4.8 debe ser instalado para abrir este proyecto" & CrLf & CrLf & "¿Desea sugerir alguna nueva característica para ser incluida en una versión futura? ¿Ha notado algún error del que desea informar? No dude en reportar errores o (incluso mejor) contribuye al proyecto (necesita una cuenta de GitHub). Sus opiniones son cruciales." & CrLf & CrLf & "¿Desea disfrutar de las últimas características? ¡Compruebe la rama Hummingbird! Actualizaciones semanales, características nuevas y una vista previa del futuro del programa"
             Label106.Text = "Lanzamiento Hummingbird"
-            Label107.Text = "Disfrute de características nuevas"
-            Label107.Left = Label106.Left + Label106.Width
             Label108.Text = "Instalador de destino:"
             Label109.Text = "Ubicación del instalador de destino:"
 
@@ -4153,7 +4335,6 @@ Public Class MainForm
             Label31.Text = "Modo de color: " & ComboBox1.SelectedItem
             Label33.Text = "Método de creación del instalador: " & ComboBox5.SelectedItem
             Label34.Text = "Etiqueta: " & LabelText.Text
-            LabelSetButton.PerformClick()
             Label36.Text = "Cambia las opciones de apariencia, como el idioma, el modo de color, o la escala DPI"
             Label38.Text = "Cambia configuraciones relacionadas a la creación del instalador personalizado"
             Label39.Text = "Limpia el registro del historial de instaladores, el cual es accesible haciendo clic en " & Quote & "Ver historial del instalador" & Quote & " en el menú principal"
@@ -4168,9 +4349,6 @@ Public Class MainForm
             Label48.Text = "Instrucciones"
             Label49.Text = "Aprenda a cómo usar este programa"
             ' These lines of code affect Label5 and PictureBox11
-            Label5.Text = "Instalador manual de"
-            Label5.Top = 14
-            PictureBox11.Top = Label5.Top + Label5.Height
             Label50.Text = "Ayuda"
             Label51.Text = "Acerca de"
             Label53.Text = "Instalador de Windows 11"
@@ -4180,17 +4358,16 @@ Public Class MainForm
             Label57.Text = "Opciones del archivo ISO"
             Label58.Text = "Nombre del archivo ISO:"
             Label59.Text = "Ubicación del archivo ISO:"
-            Label6.Text = "Instalador manual de Windows 11"
             Label60.Text = "Cuando esté listo, haga clic en " & Quote & "Crear" & Quote
             Label63.Text = "Revise sus configuraciones"
             Label64.Text = "Ubicación y nombre:"
             Label65.Text = "Imagen de Windows 11:"
             Label66.Text = "Imagen de Windows 10:"
             Label69.Text = "Método:"
-            Label7.Text = "versión " & VerStr
             ' Labels71 through 74 were deleted due to lack of functionality
             Label75.Text = "Compatibilidad de plataformas:"
             Label77.Text = "Etiqueta del instalador:"
+            Label78.Text = LabelText.Text
             Label79.Text = "¿Estas configuraciones son las correctas?"
             Label82.Text = "Progreso"
             Label83.Text = "Ésta es toda la información que necesitamos en este momento. Esto tardará unos minutos, por lo que sea paciente, por favor."
@@ -4201,7 +4378,19 @@ Public Class MainForm
             Label88.Text = "Finalizando"
             Label89.Text = "La acción realizada en este momento no puede ser cancelada. Por favor, espere."
             Label9.Text = "Configuración"
-            Label91.Text = "Para detectar actualizaciones del programa, haga clic en " & Quote & "Comprobar actualizaciones" & Quote
+            If needsUpdates Then
+                Label91.Text = "Las actualizaciones aportan nuevas características y correcciones de errores al programa. Haga clic en " & Quote & "Comprobar actualizaciones" & Quote & " para comprobar actualizaciones del programa."
+            Else
+                If UpdateCheckDate = Nothing Then
+                    Label91.Text = "Para detectar actualizaciones del programa, haga clic en " & Quote & "Comprobar actualizaciones" & Quote
+                Else
+                    If UpdateCheckDate.Day.Equals(14) And UpdateCheckDate.Month.Equals(3) Then
+                        Label91.Text = "Para comprobar actualizaciones haga clic en " & Quote & "Comprobar actualizaciones" & Quote & CrLf & "Última comprobación de actualizaciones realizada en: día π en " & UpdateCheckDate.ToLongTimeString
+                    Else
+                        Label91.Text = "Para comprobar actualizaciones haga clic en " & Quote & "Comprobar actualizaciones" & Quote & CrLf & "Última comprobación de actualizaciones realizada en: " & UpdateCheckDate
+                    End If
+                End If
+            End If
             Label92.Text = "Ésta es la información detallada de los componentes usados por el programa:"
             Label97.Text = "Todos los componentes mostrados aquí son protegidos por sus propios términos de licencia, y este programa SOLO puede redistribuir componentes de código abierto."
             AdminLabel.Text = "MODO DE ADMINISTRADOR"
@@ -4272,6 +4461,7 @@ Public Class MainForm
             LinkLabel10.Text = "Compruebe la página de Errores"
             LinkLabel11.Text = "Compruebe la rama Hummingbird"
             LinkLabel12.Text = "Hay algunas cosas que valen la pena revisar antes de continuar. Haga clic aquí para saber más."
+            LogViewLink.Text = "Ver archivo de registro"
 
             ' GroupBoxes
             GroupBox1.Text = "Posición de navegación"
@@ -4301,6 +4491,7 @@ Public Class MainForm
             Button13.Text = "Opciones avanzadas"
             ScanButton.Text = "Escanear..."
             LabelSetButton.Text = "Establecer"
+            LabelSetButton.PerformClick()
             SetDefaultButton.Text = "Predeterminado"
 
             ' CheckBoxes
@@ -4408,6 +4599,9 @@ Public Class MainForm
                     ComboBox4.Items.RemoveAt(3)
                 Loop
             End If
+
+            ' FolderBrowserDialog
+            ImageFolderBrowser.Description = "Especifique un directorio para guardar el instalador de destino:"
         ElseIf ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
             LangInt = 1
             If My.User.IsInRole(ApplicationServices.BuiltInRole.Administrator) Then
@@ -4422,10 +4616,8 @@ Public Class MainForm
             Label101.Text = "Help"
             Label102.Text = "About"
             Label104.Text = "Instructions"
-            Label105.Text = "The source code of this program can be found on GitHub." & CrLf & CrLf & "- This project can be opened on Visual Studio 2012 and newer, without the need of conversion" & CrLf & "- The .NET Framework 4.8 Developer Pack must be installed to open this project" & CrLf & CrLf & "Do you want to suggest a new feature to be included in a future version? Have you experienced a bug you want to report? Don't hesitate on reporting feedback or (even better) contributing (you'll need a GitHub account). Your feedback is critical." & CrLf & CrLf & "Do you want to enjoy the latest features? Check the Hummingbird branch! Weekly updates, new features and a sneak peek of the program's future"
+            scText.Text = "The source code of this program can be found on GitHub." & CrLf & CrLf & "- This project can be opened on Visual Studio 2012 and newer, without the need of conversion" & CrLf & "- The .NET Framework 4.8 Developer Pack must be installed to open this project" & CrLf & CrLf & "Do you want to suggest a new feature to be included in a future version? Have you experienced a bug you want to report? Don't hesitate on reporting feedback or (even better) contributing (you'll need a GitHub account). Your feedback is critical." & CrLf & CrLf & "Do you want to enjoy the latest features? Check the Hummingbird branch! Weekly updates, new features and a sneak peek of the program's future"
             Label106.Text = "Hummingbird release"
-            Label107.Text = "Enjoy new features"
-            Label107.Left = Label106.Left + Label106.Width
             Label108.Text = "Target installer:"
             Label109.Text = "Target installer path:"
 
@@ -4469,9 +4661,6 @@ Public Class MainForm
             Label48.Text = "Instructions"
             Label49.Text = "Learn how to use this program"
             ' These lines of code affect Label5 and PictureBox11
-            Label5.Text = "Manual Installer"
-            Label5.Top = PictureBox11.Top + PictureBox11.Height
-            PictureBox11.Top = 14
             Label50.Text = "Help"
             Label51.Text = "About"
             Label53.Text = "Windows 11 installer"
@@ -4481,17 +4670,16 @@ Public Class MainForm
             Label57.Text = "ISO file options"
             Label58.Text = "ISO file name:"
             Label59.Text = "ISO file location:"
-            Label6.Text = "Windows 11 Manual Installer"
             Label60.Text = "When you are ready, click " & Quote & "Create" & Quote
             Label63.Text = "Review your settings"
             Label64.Text = "Location and name:"
             Label65.Text = "Windows 11 image:"
             Label66.Text = "Windows 10 image:"
             Label69.Text = "Method:"
-            Label7.Text = "version " & VerStr
             ' Labels71 through 74 were deleted due to lack of functionality
             Label75.Text = "Platform compatibility:"
             Label77.Text = "Installer label:"
+            Label78.Text = LabelText.Text
             Label79.Text = "Are these settings OK?"
             Label82.Text = "Progress"
             Label83.Text = "That' s all the information we need right now. The installer creation will take a few minutes, so please be patient."
@@ -4502,7 +4690,19 @@ Public Class MainForm
             Label88.Text = "Finishing up"
             Label89.Text = "The action performed right now cannot be cancelled. Please wait."
             Label9.Text = "Settings"
-            Label91.Text = "To check for any program updates, click " & Quote & "Check for updates" & Quote
+            If needsUpdates Then
+                Label91.Text = "Updates bring new features and bugfixes to this program. Click " & Quote & "Check for updates" & Quote & " to check for program updates."
+            Else
+                If UpdateCheckDate = Nothing Then
+                    Label91.Text = "To check for any program updates, click " & Quote & "Check for updates" & Quote
+                Else
+                    If UpdateCheckDate.Day.Equals(14) And UpdateCheckDate.Month.Equals(3) Then
+                        Label91.Text = "To check for any program updates, click " & Quote & "Check for updates" & Quote & CrLf & "Last update check performed on: π day at " & UpdateCheckDate.ToLongTimeString
+                    Else
+                        Label91.Text = "To check for any program updates, click " & Quote & "Check for updates" & Quote & CrLf & "Last update check performed on: " & UpdateCheckDate
+                    End If
+                End If
+            End If
             Label92.Text = "Here is detailed information for components used by the program:"
             Label97.Text = "All components shown herein are covered by their own license terms, and this program can ONLY redistribute open-source components."
             AdminLabel.Text = "ADMINISTRATOR MODE"
@@ -4572,6 +4772,7 @@ Public Class MainForm
             LinkLabel10.Text = "Check the Issues page"
             LinkLabel11.Text = "Check the Hummingbird branch"
             LinkLabel12.Text = "There are some things that are worth revising before continuing. Click here to learn more."
+            LogViewLink.Text = "View log file"
 
             ' GroupBoxes
             GroupBox1.Text = "Navigation position"
@@ -4708,6 +4909,7 @@ Public Class MainForm
                     ComboBox4.Items.RemoveAt(3)
                 Loop
             End If
+            ImageFolderBrowser.Description = "Please specify the path to save the custom installer:"
         ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
             LangInt = 0
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
@@ -4723,10 +4925,8 @@ Public Class MainForm
                 Label101.Text = "Ayuda"
                 Label102.Text = "Acerca de"
                 Label104.Text = "Instrucciones"
-                Label105.Text = "El código fuente de este programa lo puede encontrar en GitHub." & CrLf & CrLf & "- Este proyecto puede ser abierto en Visual Studio 2012 y más reciente, sin necesidad de conversión" & CrLf & "- El Pack de Desarrolladores de .NET Framework 4.8 debe ser instalado para abrir este proyecto" & CrLf & CrLf & "¿Desea sugerir alguna nueva característica para ser incluida en una versión futura? ¿Ha notado algún error del que desea informar? No dude en reportar errores o (incluso mejor) contribuye al proyecto (necesita una cuenta de GitHub). Sus opiniones son cruciales." & CrLf & CrLf & "¿Desea disfrutar de las últimas características? ¡Compruebe la rama Hummingbird! Actualizaciones semanales, características nuevas y una vista previa del futuro del programa"
+                scText.Text = "El código fuente de este programa lo puede encontrar en GitHub." & CrLf & CrLf & "- Este proyecto puede ser abierto en Visual Studio 2012 y más reciente, sin necesidad de conversión" & CrLf & "- El Pack de Desarrolladores de .NET Framework 4.8 debe ser instalado para abrir este proyecto" & CrLf & CrLf & "¿Desea sugerir alguna nueva característica para ser incluida en una versión futura? ¿Ha notado algún error del que desea informar? No dude en reportar errores o (incluso mejor) contribuye al proyecto (necesita una cuenta de GitHub). Sus opiniones son cruciales." & CrLf & CrLf & "¿Desea disfrutar de las últimas características? ¡Compruebe la rama Hummingbird! Actualizaciones semanales, características nuevas y una vista previa del futuro del programa"
                 Label106.Text = "Lanzamiento Hummingbird"
-                Label107.Text = "Disfrute de características nuevas"
-                Label107.Left = Label106.Left + Label106.Width
                 Label108.Text = "Instalador de destino:"
                 Label109.Text = "Ubicación del instalador de destino:"
 
@@ -4769,10 +4969,6 @@ Public Class MainForm
                 Label47.Text = "Le ayuda a crear un instalador modificado de Windows 11 por usted mismo"
                 Label48.Text = "Instrucciones"
                 Label49.Text = "Aprenda a cómo usar este programa"
-                ' These lines of code affect Label5 and PictureBox11
-                Label5.Text = "Instalador manual de"
-                Label5.Top = 14
-                PictureBox11.Top = Label5.Top + Label5.Height
                 Label50.Text = "Ayuda"
                 Label51.Text = "Acerca de"
                 Label53.Text = "Instalador de Windows 11"
@@ -4782,17 +4978,16 @@ Public Class MainForm
                 Label57.Text = "Opciones del archivo ISO"
                 Label58.Text = "Nombre del archivo ISO:"
                 Label59.Text = "Ubicación del archivo ISO:"
-                Label6.Text = "Instalador manual de Windows 11"
                 Label60.Text = "Cuando esté listo, haga clic en " & Quote & "Crear" & Quote
                 Label63.Text = "Revise sus configuraciones"
                 Label64.Text = "Ubicación y nombre:"
                 Label65.Text = "Imagen de Windows 11:"
                 Label66.Text = "Imagen de Windows 10:"
                 Label69.Text = "Método:"
-                Label7.Text = "versión " & VerStr
                 ' Labels71 through 74 were deleted due to lack of functionality
                 Label75.Text = "Compatibilidad de plataformas:"
                 Label77.Text = "Etiqueta del instalador:"
+                Label78.Text = LabelText.Text
                 Label79.Text = "¿Estas configuraciones son las correctas?"
                 Label82.Text = "Progreso"
                 Label83.Text = "Ésta es toda la información que necesitamos en este momento. Esto tardará unos minutos, por lo que sea paciente, por favor."
@@ -4803,7 +4998,19 @@ Public Class MainForm
                 Label88.Text = "Finalizando"
                 Label89.Text = "La acción realizada en este momento no puede ser cancelada. Por favor, espere."
                 Label9.Text = "Configuración"
-                Label91.Text = "Para detectar actualizaciones del programa, haga clic en " & Quote & "Comprobar actualizaciones" & Quote
+                If needsUpdates Then
+                    Label91.Text = "Las actualizaciones aportan nuevas características y correcciones de errores al programa. Haga clic en " & Quote & "Comprobar actualizaciones" & Quote & " para comprobar actualizaciones del programa."
+                Else
+                    If UpdateCheckDate = Nothing Then
+                        Label91.Text = "Para detectar actualizaciones del programa, haga clic en " & Quote & "Comprobar actualizaciones" & Quote
+                    Else
+                        If UpdateCheckDate.Day.Equals(14) And UpdateCheckDate.Month.Equals(3) Then
+                            Label91.Text = "Para comprobar actualizaciones haga clic en " & Quote & "Comprobar actualizaciones" & Quote & CrLf & "Última comprobación de actualizaciones realizada en: día π en " & UpdateCheckDate.ToLongTimeString
+                        Else
+                            Label91.Text = "Para comprobar actualizaciones haga clic en " & Quote & "Comprobar actualizaciones" & Quote & CrLf & "Última comprobación de actualizaciones realizada en: " & UpdateCheckDate
+                        End If
+                    End If
+                End If
                 Label92.Text = "Ésta es la información detallada de los componentes usados por el programa:"
                 Label97.Text = "Todos los componentes mostrados aquí son protegidos por sus propios términos de licencia, y este programa SOLO puede redistribuir componentes de código abierto."
                 AdminLabel.Text = "MODO DE ADMINISTRADOR"
@@ -4873,7 +5080,8 @@ Public Class MainForm
                 LinkLabel10.Text = "Compruebe la página de Errores"
                 LinkLabel11.Text = "Compruebe la rama Hummingbird"
                 LinkLabel12.Text = "Hay algunas cosas que valen la pena revisar antes de continuar. Haga clic aquí para saber más."
-
+                LogViewLink.Text = "Ver archivo de registro"
+                LogViewLink.Text = "View log file"
                 ' GroupBoxes
                 GroupBox1.Text = "Posición de navegación"
                 GroupBox12.Text = "Opciones de bandeja del sistema"
@@ -5009,6 +5217,7 @@ Public Class MainForm
                         ComboBox4.Items.RemoveAt(3)
                     Loop
                 End If
+                ImageFolderBrowser.Description = "Especifique un directorio para guardar el instalador de destino:"
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 If My.User.IsInRole(ApplicationServices.BuiltInRole.Administrator) Then
                     Text = "Windows 11 Manual Installer (administrator mode)"
@@ -5022,10 +5231,8 @@ Public Class MainForm
                 Label101.Text = "Help"
                 Label102.Text = "About"
                 Label104.Text = "Instructions"
-                Label105.Text = "The source code of this program can be found on GitHub." & CrLf & CrLf & "- This project can be opened on Visual Studio 2012 and newer, without the need of conversion" & CrLf & "- The .NET Framework 4.8 Developer Pack must be installed to open this project" & CrLf & CrLf & "Do you want to suggest a new feature to be included in a future version? Have you experienced a bug you want to report? Don't hesitate on reporting feedback or (even better) contributing (you'll need a GitHub account). Your feedback is critical." & CrLf & CrLf & "Do you want to enjoy the latest features? Check the Hummingbird branch! Weekly updates, new features and a sneak peek of the program's future"
+                scText.Text = "The source code of this program can be found on GitHub." & CrLf & CrLf & "- This project can be opened on Visual Studio 2012 and newer, without the need of conversion" & CrLf & "- The .NET Framework 4.8 Developer Pack must be installed to open this project" & CrLf & CrLf & "Do you want to suggest a new feature to be included in a future version? Have you experienced a bug you want to report? Don't hesitate on reporting feedback or (even better) contributing (you'll need a GitHub account). Your feedback is critical." & CrLf & CrLf & "Do you want to enjoy the latest features? Check the Hummingbird branch! Weekly updates, new features and a sneak peek of the program's future"
                 Label106.Text = "Hummingbird release"
-                Label107.Text = "Enjoy new features"
-                Label107.Left = Label106.Left + Label106.Width
                 Label108.Text = "Target installer:"
                 Label109.Text = "Target installer path:"
 
@@ -5068,10 +5275,6 @@ Public Class MainForm
                 Label47.Text = "Allows you to create a custom Windows 11 installer by yourself"
                 Label48.Text = "Instructions"
                 Label49.Text = "Learn how to use this program"
-                ' These lines of code affect Label5 and PictureBox11
-                Label5.Text = "Manual Installer"
-                Label5.Top = PictureBox11.Top + PictureBox11.Height
-                PictureBox11.Top = 14
                 Label50.Text = "Help"
                 Label51.Text = "About"
                 Label53.Text = "Windows 11 installer"
@@ -5081,17 +5284,16 @@ Public Class MainForm
                 Label57.Text = "ISO file options"
                 Label58.Text = "ISO file name:"
                 Label59.Text = "ISO file location:"
-                Label6.Text = "Windows 11 Manual Installer"
                 Label60.Text = "When you are ready, click " & Quote & "Create" & Quote
                 Label63.Text = "Review your settings"
                 Label64.Text = "Location and name:"
                 Label65.Text = "Windows 11 image:"
                 Label66.Text = "Windows 10 image:"
                 Label69.Text = "Method:"
-                Label7.Text = "version " & VerStr
                 ' Labels71 through 74 were deleted due to lack of functionality
                 Label75.Text = "Platform compatibility:"
                 Label77.Text = "Installer label:"
+                Label78.Text = LabelText.Text
                 Label79.Text = "Are these settings OK?"
                 Label82.Text = "Progress"
                 Label83.Text = "That' s all the information we need right now. The installer creation will take a few minutes, so please be patient."
@@ -5102,7 +5304,19 @@ Public Class MainForm
                 Label88.Text = "Finishing up"
                 Label89.Text = "The action performed right now cannot be cancelled. Please wait."
                 Label9.Text = "Settings"
-                Label91.Text = "To check for any program updates, click " & Quote & "Check for updates" & Quote
+                If needsUpdates Then
+                    Label91.Text = "Updates bring new features and bugfixes to this program. Click " & Quote & "Check for updates" & Quote & " to check for program updates."
+                Else
+                    If UpdateCheckDate = Nothing Then
+                        Label91.Text = "To check for any program updates, click " & Quote & "Check for updates" & Quote
+                    Else
+                        If UpdateCheckDate.Day.Equals(14) And UpdateCheckDate.Month.Equals(3) Then
+                            Label91.Text = "To check for any program updates, click " & Quote & "Check for updates" & Quote & CrLf & "Last update check performed on: π day at " & UpdateCheckDate.ToLongTimeString
+                        Else
+                            Label91.Text = "To check for any program updates, click " & Quote & "Check for updates" & Quote & CrLf & "Last update check performed on: " & UpdateCheckDate
+                        End If
+                    End If
+                End If
                 Label92.Text = "Here is detailed information for components used by the program:"
                 Label97.Text = "All components shown herein are covered by their own license terms, and this program can ONLY redistribute open-source components."
                 AdminLabel.Text = "ADMINISTRATOR MODE"
@@ -5172,6 +5386,7 @@ Public Class MainForm
                 LinkLabel10.Text = "Check the Issues page"
                 LinkLabel11.Text = "Check the Hummingbird branch"
                 LinkLabel12.Text = "There are some things that are worth revising before continuing. Click here to learn more."
+                LogViewLink.Text = "View log file"
 
                 ' GroupBoxes
                 GroupBox1.Text = "Navigation position"
@@ -5308,6 +5523,7 @@ Public Class MainForm
                         ComboBox4.Items.RemoveAt(3)
                     Loop
                 End If
+                ImageFolderBrowser.Description = "Please specify the path to save the custom installer:"
             End If
         End If
     End Sub
@@ -5349,16 +5565,83 @@ Public Class MainForm
                 End If
             End If
         Else
-            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
-                MsgBox("No updates available", vbOKOnly + vbInformation, "Update check")
-            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
-                MsgBox("No hay actualizaciones disponibles", vbOKOnly + vbInformation, "Comprobación de actualizaciones")
-            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
-                If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
-                    MsgBox("No updates available", vbOKOnly + vbInformation, "Update check")
-                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
-                    MsgBox("No hay actualizaciones disponibles", vbOKOnly + vbInformation, "Comprobación de actualizaciones")
+            If File.Exists(".\latest") Then
+                UpdateChoicePanel.TextBox1.Text = My.Computer.FileSystem.ReadAllText(".\version")
+                File.Move(".\latest", ".\latest_old")
+                File.SetAttributes(".\latest_old", FileAttributes.Hidden)
+                Using LATEST As New WebClient()
+                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
+                    Try
+                        LATEST.DownloadFile("https://raw.githubusercontent.com/CodingWonders/win11minst/hummingbird/latest", ".\latest")
+                        File.Delete(".\latest_old")
+                    Catch ex As Exception
+                        If File.Exists(".\latest") Then
+                            File.Delete(".\latest")
+                        End If
+                        File.SetAttributes(".\latest_old", FileAttributes.Normal)
+                        File.Move(".\latest_old", ".\latest")
+                    End Try
+                End Using
+                UpdateChoicePanel.TextBox2.Text = My.Computer.FileSystem.ReadAllText(".\latest")
+                If UpdateChoicePanel.TextBox1.Text = UpdateChoicePanel.TextBox2.Text Then
+                    If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                        MsgBox("No updates available", vbOKOnly + vbInformation, "Update check")
+                    ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                        MsgBox("No hay actualizaciones disponibles", vbOKOnly + vbInformation, "Comprobación de actualizaciones")
+                    ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                        If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                            MsgBox("No updates available", vbOKOnly + vbInformation, "Update check")
+                        ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                            MsgBox("No hay actualizaciones disponibles", vbOKOnly + vbInformation, "Comprobación de actualizaciones")
+                        End If
+                    End If
+                    Label91.Visible = True
+                    LinkLabel7.Visible = False
+                Else
+                    Label91.Visible = False
+                    LinkLabel7.Visible = True
                 End If
+            Else
+                Using LATEST As New WebClient()
+                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
+                    Try
+                        LATEST.DownloadFile("https://raw.githubusercontent.com/CodingWonders/win11minst/hummingbird/latest", ".\latest")
+                        UpdateChoicePanel.TextBox1.Text = My.Computer.FileSystem.ReadAllText(".\version")
+                        UpdateChoicePanel.TextBox2.Text = My.Computer.FileSystem.ReadAllText(".\latest")
+                        If UpdateChoicePanel.TextBox1.Text = UpdateChoicePanel.TextBox2.Text Then
+                            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                                MsgBox("No updates available", vbOKOnly + vbInformation, "Update check")
+                            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                                MsgBox("No hay actualizaciones disponibles", vbOKOnly + vbInformation, "Comprobación de actualizaciones")
+                            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                                If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                                    MsgBox("No updates available", vbOKOnly + vbInformation, "Update check")
+                                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                                    MsgBox("No hay actualizaciones disponibles", vbOKOnly + vbInformation, "Comprobación de actualizaciones")
+                                End If
+                            End If
+                            Label91.Visible = True
+                            LinkLabel7.Visible = False
+                        Else
+                            Label91.Visible = False
+                            LinkLabel7.Visible = True
+                        End If
+                    Catch ex As Exception
+                        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                            MsgBox("No updates available", vbOKOnly + vbInformation, "Update check")
+                        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                            MsgBox("No hay actualizaciones disponibles", vbOKOnly + vbInformation, "Comprobación de actualizaciones")
+                        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                                MsgBox("No updates available", vbOKOnly + vbInformation, "Update check")
+                            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                                MsgBox("No hay actualizaciones disponibles", vbOKOnly + vbInformation, "Comprobación de actualizaciones")
+                            End If
+                        End If
+                        Label91.Visible = True
+                        LinkLabel7.Visible = False
+                    End Try
+                End Using
             End If
         End If
         ProgressRingPic.Visible = False
@@ -5388,6 +5671,7 @@ Public Class MainForm
                 End If
             End If
         End If
+        needsUpdates = False
     End Sub
 
     Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
@@ -6305,5 +6589,13 @@ Public Class MainForm
         ElseIf ComboBox4.Items.Contains("Español") Then
             ComboBox4.SelectedItem = "Español"
         End If
+    End Sub
+
+    Private Sub LogViewLink_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LogViewLink.LinkClicked
+        Process.Start(".\inst.log")
+    End Sub
+
+    Private Sub Label74_Click(sender As Object, e As EventArgs) Handles Label74.Click
+        Process.Start("https://www.betawiki.net/wiki/Windows_11_build_21996")
     End Sub
 End Class
