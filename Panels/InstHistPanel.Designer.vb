@@ -24,24 +24,39 @@ Partial Class InstHistPanel
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(InstHistPanel))
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.XMLExportLink = New System.Windows.Forms.LinkLabel()
         Me.OK_Button = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.InstallerListView = New System.Windows.Forms.ListView()
         Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.InstallerEntryLabel = New System.Windows.Forms.Label()
+        Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'Panel1
         '
         Me.Panel1.BackColor = System.Drawing.Color.FromArgb(CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Panel1.Controls.Add(Me.XMLExportLink)
         Me.Panel1.Controls.Add(Me.OK_Button)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Panel1.Location = New System.Drawing.Point(0, 520)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(800, 80)
         Me.Panel1.TabIndex = 1
+        '
+        'XMLExportLink
+        '
+        Me.XMLExportLink.AutoSize = True
+        Me.XMLExportLink.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
+        Me.XMLExportLink.LinkColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(92, Byte), Integer), CType(CType(186, Byte), Integer))
+        Me.XMLExportLink.Location = New System.Drawing.Point(28, 34)
+        Me.XMLExportLink.Name = "XMLExportLink"
+        Me.XMLExportLink.Size = New System.Drawing.Size(110, 15)
+        Me.XMLExportLink.TabIndex = 2
+        Me.XMLExportLink.TabStop = True
+        Me.XMLExportLink.Text = "Export to XML file..."
         '
         'OK_Button
         '
@@ -118,6 +133,7 @@ Partial Class InstHistPanel
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Installer history"
         Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -129,5 +145,7 @@ Partial Class InstHistPanel
     Friend WithEvents ColumnHeader1 As System.Windows.Forms.ColumnHeader
     Friend WithEvents ColumnHeader2 As System.Windows.Forms.ColumnHeader
     Friend WithEvents InstallerEntryLabel As System.Windows.Forms.Label
+    Friend WithEvents XMLExportLink As System.Windows.Forms.LinkLabel
+    Friend WithEvents SaveFileDialog1 As System.Windows.Forms.SaveFileDialog
 
 End Class
