@@ -95,6 +95,6 @@ Public Class AdvancedOptionsPanel
     End Sub
 
     Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
-        System.Diagnostics.Process.Start("https://github.com/CodingWonders/win11minst/issues/2")
+        Process.Start("https://github.com/CodingWonders/win11minst/issues/2")
     End Sub
 End Class
