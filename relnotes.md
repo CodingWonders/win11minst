@@ -24,6 +24,7 @@ Here you can see the feature list for each released version since `2.0.0100_2205
     > Support for other file types is planned in the future, such as exporting to a HTML file, or to an Excel spreadsheet
 
 - When updates are detected, the message is less vague
+- Refactored some code (it still works, though)
 
 #### **Removed/stripped down features**
 
