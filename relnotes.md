@@ -2,8 +2,32 @@
 
 ---
 
-Here you can see the feature list for each released version since `2.0.0100_220515`. If you want to take a look at the release notes for an older release, please look at **that specific release**
+Here you can see the feature list for each released version since `2.0.0100_220515`. If you want to take a look at the release notes for an older release, please look at **that specific release** (you can do this more easily by clicking the links at the bottom of the file)
 
+
+### 2.0.0100_220605
+---
+
+#### **Bugfixes**
+
+- Fixed a bug where the navigation bar icons would not change images or change pages from certain ones
+- Fixed a bug that allowed moving the window by dragging from the `Personalization` screen header
+- Fixed a bug where `View log file` would not be moved after resizing the window
+- Fixed a bug where clicking the `View installer history` context menu option would restore the window to a normal state when it was maximized
+
+
+#### **New features**
+
+- You can now view release notes from the update window
+- You can now export installer history items to an XML file. Because of this, the `System.Data` dependency is needed
+
+    > Support for other file types is planned in the future, such as exporting to a HTML file, or to an Excel spreadsheet
+
+- When updates are detected, the message is less vague
+
+#### **Removed/stripped down features**
+
+There are no removed features in this release
 
 ### 2.0.0100_220529
 ---
@@ -101,3 +125,18 @@ Errors:
 > The code to detect Windows Server isn't gone, but it is commented out
 
 [wnw11]: http://github.com/rcmaehl/WhyNotWin11 "WhyNotWin11"
+
+### Other releases
+If you want to look at older versions's release notes, click on one of the links below:
+
+- [2.0.0100_220501][beta_220501]
+- [2.0.0100_220424][beta_220424]
+- [2.0.0100_220417][beta_220417]
+- [2.0.0100_220410][beta_220410]
+- [2.0.0100_220313][beta_220313]
+
+[beta_220501]: https://github.com/CodingWonders/win11minst/releases/tag/beta_220501 "2.0.0100_220501"
+[beta_220424]: https://github.com/CodingWonders/win11minst/releases/tag/beta_220424 "2.0.0100_220424"
+[beta_220417]: https://github.com/CodingWonders/win11minst/releases/tag/beta_220417 "2.0.0100_220417"
+[beta_220410]: https://github.com/CodingWonders/win11minst/releases/tag/beta_220410 "2.0.0100_220410"
+[beta_220313]: https://github.com/CodingWonders/win11minst/releases/tag/beta_220313 "2.0.0100_220313"
