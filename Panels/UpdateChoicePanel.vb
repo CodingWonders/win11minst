@@ -76,6 +76,7 @@ Public Class UpdateChoicePanel
             Label5.Text = "When you click " & Quote & "Install now" & Quote & ", the program will exit and update to the latest version."
             OK_Button.Text = "Install now"
             Cancel_Button.Text = "Install later"
+            RelNotesLink.Text = "View release notes"
             TextBox1.Left = 177
             TextBox1.Width = 702
             TextBox2.Left = 226
@@ -88,6 +89,7 @@ Public Class UpdateChoicePanel
             Label5.Text = "Cuando haga clic en " & Quote & "Instalar ahora" & Quote & ", el programa se cerrará y se actualizará a la última versión."
             OK_Button.Text = "Instalar ahora"
             Cancel_Button.Text = "Instalar después"
+            RelNotesLink.Text = "Ver notas de la versión"
             TextBox1.Left = 178
             TextBox1.Width = 701
             TextBox2.Left = 228
@@ -101,6 +103,7 @@ Public Class UpdateChoicePanel
                 Label5.Text = "When you click " & Quote & "Install now" & Quote & ", the program will exit and update to the latest version."
                 OK_Button.Text = "Install now"
                 Cancel_Button.Text = "Install later"
+                RelNotesLink.Text = "View release notes"
                 TextBox1.Left = 177
                 TextBox1.Width = 702
                 TextBox2.Left = 226
@@ -113,6 +116,7 @@ Public Class UpdateChoicePanel
                 Label5.Text = "Cuando haga clic en " & Quote & "Instalar ahora" & Quote & ", el programa se cerrará y se actualizará a la última versión."
                 OK_Button.Text = "Instalar ahora"
                 Cancel_Button.Text = "Instalar después"
+                RelNotesLink.Text = "Ver notas de la versión"
                 TextBox1.Left = 178
                 TextBox1.Width = 701
                 TextBox2.Left = 228
@@ -127,6 +131,7 @@ Public Class UpdateChoicePanel
             OK_Button.BackColor = Color.FromArgb(1, 92, 186)
             OK_Button.ForeColor = Color.White
             PictureBox1.Image = New Bitmap(My.Resources.update_screen_light)
+            RelNotesLink.LinkColor = Color.FromArgb(1, 92, 186)
         ElseIf MainForm.BackColor = Color.FromArgb(32, 32, 32) Then
             BackColor = Color.FromArgb(43, 43, 43)
             ForeColor = Color.White
@@ -134,6 +139,11 @@ Public Class UpdateChoicePanel
             OK_Button.BackColor = Color.FromArgb(76, 194, 255)
             OK_Button.ForeColor = Color.Black
             PictureBox1.Image = New Bitmap(My.Resources.update_screen_dark)
+            RelNotesLink.LinkColor = Color.FromArgb(76, 194, 255)
         End If
+    End Sub
+
+    Private Sub RelNotesLink_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles RelNotesLink.LinkClicked
+        Process.Start("https://github.com/CodingWonders/win11minst/blob/hummingbird/relnotes.md")
     End Sub
 End Class

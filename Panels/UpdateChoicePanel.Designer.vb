@@ -35,6 +35,7 @@ Partial Class UpdateChoicePanel
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.TextBox2 = New System.Windows.Forms.TextBox()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
+        Me.RelNotesLink = New System.Windows.Forms.LinkLabel()
         Me.Panel1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -167,12 +168,26 @@ Partial Class UpdateChoicePanel
         Me.PictureBox2.TabIndex = 9
         Me.PictureBox2.TabStop = False
         '
+        'RelNotesLink
+        '
+        Me.RelNotesLink.AutoSize = True
+        Me.RelNotesLink.Font = New System.Drawing.Font("Segoe UI", 11.25!)
+        Me.RelNotesLink.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
+        Me.RelNotesLink.LinkColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(92, Byte), Integer), CType(CType(186, Byte), Integer))
+        Me.RelNotesLink.Location = New System.Drawing.Point(82, 337)
+        Me.RelNotesLink.Name = "RelNotesLink"
+        Me.RelNotesLink.Size = New System.Drawing.Size(132, 20)
+        Me.RelNotesLink.TabIndex = 10
+        Me.RelNotesLink.TabStop = True
+        Me.RelNotesLink.Text = "View release notes"
+        '
         'UpdateChoicePanel
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(960, 480)
+        Me.Controls.Add(Me.RelNotesLink)
         Me.Controls.Add(Me.PictureBox2)
         Me.Controls.Add(Me.TextBox2)
         Me.Controls.Add(Me.TextBox1)
@@ -211,5 +226,6 @@ Partial Class UpdateChoicePanel
     Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
     Friend WithEvents TextBox2 As System.Windows.Forms.TextBox
     Friend WithEvents PictureBox2 As System.Windows.Forms.PictureBox
+    Friend WithEvents RelNotesLink As System.Windows.Forms.LinkLabel
 
 End Class
