@@ -64,6 +64,7 @@ C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\bin\Debug\win11minst.exe.
 C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\bin\Debug\win11minst.exe
 C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\bin\Debug\win11minst.pdb
 C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\bin\Debug\win11minst.xml
+C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\bin\Debug\System.Data.dll
 C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\bin\Debug\System.dll
 C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\bin\Debug\System.Drawing.dll
 C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\bin\Debug\System.Windows.Forms.dll
