@@ -113,7 +113,7 @@ Public Class ISOFileDownloadPanel
     End Sub
 
     Private Sub UAToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles UAToolStripMenuItem.Click
-        System.Diagnostics.Process.Start("https://developers.whatismybrowser.com/useragents/parse/118164231chrome-linux-blink")
+        Process.Start("https://developers.whatismybrowser.com/useragents/parse/118164231chrome-linux-blink")
     End Sub
 
     Private Sub Label3_Click(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles Label3.Click
@@ -194,13 +194,13 @@ Public Class ISOFileDownloadPanel
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         If ComboBox1.SelectedItem = "Public" Then
-            System.Diagnostics.Process.Start("https://uupdump.net/fetchupd.php?arch=amd64&ring=retail&build=19043.330")
+            Process.Start("https://uupdump.net/fetchupd.php?arch=amd64&ring=retail&build=19043.330")
         ElseIf ComboBox1.SelectedItem = "Release Preview" Then
-            System.Diagnostics.Process.Start("https://uupdump.net/fetchupd.php?arch=amd64&ring=rp&build=19044.1")
+            Process.Start("https://uupdump.net/fetchupd.php?arch=amd64&ring=rp&build=19044.1")
         ElseIf ComboBox1.SelectedItem = "Beta" Then
-            System.Diagnostics.Process.Start("https://uupdump.net/fetchupd.php?arch=amd64&ring=wis&build=19042.330")
+            Process.Start("https://uupdump.net/fetchupd.php?arch=amd64&ring=wis&build=19042.330")
         ElseIf ComboBox1.SelectedItem = "Dev" Then
-            System.Diagnostics.Process.Start("https://uupdump.net/fetchupd.php?arch=amd64&ring=wif&build=latest")
+            Process.Start("https://uupdump.net/fetchupd.php?arch=amd64&ring=wif&build=latest")
         End If
         TextBox1.Enabled = True
     End Sub
