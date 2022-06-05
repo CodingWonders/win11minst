@@ -3069,6 +3069,7 @@ Partial Class MainForm
         '
         'LogViewLink
         '
+        Me.LogViewLink.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LogViewLink.AutoEllipsis = True
         Me.LogViewLink.Font = New System.Drawing.Font("Segoe UI", 9.65!)
         Me.LogViewLink.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline

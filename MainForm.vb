@@ -12,9 +12,9 @@ Imports System.Threading
 Public Class MainForm
     Private isMouseDown As Boolean = False
     Private mouseOffset As Point
-    Dim VerStr As String = "2.0.0100_220529"    ' Reported version
+    Dim VerStr As String = "2.0.0100_220605"    ' Reported version
     Dim AVerStr As String = My.Application.Info.Version.ToString()     ' Assembly version
-    Dim VDescStr As String = "Building the leak!"
+    Dim VDescStr As String = ""
     Dim OffEcho As String = "@echo off"
     Dim wmiget As String
     Dim StDebugTime As Date = Now
@@ -70,7 +70,7 @@ Public Class MainForm
     Dim WndTop As Point
 
     ' Left mouse button pressed
-    Private Sub titlePanel_MouseDown(sender As Object, e As MouseEventArgs) Handles titlePanel.MouseDown, Label12.MouseDown, TitleBar.MouseDown
+    Private Sub titlePanel_MouseDown(sender As Object, e As MouseEventArgs) Handles titlePanel.MouseDown, TitleBar.MouseDown
         If e.Button = Windows.Forms.MouseButtons.Left Then
             ' Get the new position
             mouseOffset = New Point(-e.X, -e.Y)
@@ -80,7 +80,7 @@ Public Class MainForm
     End Sub
 
     ' MouseMove used to check if mouse cursor is moving
-    Private Sub titlePanel_MouseMove(sender As Object, e As MouseEventArgs) Handles titlePanel.MouseMove, Label12.MouseMove, TitleBar.MouseMove
+    Private Sub titlePanel_MouseMove(sender As Object, e As MouseEventArgs) Handles titlePanel.MouseMove, TitleBar.MouseMove
         If isMouseDown Then
             Dim mousePos As Point = Control.MousePosition
             ' Get the new form position
@@ -90,7 +90,85 @@ Public Class MainForm
     End Sub
 
     ' Left mouse button released, form should stop moving
-    Private Sub titlePanel_MouseUp(sender As Object, e As MouseEventArgs) Handles titlePanel.MouseUp, Label12.MouseUp, TitleBar.MouseUp
+    Private Sub titlePanel_MouseUp(sender As Object, e As MouseEventArgs) Handles titlePanel.MouseUp, TitleBar.MouseUp
+        If e.Button = Windows.Forms.MouseButtons.Left Then
+            isMouseDown = False
+        End If
+    End Sub
+    ' Left mouse button pressed
+    Private Sub LogoPic_MouseDown(sender As Object, e As MouseEventArgs) Handles LogoPic.MouseDown
+        If e.Button = Windows.Forms.MouseButtons.Left Then
+            ' Get the new position
+            mouseOffset = New Point(-e.X, -e.Y)
+            ' Set that left button is pressed
+            isMouseDown = True
+        End If
+    End Sub
+
+    ' MouseMove used to check if mouse cursor is moving
+    Private Sub LogoPic_MouseMove(sender As Object, e As MouseEventArgs) Handles LogoPic.MouseMove
+        If isMouseDown Then
+            Dim mousePos As Point = Control.MousePosition
+            ' Get the new form position
+            mousePos.Offset(mouseOffset.X, mouseOffset.Y)
+            Location = mousePos
+        End If
+    End Sub
+
+    ' Left mouse button released, form should stop moving
+    Private Sub LogoPic_MouseUp(sender As Object, e As MouseEventArgs) Handles LogoPic.MouseUp
+        If e.Button = Windows.Forms.MouseButtons.Left Then
+            isMouseDown = False
+        End If
+    End Sub
+    ' Left mouse button pressed
+    Private Sub ProgramTitleLabel_MouseDown(sender As Object, e As MouseEventArgs) Handles ProgramTitleLabel.MouseDown
+        If e.Button = Windows.Forms.MouseButtons.Left Then
+            ' Get the new position
+            mouseOffset = New Point(-e.X, -e.Y)
+            ' Set that left button is pressed
+            isMouseDown = True
+        End If
+    End Sub
+
+    ' MouseMove used to check if mouse cursor is moving
+    Private Sub ProgramTitleLabel_MouseMove(sender As Object, e As MouseEventArgs) Handles ProgramTitleLabel.MouseMove
+        If isMouseDown Then
+            Dim mousePos As Point = Control.MousePosition
+            ' Get the new form position
+            mousePos.Offset(mouseOffset.X, mouseOffset.Y)
+            Location = mousePos
+        End If
+    End Sub
+
+    ' Left mouse button released, form should stop moving
+    Private Sub ProgramTitleLabel_MouseUp(sender As Object, e As MouseEventArgs) Handles ProgramTitleLabel.MouseUp
+        If e.Button = Windows.Forms.MouseButtons.Left Then
+            isMouseDown = False
+        End If
+    End Sub
+    ' Left mouse button pressed
+    Private Sub AdminLabel_MouseDown(sender As Object, e As MouseEventArgs) Handles AdminLabel.MouseDown
+        If e.Button = Windows.Forms.MouseButtons.Left Then
+            ' Get the new position
+            mouseOffset = New Point(-e.X, -e.Y)
+            ' Set that left button is pressed
+            isMouseDown = True
+        End If
+    End Sub
+
+    ' MouseMove used to check if mouse cursor is moving
+    Private Sub AdminLabel_MouseMove(sender As Object, e As MouseEventArgs) Handles AdminLabel.MouseMove
+        If isMouseDown Then
+            Dim mousePos As Point = Control.MousePosition
+            ' Get the new form position
+            mousePos.Offset(mouseOffset.X, mouseOffset.Y)
+            Location = mousePos
+        End If
+    End Sub
+
+    ' Left mouse button released, form should stop moving
+    Private Sub AdminLabel_MouseUp(sender As Object, e As MouseEventArgs) Handles AdminLabel.MouseUp
         If e.Button = Windows.Forms.MouseButtons.Left Then
             isMouseDown = False
         End If
@@ -350,12 +428,21 @@ Public Class MainForm
             If SettingLoadForm.TextBox1.Text.Contains("Language=1") Then
                 LangInt = 1
                 ComboBox4.SelectedItem = "English"
+                AutomaticLanguageToolStripMenuItem.Checked = False
+                EnglishToolStripMenuItem.Checked = True
+                SpanishToolStripMenuItem.Checked = False
             ElseIf SettingLoadForm.TextBox1.Text.Contains("Language=2") Then
                 LangInt = 2
                 ComboBox4.SelectedItem = "Spanish"
+                AutomaticLanguageToolStripMenuItem.Checked = False
+                EnglishToolStripMenuItem.Checked = False
+                SpanishToolStripMenuItem.Checked = True
             ElseIf SettingLoadForm.TextBox1.Text.Contains("Language=0") Then
                 LangInt = 0
                 ComboBox4.SelectedItem = "Automatic"
+                AutomaticLanguageToolStripMenuItem.Checked = True
+                EnglishToolStripMenuItem.Checked = False
+                SpanishToolStripMenuItem.Checked = False
             End If
             If SettingLoadForm.TextBox1.Text.Contains("NavBarPos=0") Then
                 RadioButton3.Checked = True
@@ -497,7 +584,11 @@ Public Class MainForm
         VersionToolStripMenuItem.Text = "version " & VerStr & " (assembly version " & AVerStr & ")"
         Label72.Text = "version " & VerStr & " (assembly version " & AVerStr & ")"
         Label74.Visible = True
-        Label74.Text = VDescStr
+        If VDescStr = "" Then
+            Label74.Text = "Blame Microsoft for pushing the system requirements, not your computer for not meeting them."
+        Else
+            Label74.Text = VDescStr
+        End If
         Notify.Visible = False
         If isHummingbird Then
             BranchPic.Visible = True
@@ -976,6 +1067,7 @@ Public Class MainForm
     End Sub
 
     Private Sub InfoPic_Click(sender As Object, e As EventArgs) Handles InfoPic.Click, PictureBox34.Click, Label102.Click
+        DisableBackPic()
         WelcomePanel.Visible = False
         InstCreatePanel.Visible = False
         SettingReviewPanel.Visible = False
@@ -1026,9 +1118,11 @@ Public Class MainForm
                 WelcomePic.Image = New Bitmap(My.Resources.home_dark_filled)
                 InfoPic.Image = New Bitmap(My.Resources.info_dark)
             End If
-        ElseIf SettingPanel.Visible = True Then
+        ElseIf SettingPanel.Visible = True Or Settings_PersonalizationPanel.Visible = True Or Settings_FunctionalityPanel.Visible = True Then
             WelcomePanel.Visible = True
             SettingPanel.Visible = False
+            Settings_PersonalizationPanel.Visible = False
+            Settings_FunctionalityPanel.Visible = False
             If BackColor = Color.FromArgb(243, 243, 243) Then
                 WelcomePic.Image = New Bitmap(My.Resources.home_filled)
                 SettingsPic.Image = New Bitmap(My.Resources.settings)
@@ -1049,6 +1143,16 @@ Public Class MainForm
         ElseIf SettingReviewPanel.Visible = True Then
             WelcomePanel.Visible = True
             SettingReviewPanel.Visible = False
+            If BackColor = Color.FromArgb(243, 243, 243) Then
+                WelcomePic.Image = New Bitmap(My.Resources.home_filled)
+                InstCreatePic.Image = New Bitmap(My.Resources.inst_create)
+            ElseIf BackColor = Color.FromArgb(32, 32, 32) Then
+                WelcomePic.Image = New Bitmap(My.Resources.home_dark_filled)
+                InstCreatePic.Image = New Bitmap(My.Resources.inst_create_dark)
+            End If
+        ElseIf ProgressPanel.Visible = True Then
+            WelcomePanel.Visible = True
+            ProgressPanel.Visible = False
             If BackColor = Color.FromArgb(243, 243, 243) Then
                 WelcomePic.Image = New Bitmap(My.Resources.home_filled)
                 InstCreatePic.Image = New Bitmap(My.Resources.inst_create)
@@ -1125,11 +1229,11 @@ Public Class MainForm
     End Sub
 
     Private Sub LinkLabel3_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel3.LinkClicked
-        System.Diagnostics.Process.Start("https://www.google.com/search?q=enable+csm+uefi&pccc=1")
+        Process.Start("https://www.google.com/search?q=enable+csm+uefi&pccc=1")
     End Sub
 
     Private Sub LinkLabel4_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel4.LinkClicked
-        System.Diagnostics.Process.Start("https://duckduckgo.com/?q=enable+csm+uefi&atb=v297-6&ia=web")
+        Process.Start("https://duckduckgo.com/?q=enable+csm+uefi&atb=v297-6&ia=web")
     End Sub
 
     Private Sub RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged
@@ -1996,11 +2100,13 @@ Public Class MainForm
     End Sub
 
     Private Sub ViewInstallerHistoryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ViewInstallerHistoryToolStripMenuItem.Click
-        Activate()
-        ShowInTaskbar = True
-        WindowState = FormWindowState.Normal
-        MiniModeDialog.Hide()
-        BringToFront()
+        If Visible = False Then
+            Activate()
+            ShowInTaskbar = True
+            WindowState = FormWindowState.Normal
+            MiniModeDialog.Hide()
+            BringToFront()
+        End If
         BackSubPanel.Show()
         InstHistPanel.ShowDialog()
         InstHistPanel.Visible = True
@@ -2032,6 +2138,7 @@ Public Class MainForm
     End Sub
 
     Private Sub InstCreatePic_Click(sender As Object, e As EventArgs) Handles InstCreatePic.Click, PictureBox9.Click, Label99.Click
+        DisableBackPic()
         PanelIndicatorPic.Top = InstCreatePic.Top + 2
         PanelIndicatorPic.Anchor = CType((AnchorStyles.Top Or AnchorStyles.Left), AnchorStyles)
         If InstCreateInt = 0 Then
@@ -2082,7 +2189,7 @@ Public Class MainForm
                 HelpPic.Image = New Bitmap(My.Resources.help_dark)
                 InfoPic.Image = New Bitmap(My.Resources.info_dark)
             End If
-        ElseIf InstCreateInt = 2 Then
+        ElseIf InstCreateInt = 2 Or InstCreateInt = 3 Then
             WelcomePanel.Visible = False
             SettingPanel.Visible = False
             Settings_FunctionalityPanel.Visible = False
@@ -2130,10 +2237,12 @@ Public Class MainForm
                 End If
             End If
             TextBox1.ForeColor = ForeColor
-            If File.Exists(TextBox2.Text) Then
-                Button6.Enabled = True
-            Else
-                Button6.Enabled = False
+            If Not ComboBox5.SelectedItem = "REGTWEAK" Then
+                If File.Exists(TextBox2.Text) Then
+                    Button6.Enabled = True
+                Else
+                    Button6.Enabled = False
+                End If
             End If
         Else
             If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
@@ -2182,10 +2291,12 @@ Public Class MainForm
                     End If
                 End If
                 TextBox1.ForeColor = ForeColor
-                If File.Exists(TextBox2.Text) Then
-                    Button6.Enabled = True
-                Else
-                    Button6.Enabled = False
+                If Not ComboBox5.SelectedItem = "REGTWEAK" Then
+                    If File.Exists(TextBox2.Text) Then
+                        Button6.Enabled = True
+                    Else
+                        Button6.Enabled = False
+                    End If
                 End If
             Else
                 If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
@@ -2277,73 +2388,80 @@ Public Class MainForm
                     Win10PresenceSTLabel.Text = "Estado de presencia: desconocido"
                 End If
             End If
-            Button6.Enabled = False
+            If Not ComboBox5.SelectedItem = "REGTWEAK" Then
+                Button6.Enabled = False
+            End If
         End If
-        If Not TextBox2.Text = "" And TextBox2.Text = TextBox1.Text Then
-            TextBox1.ForeColor = Color.Crimson
-            TextBox2.ForeColor = Color.Crimson
-            Button6.Enabled = False
-        Else
-            If File.Exists(TextBox2.Text) Then
-                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
-                    Win10PresenceSTLabel.Text = "Presence status: this file exists"
-                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
-                    Win10PresenceSTLabel.Text = "Estado de presencia: este archivo existe"
-                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
-                    If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
-                        Win10PresenceSTLabel.Text = "Presence status: this file exists"
-                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
-                        Win10PresenceSTLabel.Text = "Estado de presencia: este archivo existe"
-                    End If
-                End If
-                TextBox2.ForeColor = ForeColor
-                If File.Exists(TextBox1.Text) Then
-                    Button6.Enabled = True
-                Else
-                    Button6.Enabled = False
-                End If
-            Else
-                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
-                    Win10PresenceSTLabel.Text = "Presence status: this file does not exist"
-                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
-                    Win10PresenceSTLabel.Text = "Estado de presencia: este archivo no existe"
-                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
-                    If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
-                        Win10PresenceSTLabel.Text = "Presence status: this file does not exist"
-                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
-                        Win10PresenceSTLabel.Text = "Estado de presencia: este archivo no existe"
-                    End If
-                End If
+        If Not ComboBox5.SelectedItem = "REGTWEAK" Then
+            If Not TextBox2.Text = "" And TextBox2.Text = TextBox1.Text Then
+                TextBox1.ForeColor = Color.Crimson
                 TextBox2.ForeColor = Color.Crimson
                 Button6.Enabled = False
-            End If
-            If TextBox2.Text = "" Then
-                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
-                    Win10PresenceSTLabel.Text = "Presence status: unknown"
-                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
-                    Win10PresenceSTLabel.Text = "Estado de presencia: desconocido"
-                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
-                    If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+            Else
+                If File.Exists(TextBox2.Text) Then
+                    If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                        Win10PresenceSTLabel.Text = "Presence status: this file exists"
+                    ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                        Win10PresenceSTLabel.Text = "Estado de presencia: este archivo existe"
+                    ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                        If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                            Win10PresenceSTLabel.Text = "Presence status: this file exists"
+                        ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                            Win10PresenceSTLabel.Text = "Estado de presencia: este archivo existe"
+                        End If
+                    End If
+                    TextBox2.ForeColor = ForeColor
+                    If File.Exists(TextBox1.Text) Then
+                        Button6.Enabled = True
+                    Else
+                        Button6.Enabled = False
+                    End If
+                Else
+                    If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                        Win10PresenceSTLabel.Text = "Presence status: this file does not exist"
+                    ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                        Win10PresenceSTLabel.Text = "Estado de presencia: este archivo no existe"
+                    ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                        If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                            Win10PresenceSTLabel.Text = "Presence status: this file does not exist"
+                        ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                            Win10PresenceSTLabel.Text = "Estado de presencia: este archivo no existe"
+                        End If
+                    End If
+                    TextBox2.ForeColor = Color.Crimson
+                    Button6.Enabled = False
+                End If
+                If TextBox2.Text = "" Then
+                    If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
                         Win10PresenceSTLabel.Text = "Presence status: unknown"
-                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                    ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
                         Win10PresenceSTLabel.Text = "Estado de presencia: desconocido"
+                    ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                        If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                            Win10PresenceSTLabel.Text = "Presence status: unknown"
+                        ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                            Win10PresenceSTLabel.Text = "Estado de presencia: desconocido"
+                        End If
+                    End If
+                    If Not ComboBox5.SelectedItem = "REGTWEAK" Then
+                        Button6.Enabled = False
                     End If
                 End If
-                Button6.Enabled = False
             End If
-        End If
-        If TextBox2.ForeColor = Color.Crimson Then
-            Label60.Visible = False
-            LinkLabel12.Visible = True
-        Else
-            If TextBox1.ForeColor = Color.Crimson Or TextBox3.ForeColor = Color.Crimson Or TextBox4.ForeColor = Color.Crimson Then
+            If TextBox2.ForeColor = Color.Crimson Then
                 Label60.Visible = False
                 LinkLabel12.Visible = True
             Else
-                Label60.Visible = True
-                LinkLabel12.Visible = False
+                If TextBox1.ForeColor = Color.Crimson Or TextBox3.ForeColor = Color.Crimson Or TextBox4.ForeColor = Color.Crimson Then
+                    Label60.Visible = False
+                    LinkLabel12.Visible = True
+                Else
+                    Label60.Visible = True
+                    LinkLabel12.Visible = False
+                End If
             End If
         End If
+
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
@@ -2768,9 +2886,9 @@ Public Class MainForm
         LogBox.Clear()
         ' ...and this line of code prints version information on the LogBox
         If My.User.IsInRole(ApplicationServices.BuiltInRole.Administrator) Then
-            LogBox.AppendText("Windows 11 Manual Installer (administrator mode)" & CrLf & "version 2.0.0100")
+            LogBox.AppendText("Windows 11 Manual Installer (administrator mode)" & CrLf & "version " & VerStr)
         Else
-            LogBox.AppendText("Windows 11 Manual Installer" & CrLf & "version 2.0.0100")
+            LogBox.AppendText("Windows 11 Manual Installer" & CrLf & "version " & VerStr)
         End If
         ' If an installer creation process is incomplete (due to an exception or user cancellation), delete
         ' everything
@@ -3128,7 +3246,7 @@ Public Class MainForm
                 InstSTLabel.Text = "Recopilando instrucciones..."
             End If
         End If
-        LogBox.AppendText(CrLf & "Gathering instructions needed to create the installer...")
+        LogBox.AppendText(CrLf & "Gathering instructions necessary to create the installer...")
         LogBox.AppendText(" Done")
         If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
             InstSTLabel.Text = "Instructions gathered"
@@ -3267,7 +3385,7 @@ Public Class MainForm
             LogBox.AppendText(" Done" & CrLf & "Creating the WIM file mount point folder...")
             Directory.CreateDirectory(".\wimmount")
             LogBox.AppendText(" Done" & CrLf & "Launching the REGTWEAK script...")
-            If AdvancedOptionsPanel.CheckBox1.Checked = True Then   ' Prepare boot.wim (and install.wim, if needed) for surgery
+            If AdvancedOptionsPanel.CheckBox1.Checked = True Then   ' Prepare boot.wim (and install.wim, if necessary) for surgery
                 If AdvancedOptionsPanel.CheckBox2.Checked = True Then
                     If Win11ESD = 1 Then
                         LogBox.AppendText(CrLf & "WARNING: the program has detected ESD files on the Windows 11 image. Proceeding with normal options...")
@@ -3439,10 +3557,15 @@ Public Class MainForm
                         My.Computer.FileSystem.WriteAllText(".\inst.log", "----------------------------------------------------------------", True)
                         My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf, True)
                         My.Computer.FileSystem.WriteAllText(".\inst.log", LogBox.Text, True)
-                        If WarningText.Text = "" And ErrorText.Text = "" Then
-                            My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: none" & CrLf & CrLf & "Errors: none", True)
+                        If WarningText.Text = "" Then
+                            My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: none", True)
                         Else
-                            My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: " & CrLf & WarningText.Text & CrLf & CrLf & "Errors: " & CrLf & ErrorText.Text, True)
+                            My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: " & CrLf & WarningText.Text, True)
+                        End If
+                        If ErrorText.Text = "" Then
+                            My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: none", True)
+                        Else
+                            My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: " & CrLf & ErrorText.Text, True)
                         End If
                         File.Delete(".\inst.log.bak")
                     Else
@@ -3451,10 +3574,15 @@ Public Class MainForm
                         My.Computer.FileSystem.WriteAllText(".\inst.log", "----------------------------------------------------------------", True)
                         My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf, True)
                         My.Computer.FileSystem.WriteAllText(".\inst.log", LogBox.Text, True)
-                        If WarningText.Text = "" And ErrorText.Text = "" Then
-                            My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: none" & CrLf & CrLf & "Errors: none", True)
+                        If WarningText.Text = "" Then
+                            My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: none", True)
                         Else
-                            My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: " & CrLf & WarningText.Text & CrLf & CrLf & "Errors: " & CrLf & ErrorText.Text, True)
+                            My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: " & CrLf & WarningText.Text, True)
+                        End If
+                        If ErrorText.Text = "" Then
+                            My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: none", True)
+                        Else
+                            My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: " & CrLf & ErrorText.Text, True)
                         End If
                     End If
                 ElseIf LogMigratePanel.DialogResult = Windows.Forms.DialogResult.No Then
@@ -3462,10 +3590,15 @@ Public Class MainForm
                     My.Computer.FileSystem.WriteAllText(".\inst.log", "----------------------------------------------------------------", True)
                     My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf, True)
                     My.Computer.FileSystem.WriteAllText(".\inst.log", LogBox.Text, True)
-                    If WarningText.Text = "" And ErrorText.Text = "" Then
-                        My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: none" & CrLf & CrLf & "Errors: none", True)
+                    If WarningText.Text = "" Then
+                        My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: none", True)
                     Else
-                        My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: " & CrLf & WarningText.Text & CrLf & CrLf & "Errors: " & CrLf & ErrorText.Text, True)
+                        My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: " & CrLf & WarningText.Text, True)
+                    End If
+                    If ErrorText.Text = "" Then
+                        My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: none", True)
+                    Else
+                        My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: " & CrLf & ErrorText.Text, True)
                     End If
                 End If
             Else
@@ -3480,26 +3613,41 @@ Public Class MainForm
                     My.Computer.FileSystem.WriteAllText(".\inst.log", "----------------------------------------------------------------", True)
                     My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf, True)
                     My.Computer.FileSystem.WriteAllText(".\inst.log", LogBox.Text, True)
-                    If WarningText.Text = "" And ErrorText.Text = "" Then
-                        My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: none" & CrLf & CrLf & "Errors: none", True)
+                    If WarningText.Text = "" Then
+                        My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: none", True)
                     Else
-                        My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: " & CrLf & WarningText.Text & CrLf & CrLf & "Errors: " & CrLf & ErrorText.Text, True)
+                        My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: " & CrLf & WarningText.Text, True)
+                    End If
+                    If ErrorText.Text = "" Then
+                        My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: none", True)
+                    Else
+                        My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: " & CrLf & ErrorText.Text, True)
                     End If
                 Else
                     My.Computer.FileSystem.WriteAllText(".\inst.log", LogBox.Text, True)
-                    If WarningText.Text = "" And ErrorText.Text = "" Then
-                        My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: none" & CrLf & CrLf & "Errors: none", True)
+                    If WarningText.Text = "" Then
+                        My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: none", True)
                     Else
-                        My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: " & CrLf & WarningText.Text & CrLf & CrLf & "Errors: " & CrLf & ErrorText.Text, True)
+                        My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: " & CrLf & WarningText.Text, True)
+                    End If
+                    If ErrorText.Text = "" Then
+                        My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: none", True)
+                    Else
+                        My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: " & CrLf & ErrorText.Text, True)
                     End If
                 End If
             End If
         Else
             My.Computer.FileSystem.WriteAllText(".\inst.log", LogBox.Text, True)
-            If WarningText.Text = "" And ErrorText.Text = "" Then
-                My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: none" & CrLf & CrLf & "Errors: none", True)
+            If WarningText.Text = "" Then
+                My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: none", True)
             Else
-                My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: " & CrLf & WarningText.Text & CrLf & CrLf & "Errors: " & CrLf & ErrorText.Text, True)
+                My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: " & CrLf & WarningText.Text, True)
+            End If
+            If ErrorText.Text = "" Then
+                My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: none", True)
+            Else
+                My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: " & CrLf & ErrorText.Text, True)
             End If
         End If
         If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
@@ -3530,7 +3678,6 @@ Public Class MainForm
             End If
         End If
         CompPic.Visible = True
-        ' Button11.Visible = True
         If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
             Label83.Text = "The custom installer was created at the specified location. Please read the details below."
         ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
@@ -3606,6 +3753,9 @@ Public Class MainForm
                 InstHistPanel.InstallerEntryLabel.Text = "Entradas en el historial del instalador: " & InstHistPanel.InstallerListView.Items.Count
             End If
         End If
+        PictureBox5.Visible = False
+        Label3.Visible = False
+        LinkLabel2.Visible = False
     End Sub
 
     Private Sub Label61_Click(sender As Object, e As EventArgs) Handles Label61.Click
@@ -3636,9 +3786,9 @@ Public Class MainForm
 
     Private Sub LinkLabel5_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel5.LinkClicked
         If My.Computer.Info.OSFullName.Contains("Windows 11") Or My.Computer.Info.OSFullName.Contains("Windows 10") Then
-            System.Diagnostics.Process.Start("ms-settings:about")
+            Process.Start("ms-settings:about")
         Else
-            System.Diagnostics.Process.Start("sysdm.cpl")
+            Process.Start("sysdm.cpl")
         End If
     End Sub
 
@@ -3920,10 +4070,20 @@ Public Class MainForm
             WIMRToolStripMenuItem.Checked = True
             DLLRToolStripMenuItem.Checked = False
             REGTWEAKToolStripMenuItem.Checked = False
+            If File.Exists(TextBox1.Text) And File.Exists(TextBox2.Text) Then
+                Button6.Enabled = True
+            Else
+                Button6.Enabled = False
+            End If
         ElseIf ComboBox5.SelectedItem = "DLLR" Then
             WIMRToolStripMenuItem.Checked = False
             DLLRToolStripMenuItem.Checked = True
             REGTWEAKToolStripMenuItem.Checked = False
+            If File.Exists(TextBox1.Text) And File.Exists(TextBox2.Text) Then
+                Button6.Enabled = True
+            Else
+                Button6.Enabled = False
+            End If
         ElseIf ComboBox5.SelectedItem = "REGTWEAK" Then
             WIMRToolStripMenuItem.Checked = False
             DLLRToolStripMenuItem.Checked = False
@@ -3931,13 +4091,22 @@ Public Class MainForm
         End If
         If ComboBox5.SelectedItem = "REGTWEAK" Then
             TextBox2.Enabled = False
+            If TextBox1.Text = "" Then
+                Button6.Enabled = False
+            Else
+                If File.Exists(TextBox1.Text) Then
+                    Button6.Enabled = True
+                Else
+                    Button6.Enabled = False
+                End If
+            End If
             If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
-                Win10PresenceSTLabel.Text = "This file is not needed"
+                Win10PresenceSTLabel.Text = "This file is not necessary"
             ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
                 Win10PresenceSTLabel.Text = "Este archivo no es necesario"
             ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
                 If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
-                    Win10PresenceSTLabel.Text = "This file is not needed"
+                    Win10PresenceSTLabel.Text = "This file is not necessary"
                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                     Win10PresenceSTLabel.Text = "Este archivo no es necesario"
                 End If
@@ -4002,6 +4171,7 @@ Public Class MainForm
     End Sub
 
     Private Sub HelpPic_Click(sender As Object, e As EventArgs) Handles HelpPic.Click, PictureBox33.Click, Label101.Click
+        DisableBackPic()
         WelcomePanel.Visible = False
         InstCreatePanel.Visible = False
         SettingPanel.Visible = False
@@ -4382,12 +4552,12 @@ Public Class MainForm
                 Label91.Text = "Las actualizaciones aportan nuevas características y correcciones de errores al programa. Haga clic en " & Quote & "Comprobar actualizaciones" & Quote & " para comprobar actualizaciones del programa."
             Else
                 If UpdateCheckDate = Nothing Then
-                    Label91.Text = "Para detectar actualizaciones del programa, haga clic en " & Quote & "Comprobar actualizaciones" & Quote
+                    Label91.Text = "Para comprobar actualizaciones del programa, haga clic en " & Quote & "Comprobar actualizaciones" & Quote
                 Else
                     If UpdateCheckDate.Day.Equals(14) And UpdateCheckDate.Month.Equals(3) Then
-                        Label91.Text = "Para comprobar actualizaciones haga clic en " & Quote & "Comprobar actualizaciones" & Quote & CrLf & "Última comprobación de actualizaciones realizada en: día π en " & UpdateCheckDate.ToLongTimeString
+                        Label91.Text = "Para comprobar actualizaciones del programa, haga clic en " & Quote & "Comprobar actualizaciones" & Quote & CrLf & "Última comprobación de actualizaciones realizada en: día π en " & UpdateCheckDate.ToLongTimeString
                     Else
-                        Label91.Text = "Para comprobar actualizaciones haga clic en " & Quote & "Comprobar actualizaciones" & Quote & CrLf & "Última comprobación de actualizaciones realizada en: " & UpdateCheckDate
+                        Label91.Text = "Para comprobar actualizaciones del programa, haga clic en " & Quote & "Comprobar actualizaciones" & Quote & CrLf & "Última comprobación de actualizaciones realizada en: " & UpdateCheckDate
                     End If
                 End If
             End If
@@ -4455,7 +4625,7 @@ Public Class MainForm
             LinkLabel4.Text = "Buscar en DuckDuckGo"
             LinkLabel5.Text = "Cambiar nombre"
             LinkLabel6.Text = "No se pudo obtener el modelo del equipo"
-            LinkLabel7.Text = "Hay actualizaciones disponibles"
+            LinkLabel7.Text = "Hay actualizaciones disponibles. Haga clic aquí para saber más."
             LinkLabel8.Text = "Compruebe el proyecto"
             LinkLabel9.Text = "Descargue el Pack de Desarrolladores"
             LinkLabel10.Text = "Compruebe la página de Errores"
@@ -4766,7 +4936,7 @@ Public Class MainForm
             LinkLabel4.Text = "Search on DuckDuckGo"
             LinkLabel5.Text = "Rename"
             LinkLabel6.Text = "Could not get computer model"
-            LinkLabel7.Text = "Updates are available"
+            LinkLabel7.Text = "Updates are available. Click here to learn more."
             LinkLabel8.Text = "Check this program's project"
             LinkLabel9.Text = "Download the Developer Pack"
             LinkLabel10.Text = "Check the Issues page"
@@ -5002,12 +5172,12 @@ Public Class MainForm
                     Label91.Text = "Las actualizaciones aportan nuevas características y correcciones de errores al programa. Haga clic en " & Quote & "Comprobar actualizaciones" & Quote & " para comprobar actualizaciones del programa."
                 Else
                     If UpdateCheckDate = Nothing Then
-                        Label91.Text = "Para detectar actualizaciones del programa, haga clic en " & Quote & "Comprobar actualizaciones" & Quote
+                        Label91.Text = "Para comprobar actualizaciones del programa, haga clic en " & Quote & "Comprobar actualizaciones" & Quote
                     Else
                         If UpdateCheckDate.Day.Equals(14) And UpdateCheckDate.Month.Equals(3) Then
-                            Label91.Text = "Para comprobar actualizaciones haga clic en " & Quote & "Comprobar actualizaciones" & Quote & CrLf & "Última comprobación de actualizaciones realizada en: día π en " & UpdateCheckDate.ToLongTimeString
+                            Label91.Text = "Para comprobar actualizaciones del programa, haga clic en " & Quote & "Comprobar actualizaciones" & Quote & CrLf & "Última comprobación de actualizaciones realizada en: día π en " & UpdateCheckDate.ToLongTimeString
                         Else
-                            Label91.Text = "Para comprobar actualizaciones haga clic en " & Quote & "Comprobar actualizaciones" & Quote & CrLf & "Última comprobación de actualizaciones realizada en: " & UpdateCheckDate
+                            Label91.Text = "Para comprobar actualizaciones del programa, haga clic en " & Quote & "Comprobar actualizaciones" & Quote & CrLf & "Última comprobación de actualizaciones realizada en: " & UpdateCheckDate
                         End If
                     End If
                 End If
@@ -5074,14 +5244,13 @@ Public Class MainForm
                 LinkLabel4.Text = "Buscar en DuckDuckGo"
                 LinkLabel5.Text = "Cambiar nombre"
                 LinkLabel6.Text = "No se pudo obtener el modelo del equipo"
-                LinkLabel7.Text = "Hay actualizaciones disponibles"
+                LinkLabel7.Text = "Hay actualizaciones disponibles. Haga clic aquí para saber más."
                 LinkLabel8.Text = "Compruebe el proyecto"
                 LinkLabel9.Text = "Descargue el Pack de Desarrolladores"
                 LinkLabel10.Text = "Compruebe la página de Errores"
                 LinkLabel11.Text = "Compruebe la rama Hummingbird"
                 LinkLabel12.Text = "Hay algunas cosas que valen la pena revisar antes de continuar. Haga clic aquí para saber más."
                 LogViewLink.Text = "Ver archivo de registro"
-                LogViewLink.Text = "View log file"
                 ' GroupBoxes
                 GroupBox1.Text = "Posición de navegación"
                 GroupBox12.Text = "Opciones de bandeja del sistema"
@@ -5380,7 +5549,7 @@ Public Class MainForm
                 LinkLabel4.Text = "Search on DuckDuckGo"
                 LinkLabel5.Text = "Rename"
                 LinkLabel6.Text = "Could not get computer model"
-                LinkLabel7.Text = "Updates are available"
+                LinkLabel7.Text = "Updates are available. Click here to learn more."
                 LinkLabel8.Text = "Check this program's project"
                 LinkLabel9.Text = "Download the Developer Pack"
                 LinkLabel10.Text = "Check the Issues page"
@@ -5650,24 +5819,24 @@ Public Class MainForm
             If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
                 Label91.Text = "To check for any program updates, click " & Quote & "Check for updates" & Quote & CrLf & "Last update check performed on: π day at " & UpdateCheckDate.ToLongTimeString
             ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
-                Label91.Text = "Para comprobar actualizaciones haga clic en " & Quote & "Comprobar actualizaciones" & Quote & CrLf & "Última comprobación de actualizaciones realizada en: día π en " & UpdateCheckDate.ToLongTimeString
+                Label91.Text = "Para comprobar actualizaciones del programa, haga clic en " & Quote & "Comprobar actualizaciones" & Quote & CrLf & "Última comprobación de actualizaciones realizada en: día π en " & UpdateCheckDate.ToLongTimeString
             ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
                 If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                     Label91.Text = "To check for any program updates, click " & Quote & "Check for updates" & Quote & CrLf & "Last update check performed on: π day at " & UpdateCheckDate.ToLongTimeString
                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
-                    Label91.Text = "Para comprobar actualizaciones haga clic en " & Quote & "Comprobar actualizaciones" & Quote & CrLf & "Última comprobación de actualizaciones realizada en: día π en " & UpdateCheckDate.ToLongTimeString
+                    Label91.Text = "Para comprobar actualizaciones del programa, haga clic en " & Quote & "Comprobar actualizaciones" & Quote & CrLf & "Última comprobación de actualizaciones realizada en: día π en " & UpdateCheckDate.ToLongTimeString
                 End If
             End If
         Else
             If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
                 Label91.Text = "To check for any program updates, click " & Quote & "Check for updates" & Quote & CrLf & "Last update check performed on: " & UpdateCheckDate
             ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
-                Label91.Text = "Para comprobar actualizaciones haga clic en " & Quote & "Comprobar actualizaciones" & Quote & CrLf & "Última comprobación de actualizaciones realizada en: " & UpdateCheckDate
+                Label91.Text = "Para comprobar actualizaciones del programa, haga clic en " & Quote & "Comprobar actualizaciones" & Quote & CrLf & "Última comprobación de actualizaciones realizada en: " & UpdateCheckDate
             ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
                 If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                     Label91.Text = "To check for any program updates, click " & Quote & "Check for updates" & Quote & CrLf & "Last update check performed on: " & UpdateCheckDate
                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
-                    Label91.Text = "Para comprobar actualizaciones haga clic en " & Quote & "Comprobar actualizaciones" & Quote & CrLf & "Última comprobación de actualizaciones realizada en: " & UpdateCheckDate
+                    Label91.Text = "Para comprobar actualizaciones del programa, haga clic en " & Quote & "Comprobar actualizaciones" & Quote & CrLf & "Última comprobación de actualizaciones realizada en: " & UpdateCheckDate
                 End If
             End If
         End If
@@ -5740,12 +5909,6 @@ Public Class MainForm
         MsgBox("We could not get this computer's model" & CrLf & "This might be because, the component used to get the model (Windows Management Instrumentation, WMI), is missing from your system or has returned an error code." & CrLf & CrLf & "This is not critical, as it only affects the user experience.", vbOKOnly + vbExclamation, "Computer model gather process failure")
     End Sub
 
-    'Private Sub MainForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
-    '    If InstCreateInt = 2 Then
-    '        e.Cancel = True
-    '    End If
-    'End Sub
-
     Private Sub Button13_Click(sender As Object, e As EventArgs) Handles Button13.Click
         BringToFront()
         BackSubPanel.Show()
@@ -5756,6 +5919,7 @@ Public Class MainForm
     End Sub
 
     Private Sub LinkLabel7_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel7.LinkClicked
+        SaveSettingsFile()
         BringToFront()
         BackSubPanel.Show()
         UpdateChoicePanel.ShowDialog()
@@ -5765,19 +5929,19 @@ Public Class MainForm
     End Sub
 
     Private Sub LinkLabel8_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel8.LinkClicked
-        System.Diagnostics.Process.Start("https://www.github.com/CodingWonders/win11minst")
+        Process.Start("https://www.github.com/CodingWonders/win11minst")
     End Sub
 
     Private Sub LinkLabel9_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel9.LinkClicked
-        System.Diagnostics.Process.Start("https://dotnet.microsoft.com/en-us/download/dotnet-framework/thank-you/net48-developer-pack-offline-installer")
+        Process.Start("https://dotnet.microsoft.com/en-us/download/dotnet-framework/thank-you/net48-developer-pack-offline-installer")
     End Sub
 
     Private Sub LinkLabel10_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel10.LinkClicked
-        System.Diagnostics.Process.Start("https://github.com/CodingWonders/win11minst/issues")
+        Process.Start("https://github.com/CodingWonders/win11minst/issues")
     End Sub
 
     Private Sub LinkLabel11_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel11.LinkClicked
-        System.Diagnostics.Process.Start("https://github.com/CodingWonders/win11minst/tree/hummingbird")
+        Process.Start("https://github.com/CodingWonders/win11minst/tree/hummingbird")
     End Sub
 
     Private Sub PictureBox35_Click(sender As Object, e As EventArgs) Handles PictureBox35.Click
@@ -6541,15 +6705,15 @@ Public Class MainForm
     End Sub
 
     Private Sub LinkLabel13_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel13.LinkClicked
-        System.Diagnostics.Process.Start("https://github.com/microsoft/fluentui-system-icons")
+        Process.Start("https://github.com/microsoft/fluentui-system-icons")
     End Sub
 
     Private Sub LinkLabel14_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel14.LinkClicked
-        System.Diagnostics.Process.Start("https://icons8.com/icons/fluency")
+        Process.Start("https://icons8.com/icons/fluency")
     End Sub
 
     Private Sub LinkLabel16_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel16.LinkClicked
-        System.Diagnostics.Process.Start("https://github.com/rcmaehl/whynotwin11")
+        Process.Start("https://github.com/rcmaehl/whynotwin11")
     End Sub
 
     Private Sub CheckBox3_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox3.CheckedChanged
@@ -6593,9 +6757,5 @@ Public Class MainForm
 
     Private Sub LogViewLink_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LogViewLink.LinkClicked
         Process.Start(".\inst.log")
-    End Sub
-
-    Private Sub Label74_Click(sender As Object, e As EventArgs) Handles Label74.Click
-        Process.Start("https://www.betawiki.net/wiki/Windows_11_build_21996")
     End Sub
 End Class
