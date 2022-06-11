@@ -4,6 +4,27 @@
 
 Here you can see the feature list for each released version since `2.0.0100_220515`. If you want to take a look at the release notes for an older release, please look at **that specific release** (you can do this more easily by clicking the links at the bottom of the file)
 
+### Updating the program
+
+S
+
+### 2.0.0100_220612
+---
+
+#### **Bugfixes**
+
+- Fixed a bug where the program would throw an exception if a solid color was set as the desktop background
+
+    > If you apply a solid background on your system, the program will default to its background color
+
+
+#### **New features**
+
+- You can now drag ISO files and drop them in the program
+- Installer history items can now be exported to HTML files
+- Audible events are now produced by dialogs during installer creation
+- On-the-fly color mode and language changes for external panels
+
 
 ### 2.0.0100_220605
 ---
