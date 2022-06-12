@@ -1,12 +1,36 @@
 ## Windows 11 Manual Installer Release Notes
 
----
+
 
 Here you can see the feature list for each released version since `2.0.0100_220515`. If you want to take a look at the release notes for an older release, please look at **that specific release** (you can do this more easily by clicking the links at the bottom of the file)
 
 ### Updating the program
+---
+Since version `2.0.0100_220529`, the program has had a built-in updater, which installs up-to-date versions (with new features and bugfixes).
 
-S
+To install updates when the program is open:
+
+1. Go to the About screen
+2. Click "Check for updates"
+
+If updates are found:
+
+3. Click "`Updates are available. Click here to learn more.`"
+4. Click "`Install now`"
+5. Wait a little bit for the program to update
+
+Congratulations, you have updated the program. If no updates were found, you don't have anything to do.
+
+To install updates while the program is loading:
+
+1. Wait until the update screen is shown
+
+If updates are found:
+
+2. Click "`Install now`"
+3. Wait a little bit for the program to update
+
+Congratulations, you have updated the program. If no updates are found, the program will continue startup.
 
 ### 2.0.0100_220612
 ---
@@ -21,9 +45,24 @@ S
 #### **New features**
 
 - You can now drag ISO files and drop them in the program
+
+    > If you run the program as an Administrator, the drag & drop feature will not work (and it is not an isolated case, every program that supports drag & drop will not perform the operation). There is a workaround, which requires you to change a Group Policy setting related to User Account Control (UAC); although it's not recommended, as this change may pose a security risk to your system. Still, if you are interested, here is the workaround link: [https://weblogs.asp.net/jeffwids/windows-7-user-account-control-does-not-allow-drag-and-drop][dndadmin]
+
+[dndadmin]: https://weblogs.asp.net/jeffwids/windows-7-user-account-control-does-not-allow-drag-and-drop
+
 - Installer history items can now be exported to HTML files
+
+    > This option, and the "`Export to XML file...`" option, are now shown by clicking the "`Export options`" button
+
 - Audible events are now produced by dialogs during installer creation
 - On-the-fly color mode and language changes for external panels
+
+    > It may take some time to perform these on-the-fly changes on some panels, like the update screen
+
+- New references (from later versions) can now be downloaded and applied by the updater, replacing existing ones
+- Settings are now saved when installing updates
+- Updated user agent
+- Advanced options can now be accessed by selecting "`Installer creation method > Advanced options`"
 
 
 ### 2.0.0100_220605
@@ -68,14 +107,14 @@ There are no removed features in this release
 - The image download panel now detects administrative privileges
     - If they are present, the build mode option is visible
     - If they aren't present, the build mode option is hidden
-- The build mode is now automated and will not require you to type `0` after script completion
+- The build process is now automated and will not require you to type `0` after script completion
 - The update system is functional
 
     > From this release aftwerwards, you can trigger an update by clicking `Check for updates` on the About screen or on program startup. Also, in new copies (those that didn't check for updates before), the program will suggest the user to do so
 
 - Updated the About screen
 - The log can now be viewed by clicking `View log file` after installer creation
-- When specifying additional REGTWEAK options, the script flags will be shown in the installer creation log (`LogBox`)
+- When specifying additional REGTWEAK options, the script flags will be shown in the installer creation log (`MainForm.LogBox`)
 
 #### **Removed/stripped down features**
 
