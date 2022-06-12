@@ -4,7 +4,7 @@ Imports Microsoft.VisualBasic.ControlChars
 
 Public Class MiniModeDialog
     Dim HideWnd As Boolean
-    Dim TrueLoc As Integer = 557
+    Public TrueLoc As Integer = 557
     Private Sub OK_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OK_Button.Click
         Me.DialogResult = System.Windows.Forms.DialogResult.OK
         Me.Close()
@@ -105,6 +105,7 @@ Public Class MiniModeDialog
                 CheckBox1.ForeColor = Color.White
             End If
         End Try
+        backPic.BackColor = MainForm.BackColor
     End Sub
 
     Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
