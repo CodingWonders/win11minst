@@ -64,7 +64,7 @@ Congratulations, you have updated the program. If no updates are found, the prog
 - Updated user agent
 - Advanced options can now be accessed by selecting "`Installer creation method > Advanced options`"
 
-#### **Removed features**
+#### **Removed/stripped down features**
 
 There are no removed features in this release
 
