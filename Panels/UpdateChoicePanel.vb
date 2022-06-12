@@ -1,9 +1,11 @@
 ﻿Imports System.Windows.Forms
 Imports System.Net
 Imports Microsoft.VisualBasic.ControlChars
+Imports System.IO
+Imports System.Text.Encoding
 
 Public Class UpdateChoicePanel
-
+    Dim VerTag As String
     Private Sub OK_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OK_Button.Click
         Me.DialogResult = System.Windows.Forms.DialogResult.OK
         Using Win11MinstDown As New WebClient()
@@ -27,13 +29,32 @@ Public Class UpdateChoicePanel
                 End If
             End Try
         End Using
+        ' NEW: reference downloads
+        Using RefDown As New WebClient()
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
+            Try
+                If File.Exists(".\new.zip") Then
+                    File.Delete(".\new.zip")
+                End If
+                RefDown.DownloadFile("https://github.com/CodingWonders/win11minst/releases/download/" & VerTag & "/win11minst.zip", ".\new.zip")
+                File.SetAttributes(".\new.zip", FileAttributes.Hidden)
+                Directory.CreateDirectory(".\ref")
+                File.WriteAllText(".\ex.bat", "@echo off" & CrLf & ".\prog_bin\7z e .\new.zip " & Quote & "*.dll" & Quote & " -o.\ref", ASCII)
+                Process.Start(".\ex.bat").WaitForExit()
+                File.Delete(".\ex.bat")
+            Catch ex As Exception
+
+            End Try
+        End Using
         My.Computer.FileSystem.WriteAllText(".\upd.bat", "@echo off" & CrLf & _
                                             "echo Updating the program. Please wait..." & CrLf & _
                                             "del .\version && del .\latest" & CrLf & _
+                                            "move /y .\ref\*.dll ." & CrLf & _
                                             "move .\win11minst.exe .\win11minst_old_v" & My.Application.Info.Version.ToString() & ".exe" & CrLf & _
                                             "move .\win11minst_new.exe .\win11minst.exe" & CrLf & _
                                             "ping -n 3 127.0.0.1 > nul" & CrLf & _
-                                            "win11minst & del .\upd.bat & exit", False, System.Text.Encoding.ASCII)
+                                            "rd .\ref" & CrLf & _
+                                            "win11minst & del .\upd.bat & exit", False, ASCII)
         If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then
             MsgBox("The program update process will take place when you click " & Quote & "OK" & Quote & "." & CrLf & CrLf & "The program will exit, and the update will proceed." & CrLf & "If you do not like the up-to-date version, or if the update did not go successfully, a backup of the old version will be made.", vbOKOnly + vbInformation, "Beginning the update...")
         ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Then
@@ -47,6 +68,8 @@ Public Class UpdateChoicePanel
         End If
         If DialogResult.OK Then
             Process.Start(".\upd.bat")
+            MainForm.SaveSettingsFile()
+            MainForm.Notify.Visible = False
             End
         End If
     End Sub
@@ -58,6 +81,7 @@ Public Class UpdateChoicePanel
     End Sub
 
     Private Sub UpdateChoicePanel_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        VerTag = TextBox2.Text.Replace("2.0.0100_", "beta_").ToString()
         Label1.Parent = PictureBox1
         Label1.BackColor = Color.Transparent
         Label2.Parent = PictureBox1
@@ -68,6 +92,8 @@ Public Class UpdateChoicePanel
         Label4.BackColor = Color.Transparent
         PictureBox2.Parent = PictureBox1
         PictureBox2.BackColor = Color.Transparent
+        RelNotesLink.Parent = PictureBox1
+        RelNotesLink.BackColor = Color.Transparent
         If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then
             Label1.Text = "Updates are available"
             Label2.Text = "You can decide when do you want to install this update"
@@ -131,7 +157,6 @@ Public Class UpdateChoicePanel
             OK_Button.BackColor = Color.FromArgb(1, 92, 186)
             OK_Button.ForeColor = Color.White
             PictureBox1.Image = New Bitmap(My.Resources.update_screen_light)
-            RelNotesLink.LinkColor = Color.FromArgb(1, 92, 186)
         ElseIf MainForm.BackColor = Color.FromArgb(32, 32, 32) Then
             BackColor = Color.FromArgb(43, 43, 43)
             ForeColor = Color.White
@@ -139,7 +164,6 @@ Public Class UpdateChoicePanel
             OK_Button.BackColor = Color.FromArgb(76, 194, 255)
             OK_Button.ForeColor = Color.Black
             PictureBox1.Image = New Bitmap(My.Resources.update_screen_dark)
-            RelNotesLink.LinkColor = Color.FromArgb(76, 194, 255)
         End If
     End Sub
 

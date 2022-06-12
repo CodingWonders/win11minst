@@ -13,14 +13,18 @@ Public Class InstHistPanel
             ColumnHeader1.Text = "Installer name and path"
             ColumnHeader2.Text = "Creation time and date"
             OK_Button.Text = "OK"
-            XMLExportLink.Text = "Export to XML file..."
+            XMLExportOptn.Text = "Export to XML file..."
+            HTMLExportOptn.Text = "Export to HTML file..."
+            ExportOptnBtn.Text = "Export options"
         ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Then
             Label1.Text = "Historial de instaladores"
             InstallerEntryLabel.Text = "Entradas en el historial de instaladores: " & InstallerListView.Items.Count
             ColumnHeader1.Text = "Nombre y ruta del instalador"
             ColumnHeader2.Text = "Fecha y hora de creación"
             OK_Button.Text = "Aceptar"
-            XMLExportLink.Text = "Exportar a archivo XML..."
+            XMLExportOptn.Text = "Exportar a archivo XML..."
+            HTMLExportOptn.Text = "Exportar a archivo HTML..."
+            ExportOptnBtn.Text = "Opciones de exportación"
         ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 Label1.Text = "Installer history"
@@ -28,14 +32,18 @@ Public Class InstHistPanel
                 ColumnHeader1.Text = "Installer name and path"
                 ColumnHeader2.Text = "Creation time and date"
                 OK_Button.Text = "OK"
-                XMLExportLink.Text = "Export to XML file..."
+                XMLExportOptn.Text = "Export to XML file..."
+                HTMLExportOptn.Text = "Export to HTML file..."
+                ExportOptnBtn.Text = "Export options"
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 Label1.Text = "Historial de instaladores"
                 InstallerEntryLabel.Text = "Entradas en el historial de instaladores: " & InstallerListView.Items.Count
                 ColumnHeader1.Text = "Nombre y ruta del instalador"
                 ColumnHeader2.Text = "Fecha y hora de creación"
                 OK_Button.Text = "Aceptar"
-                XMLExportLink.Text = "Exportar a archivo XML..."
+                XMLExportOptn.Text = "Exportar a archivo XML..."
+                HTMLExportOptn.Text = "Exportar a archivo HTML..."
+                ExportOptnBtn.Text = "Opciones de exportación"
             End If
         End If
         Text = Label1.Text
@@ -47,7 +55,9 @@ Public Class InstHistPanel
             InstallerListView.BackColor = Color.White
             OK_Button.BackColor = Color.FromArgb(1, 92, 186)
             OK_Button.ForeColor = Color.White
-            XMLExportLink.LinkColor = Color.FromArgb(1, 92, 186)
+            ExportOptnBtn.Image = New Bitmap(My.Resources.export_light)
+            ExportOptnBtn.BackColor = Color.FromArgb(243, 243, 243)
+            ExportOptnBtn.ForeColor = Color.Black
         ElseIf MainForm.BackColor = Color.FromArgb(32, 32, 32) Then
             Me.BackColor = Color.FromArgb(43, 43, 43)
             Me.ForeColor = Color.White
@@ -56,7 +66,9 @@ Public Class InstHistPanel
             InstallerListView.BackColor = Color.FromArgb(43, 43, 43)
             OK_Button.BackColor = Color.FromArgb(76, 194, 255)
             OK_Button.ForeColor = Color.Black
-            XMLExportLink.LinkColor = Color.FromArgb(76, 194, 255)
+            ExportOptnBtn.Image = New Bitmap(My.Resources.export_dark)
+            ExportOptnBtn.BackColor = Color.FromArgb(32, 32, 32)
+            ExportOptnBtn.ForeColor = Color.White
         End If
         If InstallerListView.Items.Count = 0 Then
             If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then
@@ -78,7 +90,11 @@ Public Class InstHistPanel
         BackSubPanel.Close()
     End Sub
 
-    Private Sub XMLExportLink_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles XMLExportLink.LinkClicked
+    Private Sub ExportOptnBtn_Click(sender As Object, e As MouseEventArgs) Handles ExportOptnBtn.Click
+        ExportOptionsCMS.Show(CType(sender, Control), e.Location)
+    End Sub
+
+    Private Sub XMLExportOptn_Click(sender As Object, e As EventArgs) Handles XMLExportOptn.Click
         LVData = New DataTable("InstallerHistory")
         With LVData
             .Columns.Add(New DataColumn("InstallerNameAndPath", GetType(String)))
@@ -96,5 +112,71 @@ Public Class InstHistPanel
             File.Delete(".\inst.xml")
         End If
         LVData.WriteXml(".\inst.xml", XmlWriteMode.WriteSchema)
+    End Sub
+
+    Private Sub HTMLExportOptn_Click(sender As Object, e As EventArgs) Handles HTMLExportOptn.Click
+        GenHtml()
+    End Sub
+
+    Sub GenHtml()
+        If File.Exists(".\inst.html") Then
+            File.Delete(".\inst.html")
+        End If
+        My.Computer.FileSystem.WriteAllText(".\inst.html", _
+                                            "<html>" & CrLf & _
+                                            "<head>" & CrLf & _
+                                            "   <title>Windows 11 Manual Installer: installer history</title>" & CrLf & _
+                                            "   <style>" & CrLf & _
+                                            "       body {" & CrLf & _
+                                            "           background-color: rgb(249,249,249);" & CrLf & _
+                                            "       }" & CrLf & _
+                                            "   </style>" & CrLf & _
+                                            "   <style>" & CrLf & _
+                                            "       table {" & CrLf & _
+                                            "           font-family: arial, helvetica, sans-serif;" & CrLf & _
+                                            "           border-collapse: collapse;" & CrLf & _
+                                            "           width: 100%" & CrLf & _
+                                            "       }" & CrLf & _
+                                            CrLf & _
+                                            "       th {" & CrLf & _
+                                            "           border: 1px solid #ff000000;" & CrLf & _
+                                            "           text-align: center;" & CrLf & _
+                                            "           padding: 8px;" & CrLf & _
+                                            "       }" & CrLf & _
+                                            CrLf & _
+                                            "       td {" & CrLf & _
+                                            "           border: 1px solid #ff000000;" & CrLf & _
+                                            "           text-align: left;" & CrLf & _
+                                            "           padding: 8px;" & CrLf & _
+                                            "       }" & CrLf & _
+                                            "   </style>" & CrLf & _
+                                            "</head>" & CrLf & _
+                                            "<body>" & CrLf & _
+                                            "   <img src=" & Quote & "./Resources/HTMLHelp/Resources/helpbanner.gif" & Quote & " class=" & Quote & "center" & Quote & " />" & CrLf & _
+                                            "   <style>" & CrLf & _
+                                            "       .center {" & CrLf & _
+                                            "           display: block;" & CrLf & _
+                                            "           margin-left: auto;" & CrLf & _
+                                            "           margin-right: auto;" & CrLf & _
+                                            "       }" & CrLf & _
+                                            "   </style>" & CrLf & _
+                                            "   <h3 style=" & Quote & "font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: center" & Quote & ">Installer history</h3>" & CrLf & _
+                                            "   <p style=" & Quote & "font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: center" & Quote & ">Here you can see the installer full path and creation time</p>" & CrLf & _
+                                            "   <table style=" & Quote & "font-family: Arial, Helvetica, sans-serif;" & Quote & ">" & CrLf & _
+                                            "       <tr>" & CrLf & _
+                                            "           <th class=" & Quote & "auto-style1" & Quote & " style=" & Quote & "border-spacing: 1px; text-align: center; font-family: Arial, Helvetica, sans-serif; font-weight: bold;" & Quote & ">Installer name and path</th>" & CrLf & _
+                                            "           <th class=" & Quote & "auto-style2" & Quote & " style=" & Quote & "border-spacing: 1px; text-align: center; font-family: Arial, Helvetica, sans-serif; font-weight: bold;" & Quote & ">Creation time and date</th>" & CrLf & _
+                                            "       </tr>", True)
+        For Each LVI As ListViewItem In InstallerListView.Items
+            My.Computer.FileSystem.WriteAllText(".\inst.html", _
+                                    "       <tr>" & CrLf & _
+                                    "           <th class=" & Quote & "auto-style1" & Quote & " style=" & Quote & "border-spacing: 1px; text-align: left; font-family: Arial, Helvetica, sans-serif;" & Quote & ">" & LVI.Text & "</th>" & CrLf & _
+                                    "           <th class=" & Quote & "auto-style2" & Quote & " style=" & Quote & "border-spacing: 1px; text-align: left; font-family: Arial, Helvetica, sans-serif;" & Quote & ">" & LVI.SubItems(1).Text & "</th>" & CrLf & _
+                                    "       </tr>" & CrLf, True)
+        Next
+        My.Computer.FileSystem.WriteAllText(".\inst.html", _
+                                            "   </table>" & CrLf & _
+                                            "</body>" & CrLf & _
+                                            "</html>", True)
     End Sub
 End Class

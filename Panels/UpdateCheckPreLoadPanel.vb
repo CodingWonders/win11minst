@@ -2,11 +2,12 @@
 Imports System.Net
 Imports System.IO
 Imports Microsoft.VisualBasic.ControlChars
+Imports System.Text.Encoding
 
 Public Class UpdateCheckPreLoadPanel
     Private isMouseDown As Boolean = False
     Private mouseOffset As Point
-    Dim updCom As String
+    Dim VerTag As String
     Private Sub OK_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
         DialogResult = System.Windows.Forms.DialogResult.OK
         Me.Close()
@@ -169,6 +170,7 @@ Public Class UpdateCheckPreLoadPanel
                 End Using
             End If
         End If
+        VerTag = TextBox2.Text.Replace("2.0.0100_", "beta_").ToString()
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
@@ -199,13 +201,31 @@ Public Class UpdateCheckPreLoadPanel
                 End If
             End Try
         End Using
+        Using RefDown As New WebClient()
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
+            Try
+                If File.Exists(".\new.zip") Then
+                    File.Delete(".\new.zip")
+                End If
+                RefDown.DownloadFile("https://github.com/CodingWonders/win11minst/releases/download/" & VerTag & "/win11minst.zip", ".\new.zip")
+                File.SetAttributes(".\new.zip", FileAttributes.Hidden)
+                Directory.CreateDirectory(".\ref")
+                File.WriteAllText(".\ex.bat", "@echo off" & CrLf & ".\prog_bin\7z e .\new.zip " & Quote & "*.dll" & Quote & " -o.\ref", ASCII)
+                Process.Start(".\ex.bat").WaitForExit()
+                File.Delete(".\ex.bat")
+            Catch ex As Exception
+
+            End Try
+        End Using
         My.Computer.FileSystem.WriteAllText(".\upd.bat", "@echo off" & CrLf & _
-                                            "echo Updating the program. Please wait..." & CrLf & _
-                                            "del .\version && del .\latest" & CrLf & _
-                                            "move .\win11minst.exe .\win11minst_old_v" & My.Application.Info.Version.ToString() & ".exe" & CrLf & _
-                                            "move .\win11minst_new.exe .\win11minst.exe" & CrLf & _
-                                            "ping -n 3 127.0.0.1 > nul" & CrLf & _
-                                            "win11minst & del .\upd.bat & exit", False, System.Text.Encoding.ASCII)
+                                                    "echo Updating the program. Please wait..." & CrLf & _
+                                                    "del .\version && del .\latest" & CrLf & _
+                                                    "move /y .\ref\*.dll ." & CrLf & _
+                                                    "move .\win11minst.exe .\win11minst_old_v" & My.Application.Info.Version.ToString() & ".exe" & CrLf & _
+                                                    "move .\win11minst_new.exe .\win11minst.exe" & CrLf & _
+                                                    "ping -n 3 127.0.0.1 > nul" & CrLf & _
+                                                    "rd .\ref" & CrLf & _
+                                                    "win11minst & del .\upd.bat & exit", False, ASCII)
         If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then
             MsgBox("The program update process will take place when you click " & Quote & "OK" & Quote & "." & CrLf & CrLf & "The program will exit, and the update will proceed." & CrLf & "If you do not like the up-to-date version, or if the update did not go successfully, a backup of the old version will be made.", vbOKOnly + vbInformation, "Beginning the update...")
         ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Then

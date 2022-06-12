@@ -238,21 +238,20 @@ Partial Class ISOFileDownloadPanel
         Me.ContextMenuStrip1.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UAToolStripMenuItem, Me.BuildModeToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(794, 52)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(156, 74)
         '
         'UAToolStripMenuItem
         '
         Me.UAToolStripMenuItem.Image = Global.Windows_11_Manual_Installer_2._0.My.Resources.Resources.linux_ua
         Me.UAToolStripMenuItem.Name = "UAToolStripMenuItem"
-        Me.UAToolStripMenuItem.Size = New System.Drawing.Size(793, 24)
-        Me.UAToolStripMenuItem.Text = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96." & _
-    "0.4664.45 Safari/537.36"
+        Me.UAToolStripMenuItem.Size = New System.Drawing.Size(155, 24)
+        Me.UAToolStripMenuItem.Text = "<ua>"
         '
         'BuildModeToolStripMenuItem
         '
         Me.BuildModeToolStripMenuItem.Image = Global.Windows_11_Manual_Installer_2._0.My.Resources.Resources.build_mode
         Me.BuildModeToolStripMenuItem.Name = "BuildModeToolStripMenuItem"
-        Me.BuildModeToolStripMenuItem.Size = New System.Drawing.Size(793, 24)
+        Me.BuildModeToolStripMenuItem.Size = New System.Drawing.Size(155, 24)
         Me.BuildModeToolStripMenuItem.Text = "Build mode"
         '
         'BuildModePanel

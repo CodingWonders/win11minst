@@ -173,7 +173,7 @@ Partial Class UpdateChoicePanel
         Me.RelNotesLink.AutoSize = True
         Me.RelNotesLink.Font = New System.Drawing.Font("Segoe UI", 11.25!)
         Me.RelNotesLink.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
-        Me.RelNotesLink.LinkColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(92, Byte), Integer), CType(CType(186, Byte), Integer))
+        Me.RelNotesLink.LinkColor = System.Drawing.Color.White
         Me.RelNotesLink.Location = New System.Drawing.Point(82, 337)
         Me.RelNotesLink.Name = "RelNotesLink"
         Me.RelNotesLink.Size = New System.Drawing.Size(132, 20)

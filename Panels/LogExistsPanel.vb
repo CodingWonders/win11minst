@@ -40,6 +40,7 @@ Public Class LogExistsPanel
             Yes_Button.BackColor = Color.FromArgb(76, 194, 255)
             Yes_Button.ForeColor = Color.Black
         End If
+        My.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Exclamation)
     End Sub
 
     Private Sub No_Button_Click(sender As Object, e As EventArgs) Handles No_Button.Click

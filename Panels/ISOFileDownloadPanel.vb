@@ -67,7 +67,8 @@ Public Class ISOFileDownloadPanel
         Else
             BuildModeToolStripMenuItem.Visible = False
         End If
-        UserAgentChanger.SetUserAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36")
+        UserAgentChanger.SetUserAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/99.0.4844.0 Safari/537.36")
+        UAToolStripMenuItem.Text = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/99.0.4844.0 Safari/537.36"
         If MainForm.BackColor = Color.FromArgb(243, 243, 243) Then
             BackColor = Color.White
             ForeColor = Color.Black

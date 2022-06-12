@@ -4,7 +4,7 @@ Imports System.IO
 
 
 Public Class ISOFileScanPanel
-    Dim FoundFileNum As Integer
+    Public FoundFileNum As Integer
     Private Sub OK_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
         Me.DialogResult = System.Windows.Forms.DialogResult.OK
         Me.Close()
@@ -324,6 +324,7 @@ Public Class ISOFileScanPanel
                 Button1.Text = "Examinar..."
                 OK_Button.Text = "Aceptar"
                 Cancel_Button.Text = "Cancelar"
+                ISOFolderScanner.Description = "Por favor, elija un directorio para escanear archivos ISO:"
             End If
         End If
         Text = Label1.Text

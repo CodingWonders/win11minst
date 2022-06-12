@@ -28,5 +28,6 @@ Public Class FileNotFoundPanel
             OK_Button.BackColor = Color.FromArgb(76, 194, 255)
             OK_Button.ForeColor = Color.Black
         End If
+        My.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Exclamation)
     End Sub
 End Class
