@@ -351,6 +351,7 @@ Partial Class MainForm
         Me.ConglomerateToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.AdditionalToolsCMS = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.AOTSMI = New System.Windows.Forms.ToolStripMenuItem()
         Me.titlePanel.SuspendLayout()
         Me.TitleBar.SuspendLayout()
         CType(Me.minBox, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -2930,6 +2931,7 @@ Partial Class MainForm
         '
         'TextBox2
         '
+        Me.TextBox2.AllowDrop = True
         Me.TextBox2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TextBox2.Location = New System.Drawing.Point(200, 75)
         Me.TextBox2.Name = "TextBox2"
@@ -2938,6 +2940,7 @@ Partial Class MainForm
         '
         'TextBox1
         '
+        Me.TextBox1.AllowDrop = True
         Me.TextBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TextBox1.Location = New System.Drawing.Point(200, 40)
         Me.TextBox1.Name = "TextBox1"
@@ -3946,8 +3949,7 @@ Partial Class MainForm
         Me.NotifyIconCMS.BackColor = System.Drawing.Color.FromArgb(CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer))
         Me.NotifyIconCMS.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Windows11ManualInstallerToolStripMenuItem, Me.VersionToolStripMenuItem, Me.ToolStripSeparator4, Me.InstallerStatusToolStripMenuItem, Me.StatusTSI, Me.ToolStripSeparator3, Me.LastInstallerCreatedAtToolStripMenuItem, Me.IHDataToolStripMenuItem, Me.ViewInstallerHistoryToolStripMenuItem, Me.ToolStripSeparator2, Me.LanguageToolStripMenuItem, Me.ColorModeToolStripMenuItem, Me.InstallerCreationMethodToolStripMenuItem, Me.ToolStripSeparator5, Me.OpenToolStripMenuItem, Me.ToolStripSeparator1, Me.ExitToolStripMenuItem})
         Me.NotifyIconCMS.Name = "NotifyIconCMS"
-        Me.NotifyIconCMS.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
-        Me.NotifyIconCMS.Size = New System.Drawing.Size(322, 298)
+        Me.NotifyIconCMS.Size = New System.Drawing.Size(322, 320)
         '
         'Windows11ManualInstallerToolStripMenuItem
         '
@@ -4080,7 +4082,7 @@ Partial Class MainForm
         '
         'InstallerCreationMethodToolStripMenuItem
         '
-        Me.InstallerCreationMethodToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.WIMRToolStripMenuItem, Me.DLLRToolStripMenuItem, Me.REGTWEAKToolStripMenuItem})
+        Me.InstallerCreationMethodToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.WIMRToolStripMenuItem, Me.DLLRToolStripMenuItem, Me.REGTWEAKToolStripMenuItem, Me.AOTSMI})
         Me.InstallerCreationMethodToolStripMenuItem.Image = Global.Windows_11_Manual_Installer_2._0.My.Resources.Resources.inst_create
         Me.InstallerCreationMethodToolStripMenuItem.Name = "InstallerCreationMethodToolStripMenuItem"
         Me.InstallerCreationMethodToolStripMenuItem.Size = New System.Drawing.Size(321, 22)
@@ -4093,7 +4095,7 @@ Partial Class MainForm
         Me.WIMRToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
         Me.WIMRToolStripMenuItem.Image = Global.Windows_11_Manual_Installer_2._0.My.Resources.Resources.wimr
         Me.WIMRToolStripMenuItem.Name = "WIMRToolStripMenuItem"
-        Me.WIMRToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
+        Me.WIMRToolStripMenuItem.Size = New System.Drawing.Size(170, 22)
         Me.WIMRToolStripMenuItem.Text = "WIMR"
         '
         'DLLRToolStripMenuItem
@@ -4101,7 +4103,7 @@ Partial Class MainForm
         Me.DLLRToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer))
         Me.DLLRToolStripMenuItem.Image = Global.Windows_11_Manual_Installer_2._0.My.Resources.Resources.dllr
         Me.DLLRToolStripMenuItem.Name = "DLLRToolStripMenuItem"
-        Me.DLLRToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
+        Me.DLLRToolStripMenuItem.Size = New System.Drawing.Size(170, 22)
         Me.DLLRToolStripMenuItem.Text = "DLLR"
         '
         'REGTWEAKToolStripMenuItem
@@ -4109,7 +4111,7 @@ Partial Class MainForm
         Me.REGTWEAKToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer))
         Me.REGTWEAKToolStripMenuItem.Image = Global.Windows_11_Manual_Installer_2._0.My.Resources.Resources.regtweak
         Me.REGTWEAKToolStripMenuItem.Name = "REGTWEAKToolStripMenuItem"
-        Me.REGTWEAKToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
+        Me.REGTWEAKToolStripMenuItem.Size = New System.Drawing.Size(170, 22)
         Me.REGTWEAKToolStripMenuItem.Text = "REGTWEAK"
         '
         'ToolStripSeparator5
@@ -4162,6 +4164,13 @@ Partial Class MainForm
         Me.AdditionalToolsCMS.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem1})
         Me.AdditionalToolsCMS.Name = "AdditionalToolsCMS"
         Me.AdditionalToolsCMS.Size = New System.Drawing.Size(159, 28)
+        '
+        'AOTSMI
+        '
+        Me.AOTSMI.BackColor = System.Drawing.Color.FromArgb(CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.AOTSMI.Name = "AOTSMI"
+        Me.AOTSMI.Size = New System.Drawing.Size(170, 22)
+        Me.AOTSMI.Text = "Advanced options"
         '
         'MainForm
         '
@@ -4665,5 +4674,6 @@ Partial Class MainForm
     Friend WithEvents LinkLabel16 As System.Windows.Forms.LinkLabel
     Friend WithEvents scText As System.Windows.Forms.TextBox
     Friend WithEvents LogViewLink As System.Windows.Forms.LinkLabel
+    Friend WithEvents AOTSMI As System.Windows.Forms.ToolStripMenuItem
 
 End Class

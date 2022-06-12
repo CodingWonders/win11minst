@@ -12,7 +12,7 @@ Imports System.Threading
 Public Class MainForm
     Private isMouseDown As Boolean = False
     Private mouseOffset As Point
-    Dim VerStr As String = "2.0.0100_220605"    ' Reported version
+    Dim VerStr As String = "2.0.0100_220612"    ' Reported version
     Dim AVerStr As String = My.Application.Info.Version.ToString()     ' Assembly version
     Dim VDescStr As String = ""
     Dim OffEcho As String = "@echo off"
@@ -336,8 +336,7 @@ Public Class MainForm
             End If
         ElseIf WindowState = FormWindowState.Maximized Then
             If Left = 0 And Top = 0 Then
-                Left = WndLeft.X
-                Top = WndTop.Y
+                Location = New Point(WndLeft.X, WndTop.Y)
             End If
             WindowState = FormWindowState.Normal
             If BackColor = Color.FromArgb(243, 243, 243) Then
@@ -580,7 +579,17 @@ Public Class MainForm
         File.WriteAllText(".\settings.ini", SettingLoadForm.TextBox2.Text, ASCII)
     End Sub
 
+    Sub KillCmdWnd()    ' After updating to a newer version, a CMD window will still be open. This solves it
+        File.WriteAllText(".\kill.bat", "@echo off" & CrLf & "taskkill /f /im cmd.exe /t", ASCII)
+        Dim KillCmd As New ProcessStartInfo()
+        KillCmd.WorkingDirectory = Directory.GetCurrentDirectory()
+        KillCmd.CreateNoWindow = True
+        KillCmd.FileName = ".\kill.bat"
+        Dim KillCmdProc As Process = Process.Start(KillCmd)
+    End Sub
+
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        KillCmdWnd()
         VersionToolStripMenuItem.Text = "version " & VerStr & " (assembly version " & AVerStr & ")"
         Label72.Text = "version " & VerStr & " (assembly version " & AVerStr & ")"
         Label74.Visible = True
@@ -651,6 +660,7 @@ Public Class MainForm
                 ' Set the REGTWEAK CMS element invisible
                 WIMRToolStripMenuItem.Checked = True
                 REGTWEAKToolStripMenuItem.Visible = False
+                AOTSMI.Visible = False
             End If
         End If
 
@@ -760,7 +770,7 @@ Public Class MainForm
         PictureBox18.BackColor = Color.Transparent
 
         ' This is for the top-right resize panel, to not make the
-        ' thought that someone has bitten the Close button (bite an apple, not a close button)
+        ' thought that someone has bitten the Close button (bite into an apple, not into a close button)
         TopRightResizePanel.BackColor = BackColor
         BottomRightResizePanel.BackColor = WelcomePanel.BackColor
 
@@ -768,7 +778,12 @@ Public Class MainForm
         Dim rkWallPaper As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", False)
         Dim WallpaperPath As String = rkWallPaper.GetValue("WallPaper").ToString()
         rkWallPaper.Close()
-        backgroundPic.Image = New Bitmap(WallpaperPath)
+        If File.Exists(WallpaperPath) Then
+            backgroundPic.Image = New Bitmap(WallpaperPath)
+        Else
+            backgroundPic.Image = Nothing
+            backgroundPic.BackColor = BackColor
+        End If
         wmiget = CrLf & ":: Modern, fresh, clean, beautiful" & CrLf & "@echo off" & CrLf & "wmic computersystem get model > .\model.txt"
         File.WriteAllText(".\wmi.bat", wmiget.Trim(), ASCII)
         'LaunchPSI.WorkingDirectory = Application.StartupPath
@@ -937,6 +952,9 @@ Public Class MainForm
                 FileNotFoundPanel.Label1.Font = New Font("Segoe UI", 14.25, FontStyle.Bold)
                 VolumeConnectPanel.Label1.Font = New Font("Segoe UI", 14.25, FontStyle.Bold)
             End If
+        End If
+        If File.Exists(".\kill.bat") Then
+            File.Delete(".\kill.bat")
         End If
         CenterToScreen()        ' This is done to prevent a bug where it would not center to the screen!
         Visible = True
@@ -1920,6 +1938,7 @@ Public Class MainForm
         ' These lines are ubiquitous
         TopRightResizePanel.BackColor = BackColor
         BottomRightResizePanel.BackColor = WelcomePanel.BackColor
+        UpdatePanelProperties()
     End Sub
 
     Private Sub SettingsPic_Click(sender As Object, e As EventArgs) Handles SettingsPic.Click, PictureBox7.Click
@@ -4704,6 +4723,7 @@ Public Class MainForm
                 DarkToolStripMenuItem.Checked = True
             End If
             InstallerCreationMethodToolStripMenuItem.Text = "Método de creación del instalador"
+            AOTSMI.Text = "Opciones avanzadas"
             OpenToolStripMenuItem.Text = "Abrir"
             ExitToolStripMenuItem.Text = "Salir"
 
@@ -5014,6 +5034,7 @@ Public Class MainForm
                 DarkToolStripMenuItem.Checked = True
             End If
             InstallerCreationMethodToolStripMenuItem.Text = "Installer creation method"
+            AOTSMI.Text = "Advanced options"
             OpenToolStripMenuItem.Text = "Open"
             ExitToolStripMenuItem.Text = "Exit"
 
@@ -5321,6 +5342,7 @@ Public Class MainForm
                     DarkToolStripMenuItem.Checked = True
                 End If
                 InstallerCreationMethodToolStripMenuItem.Text = "Método de creación del instalador"
+                AOTSMI.Text = "Opciones avanzadas"
                 OpenToolStripMenuItem.Text = "Abrir"
                 ExitToolStripMenuItem.Text = "Salir"
 
@@ -5627,6 +5649,7 @@ Public Class MainForm
                     DarkToolStripMenuItem.Checked = True
                 End If
                 InstallerCreationMethodToolStripMenuItem.Text = "Installer creation method"
+                AOTSMI.Text = "Advanced options"
                 OpenToolStripMenuItem.Text = "Open"
                 ExitToolStripMenuItem.Text = "Exit"
 
@@ -5695,6 +5718,7 @@ Public Class MainForm
                 ImageFolderBrowser.Description = "Please specify the path to save the custom installer:"
             End If
         End If
+        UpdatePanelProperties()
     End Sub
 
     Private Sub DebugPic_Click(sender As Object, e As EventArgs) Handles DebugPic.Click
@@ -5909,7 +5933,7 @@ Public Class MainForm
         MsgBox("We could not get this computer's model" & CrLf & "This might be because, the component used to get the model (Windows Management Instrumentation, WMI), is missing from your system or has returned an error code." & CrLf & CrLf & "This is not critical, as it only affects the user experience.", vbOKOnly + vbExclamation, "Computer model gather process failure")
     End Sub
 
-    Private Sub Button13_Click(sender As Object, e As EventArgs) Handles Button13.Click
+    Private Sub Button13_Click(sender As Object, e As EventArgs) Handles Button13.Click, AOTSMI.Click
         BringToFront()
         BackSubPanel.Show()
         AdvancedOptionsPanel.ShowDialog()
@@ -6757,5 +6781,644 @@ Public Class MainForm
 
     Private Sub LogViewLink_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LogViewLink.LinkClicked
         Process.Start(".\inst.log")
+    End Sub
+
+    Private Sub TextBox1_DragEnter(sender As Object, e As DragEventArgs) Handles TextBox1.DragEnter
+        If e.Data.GetDataPresent(DataFormats.FileDrop) Then
+            e.Effect = DragDropEffects.Copy
+        End If
+    End Sub
+
+    Private Sub TextBox1_DragDrop(sender As Object, e As DragEventArgs) Handles TextBox1.DragDrop
+        Dim IsoFiles() As String = e.Data.GetData(DataFormats.FileDrop)
+        For Each Path In IsoFiles
+            TextBox1.Text = Path
+        Next
+    End Sub
+
+    Private Sub TextBox2_DragEnter(sender As Object, e As DragEventArgs) Handles TextBox2.DragEnter
+        If e.Data.GetDataPresent(DataFormats.FileDrop) Then
+            e.Effect = DragDropEffects.Copy
+        End If
+    End Sub
+
+    Private Sub TextBox2_DragDrop(sender As Object, e As DragEventArgs) Handles TextBox2.DragDrop
+        Dim IsoFiles() As String = e.Data.GetData(DataFormats.FileDrop)
+        For Each Path In IsoFiles
+            TextBox2.Text = Path
+        Next
+    End Sub
+
+    Sub UpdatePanelProperties()
+        ' Color modes
+        If BackSubPanel.Visible = True Then
+            If BackColor = Color.FromArgb(243, 243, 243) Then
+                If AdvancedOptionsPanel.Visible = True Then
+                    AdvancedOptionsPanel.BackColor = Color.White
+                    AdvancedOptionsPanel.ForeColor = Color.Black
+                    AdvancedOptionsPanel.Panel1.BackColor = Color.FromArgb(243, 243, 243)
+                    AdvancedOptionsPanel.LinkLabel1.LinkColor = Color.FromArgb(1, 92, 186)
+                    AdvancedOptionsPanel.OK_Button.BackColor = Color.FromArgb(1, 92, 186)
+                    AdvancedOptionsPanel.OK_Button.ForeColor = Color.White
+                ElseIf DisclaimerPanel.Visible = True Then
+                    DisclaimerPanel.BackColor = Color.White
+                    DisclaimerPanel.ForeColor = Color.Black
+                    DisclaimerPanel.Panel1.BackColor = Color.FromArgb(243, 243, 243)
+                    DisclaimerPanel.TextBox1.BackColor = Color.White
+                    DisclaimerPanel.TextBox1.ForeColor = Color.Black
+                    DisclaimerPanel.BackColor = Color.FromArgb(1, 92, 186)
+                    DisclaimerPanel.OK_Button.ForeColor = Color.White
+                ElseIf FileCopyPanel.Visible = True Then
+                    FileCopyPanel.BackColor = Color.White
+                    FileCopyPanel.ForeColor = Color.Black
+                    FileCopyPanel.Panel1.BackColor = Color.FromArgb(243, 243, 243)
+                    FileCopyPanel.OK_Button.BackColor = Color.FromArgb(1, 92, 186)
+                    FileCopyPanel.OK_Button.ForeColor = Color.White
+                ElseIf InstCreateAbortPanel.Visible = True Then
+                    InstCreateAbortPanel.BackColor = Color.White
+                    InstCreateAbortPanel.ForeColor = Color.Black
+                    InstCreateAbortPanel.Panel1.BackColor = Color.FromArgb(243, 243, 243)
+                    InstCreateAbortPanel.No_Button.BackColor = Color.FromArgb(1, 92, 186)
+                    InstCreateAbortPanel.No_Button.ForeColor = Color.White
+                ElseIf InstHistPanel.Visible = True Then
+                    InstHistPanel.BackColor = Color.White
+                    InstHistPanel.ForeColor = Color.Black
+                    InstHistPanel.Panel1.BackColor = Color.FromArgb(243, 243, 243)
+                    InstHistPanel.InstallerListView.ForeColor = Color.Black
+                    InstHistPanel.InstallerListView.BackColor = Color.White
+                    InstHistPanel.OK_Button.BackColor = Color.FromArgb(1, 92, 186)
+                    InstHistPanel.OK_Button.ForeColor = Color.White
+                    InstHistPanel.ExportOptnBtn.Image = New Bitmap(My.Resources.export_light)
+                    InstHistPanel.ExportOptnBtn.BackColor = Color.FromArgb(243, 243, 243)
+                    InstHistPanel.ExportOptnBtn.ForeColor = Color.Black
+                ElseIf ISOFileDownloadPanel.Visible = True Then
+                    ISOFileDownloadPanel.BackColor = Color.White
+                    ISOFileDownloadPanel.ForeColor = Color.Black
+                    ISOFileDownloadPanel.Panel1.BackColor = Color.FromArgb(243, 243, 243)
+                    ISOFileDownloadPanel.OK_Button.BackColor = Color.FromArgb(1, 92, 186)
+                    ISOFileDownloadPanel.OK_Button.ForeColor = Color.White
+                ElseIf ISOFileScanPanel.Visible = True Then
+                    ISOFileScanPanel.BackColor = Color.White
+                    ISOFileScanPanel.ForeColor = Color.Black
+                    ISOFileScanPanel.TextBox1.BackColor = Color.White
+                    ISOFileScanPanel.TextBox1.ForeColor = Color.Black
+                    ISOFileScanPanel.ListBox1.BackColor = Color.White
+                    ISOFileScanPanel.ListBox1.ForeColor = Color.Black
+                    ISOFileScanPanel.PictureBox1.Image = New Bitmap(My.Resources.pref_reset)
+                    ISOFileScanPanel.Panel1.BackColor = Color.FromArgb(243, 243, 243)
+                    ISOFileScanPanel.OK_Button.BackColor = Color.FromArgb(1, 92, 186)
+                    ISOFileScanPanel.OK_Button.ForeColor = Color.White
+                ElseIf LogExistsPanel.Visible = True Then
+                    LogExistsPanel.BackColor = Color.White
+                    LogExistsPanel.ForeColor = Color.Black
+                    LogExistsPanel.Panel1.BackColor = Color.FromArgb(243, 243, 243)
+                    LogExistsPanel.Yes_Button.BackColor = Color.FromArgb(1, 92, 186)
+                    LogExistsPanel.Yes_Button.ForeColor = Color.White
+                ElseIf LogMigratePanel.Visible = True Then
+                    LogMigratePanel.BackColor = Color.White
+                    LogMigratePanel.ForeColor = Color.Black
+                    LogMigratePanel.Panel1.BackColor = Color.FromArgb(243, 243, 243)
+                    LogMigratePanel.Yes_Button.BackColor = Color.FromArgb(1, 92, 186)
+                    LogMigratePanel.Yes_Button.ForeColor = Color.White
+                ElseIf MethodHelpPanel.Visible = True Then
+                    MethodHelpPanel.BackColor = Color.White
+                    MethodHelpPanel.ForeColor = Color.Black
+                    MethodHelpPanel.Panel1.BackColor = Color.FromArgb(243, 243, 243)
+                    MethodHelpPanel.OK_Button.BackColor = Color.FromArgb(1, 92, 186)
+                    MethodHelpPanel.OK_Button.ForeColor = Color.White
+                ElseIf PrefResetPanel.Visible = True Then
+                    PrefResetPanel.BackColor = Color.White
+                    PrefResetPanel.ForeColor = Color.Black
+                    PrefResetPanel.Panel1.BackColor = Color.FromArgb(243, 243, 243)
+                    PrefResetPanel.No_Button.BackColor = Color.FromArgb(1, 92, 186)
+                    PrefResetPanel.No_Button.ForeColor = Color.White
+                ElseIf UpdateChoicePanel.Visible = True Then
+                    UpdateChoicePanel.BackColor = Color.White
+                    UpdateChoicePanel.ForeColor = Color.Black
+                    UpdateChoicePanel.Panel1.BackColor = Color.FromArgb(243, 243, 243)
+                    UpdateChoicePanel.OK_Button.BackColor = Color.FromArgb(1, 92, 186)
+                    UpdateChoicePanel.OK_Button.ForeColor = Color.White
+                    UpdateChoicePanel.PictureBox1.Image = New Bitmap(My.Resources.update_screen_light)
+                    UpdateChoicePanel.RelNotesLink.LinkColor = Color.FromArgb(1, 92, 186)
+                End If
+            ElseIf BackColor = Color.FromArgb(32, 32, 32) Then
+                If AdvancedOptionsPanel.Visible = True Then
+                    AdvancedOptionsPanel.BackColor = Color.FromArgb(43, 43, 43)
+                    AdvancedOptionsPanel.ForeColor = Color.White
+                    AdvancedOptionsPanel.Panel1.BackColor = Color.FromArgb(32, 32, 32)
+                    AdvancedOptionsPanel.LinkLabel1.LinkColor = Color.FromArgb(76, 194, 255)
+                    AdvancedOptionsPanel.OK_Button.BackColor = Color.FromArgb(76, 194, 255)
+                    AdvancedOptionsPanel.OK_Button.ForeColor = Color.Black
+                ElseIf DisclaimerPanel.Visible = True Then
+                    DisclaimerPanel.BackColor = Color.FromArgb(43, 43, 43)
+                    DisclaimerPanel.ForeColor = Color.White
+                    DisclaimerPanel.Panel1.BackColor = Color.FromArgb(32, 32, 32)
+                    DisclaimerPanel.TextBox1.BackColor = Color.FromArgb(43, 43, 43)
+                    DisclaimerPanel.TextBox1.ForeColor = Color.White
+                    DisclaimerPanel.BackColor = Color.FromArgb(76, 194, 255)
+                    DisclaimerPanel.OK_Button.ForeColor = Color.Black
+                ElseIf FileCopyPanel.Visible = True Then
+                    FileCopyPanel.BackColor = Color.FromArgb(43, 43, 43)
+                    FileCopyPanel.ForeColor = Color.White
+                    FileCopyPanel.Panel1.BackColor = Color.FromArgb(32, 32, 32)
+                    FileCopyPanel.OK_Button.BackColor = Color.FromArgb(76, 194, 255)
+                    FileCopyPanel.OK_Button.ForeColor = Color.Black
+                ElseIf InstCreateAbortPanel.Visible = True Then
+                    InstCreateAbortPanel.BackColor = Color.FromArgb(43, 43, 43)
+                    InstCreateAbortPanel.ForeColor = Color.White
+                    InstCreateAbortPanel.Panel1.BackColor = Color.FromArgb(32, 32, 32)
+                    InstCreateAbortPanel.No_Button.BackColor = Color.FromArgb(76, 194, 255)
+                    InstCreateAbortPanel.No_Button.ForeColor = Color.Black
+                ElseIf InstHistPanel.Visible = True Then
+                    InstHistPanel.BackColor = Color.FromArgb(43, 43, 43)
+                    InstHistPanel.ForeColor = Color.White
+                    InstHistPanel.Panel1.BackColor = Color.FromArgb(32, 32, 32)
+                    InstHistPanel.InstallerListView.ForeColor = Color.White
+                    InstHistPanel.InstallerListView.BackColor = Color.FromArgb(43, 43, 43)
+                    InstHistPanel.OK_Button.BackColor = Color.FromArgb(76, 194, 255)
+                    InstHistPanel.OK_Button.ForeColor = Color.Black
+                    InstHistPanel.ExportOptnBtn.Image = New Bitmap(My.Resources.export_dark)
+                    InstHistPanel.ExportOptnBtn.BackColor = Color.FromArgb(32, 32, 32)
+                    InstHistPanel.ExportOptnBtn.ForeColor = Color.White
+                ElseIf ISOFileDownloadPanel.Visible = True Then
+                    ISOFileDownloadPanel.BackColor = Color.FromArgb(43, 43, 43)
+                    ISOFileDownloadPanel.ForeColor = Color.White
+                    ISOFileDownloadPanel.Panel1.BackColor = Color.FromArgb(32, 32, 32)
+                    ISOFileDownloadPanel.OK_Button.BackColor = Color.FromArgb(76, 194, 255)
+                    ISOFileDownloadPanel.OK_Button.ForeColor = Color.Black
+                ElseIf ISOFileScanPanel.Visible = True Then
+                    ISOFileScanPanel.BackColor = Color.FromArgb(43, 43, 43)
+                    ISOFileScanPanel.ForeColor = Color.White
+                    ISOFileScanPanel.TextBox1.BackColor = Color.FromArgb(43, 43, 43)
+                    ISOFileScanPanel.TextBox1.ForeColor = Color.White
+                    ISOFileScanPanel.ListBox1.BackColor = Color.FromArgb(43, 43, 43)
+                    ISOFileScanPanel.ListBox1.ForeColor = Color.White
+                    ISOFileScanPanel.PictureBox1.Image = New Bitmap(My.Resources.pref_reset_dark)
+                    ISOFileScanPanel.Panel1.BackColor = Color.FromArgb(32, 32, 32)
+                    ISOFileScanPanel.OK_Button.BackColor = Color.FromArgb(76, 194, 255)
+                    ISOFileScanPanel.OK_Button.ForeColor = Color.Black
+                ElseIf LogExistsPanel.Visible = True Then
+                    LogExistsPanel.BackColor = Color.FromArgb(43, 43, 43)
+                    LogExistsPanel.ForeColor = Color.White
+                    LogExistsPanel.Panel1.BackColor = Color.FromArgb(32, 32, 32)
+                    LogExistsPanel.Yes_Button.BackColor = Color.FromArgb(76, 194, 255)
+                    LogExistsPanel.Yes_Button.ForeColor = Color.Black
+                ElseIf LogMigratePanel.Visible = True Then
+                    LogMigratePanel.BackColor = Color.FromArgb(43, 43, 43)
+                    LogMigratePanel.ForeColor = Color.White
+                    LogMigratePanel.Panel1.BackColor = Color.FromArgb(32, 32, 32)
+                    LogMigratePanel.Yes_Button.BackColor = Color.FromArgb(76, 194, 255)
+                    LogMigratePanel.Yes_Button.ForeColor = Color.Black
+                ElseIf MethodHelpPanel.Visible = True Then
+                    MethodHelpPanel.BackColor = Color.FromArgb(43, 43, 43)
+                    MethodHelpPanel.ForeColor = Color.White
+                    MethodHelpPanel.Panel1.BackColor = Color.FromArgb(32, 32, 32)
+                    MethodHelpPanel.OK_Button.BackColor = Color.FromArgb(76, 194, 255)
+                    MethodHelpPanel.OK_Button.ForeColor = Color.Black
+                ElseIf PrefResetPanel.Visible = True Then
+                    PrefResetPanel.BackColor = Color.FromArgb(43, 43, 43)
+                    PrefResetPanel.ForeColor = Color.White
+                    PrefResetPanel.Panel1.BackColor = Color.FromArgb(32, 32, 32)
+                    PrefResetPanel.No_Button.BackColor = Color.FromArgb(76, 194, 255)
+                    PrefResetPanel.No_Button.ForeColor = Color.Black
+                ElseIf UpdateChoicePanel.Visible = True Then
+                    UpdateChoicePanel.BackColor = Color.FromArgb(43, 43, 43)
+                    UpdateChoicePanel.ForeColor = Color.White
+                    UpdateChoicePanel.Panel1.BackColor = Color.FromArgb(32, 32, 32)
+                    UpdateChoicePanel.OK_Button.BackColor = Color.FromArgb(76, 194, 255)
+                    UpdateChoicePanel.OK_Button.ForeColor = Color.Black
+                    UpdateChoicePanel.PictureBox1.Image = New Bitmap(My.Resources.update_screen_dark)
+                End If
+            End If
+            If AdvancedOptionsPanel.Visible = True Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                    AdvancedOptionsPanel.CheckBox1.Text = "Bypass Microsoft Account sign-in and forced Internet connection setup (22557+)"
+                    AdvancedOptionsPanel.CheckBox2.Text = "Hide " & Quote & "System requirements not met" & Quote & " watermark (22557+)"
+                    AdvancedOptionsPanel.Label1.Text = "Advanced options"
+                    AdvancedOptionsPanel.Label2.Text = "Bypasses Microsoft Account sign-in and forced Internet connection setup on Windows 11 Pro (Nickel builds 22557 onwards)"
+                    AdvancedOptionsPanel.Label3.Text = "Note: the program must be run with administrative privileges"
+                    AdvancedOptionsPanel.Label4.Text = "Hides the " & Quote & "System requirements not met" & Quote & " watermark on Nickel builds 22557 onwards and Windows Server" & Quote & "Copper" & Quote & " builds 25057 onwards"
+                    AdvancedOptionsPanel.Label5.Text = "Enabling this option is not recommended yet, as it doesn't work as intended."
+                    AdvancedOptionsPanel.LinkLabel1.Text = "Read the full issue and a possible workaround"
+                    AdvancedOptionsPanel.OK_Button.Text = "OK"
+                    AdvancedOptionsPanel.Cancel_Button.Text = "Cancel"
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                    AdvancedOptionsPanel.CheckBox1.Text = "Omitir inicio de sesión con la cuenta de Microsoft y configuración forzada de Internet (22557+)"
+                    AdvancedOptionsPanel.CheckBox2.Text = "Ocultar la marca de agua " & Quote & "Requisitos de sistema no cumplidos" & Quote & " (22557+)"
+                    AdvancedOptionsPanel.Label1.Text = "Opciones avanzadas"
+                    AdvancedOptionsPanel.Label2.Text = "Omite el inicio de sesión con la cuenta de Microsoft y la configuración forzada de Internet en Windows 11 Pro (compilaciones de Nickel 22557 en adelante)"
+                    AdvancedOptionsPanel.Label3.Text = "Nota: el programa debe ejecutarse con privilegios administrativos"
+                    AdvancedOptionsPanel.Label4.Text = "Oculta la marca de agua " & Quote & "Requisitos de sistema no cumplidos" & Quote & " en compilaciones de Nickel 22557 en adelante y en compilaciones Windows Server " & Quote & "Copper" & Quote & " 25057 en adelante"
+                    AdvancedOptionsPanel.Label5.Text = "Todavía no es recomendable habilitar esta opción, ya que no funciona como se esperaba."
+                    AdvancedOptionsPanel.LinkLabel1.Text = "Lea la publicación completa y una posible solución"
+                    AdvancedOptionsPanel.OK_Button.Text = "Aceptar"
+                    AdvancedOptionsPanel.Cancel_Button.Text = "Cancelar"
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                    If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                        AdvancedOptionsPanel.CheckBox1.Text = "Bypass Microsoft Account sign-in and forced Internet connection setup (22557+)"
+                        AdvancedOptionsPanel.CheckBox2.Text = "Hide " & Quote & "System requirements not met" & Quote & " watermark (22557+)"
+                        AdvancedOptionsPanel.Label1.Text = "Advanced options"
+                        AdvancedOptionsPanel.Label2.Text = "Bypasses Microsoft Account sign-in and forced Internet connection setup on Windows 11 Pro (Nickel builds 22557 onwards)"
+                        AdvancedOptionsPanel.Label3.Text = "Note: the program must be run with administrative privileges"
+                        AdvancedOptionsPanel.Label4.Text = "Hides the " & Quote & "System requirements not met" & Quote & " watermark on Nickel builds 22557 onwards and Windows Server" & Quote & "Copper" & Quote & " builds 25057 onwards"
+                        AdvancedOptionsPanel.Label5.Text = "Enabling this option is not recommended yet, as it doesn't work as intended."
+                        AdvancedOptionsPanel.LinkLabel1.Text = "Read the full issue and a possible workaround"
+                        AdvancedOptionsPanel.OK_Button.Text = "OK"
+                        AdvancedOptionsPanel.Cancel_Button.Text = "Cancel"
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                        AdvancedOptionsPanel.CheckBox1.Text = "Omitir inicio de sesión con la cuenta de Microsoft y configuración forzada de Internet (22557+)"
+                        AdvancedOptionsPanel.CheckBox2.Text = "Ocultar la marca de agua " & Quote & "Requisitos de sistema no cumplidos" & Quote & " (22557+)"
+                        AdvancedOptionsPanel.Label1.Text = "Opciones avanzadas"
+                        AdvancedOptionsPanel.Label2.Text = "Omite el inicio de sesión con la cuenta de Microsoft y la configuración forzada de Internet en Windows 11 Pro (compilaciones de Nickel 22557 en adelante)"
+                        AdvancedOptionsPanel.Label3.Text = "Nota: el programa debe ejecutarse con privilegios administrativos"
+                        AdvancedOptionsPanel.Label4.Text = "Oculta la marca de agua " & Quote & "Requisitos de sistema no cumplidos" & Quote & " en compilaciones de Nickel 22557 en adelante y en compilaciones Windows Server " & Quote & "Copper" & Quote & " 25057 en adelante"
+                        AdvancedOptionsPanel.Label5.Text = "Todavía no es recomendable habilitar esta opción, ya que no funciona como se esperaba."
+                        AdvancedOptionsPanel.LinkLabel1.Text = "Lea la publicación completa y una posible solución"
+                        AdvancedOptionsPanel.OK_Button.Text = "Aceptar"
+                        AdvancedOptionsPanel.Cancel_Button.Text = "Cancelar"
+                    End If
+                End If
+            ElseIf DisclaimerPanel.Visible = True Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                    DisclaimerPanel.Label1.Text = "Disclaimer notice"
+                    DisclaimerPanel.OK_Button.Text = "OK"
+                    DisclaimerPanel.Exit_Button.Text = "Exit"
+                    DisclaimerPanel.TextBox1.Text = "You must only use this tool on a system that you don't use productively." & CrLf & "Microsoft has warned that unsupported systems running Windows 11 might not recieve updates in the future." & CrLf & CrLf & "The modified installation images you create will also work on supported systems, but you can natively install Windows 11 on them, without performing modifications to the installation image." & CrLf & "If you have an unsupported system, don't upgrade it to Windows 11. Instead, you can perform a dual-boot, or use another system (that would be the best option anyway)" & CrLf & CrLf & "This tool MUST NOT be used to pirate Windows images, and the program developer recommends you get Windows legally." & CrLf & "The components used by the program are covered by their license agreements. These specify the rules for their use and redistribution." & CrLf & CrLf & "If you agree to this disclaimer notice and want to continue using the software, click OK. Otherwise, click Exit."
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                    DisclaimerPanel.Label1.Text = "Descargo de responsabilidad"
+                    DisclaimerPanel.OK_Button.Text = "Aceptar"
+                    DisclaimerPanel.Exit_Button.Text = "Salir"
+                    DisclaimerPanel.TextBox1.Text = "Usted solo debe utilizar esta herramienta en un sistema que no use productivamente." & CrLf & "Microsoft ha avisado de que sistemas no soportados ejecutando Windows 11 podrían no recibir actualizaciones en el futuro." & CrLf & CrLf & "Las imágenes de instalación modificadas que usted cree también funcionarán en sistemas soportados, pero usted puede instalar Windows 11 de forma nativa en ellos, sin realizar modificaciones a la imagen de instalación." & CrLf & "Si usted tiene un sistema no soportado, no lo actualice a Windows 11. En vez de eso, puede realizar un arranque dual, o usar otro sistema (ésta sería la mejor opción de todas formas)" & CrLf & CrLf & "Esta herramienta NO DEBE ser usada para piratear imágenes de Windows, y el desarrollador del programa le recomienda obtener Windows legalmente." & CrLf & "Los componentes utilizados por el programa están protegidos por sus acuerdos de licencia. Éstos especifican las reglas de su uso y redistribución." & CrLf & CrLf & "Si acepta este descargo de responsabilidad y quiere continuar usando el software, haga clic en Aceptar. En caso contrario, haga clic en Salir."
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                    If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                        DisclaimerPanel.Label1.Text = "Disclaimer notice"
+                        DisclaimerPanel.OK_Button.Text = "OK"
+                        DisclaimerPanel.Exit_Button.Text = "Exit"
+                        DisclaimerPanel.TextBox1.Text = "You must only use this tool on a system that you don't use productively." & CrLf & "Microsoft has warned that unsupported systems running Windows 11 might not recieve updates in the future." & CrLf & CrLf & "The modified installation images you create will also work on supported systems, but you can natively install Windows 11 on them, without performing modifications to the installation image." & CrLf & "If you have an unsupported system, don't upgrade it to Windows 11. Instead, you can perform a dual-boot, or use another system (that would be the best option anyway)" & CrLf & CrLf & "This tool MUST NOT be used to pirate Windows images, and the program developer recommends you get Windows legally." & CrLf & "The components used by the program are covered by their license agreements. These specify the rules for their use and redistribution." & CrLf & CrLf & "If you agree to this disclaimer notice and want to continue using the software, click OK. Otherwise, click Exit."
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                        DisclaimerPanel.Label1.Text = "Descargo de responsabilidad"
+                        DisclaimerPanel.OK_Button.Text = "Aceptar"
+                        DisclaimerPanel.Exit_Button.Text = "Salir"
+                        DisclaimerPanel.TextBox1.Text = "Usted solo debe utilizar esta herramienta en un sistema que no use productivamente." & CrLf & "Microsoft ha avisado de que sistemas no soportados ejecutando Windows 11 podrían no recibir actualizaciones en el futuro." & CrLf & CrLf & "Las imágenes de instalación modificadas que usted cree también funcionarán en sistemas soportados, pero usted puede instalar Windows 11 de forma nativa en ellos, sin realizar modificaciones a la imagen de instalación." & CrLf & "Si usted tiene un sistema no soportado, no lo actualice a Windows 11. En vez de eso, puede realizar un arranque dual, o usar otro sistema (ésta sería la mejor opción de todas formas)" & CrLf & CrLf & "Esta herramienta NO DEBE ser usada para piratear imágenes de Windows, y el desarrollador del programa le recomienda obtener Windows legalmente." & CrLf & "Los componentes utilizados por el programa están protegidos por sus acuerdos de licencia. Éstos especifican las reglas de su uso y redistribución." & CrLf & CrLf & "Si acepta este descargo de responsabilidad y quiere continuar usando el software, haga clic en Aceptar. En caso contrario, haga clic en Salir."
+                    End If
+                End If
+            ElseIf FileCopyPanel.Visible = True Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                    FileCopyPanel.Label1.Text = "File copy"
+                    FileCopyPanel.Label2.Text = "To prevent file access errors while creating the custom installer, the source files will be copied to the local disk. These files will be deleted after the program has finished, to save disk space." & CrLf & "Do you want to do so?"
+                    FileCopyPanel.OK_Button.Text = "Yes"
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                    FileCopyPanel.Label1.Text = "Copia de archivos"
+                    FileCopyPanel.Label2.Text = "Para prevenir errores de acceso de archivo al crear el instalador modificado, los archivos de origen serán copiados al disco local. Éstos archivos serán borrados después de que el programa haya terminado, para ahorrar espacio en el disco." & CrLf & "¿Desea hacer esto?"
+                    FileCopyPanel.OK_Button.Text = "Sí"
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                    If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                        FileCopyPanel.Label1.Text = "File copy"
+                        FileCopyPanel.Label2.Text = "To prevent file access errors while creating the custom installer, the source files will be copied to the local disk. These files will be deleted after the program has finished, to save disk space." & CrLf & "Do you want to do so?"
+                        FileCopyPanel.OK_Button.Text = "Yes"
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                        FileCopyPanel.Label1.Text = "Copia de archivos"
+                        FileCopyPanel.Label2.Text = "Para prevenir errores de acceso de archivo al crear el instalador modificado, los archivos de origen serán copiados al disco local. Éstos archivos serán borrados después de que el programa haya terminado, para ahorrar espacio en el disco." & CrLf & "¿Desea hacer esto?"
+                        FileCopyPanel.OK_Button.Text = "Sí"
+                    End If
+                End If
+            ElseIf InstCreateAbortPanel.Visible = True Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                    InstCreateAbortPanel.Label1.Text = "Cancel installer creation?"
+                    InstCreateAbortPanel.Label2.Text = "Are you sure you want to cancel the installer creation process? This will delete any file modifications done at this time."
+                    InstCreateAbortPanel.Yes_Button.Text = "Yes"
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                    InstCreateAbortPanel.Label1.Text = "¿Cancelar la creación del instalador?"
+                    InstCreateAbortPanel.Label2.Text = "¿Está seguro de que quiere cancelar el proceso de creación del instalador? Esto borrará todas las modificaciones de archivos realizados en este momento."
+                    InstCreateAbortPanel.Yes_Button.Text = "Sí"
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                    If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                        InstCreateAbortPanel.Label1.Text = "Cancel installer creation?"
+                        InstCreateAbortPanel.Label2.Text = "Are you sure you want to cancel the installer creation process? This will delete any file modifications done at this time."
+                        InstCreateAbortPanel.Yes_Button.Text = "Yes"
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                        InstCreateAbortPanel.Label1.Text = "¿Cancelar la creación del instalador?"
+                        InstCreateAbortPanel.Label2.Text = "¿Está seguro de que quiere cancelar el proceso de creación del instalador? Esto borrará todas las modificaciones de archivos realizados en este momento."
+                        InstCreateAbortPanel.Yes_Button.Text = "Sí"
+                    End If
+                End If
+            ElseIf InstHistPanel.Visible = True Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                    InstHistPanel.Label1.Text = "Installer history"
+                    InstHistPanel.InstallerEntryLabel.Text = "Installer history entries: " & InstHistPanel.InstallerListView.Items.Count
+                    InstHistPanel.ColumnHeader1.Text = "Installer name and path"
+                    InstHistPanel.ColumnHeader2.Text = "Creation time and date"
+                    InstHistPanel.OK_Button.Text = "OK"
+                    InstHistPanel.XMLExportOptn.Text = "Export to XML file..."
+                    InstHistPanel.HTMLExportOptn.Text = "Export to HTML file..."
+                    InstHistPanel.ExportOptnBtn.Text = "Export options"
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                    InstHistPanel.Label1.Text = "Historial de instaladores"
+                    InstHistPanel.InstallerEntryLabel.Text = "Entradas en el historial de instaladores: " & InstHistPanel.InstallerListView.Items.Count
+                    InstHistPanel.ColumnHeader1.Text = "Nombre y ruta del instalador"
+                    InstHistPanel.ColumnHeader2.Text = "Fecha y hora de creación"
+                    InstHistPanel.OK_Button.Text = "Aceptar"
+                    InstHistPanel.XMLExportOptn.Text = "Exportar a archivo XML..."
+                    InstHistPanel.HTMLExportOptn.Text = "Exportar a archivo HTML..."
+                    InstHistPanel.ExportOptnBtn.Text = "Opciones de exportación"
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                    If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                        InstHistPanel.Label1.Text = "Installer history"
+                        InstHistPanel.InstallerEntryLabel.Text = "Installer history entries: " & InstHistPanel.InstallerListView.Items.Count
+                        InstHistPanel.ColumnHeader1.Text = "Installer name and path"
+                        InstHistPanel.ColumnHeader2.Text = "Creation time and date"
+                        InstHistPanel.OK_Button.Text = "OK"
+                        InstHistPanel.XMLExportOptn.Text = "Export to XML file..."
+                        InstHistPanel.HTMLExportOptn.Text = "Export to HTML file..."
+                        InstHistPanel.ExportOptnBtn.Text = "Export options"
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                        InstHistPanel.Label1.Text = "Historial de instaladores"
+                        InstHistPanel.InstallerEntryLabel.Text = "Entradas en el historial de instaladores: " & InstHistPanel.InstallerListView.Items.Count
+                        InstHistPanel.ColumnHeader1.Text = "Nombre y ruta del instalador"
+                        InstHistPanel.ColumnHeader2.Text = "Fecha y hora de creación"
+                        InstHistPanel.OK_Button.Text = "Aceptar"
+                        InstHistPanel.XMLExportOptn.Text = "Exportar a archivo XML..."
+                        InstHistPanel.HTMLExportOptn.Text = "Exportar a archivo HTML..."
+                        InstHistPanel.ExportOptnBtn.Text = "Opciones de exportación"
+                    End If
+                End If
+                If InstHistPanel.InstallerListView.Items.Count = 0 Then
+                    If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                        InstHistPanel.InstallerEntryLabel.Text = "Installer history entries: " & InstHistPanel.InstallerListView.Items.Count & ". No installer history data is available."
+                    ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                        InstHistPanel.InstallerEntryLabel.Text = "Entradas en el historial de instaladores: " & InstHistPanel.InstallerListView.Items.Count & ". No hay datos disponibles sobre el historial de instaladores."
+                    ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                        If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                            InstHistPanel.InstallerEntryLabel.Text = "Installer history entries: " & InstHistPanel.InstallerListView.Items.Count & ". No installer history data is available."
+                        ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                            InstHistPanel.InstallerEntryLabel.Text = "Entradas en el historial de instaladores: " & InstHistPanel.InstallerListView.Items.Count & ". No hay datos disponibles sobre el historial de instaladores."
+                        End If
+                    End If
+                End If
+            ElseIf ISOFileDownloadPanel.Visible = True Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                    ISOFileDownloadPanel.Label1.Text = "Download ISO files..."
+                    ISOFileDownloadPanel.Label2.Text = "Download"
+                    ISOFileDownloadPanel.Label4.Text = "Loading web component. Please wait..."
+                    ISOFileDownloadPanel.Label5.Text = "We couldn 't load the web component." & CrLf & CrLf & "This can be caused by an unavailable Internet connection, or by a fault on the website backend. Please try again." & CrLf & "If the problem persists, please try to download the files manually by searching for " & Quote & "download windows 11" & Quote & " or " & Quote & "download windows 10" & Quote & " on the Internet."
+                    ISOFileDownloadPanel.GroupBox1.Text = "Error status"
+                    ISOFileDownloadPanel.Button1.Text = "Retry"
+                    ISOFileDownloadPanel.OK_Button.Text = "OK"
+                    ISOFileDownloadPanel.Cancel_Button.Text = "Cancel"
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                    ISOFileDownloadPanel.Label1.Text = "Descargar archivos ISO..."
+                    ISOFileDownloadPanel.Label2.Text = "Descargar"
+                    ISOFileDownloadPanel.Label4.Text = "Cargando componente web. Por favor, espere..."
+                    ISOFileDownloadPanel.Label5.Text = "No pudimos cargar el componente web." & CrLf & CrLf & "Esto puede ser causado por una conexión a Internet no disponible, o por un error en el backend de la página web. Por favor, inténtelo de nuevo." & CrLf & "Si el problema persiste, por favor, intente descargar los archivos manualmente buscando " & Quote & "descargar windows 11" & Quote & " o " & Quote & "descargar windows 10" & Quote & " en Internet."
+                    ISOFileDownloadPanel.GroupBox1.Text = "Estado de error"
+                    ISOFileDownloadPanel.Button1.Text = "Reintentar"
+                    ISOFileDownloadPanel.OK_Button.Text = "Aceptar"
+                    ISOFileDownloadPanel.Cancel_Button.Text = "Cancelar"
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                    If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                        ISOFileDownloadPanel.Label1.Text = "Download ISO files..."
+                        ISOFileDownloadPanel.Label2.Text = "Download"
+                        ISOFileDownloadPanel.Label4.Text = "Loading web component. Please wait..."
+                        ISOFileDownloadPanel.Label5.Text = "We couldn 't load the web component." & CrLf & CrLf & "This can be caused by an unavailable Internet connection, or by a fault on the website backend. Please try again." & CrLf & "If the problem persists, please try to download the files manually by searching for " & Quote & "download windows 11" & Quote & " or " & Quote & "download windows 10" & Quote & " on the Internet."
+                        ISOFileDownloadPanel.GroupBox1.Text = "Error status"
+                        ISOFileDownloadPanel.Button1.Text = "Retry"
+                        ISOFileDownloadPanel.OK_Button.Text = "OK"
+                        ISOFileDownloadPanel.Cancel_Button.Text = "Cancel"
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                        ISOFileDownloadPanel.Label1.Text = "Descargar archivos ISO..."
+                        ISOFileDownloadPanel.Label2.Text = "Descargar"
+                        ISOFileDownloadPanel.Label4.Text = "Cargando componente web. Por favor, espere..."
+                        ISOFileDownloadPanel.Label5.Text = "No pudimos cargar el componente web." & CrLf & CrLf & "Esto puede ser causado por una conexión a Internet no disponible, o por un error en el backend de la página web. Por favor, inténtelo de nuevo." & CrLf & "Si el problema persiste, por favor, intente descargar los archivos manualmente buscando " & Quote & "descargar windows 11" & Quote & " o " & Quote & "descargar windows 10" & Quote & " en Internet."
+                        ISOFileDownloadPanel.GroupBox1.Text = "Estado de error"
+                        ISOFileDownloadPanel.Button1.Text = "Reintentar"
+                        ISOFileDownloadPanel.OK_Button.Text = "Aceptar"
+                        ISOFileDownloadPanel.Cancel_Button.Text = "Cancelar"
+                    End If
+                End If
+            ElseIf ISOFileScanPanel.Visible = True Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                    ISOFileScanPanel.Label1.Text = "Scan for ISO images"
+                    ISOFileScanPanel.Label2.Text = "Directory to scan:"
+                    ISOFileScanPanel.TextBox1.Left = 150
+                    ISOFileScanPanel.TextBox1.Width = 468
+                    ISOFileScanPanel.Label3.Text = "Scanning directory for ISO files..."
+                    ISOFileScanPanel.Label5.Text = "This is a"
+                    ISOFileScanPanel.Label4.Visible = True
+                    ISOFileScanPanel.RadioButton1.Left = 504
+                    ISOFileScanPanel.RadioButton2.Left = 599
+                    ISOFileScanPanel.CounterLabel.Text = "Files found so far: " & ISOFileScanPanel.FoundFileNum
+                    ISOFileScanPanel.CheckBox1.Text = "Search subdirectories for ISO images"
+                    ISOFileScanPanel.Button1.Text = "Browse..."
+                    ISOFileScanPanel.OK_Button.Text = "OK"
+                    ISOFileScanPanel.Cancel_Button.Text = "Cancel"
+                    ISOFileScanPanel.ISOFolderScanner.Description = "Please select a directory to scan for ISO files:"
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                    ISOFileScanPanel.Label1.Text = "Escanear imágenes ISO"
+                    ISOFileScanPanel.Label2.Text = "Directorio a escanear:"
+                    ISOFileScanPanel.TextBox1.Left = 171
+                    ISOFileScanPanel.TextBox1.Width = 447
+                    ISOFileScanPanel.Label3.Text = "Escaneando directorio por archivos ISO..."
+                    ISOFileScanPanel.Label5.Text = "Este es un instalador de"
+                    ISOFileScanPanel.Label4.Visible = False
+                    ISOFileScanPanel.RadioButton1.Left = 586
+                    ISOFileScanPanel.RadioButton2.Left = 681
+                    ISOFileScanPanel.CounterLabel.Text = "Archivos encontrados hasta ahora: " & ISOFileScanPanel.FoundFileNum
+                    ISOFileScanPanel.CheckBox1.Text = "Buscar en subdirectorios por archivos ISO"
+                    ISOFileScanPanel.Button1.Text = "Examinar..."
+                    ISOFileScanPanel.OK_Button.Text = "Aceptar"
+                    ISOFileScanPanel.Cancel_Button.Text = "Cancelar"
+                    ISOFileScanPanel.ISOFolderScanner.Description = "Por favor, elija un directorio para escanear archivos ISO:"
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                    If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                        ISOFileScanPanel.Label1.Text = "Scan for ISO images"
+                        ISOFileScanPanel.Label2.Text = "Directory to scan:"
+                        ISOFileScanPanel.TextBox1.Left = 150
+                        ISOFileScanPanel.TextBox1.Width = 468
+                        ISOFileScanPanel.Label3.Text = "Scanning directory for ISO files..."
+                        ISOFileScanPanel.Label5.Text = "This is a"
+                        ISOFileScanPanel.Label4.Visible = True
+                        ISOFileScanPanel.RadioButton1.Left = 504
+                        ISOFileScanPanel.RadioButton2.Left = 599
+                        ISOFileScanPanel.CounterLabel.Text = "Files found so far: " & ISOFileScanPanel.FoundFileNum
+                        ISOFileScanPanel.CheckBox1.Text = "Search subdirectories for ISO images"
+                        ISOFileScanPanel.Button1.Text = "Browse..."
+                        ISOFileScanPanel.OK_Button.Text = "OK"
+                        ISOFileScanPanel.Cancel_Button.Text = "Cancel"
+                        ISOFileScanPanel.ISOFolderScanner.Description = "Please select a directory to scan for ISO files:"
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                        ISOFileScanPanel.Label1.Text = "Escanear imágenes ISO"
+                        ISOFileScanPanel.Label2.Text = "Directorio a escanear:"
+                        ISOFileScanPanel.TextBox1.Left = 171
+                        ISOFileScanPanel.TextBox1.Width = 447
+                        ISOFileScanPanel.Label3.Text = "Escaneando directorio por archivos ISO..."
+                        ISOFileScanPanel.Label5.Text = "Este es un instalador de"
+                        ISOFileScanPanel.Label4.Visible = False
+                        ISOFileScanPanel.RadioButton1.Left = 586
+                        ISOFileScanPanel.RadioButton2.Left = 681
+                        ISOFileScanPanel.CounterLabel.Text = "Archivos encontrados hasta ahora: " & ISOFileScanPanel.FoundFileNum
+                        ISOFileScanPanel.CheckBox1.Text = "Buscar en subdirectorios por archivos ISO"
+                        ISOFileScanPanel.Button1.Text = "Examinar..."
+                        ISOFileScanPanel.OK_Button.Text = "Aceptar"
+                        ISOFileScanPanel.Cancel_Button.Text = "Cancelar"
+                        ISOFileScanPanel.ISOFolderScanner.Description = "Por favor, elija un directorio para escanear archivos ISO:"
+                    End If
+                End If
+            ElseIf LogExistsPanel.Visible = True Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                    LogExistsPanel.Label1.Text = "A log file already exists"
+                    LogExistsPanel.Label2.Text = "Do you want to append the current log contents to the log file, or do you want to delete the existing log file?"
+                    LogExistsPanel.Yes_Button.Text = "Append to existing log file"
+                    LogExistsPanel.No_Button.Text = "Delete existing log file"
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                    LogExistsPanel.Label1.Text = "Un archivo de registro ya existe"
+                    LogExistsPanel.Label2.Text = "¿Desea anexar los contenidos del registro actual al archivo de registro, o desea borrar el archivo de registro existente?"
+                    LogExistsPanel.Yes_Button.Text = "Anexar al archivo de registro existente"
+                    LogExistsPanel.No_Button.Text = "Borrar archivo de registro existente"
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                    If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                        LogExistsPanel.Label1.Text = "A log file already exists"
+                        LogExistsPanel.Label2.Text = "Do you want to append the current log contents to the log file, or do you want to delete the existing log file?"
+                        LogExistsPanel.Yes_Button.Text = "Append to existing log file"
+                        LogExistsPanel.No_Button.Text = "Delete existing log file"
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                        LogExistsPanel.Label1.Text = "Un archivo de registro ya existe"
+                        LogExistsPanel.Label2.Text = "¿Desea anexar los contenidos del registro actual al archivo de registro, o desea borrar el archivo de registro existente?"
+                        LogExistsPanel.Yes_Button.Text = "Anexar al archivo de registro existente"
+                        LogExistsPanel.No_Button.Text = "Borrar archivo de registro existente"
+                    End If
+                End If
+            ElseIf LogMigratePanel.Visible = True Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                    LogMigratePanel.Label1.Text = "Migrate old log files"
+                    LogMigratePanel.Label2.Text = "The Windows 11 Manual Installer has detected log files created by previous versions of the program. Version 2.0 uses a different log format. Do you want to migrate the contents of old files, and append current log contents to the log file?"
+                    LogMigratePanel.Yes_Button.Text = "Migrate"
+                    LogMigratePanel.No_Button.Text = "Don't migrate"
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                    LogMigratePanel.Label1.Text = "Migrar archivos de registro antiguos"
+                    LogMigratePanel.Label2.Text = "El Instalador manual de Windows 11 ha detectado archivos de registro creados por versiones antiguas del programa. La versión 2.0 utiliza un formato de registro diferente. ¿Desea migrar los contenidos de los archivos antiguos, y anexar los contenidos actuales del registro al archivo de registro?"
+                    LogMigratePanel.Yes_Button.Text = "Migrar"
+                    LogMigratePanel.No_Button.Text = "No migrar"
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                    If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                        LogMigratePanel.Label1.Text = "Migrate old log files"
+                        LogMigratePanel.Label2.Text = "The Windows 11 Manual Installer has detected log files created by previous versions of the program. Version 2.0 uses a different log format. Do you want to migrate the contents of old files, and append current log contents to the log file?"
+                        LogMigratePanel.Yes_Button.Text = "Migrate"
+                        LogMigratePanel.No_Button.Text = "Don't migrate"
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                        LogMigratePanel.Label1.Text = "Migrar archivos de registro antiguos"
+                        LogMigratePanel.Label2.Text = "El Instalador manual de Windows 11 ha detectado archivos de registro creados por versiones antiguas del programa. La versión 2.0 utiliza un formato de registro diferente. ¿Desea migrar los contenidos de los archivos antiguos, y anexar los contenidos actuales del registro al archivo de registro?"
+                        LogMigratePanel.Yes_Button.Text = "Migrar"
+                        LogMigratePanel.No_Button.Text = "No migrar"
+                    End If
+                End If
+            ElseIf MethodHelpPanel.Visible = True Then
+                ' If this is still present on stable release, fill this section
+            ElseIf PrefResetPanel.Visible = True Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                    PrefResetPanel.Label1.Text = "Reset preferences?"
+                    PrefResetPanel.Label2.Text = "This will reset ALL preferences to their default values (e.g., language or color mode)"
+                    PrefResetPanel.Yes_Button.Text = "Yes"
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                    PrefResetPanel.Label1.Text = "¿Restablecer preferencias?"
+                    PrefResetPanel.Label2.Text = "Esto restablecerá TODAS las preferencias a sus valores predeterminados (p.ej., el idioma o el modo de color)"
+                    PrefResetPanel.Yes_Button.Text = "Sí"
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                    If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                        PrefResetPanel.Label1.Text = "Reset preferences?"
+                        PrefResetPanel.Label2.Text = "This will reset ALL preferences to their default values (e.g., language or color mode)"
+                        PrefResetPanel.Yes_Button.Text = "Yes"
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                        PrefResetPanel.Label1.Text = "¿Restablecer preferencias?"
+                        PrefResetPanel.Label2.Text = "Esto restablecerá TODAS las preferencias a sus valores predeterminados (p.ej., el idioma o el modo de color)"
+                        PrefResetPanel.Yes_Button.Text = "Sí"
+                    End If
+                End If
+            ElseIf UpdateChoicePanel.Visible = True Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                    UpdateChoicePanel.Label1.Text = "Updates are available"
+                    UpdateChoicePanel.Label2.Text = "You can decide when do you want to install this update"
+                    UpdateChoicePanel.Label3.Text = "This version:"
+                    UpdateChoicePanel.Label4.Text = "Up-to-date version:"
+                    UpdateChoicePanel.Label5.Text = "When you click " & Quote & "Install now" & Quote & ", the program will exit and update to the latest version."
+                    UpdateChoicePanel.OK_Button.Text = "Install now"
+                    UpdateChoicePanel.Cancel_Button.Text = "Install later"
+                    UpdateChoicePanel.RelNotesLink.Text = "View release notes"
+                    UpdateChoicePanel.TextBox1.Left = 177
+                    UpdateChoicePanel.TextBox1.Width = 702
+                    UpdateChoicePanel.TextBox2.Left = 226
+                    UpdateChoicePanel.TextBox2.Width = 653
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                    UpdateChoicePanel.Label1.Text = "Hay actualizaciones disponibles"
+                    UpdateChoicePanel.Label2.Text = "Usted puede decidir cuándo quiere instalar esta actualización"
+                    UpdateChoicePanel.Label3.Text = "Esta versión:"
+                    UpdateChoicePanel.Label4.Text = "Versión actualizada:"
+                    UpdateChoicePanel.Label5.Text = "Cuando haga clic en " & Quote & "Instalar ahora" & Quote & ", el programa se cerrará y se actualizará a la última versión."
+                    UpdateChoicePanel.OK_Button.Text = "Instalar ahora"
+                    UpdateChoicePanel.Cancel_Button.Text = "Instalar después"
+                    UpdateChoicePanel.RelNotesLink.Text = "Ver notas de la versión"
+                    UpdateChoicePanel.TextBox1.Left = 178
+                    UpdateChoicePanel.TextBox1.Width = 701
+                    UpdateChoicePanel.TextBox2.Left = 228
+                    UpdateChoicePanel.TextBox2.Width = 651
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                    If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                        UpdateChoicePanel.Label1.Text = "Updates are available"
+                        UpdateChoicePanel.Label2.Text = "You can decide when do you want to install this update"
+                        UpdateChoicePanel.Label3.Text = "This version:"
+                        UpdateChoicePanel.Label4.Text = "Up-to-date version:"
+                        UpdateChoicePanel.Label5.Text = "When you click " & Quote & "Install now" & Quote & ", the program will exit and update to the latest version."
+                        UpdateChoicePanel.OK_Button.Text = "Install now"
+                        UpdateChoicePanel.Cancel_Button.Text = "Install later"
+                        UpdateChoicePanel.RelNotesLink.Text = "View release notes"
+                        UpdateChoicePanel.TextBox1.Left = 177
+                        UpdateChoicePanel.TextBox1.Width = 702
+                        UpdateChoicePanel.TextBox2.Left = 226
+                        UpdateChoicePanel.TextBox2.Width = 653
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                        UpdateChoicePanel.Label1.Text = "Hay actualizaciones disponibles"
+                        UpdateChoicePanel.Label2.Text = "Usted puede decidir cuándo quiere instalar esta actualización"
+                        UpdateChoicePanel.Label3.Text = "Esta versión:"
+                        UpdateChoicePanel.Label4.Text = "Versión actualizada:"
+                        UpdateChoicePanel.Label5.Text = "Cuando haga clic en " & Quote & "Instalar ahora" & Quote & ", el programa se cerrará y se actualizará a la última versión."
+                        UpdateChoicePanel.OK_Button.Text = "Instalar ahora"
+                        UpdateChoicePanel.Cancel_Button.Text = "Instalar después"
+                        UpdateChoicePanel.RelNotesLink.Text = "Ver notas de la versión"
+                        UpdateChoicePanel.TextBox1.Left = 178
+                        UpdateChoicePanel.TextBox1.Width = 701
+                        UpdateChoicePanel.TextBox2.Left = 228
+                        UpdateChoicePanel.TextBox2.Width = 651
+                    End If
+                End If
+            End If
+        End If
+        If MiniModeDialog.Visible = True Then
+            Try
+                MiniModeDialog.tbPic.Left = MiniModeDialog.TrueLoc
+                MiniModeDialog.CheckBox1.Left = MiniModeDialog.TrueLoc + 12
+                MiniModeDialog.PictureBox2.Left = MiniModeDialog.TrueLoc + 39
+                MiniModeDialog.Label1.Left = MiniModeDialog.TrueLoc + 104
+                MiniModeDialog.OK_Button.Left = MiniModeDialog.TrueLoc + 741
+                MiniModeDialog.backPic.SizeMode = PictureBoxSizeMode.Zoom
+                MiniModeDialog.backPic.Image = backgroundPic.Image
+                If BackColor = Color.FromArgb(243, 243, 243) Then
+                    MiniModeDialog.tbPic.Image = New Bitmap(My.Resources.tb_White)
+                    MiniModeDialog.CheckBox1.ForeColor = Color.Black
+                ElseIf BackColor = Color.FromArgb(32, 32, 32) Then
+                    MiniModeDialog.tbPic.Image = New Bitmap(My.Resources.tb_Black)
+                    MiniModeDialog.CheckBox1.ForeColor = Color.White
+                End If
+            Catch ex As Exception
+                If BackColor = Color.FromArgb(243, 243, 243) Then
+                    MiniModeDialog.backPic.Image = New Bitmap(My.Resources.Bloom_Light)
+                    MiniModeDialog.tbPic.Image = New Bitmap(My.Resources.tb_White)
+                    MiniModeDialog.CheckBox1.ForeColor = Color.Black
+                ElseIf BackColor = Color.FromArgb(32, 32, 32) Then
+                    MiniModeDialog.backPic.Image = New Bitmap(My.Resources.Bloom_Dark)
+                    MiniModeDialog.tbPic.Image = New Bitmap(My.Resources.tb_Black)
+                    MiniModeDialog.CheckBox1.ForeColor = Color.White
+                End If
+            End Try
+            MiniModeDialog.backPic.BackColor = BackColor
+        End If
     End Sub
 End Class
