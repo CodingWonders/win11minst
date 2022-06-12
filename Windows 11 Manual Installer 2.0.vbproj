@@ -463,6 +463,8 @@
     <None Include="Resources\darkmode.png" />
     <None Include="Resources\build_mode.png" />
     <None Include="Resources\dllr_mh.png" />
+    <None Include="Resources\export_dark.png" />
+    <None Include="Resources\export_light.png" />
     <Content Include="Resources\HTMLHelp\HelpPage.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
