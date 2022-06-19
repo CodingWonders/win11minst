@@ -63,7 +63,11 @@ This version may not have many new features. As the date for the stable version 
 
 ![win11minst-32bit-hover](https://user-images.githubusercontent.com/101426328/174486904-6efe36b2-dbfa-4d6d-98dd-4ead773d6160.png)
 
+> A description of the 'processor' icon. Taken from a 32-bit Windows 7 VM
+
 ![win11minst_q5GcGEyNLp](https://user-images.githubusercontent.com/101426328/174487015-cafd0f34-b798-4439-bb0c-7b1d815bb9f0.png)
+
+> The message that shows after clicking the 'processor' icon
 
 #### **Removed/stripped down features**
 
