@@ -529,4 +529,34 @@
   <data name="export_light" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\export_light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="first_step_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\first_step_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="first_step_light" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\first_step_light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="last_step_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\last_step_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="last_step_light" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\last_step_light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="next_step_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\next_step_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="next_step_light" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\next_step_light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="prev_step_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\prev_step_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="prev_step_light" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\prev_step_light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="x86_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\x86_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="x86_light" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\x86_light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
