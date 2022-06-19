@@ -43,14 +43,16 @@ This version may not have many new features. As the date for the stable version 
 
 - Component version information is now displayed in the About screen
 
-![win11minst_UOnQNw3Lw8](https://user-images.githubusercontent.com/101426328/174486722-2edf9865-97f4-4fa8-b07e-10ee628d4557.png)
+![win11minst_UOnQNw3Lw8](https://user-images.githubusercontent.com/101426328/174486774-8842f0b6-5a94-4250-bf77-f99d70886973.png)
 
 - Functionality settings can now be accessed from the installer creation screen
 
-![XOZ2RL8IUJ](https://user-images.githubusercontent.com/101426328/174486754-c9cdd582-a9cb-4d52-8e5c-7c2412544458.gif)
-
+![XOZ2RL8IUJ](https://user-images.githubusercontent.com/101426328/174486782-23b69305-e19a-4712-b5a8-7a4c49049891.gif)
 
 - When hovering over the side panel images, a description is shown
+
+![iBbKXr8tT5](https://user-images.githubusercontent.com/101426328/174487296-9e73c73d-bb41-49d8-9525-8cc934ffd8bb.gif)
+
 - Added French translations
 
     > Since releases are weekly, not a lot much was done for full French translations, so it will only apply on the main window (for now)
@@ -58,6 +60,10 @@ This version may not have many new features. As the date for the stable version 
 - Began work on a revamped Instructions panel (although it can't be loaded yet)
 - Began improving program speed and fluidity
 - If the program is run on a 32-bit (x86) system, a 'processor' icon will appear next to the window buttons
+
+![win11minst-32bit-hover](https://user-images.githubusercontent.com/101426328/174486904-6efe36b2-dbfa-4d6d-98dd-4ead773d6160.png)
+
+![win11minst_q5GcGEyNLp](https://user-images.githubusercontent.com/101426328/174487015-cafd0f34-b798-4439-bb0c-7b1d815bb9f0.png)
 
 #### **Removed/stripped down features**
 
