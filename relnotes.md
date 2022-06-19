@@ -42,7 +42,14 @@ This version may not have many new features. As the date for the stable version 
 #### **New features**
 
 - Component version information is now displayed in the About screen
+
+![win11minst_UOnQNw3Lw8](https://user-images.githubusercontent.com/101426328/174486722-2edf9865-97f4-4fa8-b07e-10ee628d4557.png)
+
 - Functionality settings can now be accessed from the installer creation screen
+
+![XOZ2RL8IUJ](https://user-images.githubusercontent.com/101426328/174486754-c9cdd582-a9cb-4d52-8e5c-7c2412544458.gif)
+
+
 - When hovering over the side panel images, a description is shown
 - Added French translations
 
