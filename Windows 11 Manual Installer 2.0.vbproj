@@ -422,6 +422,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon3.ico" />
+    <None Include="Resources\x86_light.png" />
+    <None Include="Resources\x86_dark.png" />
+    <None Include="Resources\prev_step_dark.png" />
+    <None Include="Resources\next_step_light.png" />
+    <None Include="Resources\next_step_dark.png" />
+    <None Include="Resources\last_step_light.png" />
+    <None Include="Resources\last_step_dark.png" />
+    <None Include="Resources\prev_step_light.png" />
     <None Include="Resources\logo_dark.png" />
     <None Include="Resources\logo_light.png" />
     <None Include="Resources\logo_wide.png" />
@@ -465,6 +473,8 @@
     <None Include="Resources\dllr_mh.png" />
     <None Include="Resources\export_dark.png" />
     <None Include="Resources\export_light.png" />
+    <None Include="Resources\first_step_dark.png" />
+    <None Include="Resources\first_step_light.png" />
     <Content Include="Resources\HTMLHelp\HelpPage.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
