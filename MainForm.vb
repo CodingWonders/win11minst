@@ -12,9 +12,9 @@ Imports System.Threading
 Public Class MainForm
     Private isMouseDown As Boolean = False
     Private mouseOffset As Point
-    Dim VerStr As String = "2.0.0100_220612"    ' Reported version
+    Dim VerStr As String = "2.0.0100_220619"    ' Reported version
     Dim AVerStr As String = My.Application.Info.Version.ToString()     ' Assembly version
-    Dim VDescStr As String = ""
+    Dim VDescStr As String = "Even though we all hated Internet Explorer, it brought the Internet to a mainstream audience"
     Dim OffEcho As String = "@echo off"
     Dim wmiget As String
     Dim StDebugTime As Date = Now
@@ -68,6 +68,13 @@ Public Class MainForm
     Dim needsUpdates As Boolean
     Dim WndLeft As Point
     Dim WndTop As Point
+    Dim SevenZipVer As FileVersionInfo
+    Dim SevenZipStr As String
+    Dim OSCDIMGVer As FileVersionInfo
+    Dim OSCDIMGStr As String
+    Dim DismVer As FileVersionInfo
+    Dim DismStr As String
+    Dim MOLinkIsClicked As Boolean
 
     ' Left mouse button pressed
     Private Sub titlePanel_MouseDown(sender As Object, e As MouseEventArgs) Handles titlePanel.MouseDown, TitleBar.MouseDown
@@ -180,19 +187,25 @@ Public Class MainForm
             If Not File.Exists(".\noshow") Then
                 MiniModeDialog.Show()
             End If
-            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                 Notify.BalloonTipTitle = "The program is running in the background."
                 Notify.BalloonTipText = "Click this message to bring it back."
-            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                 Notify.BalloonTipTitle = "El programa se está ejecutando en segundo plano."
                 Notify.BalloonTipText = "Haga clic en este mensaje para traerlo de vuelta."
-            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                Notify.BalloonTipTitle = "Le programme fonctionne en arrière-plan."
+                Notify.BalloonTipText = "Cliquez sur ce message pour le faire réapparaître."
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                 If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                     Notify.BalloonTipTitle = "The program is running in the background."
                     Notify.BalloonTipText = "Click this message to bring it back."
                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                     Notify.BalloonTipTitle = "El programa se está ejecutando en segundo plano."
                     Notify.BalloonTipText = "Haga clic en este mensaje para traerlo de vuelta."
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                    Notify.BalloonTipTitle = "Le programme fonctionne en arrière-plan."
+                    Notify.BalloonTipText = "Cliquez sur ce message pour le faire réapparaître."
                 End If
             End If
             If CheckBox1.Checked = True And CheckBox1.Enabled = True Then
@@ -430,18 +443,28 @@ Public Class MainForm
                 AutomaticLanguageToolStripMenuItem.Checked = False
                 EnglishToolStripMenuItem.Checked = True
                 SpanishToolStripMenuItem.Checked = False
+                FrenchToolStripMenuItem.Checked = False
             ElseIf SettingLoadForm.TextBox1.Text.Contains("Language=2") Then
                 LangInt = 2
                 ComboBox4.SelectedItem = "Spanish"
                 AutomaticLanguageToolStripMenuItem.Checked = False
                 EnglishToolStripMenuItem.Checked = False
                 SpanishToolStripMenuItem.Checked = True
+                FrenchToolStripMenuItem.Checked = False
+            ElseIf SettingLoadForm.TextBox1.Text.Contains("Language=3") Then
+                LangInt = 3
+                ComboBox4.SelectedItem = "French"
+                AutomaticLanguageToolStripMenuItem.Checked = False
+                EnglishToolStripMenuItem.Checked = False
+                SpanishToolStripMenuItem.Checked = False
+                FrenchToolStripMenuItem.Checked = True
             ElseIf SettingLoadForm.TextBox1.Text.Contains("Language=0") Then
                 LangInt = 0
                 ComboBox4.SelectedItem = "Automatic"
                 AutomaticLanguageToolStripMenuItem.Checked = True
                 EnglishToolStripMenuItem.Checked = False
                 SpanishToolStripMenuItem.Checked = False
+                FrenchToolStripMenuItem.Checked = False
             End If
             If SettingLoadForm.TextBox1.Text.Contains("NavBarPos=0") Then
                 RadioButton3.Checked = True
@@ -510,18 +533,20 @@ Public Class MainForm
         End If
         SettingLoadForm.TextBox2.Clear()
         SettingLoadForm.TextBox2.AppendText("# Settings file for the Windows 11 Manual Installer" & CrLf & CrLf & "[Personalization]" & CrLf)
-        If ComboBox1.SelectedItem = "Light" Or ComboBox1.SelectedItem = "Claro" Then
+        If ComboBox1.SelectedItem = "Light" Or ComboBox1.SelectedItem = "Claro" Or ComboBox1.SelectedItem = "Lumière" Then
             SettingLoadForm.TextBox2.AppendText("ColorMode=2")
-        ElseIf ComboBox1.SelectedItem = "Dark" Or ComboBox1.SelectedItem = "Oscuro" Then
+        ElseIf ComboBox1.SelectedItem = "Dark" Or ComboBox1.SelectedItem = "Oscuro" Or ComboBox1.SelectedItem = "Sombre" Then
             SettingLoadForm.TextBox2.AppendText("ColorMode=1")
-        ElseIf ComboBox1.SelectedItem = "Automatic" Or ComboBox1.SelectedItem = "Automático" Then
+        ElseIf ComboBox1.SelectedItem = "Automatic" Or ComboBox1.SelectedItem = "Automático" Or ComboBox1.SelectedItem = "Automatique" Then
             SettingLoadForm.TextBox2.AppendText("ColorMode=0")
         End If
-        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             SettingLoadForm.TextBox2.AppendText(CrLf & "Language=1")
-        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
             SettingLoadForm.TextBox2.AppendText(CrLf & "Language=2")
-        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            SettingLoadForm.TextBox2.AppendText(CrLf & "Language=3")
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             SettingLoadForm.TextBox2.AppendText(CrLf & "Language=0")
         End If
         If RadioButton3.Checked = True Then
@@ -588,6 +613,15 @@ Public Class MainForm
         Dim KillCmdProc As Process = Process.Start(KillCmd)
     End Sub
 
+    Public Sub DetectCompVersion()
+        SevenZipVer = FileVersionInfo.GetVersionInfo(".\prog_bin\7z.exe")
+        SevenZipStr = SevenZipVer.FileVersion
+        OSCDIMGVer = FileVersionInfo.GetVersionInfo(".\prog_bin\oscdimg.exe")
+        OSCDIMGStr = OSCDIMGVer.FileVersion
+        DismVer = FileVersionInfo.GetVersionInfo("\Windows\System32\dism.exe")
+        DismStr = DismVer.FileVersion
+    End Sub
+
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         KillCmdWnd()
         VersionToolStripMenuItem.Text = "version " & VerStr & " (assembly version " & AVerStr & ")"
@@ -631,18 +665,26 @@ Public Class MainForm
             My.Computer.FileSystem.WriteAllText(".\version", VerStr, False, ASCII)
         End If
         If needsUpdates Then
-            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                 Label91.Text = "Updates bring new features and bugfixes to this program. Click " & Quote & "Check for updates" & Quote & " to check for program updates."
-            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                 Label91.Text = "Las actualizaciones aportan nuevas características y correcciones de errores al programa. Haga clic en " & Quote & "Comprobar actualizaciones" & Quote & " para comprobar actualizaciones del programa."
-            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                Label91.Text = "Les mises à jour apportent de nouvelles fonctionnalités et des corrections de bogues à ce programme. Cliquez sur " & Quote & "Vérifier les mises à jour" & Quote & " pour vérifier les mises à jour du programme."
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                 If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                     Label91.Text = "Updates bring new features and bugfixes to this program. Click " & Quote & "Check for updates" & Quote & " to check for program updates."
                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                     Label91.Text = "Las actualizaciones aportan nuevas características y correcciones de errores al programa. Haga clic en " & Quote & "Comprobar actualizaciones" & Quote & " para comprobar actualizaciones del programa."
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                    Label91.Text = "Les mises à jour apportent de nouvelles fonctionnalités et des corrections de bogues à ce programme. Cliquez sur " & Quote & "Vérifier les mises à jour" & Quote & " pour vérifier les mises à jour du programme."
                 End If
             End If
         End If
+        DetectCompVersion()
+        Label94.Text = Label94.Text & " " & SevenZipStr
+        Label95.Text = Label95.Text & " " & DismStr
+        Label96.Text = Label96.Text & " " & OSCDIMGStr
         ErrorCount = 0
         WarnCount = 0
         MessageCount = 0
@@ -663,21 +705,18 @@ Public Class MainForm
                 AOTSMI.Visible = False
             End If
         End If
-
         Notify.Visible = True
         Dim HTMLname As String = "HelpPage.html"
         With WebBrowser1
             .ScriptErrorsSuppressed = True
             .Url = New Uri(String.Format("file:///{0}{1}{2}/", Directory.GetCurrentDirectory(), "/Resources/HTMLHelp/", HTMLname))
         End With
-
         NameLabel.Text = "Name: " & TextBox3.Text
         Label28.Text = "DPI scale to be applied: " & TrackBar1.Value & "%"
         InstCreateInt = 0
         If Not InstProjectReuseDialog.DialogResult = Windows.Forms.DialogResult.OK Then
             TextBox4.Text = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)
         End If
-
         ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote
         ' This condition is used for debugging purposes
         If Debugger.IsAttached = True Then
@@ -957,6 +996,10 @@ Public Class MainForm
             File.Delete(".\kill.bat")
         End If
         CenterToScreen()        ' This is done to prevent a bug where it would not center to the screen!
+        If Environment.Is64BitOperatingSystem = False Then
+            x86_Pic.Visible = True
+            AdminLabel.Left = 832
+        End If
         Visible = True
         BringToFront()
         BackSubPanel.Show()
@@ -964,42 +1007,32 @@ Public Class MainForm
         DisclaimerPanel.Visible = True
         DisclaimerPanel.Visible = False
         If My.Computer.Info.OSFullName.Contains("Windows 11") Then
-            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                 MsgBox("This computer (or device) is already running Windows 11. You will not be able to use this tool to upgrade to/install Windows 11 on your system, but you can still use it to upgrade to/install Windows 11 on other systems.", vbOKOnly + vbInformation, "Already running Windows 11")
-            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                 MsgBox("Este ordenador (o dispositivo) ya está ejecutando Windows 11. No será posible usar la herramienta para actualizar a/instalar Windows 11 en su sistema, pero todavía puede usarlo para actualizar a/instalar Windows 11 en otros sistemas.", vbOKOnly + vbInformation, "Ya se está ejecutando Windows 11")
-            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                MsgBox("Cet ordinateur (ou appareil) exécute déjà Windows 11. Vous ne pourrez pas utiliser cet outil pour mettre à niveau vers/installer Windows 11 sur votre système, mais vous pouvez toujours l'utiliser pour mettre à niveau vers/installer Windows 11 sur d'autres systèmes.", vbOKOnly + vbInformation, "Vous utilisez déjà Windows 11")
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                 If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                     MsgBox("This computer (or device) is already running Windows 11. You will not be able to use this tool to upgrade to/install Windows 11 on your system, but you can still use it to upgrade to/install Windows 11 on other systems.", vbOKOnly + vbInformation, "Already running Windows 11")
                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                     MsgBox("Este ordenador (o dispositivo) ya está ejecutando Windows 11. No será posible usar la herramienta para actualizar a/instalar Windows 11 en su sistema, pero todavía puede usarlo para actualizar a/instalar Windows 11 en otros sistemas.", vbOKOnly + vbInformation, "Ya se está ejecutando Windows 11")
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                    MsgBox("Cet ordinateur (ou appareil) exécute déjà Windows 11. Vous ne pourrez pas utiliser cet outil pour mettre à niveau vers/installer Windows 11 sur votre système, mais vous pouvez toujours l'utiliser pour mettre à niveau vers/installer Windows 11 sur d'autres systèmes.", vbOKOnly + vbInformation, "Vous utilisez déjà Windows 11")
                 End If
             End If
-        End If
-        If Environment.Is64BitOperatingSystem = False Then
-            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
-                MsgBox("The program has detected a 32-bit processor or a 32-bit operating system. The tool will still work, but the installer won't. You'll need a computer with a 64-bit processor to install Windows 11." & CrLf & "If it's the latter (you have a 32-bit OS on a 64-bit processor), you'll need to reinstall Windows.", vbOKOnly + vbInformation, "Incompatible installer architecture")
-            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
-                MsgBox("El programa ha detectado un procesador o un sistema operativo de 32 bits. La herramienta todavía funcionará, pero el instalador no lo hará. Necesitará un ordenador con un procesador de 64 bits para instalar Windows 11." & CrLf & "Si es lo último (tiene un sistema operativo de 32 bits en un procesador de 64 bits), deberá reinstalar Windows.", vbOKOnly + vbInformation, "Arquitectura del instalador incompatible")
-            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
-                If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
-                    MsgBox("The program has detected a 32-bit processor or a 32-bit operating system. The tool will still work, but the installer won't. You'll need a computer with a 64-bit processor to install Windows 11." & CrLf & "If it's the latter (you have a 32-bit OS on a 64-bit processor), you'll need to reinstall Windows.", vbOKOnly + vbInformation, "Incompatible installer architecture")
-                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
-                    MsgBox("El programa ha detectado un procesador o un sistema operativo de 32 bits. La herramienta todavía funcionará, pero el instalador no lo hará. Necesitará un ordenador con un procesador de 64 bits para instalar Windows 11." & CrLf & "Si es lo último (tiene un sistema operativo de 32 bits en un procesador de 64 bits), deberá reinstalar Windows.", vbOKOnly + vbInformation, "Arquitectura del instalador incompatible")
-                End If
-            End If
-
         End If
 
         ' Windows Server (Nickel) and Server (Copper) builds still don't check servers to meet system reqs (tested build 25083).
         ' Hold this for a bit (do not remove this, use this in the future if M$ wants to block Windows Server Nickel or Copper
         ' on unsupported servers, also, remove this comment if that happens)
         'If My.Computer.Info.OSFullName.Contains("Windows Server") Then
-        '    If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+        '    If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
         '        MsgBox("This computer is running a Windows Server operating system. To achieve optimal results on incompatible servers, please create Copper or Nickel build installers of Windows Server.", vbOKOnly + vbInformation, "Windows Server detected")
-        '    ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+        '    ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
         '        MsgBox("Este ordenador está ejecutando un sistema operativo Windows Server. Para lograr resultados óptimos en servidores incompatibles, por favor, cree instaladores de compilaciones Nickel y Copper de Windows Server.", vbOKOnly + vbInformation, "Se ha detectado Windows Server")
-        '    ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+        '    ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
         '        If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
         '            MsgBox("This computer is running a Windows Server operating system. To achieve optimal results on incompatible servers, please create Copper or Nickel build installers of Windows Server.", vbOKOnly + vbInformation, "Windows Server detected")
         '        ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
@@ -1235,6 +1268,7 @@ Public Class MainForm
         PictureBox33.Image = HelpPic.Image
         PictureBox34.Image = InfoPic.Image
     End Sub
+
     Private Sub LogoPic_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles LogoPic.MouseDoubleClick
         If CheckBox3.Checked = True Then
             Notify.ShowBalloonTip(5)
@@ -1256,30 +1290,38 @@ Public Class MainForm
 
     Private Sub RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged
         If RadioButton1.Checked = True Then
-            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                 PC_DETAIL_Label.Text = "Select this option for broader hardware compatibility"
-            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                 PC_DETAIL_Label.Text = "Seleccione esta opción para una compatibilidad de hardware más amplia"
-            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                PC_DETAIL_Label.Text = "Sélectionnez cette option pour une compatibilité matérielle plus large"
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                 If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                     PC_DETAIL_Label.Text = "Select this option for broader hardware compatibility"
                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                     PC_DETAIL_Label.Text = "Seleccione esta opción para una compatibilidad de hardware más amplia"
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                    PC_DETAIL_Label.Text = "Sélectionnez cette option pour une compatibilité matérielle plus large"
                 End If
             End If
             LinkLabel3.Visible = False
             LinkLabel4.Visible = False
             Label76.Text = "BIOS/UEFI-CSM (ID: 0x00)"
         Else
-            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                 PC_DETAIL_Label.Text = "Select this option for systems that only support UEFI" & CrLf & "NOTE: you can enable UEFI-CSM on your system. If you don't know how, check one of the links below."
-            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                 PC_DETAIL_Label.Text = "Seleccione esta opción para sistemas que solo soporten UEFI" & CrLf & "NOTA: usted puede habilitar UEFI-CSM en su sistema. Si no sabe cómo, compruebe uno de los enlaces de abajo."
-            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                PC_DETAIL_Label.Text = "Sélectionnez cette option pour les systèmes qui ne prennent en charge que l'UEFI." & CrLf & "NOTE : vous pouvez activer UEFI-CSM sur votre système. Si vous ne savez pas comment faire, consultez l'un des liens ci-dessous."
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                 If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                     PC_DETAIL_Label.Text = "Select this option for systems that only support UEFI" & CrLf & "NOTE: you can enable UEFI-CSM on your system. If you don't know how, check one of the links below."
                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                     PC_DETAIL_Label.Text = "Seleccione esta opción para sistemas que solo soporten UEFI" & CrLf & "NOTA: usted puede habilitar UEFI-CSM en su sistema. Si no sabe cómo, compruebe uno de los enlaces de abajo."
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                    PC_DETAIL_Label.Text = "Sélectionnez cette option pour les systèmes qui ne prennent en charge que l'UEFI." & CrLf & "NOTE : vous pouvez activer UEFI-CSM sur votre système. Si vous ne savez pas comment faire, consultez l'un des liens ci-dessous."
                 End If
             End If
             LinkLabel3.Visible = True
@@ -1289,18 +1331,22 @@ Public Class MainForm
     End Sub
 
     Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
-        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             Label31.Text = "Color mode: " & ComboBox1.Text.ToLower & " mode"
-        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
-            Label31.Text = "Modo de color: modo" & ComboBox1.Text.ToLower
-        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+            Label31.Text = "Modo de color: modo " & ComboBox1.Text.ToLower
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            Label31.Text = "Mode couleur: mode " & ComboBox1.Text.ToLower
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 Label31.Text = "Color mode: " & ComboBox1.Text.ToLower & " mode"
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 Label31.Text = "Modo de color: modo " & ComboBox1.Text.ToLower
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                Label31.Text = "Mode couleur: mode " & ComboBox1.Text.ToLower
             End If
         End If
-        If ComboBox1.SelectedItem = "Dark" Or ComboBox1.SelectedItem = "Oscuro" Then
+        If ComboBox1.SelectedItem = "Dark" Or ComboBox1.SelectedItem = "Oscuro" Or ComboBox1.SelectedItem = "Sombre" Then
             ColorInt = 1
             If RadioButton3.Checked = True Then
                 PictureBox2.Image = New Bitmap(My.Resources.NavBar_LeftPos_Dark)
@@ -1321,6 +1367,7 @@ Public Class MainForm
             WelcomePanel.BackColor = Color.FromArgb(39, 39, 39)
             ForeColor = Color.White
             Panel_Border_Pic.Image = New Bitmap(My.Resources.panel_corner_black)
+            x86_Pic.Image = New Bitmap(My.Resources.x86_dark)
             minBox.Image = New Bitmap(My.Resources.minBox_dark)
             ' This has changed to determine window state
             If WindowState = FormWindowState.Maximized Then
@@ -1457,11 +1504,11 @@ Public Class MainForm
             LinkLabel13.LinkColor = Color.FromArgb(76, 194, 255)
             LinkLabel14.LinkColor = Color.FromArgb(76, 194, 255)
             LinkLabel16.LinkColor = Color.FromArgb(76, 194, 255)
+            LinkLabel17.LinkColor = Color.FromArgb(76, 194, 255)
+            LinkLabel18.LinkColor = Color.FromArgb(76, 194, 255)
             TargetInstallerLinkLabel.LinkColor = Color.FromArgb(76, 194, 255)
             LogViewLink.LinkColor = Color.FromArgb(76, 194, 255)
-
-
-        ElseIf ComboBox1.SelectedItem = "Light" Or ComboBox1.SelectedItem = "Claro" Then
+        ElseIf ComboBox1.SelectedItem = "Light" Or ComboBox1.SelectedItem = "Claro" Or ComboBox1.SelectedItem = "Lumière" Then
             ColorInt = 2
             If RadioButton3.Checked = True Then
                 PictureBox2.Image = New Bitmap(My.Resources.NavBar_LeftPos_Light)
@@ -1482,6 +1529,7 @@ Public Class MainForm
             WelcomePanel.BackColor = Color.FromArgb(249, 249, 249)
             ForeColor = Color.Black
             Panel_Border_Pic.Image = New Bitmap(My.Resources.panel_corner_white)
+            x86_Pic.Image = New Bitmap(My.Resources.x86_light)
             minBox.Image = New Bitmap(My.Resources.minBox)
             If WindowState = FormWindowState.Maximized Then
                 maxBox.Image = New Bitmap(My.Resources.restdownbox)
@@ -1608,9 +1656,11 @@ Public Class MainForm
             LinkLabel13.LinkColor = Color.FromArgb(1, 92, 186)
             LinkLabel14.LinkColor = Color.FromArgb(1, 92, 186)
             LinkLabel16.LinkColor = Color.FromArgb(1, 92, 186)
+            LinkLabel17.LinkColor = Color.FromArgb(1, 92, 186)
+            LinkLabel18.LinkColor = Color.FromArgb(1, 92, 186)
             TargetInstallerLinkLabel.LinkColor = Color.FromArgb(1, 92, 186)
             LogViewLink.LinkColor = Color.FromArgb(1, 92, 186)
-        ElseIf ComboBox1.SelectedItem = "Automatic" Or ComboBox1.SelectedItem = "Automático" Then
+        ElseIf ComboBox1.SelectedItem = "Automatic" Or ComboBox1.SelectedItem = "Automático" Or ComboBox1.SelectedItem = "Automatique" Then
             ColorInt = 0
             Try
                 If My.Computer.Info.OSFullName.Contains("Windows 7") Or My.Computer.Info.OSFullName.Contains("Windows 8") Or My.Computer.Info.OSFullName.Contains("Windows Server 2008") Or My.Computer.Info.OSFullName.Contains("Windows Server 2012") Then
@@ -1653,6 +1703,7 @@ Public Class MainForm
                         WelcomePanel.BackColor = Color.FromArgb(39, 39, 39)
                         ForeColor = Color.White
                         Panel_Border_Pic.Image = New Bitmap(My.Resources.panel_corner_black)
+                        x86_Pic.Image = New Bitmap(My.Resources.x86_dark)
                         minBox.Image = New Bitmap(My.Resources.minBox_dark)
                         If WindowState = FormWindowState.Maximized Then
                             maxBox.Image = New Bitmap(My.Resources.restdownbox_dark)
@@ -1770,6 +1821,8 @@ Public Class MainForm
                         LinkLabel13.LinkColor = Color.FromArgb(76, 194, 255)
                         LinkLabel14.LinkColor = Color.FromArgb(76, 194, 255)
                         LinkLabel16.LinkColor = Color.FromArgb(76, 194, 255)
+                        LinkLabel17.LinkColor = Color.FromArgb(76, 194, 255)
+                        LinkLabel18.LinkColor = Color.FromArgb(76, 194, 255)
                         TargetInstallerLinkLabel.LinkColor = Color.FromArgb(76, 194, 255)
                         LogViewLink.LinkColor = Color.FromArgb(76, 194, 255)
                     ElseIf ColorStr = "1" Then
@@ -1791,12 +1844,13 @@ Public Class MainForm
                         WelcomePanel.BackColor = Color.FromArgb(249, 249, 249)
                         ForeColor = Color.Black
                         Panel_Border_Pic.Image = New Bitmap(My.Resources.panel_corner_white)
+                        x86_Pic.Image = New Bitmap(My.Resources.x86_light)
                         If WindowState = FormWindowState.Maximized Then
                             maxBox.Image = New Bitmap(My.Resources.restdownbox)
                         Else
                             maxBox.Image = New Bitmap(My.Resources.maxbox)
                         End If
-                        maxBox.Image = New Bitmap(My.Resources.maxbox)
+                        minBox.Image = New Bitmap(My.Resources.minBox)
                         closeBox.Image = New Bitmap(My.Resources.closebox)
                         back_Pic.Image = New Bitmap(My.Resources.back_arrow)
                         PictureBox11.Image = New Bitmap(My.Resources.logo_light)
@@ -1908,6 +1962,8 @@ Public Class MainForm
                         LinkLabel13.LinkColor = Color.FromArgb(1, 92, 186)
                         LinkLabel14.LinkColor = Color.FromArgb(1, 92, 186)
                         LinkLabel16.LinkColor = Color.FromArgb(1, 92, 186)
+                        LinkLabel17.LinkColor = Color.FromArgb(1, 92, 186)
+                        LinkLabel18.LinkColor = Color.FromArgb(1, 92, 186)
                         TargetInstallerLinkLabel.LinkColor = Color.FromArgb(1, 92, 186)
                         LogViewLink.LinkColor = Color.FromArgb(1, 92, 186)
                     End If
@@ -1921,15 +1977,19 @@ Public Class MainForm
                     End If
                 End If
             Catch NREx As NullReferenceException
-                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                     MsgBox("Cannot set the color mode to match the system's. Perhaps the registry key is not available.", vbOKOnly + vbExclamation, "Automatic color mode")
-                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                     MsgBox("No se pudo establecer el modo de color para combinar con el del sistema. Quizá la clave de registro no está disponible.", vbOKOnly + vbExclamation, "Modo de color automático")
-                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                    MsgBox("Impossible de régler le mode de couleur pour qu'il corresponde à celui du système. La clé de registre n'est peut-être pas disponible.", vbOKOnly + vbExclamation, "Mode couleur automatique")
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         MsgBox("Cannot set the color mode to match the system's. Perhaps the registry key is not available.", vbOKOnly + vbExclamation, "Automatic color mode")
                     ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                         MsgBox("No se pudo establecer el modo de color para combinar con el del sistema. Quizá la clave de registro no está disponible.", vbOKOnly + vbExclamation, "Modo de color automático")
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                        MsgBox("Impossible de régler le mode de couleur pour qu'il corresponde à celui du système. La clé de registre n'est peut-être pas disponible.", vbOKOnly + vbExclamation, "Mode couleur automatique")
                     End If
                 End If
             End Try
@@ -1981,15 +2041,19 @@ Public Class MainForm
         If DialogInt = 0 Then
             DialogInt += 1
             If My.Computer.Info.OSFullName.Contains("Windows 7") Or My.Computer.Info.OSFullName.Contains("Windows 8") Then
-                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                     MsgBox("The automatic color mode option is not accessible under Windows 7 and Windows 8/8.1, because they do not support dark mode." & CrLf & "The way this program sets the color mode is by looking at the " & Quote & "AppsUseLightMode" & Quote & " registry key, which is present since Windows 10 version 1809 (October 2018 Update), and is carried on by further versions of Windows 10, and Windows 11." & CrLf & "- If its value is 0, then the program will use dark mode" & CrLf & "- If its value is 1, then the program will use light mode" & CrLf & CrLf & "You can still set the color mode manually.", vbOKOnly + vbInformation, "Automatic color mode")
-                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                     MsgBox("La opción de modo de color automático no es accesible en Windows 7 y Windows 8/8.1, porque no soportan el modo oscuro." & CrLf & "La manera en la que este programa establece el modo de color es observando la clave del registro " & Quote & "AppsUseLightMode" & Quote & " , que está presente desde Windows 10 versión 1809 (actualización de Octubre de 2018), y se mantiene en versiones próximas de Windows 10, y Windows 11." & CrLf & "- Si su valor es 0, el programa utilizará el modo oscuro" & CrLf & "- Si su valor es 1, el programa utilizará el modo claro" & CrLf & CrLf & "Todavía puede establecer el modo de color manualmente.", vbOKOnly + vbInformation, "Modo de color automático")
-                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                    MsgBox("L'option de mode couleur automatique n'est pas accessible sous Windows 7 et Windows 8/8.1, car ils ne prennent pas en charge le mode sombre." & CrLf & "La façon dont ce programme définit le mode de couleur est en regardant la clé de registre " & Quote & "AppsUseLightMode" & Quote & ", qui est présente depuis la version 1809 de Windows 10 (mise à jour d'octobre 2018), et est reprise par les versions ultérieures de Windows 10, et Windows 11." & CrLf & "- Si sa valeur est 0, alors le programme utilisera le mode sombre." & CrLf & "- Si sa valeur est 1, alors le programme utilisera le mode clair." & CrLf & CrLf & "Vous pouvez toujours définir le mode couleur manuellement.", vbOKOnly + vbInformation, "Mode couleur automatique")
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         MsgBox("The automatic color mode option is not accessible under Windows 7 and Windows 8/8.1, because they do not support dark mode." & CrLf & "The way this program sets the color mode is by looking at the " & Quote & "AppsUseLightMode" & Quote & " registry key, which is present since Windows 10 version 1809 (October 2018 Update), and is carried on by further versions of Windows 10, and Windows 11." & CrLf & "- If its value is 0, then the program will use dark mode" & CrLf & "- If its value is 1, then the program will use light mode" & CrLf & CrLf & "You can still set the color mode manually.", vbOKOnly + vbInformation, "Automatic color mode")
                     ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                         MsgBox("La opción de modo de color automático no es accesible en Windows 7 y Windows 8/8.1, porque no soportan el modo oscuro." & CrLf & "La manera en la que este programa establece el modo de color es observando la clave del registro " & Quote & "AppsUseLightMode" & Quote & " , que está presente desde Windows 10 versión 1809 (actualización de Octubre de 2018), y se mantiene en versiones próximas de Windows 10, y Windows 11." & CrLf & "- Si su valor es 0, el programa utilizará el modo oscuro" & CrLf & "- Si su valor es 1, el programa utilizará el modo claro" & CrLf & CrLf & "Todavía puede establecer el modo de color manualmente.", vbOKOnly + vbInformation, "Modo de color automático")
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                        MsgBox("L'option de mode couleur automatique n'est pas accessible sous Windows 7 et Windows 8/8.1, car ils ne prennent pas en charge le mode sombre." & CrLf & "La façon dont ce programme définit le mode de couleur est en regardant la clé de registre " & Quote & "AppsUseLightMode" & Quote & ", qui est présente depuis la version 1809 de Windows 10 (mise à jour d'octobre 2018), et est reprise par les versions ultérieures de Windows 10, et Windows 11." & CrLf & "- Si sa valeur est 0, alors le programme utilisera le mode sombre." & CrLf & "- Si sa valeur est 1, alors le programme utilisera le mode clair." & CrLf & CrLf & "Vous pouvez toujours définir le mode couleur manuellement.", vbOKOnly + vbInformation, "Mode couleur automatique")
                     End If
                 End If
             End If
@@ -1997,15 +2061,19 @@ Public Class MainForm
     End Sub
 
     Private Sub TrackBar1_Scroll(sender As Object, e As EventArgs) Handles TrackBar1.Scroll
-        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             Label28.Text = "DPI scale to be applied: " & TrackBar1.Value & "%"
-        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
             Label28.Text = "Escala DPI a ser aplicada: " & TrackBar1.Value & "%"
-        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            Label28.Text = "Échelle DPI à appliquer : " & TrackBar1.Value & "%"
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 Label28.Text = "DPI scale to be applied: " & TrackBar1.Value & "%"
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 Label28.Text = "Escala DPI a ser aplicada: " & TrackBar1.Value & "%"
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                Label28.Text = "Échelle DPI à appliquer : " & TrackBar1.Value & "%"
             End If
         End If
     End Sub
@@ -2016,8 +2084,21 @@ Public Class MainForm
             Settings_PersonalizationPanel.Visible = False
         End If
         If Settings_FunctionalityPanel.Visible = True Then
-            SettingPanel.Visible = True
-            Settings_FunctionalityPanel.Visible = False
+            If MOLinkIsClicked Then
+                InstCreatePanel.Visible = True
+                Settings_FunctionalityPanel.Visible = False
+                ApplyNavBarImages()
+                PanelIndicatorPic.Anchor = CType((AnchorStyles.Top Or AnchorStyles.Left), AnchorStyles)
+                PanelIndicatorPic.Top = InstCreatePic.Top + 2
+                If BackColor = Color.FromArgb(243, 243, 243) Then
+                    SettingsPic.Image = New Bitmap(My.Resources.settings)
+                ElseIf BackColor = Color.FromArgb(32, 32, 32) Then
+                    SettingsPic.Image = New Bitmap(My.Resources.settings_dark)
+                End If
+            Else
+                SettingPanel.Visible = True
+                Settings_FunctionalityPanel.Visible = False
+            End If
         End If
         If SettingReviewPanel.Visible = True Then
             InstCreateInt = 0
@@ -2028,6 +2109,7 @@ Public Class MainForm
     End Sub
 
     Private Sub PictureBox14_Click(sender As Object, e As EventArgs) Handles PictureBox14.Click
+        MOLinkIsClicked = False
         EnableBackPic()
         LogoPic.Left = 48
         ProgramTitleLabel.Left = 102
@@ -2038,15 +2120,19 @@ Public Class MainForm
                 ComboBox5.Items.Remove("REGTWEAK")
                 ComboBox5.SelectedItem = "WIMR"
                 REGTWEAKToolStripMenuItem.Visible = False
-                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                     MsgBox("REGTWEAK is not available on this copy of the program. This can occur if the script isn't found. Make sure you have copied all essential files to the runtime directory.", vbOKOnly + vbExclamation, "A method is unavailable")
-                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                     MsgBox("REGTWEAK no está disponible en esta copia del programa. Esto puede ocurrir si el script no ha sido encontrado. Asegúrese de que tiene copiado todos los archivos esenciales al directorio de ejecución.", vbOKOnly + vbExclamation, "Un método no está disponible")
-                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                    MsgBox("REGTWEAK n'est pas disponible sur cette copie du programme. Cela peut se produire si le script est introuvable. Assurez-vous que vous avez copié tous les fichiers essentiels dans le répertoire d'exécution.", vbOKOnly + vbExclamation, "Une méthode n'est pas disponible")
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         MsgBox("REGTWEAK is not available on this copy of the program. This can occur if the script isn't found. Make sure you have copied all essential files to the runtime directory.", vbOKOnly + vbExclamation, "A method is unavailable")
                     ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                         MsgBox("REGTWEAK no está disponible en esta copia del programa. Esto puede ocurrir si el script no ha sido encontrado. Asegúrese de que tiene copiado todos los archivos esenciales al directorio de ejecución.", vbOKOnly + vbExclamation, "Un método no está disponible")
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                        MsgBox("REGTWEAK n'est pas disponible sur cette copie du programme. Cela peut se produire si le script est introuvable. Assurez-vous que vous avez copié tous les fichiers essentiels dans le répertoire d'exécution.", vbOKOnly + vbExclamation, "Une méthode n'est pas disponible")
                     End If
                 End If
             Else
@@ -2055,6 +2141,50 @@ Public Class MainForm
                     REGTWEAKToolStripMenuItem.Visible = True
                 End If
             End If
+        End If
+    End Sub
+
+    Private Sub LinkLabel17_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel17.LinkClicked
+        MOLinkIsClicked = True
+        EnableBackPic()
+        LogoPic.Left = 48
+        ProgramTitleLabel.Left = 102
+        InstCreatePanel.Visible = False
+        Settings_FunctionalityPanel.Visible = True
+        PanelIndicatorPic.Anchor = CType((AnchorStyles.Bottom Or AnchorStyles.Left), AnchorStyles)
+        PanelIndicatorPic.Top = SettingsPic.Top + 2
+        If My.User.IsInRole(ApplicationServices.BuiltInRole.Administrator) Then
+            If Not File.Exists(".\prog_bin\regtweak.bat") Then
+                ComboBox5.Items.Remove("REGTWEAK")
+                ComboBox5.SelectedItem = "WIMR"
+                REGTWEAKToolStripMenuItem.Visible = False
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+                    MsgBox("REGTWEAK is not available on this copy of the program. This can occur if the script isn't found. Make sure you have copied all essential files to the runtime directory.", vbOKOnly + vbExclamation, "A method is unavailable")
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+                    MsgBox("REGTWEAK no está disponible en esta copia del programa. Esto puede ocurrir si el script no ha sido encontrado. Asegúrese de que tiene copiado todos los archivos esenciales al directorio de ejecución.", vbOKOnly + vbExclamation, "Un método no está disponible")
+                ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                    MsgBox("REGTWEAK n'est pas disponible sur cette copie du programme. Cela peut se produire si le script est introuvable. Assurez-vous que vous avez copié tous les fichiers essentiels dans le répertoire d'exécution.", vbOKOnly + vbExclamation, "Une méthode n'est pas disponible")
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+                    If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                        MsgBox("REGTWEAK is not available on this copy of the program. This can occur if the script isn't found. Make sure you have copied all essential files to the runtime directory.", vbOKOnly + vbExclamation, "A method is unavailable")
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                        MsgBox("REGTWEAK no está disponible en esta copia del programa. Esto puede ocurrir si el script no ha sido encontrado. Asegúrese de que tiene copiado todos los archivos esenciales al directorio de ejecución.", vbOKOnly + vbExclamation, "Un método no está disponible")
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                        MsgBox("REGTWEAK n'est pas disponible sur cette copie du programme. Cela peut se produire si le script est introuvable. Assurez-vous que vous avez copié tous les fichiers essentiels dans le répertoire d'exécution.", vbOKOnly + vbExclamation, "Une méthode n'est pas disponible")
+                    End If
+                End If
+            Else
+                If Not ComboBox5.Items.Contains("REGTWEAK") Then
+                    ComboBox5.Items.Add("REGTWEAK")
+                    REGTWEAKToolStripMenuItem.Visible = True
+                End If
+            End If
+        End If
+        ApplyNavBarImages()
+        If BackColor = Color.FromArgb(243, 243, 243) Then
+            InstCreatePic.Image = New Bitmap(My.Resources.inst_create)
+        ElseIf BackColor = Color.FromArgb(32, 32, 32) Then
+            InstCreatePic.Image = New Bitmap(My.Resources.inst_create_dark)
         End If
     End Sub
 
@@ -2119,7 +2249,7 @@ Public Class MainForm
     End Sub
 
     Private Sub ViewInstallerHistoryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ViewInstallerHistoryToolStripMenuItem.Click
-        If Visible = False Then
+        If Visible = False Or WindowState = FormWindowState.Minimized Then
             Activate()
             ShowInTaskbar = True
             WindowState = FormWindowState.Normal
@@ -2244,15 +2374,19 @@ Public Class MainForm
 
     Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles TextBox1.TextChanged
         If File.Exists(TextBox1.Text) Then
-            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                 Win11PresenceSTLabel.Text = "Presence status: this file exists"
-            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                 Win11PresenceSTLabel.Text = "Estado de presencia: este archivo existe"
-            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                Win11PresenceSTLabel.Text = "Statut de présence : ce fichier existe"
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                 If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                     Win11PresenceSTLabel.Text = "Presence status: this file exists"
                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                     Win11PresenceSTLabel.Text = "Estado de presencia: este archivo existe"
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                    Win11PresenceSTLabel.Text = "Statut de présence : ce fichier existe"
                 End If
             End If
             TextBox1.ForeColor = ForeColor
@@ -2264,30 +2398,38 @@ Public Class MainForm
                 End If
             End If
         Else
-            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                 Win11PresenceSTLabel.Text = "Presence status: this file does not exist"
-            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                 Win11PresenceSTLabel.Text = "Estado de presencia: este archivo no existe"
-            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                Win11PresenceSTLabel.Text = "Statut de présence : ce fichier n'existe pas"
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                 If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                     Win11PresenceSTLabel.Text = "Presence status: this file does not exist"
                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                     Win11PresenceSTLabel.Text = "Estado de presencia: este archivo no existe"
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                    Win11PresenceSTLabel.Text = "Statut de présence : ce fichier n'existe pas"
                 End If
             End If
             TextBox1.ForeColor = Color.Crimson
             Button6.Enabled = False
         End If
         If TextBox1.Text = "" Then
-            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                 Win11PresenceSTLabel.Text = "Presence status: unknown"
-            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                 Win11PresenceSTLabel.Text = "Estado de presencia: desconocido"
-            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                Win11PresenceSTLabel.Text = "Statut de présence : inconnu"
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                 If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                     Win11PresenceSTLabel.Text = "Presence status: unknown"
                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                     Win11PresenceSTLabel.Text = "Estado de presencia: desconocido"
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                    Win11PresenceSTLabel.Text = "Statut de présence : inconnu"
                 End If
             End If
             Button6.Enabled = False
@@ -2298,15 +2440,19 @@ Public Class MainForm
             Button6.Enabled = False
         Else
             If File.Exists(TextBox1.Text) Then
-                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                     Win11PresenceSTLabel.Text = "Presence status: this file exists"
-                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                     Win11PresenceSTLabel.Text = "Estado de presencia: este archivo existe"
-                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                    Win11PresenceSTLabel.Text = "Statut de présence : ce fichier existe"
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         Win11PresenceSTLabel.Text = "Presence status: this file exists"
                     ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                         Win11PresenceSTLabel.Text = "Estado de presencia: este archivo existe"
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                        Win11PresenceSTLabel.Text = "Statut de présence : ce fichier existe"
                     End If
                 End If
                 TextBox1.ForeColor = ForeColor
@@ -2318,30 +2464,38 @@ Public Class MainForm
                     End If
                 End If
             Else
-                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                     Win11PresenceSTLabel.Text = "Presence status: this file does not exist"
-                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                     Win11PresenceSTLabel.Text = "Estado de presencia: este archivo no existe"
-                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                    Win11PresenceSTLabel.Text = "Statut de présence : ce fichier n'existe pas"
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         Win11PresenceSTLabel.Text = "Presence status: this file does not exist"
                     ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                         Win11PresenceSTLabel.Text = "Estado de presencia: este archivo no existe"
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                        Win11PresenceSTLabel.Text = "Statut de présence : ce fichier n'existe pas"
                     End If
                 End If
                 TextBox1.ForeColor = Color.Crimson
                 Button6.Enabled = False
             End If
             If TextBox1.Text = "" Then
-                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                     Win11PresenceSTLabel.Text = "Presence status: unknown"
-                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                     Win11PresenceSTLabel.Text = "Estado de presencia: desconocido"
-                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                    Win11PresenceSTLabel.Text = "Statut de présence : inconnu"
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         Win11PresenceSTLabel.Text = "Presence status: unknown"
                     ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                         Win11PresenceSTLabel.Text = "Estado de presencia: desconocido"
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                        Win11PresenceSTLabel.Text = "Statut de présence : inconnu"
                     End If
                 End If
                 Button6.Enabled = False
@@ -2363,15 +2517,19 @@ Public Class MainForm
 
     Private Sub TextBox2_TextChanged(sender As Object, e As EventArgs) Handles TextBox2.TextChanged
         If File.Exists(TextBox2.Text) Then
-            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                 Win10PresenceSTLabel.Text = "Presence status: this file exists"
-            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                 Win10PresenceSTLabel.Text = "Estado de presencia: este archivo existe"
-            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                Win10PresenceSTLabel.Text = "Statut de présence : ce fichier existe"
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                 If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                     Win10PresenceSTLabel.Text = "Presence status: this file exists"
                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                     Win10PresenceSTLabel.Text = "Estado de presencia: este archivo existe"
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                    Win10PresenceSTLabel.Text = "Statut de présence : ce fichier existe"
                 End If
             End If
             TextBox2.ForeColor = ForeColor
@@ -2381,30 +2539,38 @@ Public Class MainForm
                 Button6.Enabled = False
             End If
         Else
-            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                 Win10PresenceSTLabel.Text = "Presence status: this file does not exist"
-            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                 Win10PresenceSTLabel.Text = "Estado de presencia: este archivo no existe"
-            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                Win10PresenceSTLabel.Text = "Statut de présence : ce fichier n'existe pas"
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                 If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                     Win10PresenceSTLabel.Text = "Presence status: this file does not exist"
                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                     Win10PresenceSTLabel.Text = "Estado de presencia: este archivo no existe"
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                    Win10PresenceSTLabel.Text = "Statut de présence : ce fichier n'existe pas"
                 End If
             End If
             TextBox2.ForeColor = Color.Crimson
             Button6.Enabled = False
         End If
         If TextBox2.Text = "" Then
-            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                 Win10PresenceSTLabel.Text = "Presence status: unknown"
-            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                 Win10PresenceSTLabel.Text = "Estado de presencia: desconocido"
-            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                Win10PresenceSTLabel.Text = "Statut de présence : inconnu"
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                 If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                     Win10PresenceSTLabel.Text = "Presence status: unknown"
                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                     Win10PresenceSTLabel.Text = "Estado de presencia: desconocido"
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                    Win10PresenceSTLabel.Text = "Statut de présence : inconnu"
                 End If
             End If
             If Not ComboBox5.SelectedItem = "REGTWEAK" Then
@@ -2418,15 +2584,19 @@ Public Class MainForm
                 Button6.Enabled = False
             Else
                 If File.Exists(TextBox2.Text) Then
-                    If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                    If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                         Win10PresenceSTLabel.Text = "Presence status: this file exists"
-                    ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                    ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                         Win10PresenceSTLabel.Text = "Estado de presencia: este archivo existe"
-                    ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                    ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                        Win10PresenceSTLabel.Text = "Statut de présence : ce fichier existe"
+                    ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                         If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                             Win10PresenceSTLabel.Text = "Presence status: this file exists"
                         ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                             Win10PresenceSTLabel.Text = "Estado de presencia: este archivo existe"
+                        ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                            Win10PresenceSTLabel.Text = "Statut de présence : ce fichier existe"
                         End If
                     End If
                     TextBox2.ForeColor = ForeColor
@@ -2436,30 +2606,38 @@ Public Class MainForm
                         Button6.Enabled = False
                     End If
                 Else
-                    If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                    If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                         Win10PresenceSTLabel.Text = "Presence status: this file does not exist"
-                    ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                    ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                         Win10PresenceSTLabel.Text = "Estado de presencia: este archivo no existe"
-                    ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                    ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                        Win10PresenceSTLabel.Text = "Statut de présence : ce fichier n'existe pas"
+                    ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                         If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                             Win10PresenceSTLabel.Text = "Presence status: this file does not exist"
                         ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                             Win10PresenceSTLabel.Text = "Estado de presencia: este archivo no existe"
+                        ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                            Win10PresenceSTLabel.Text = "Statut de présence : ce fichier n'existe pas"
                         End If
                     End If
                     TextBox2.ForeColor = Color.Crimson
                     Button6.Enabled = False
                 End If
                 If TextBox2.Text = "" Then
-                    If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                    If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                         Win10PresenceSTLabel.Text = "Presence status: unknown"
-                    ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                    ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                         Win10PresenceSTLabel.Text = "Estado de presencia: desconocido"
-                    ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                    ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                        Win10PresenceSTLabel.Text = "Statut de présence : inconnu"
+                    ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                         If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                             Win10PresenceSTLabel.Text = "Presence status: unknown"
                         ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                             Win10PresenceSTLabel.Text = "Estado de presencia: desconocido"
+                        ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                            Win10PresenceSTLabel.Text = "Statut de présence : inconnu"
                         End If
                     End If
                     If Not ComboBox5.SelectedItem = "REGTWEAK" Then
@@ -2485,16 +2663,10 @@ Public Class MainForm
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         Win11FileSpecDialog.ShowDialog()
-        If DialogResult.OK Then
-            TextBox1.Text = Win11FileSpecDialog.FileName
-        End If
     End Sub
 
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
         Win10FileSpecDialog.ShowDialog()
-        If DialogResult.OK Then
-            TextBox2.Text = Win10FileSpecDialog.FileName
-        End If
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
@@ -2528,15 +2700,19 @@ Public Class MainForm
         End If
 
         If TextBox3.Text = "" Then
-            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                 MsgBox("The file name cannot be nothing. Please specify a file name and try again.", vbOKOnly + vbInformation, "File name")
-            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                 MsgBox("El nombre del archivo no puede ser nada. Por favor, especifique un nombre de archivo e inténtelo de nuevo", vbOKOnly + vbInformation, "Nombre de archivo")
-            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                MsgBox("Le nom du fichier ne peut être rien. Veuillez spécifier un nom de fichier et réessayer.", vbOKOnly + vbInformation, "Nom de fichier")
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                 If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                     MsgBox("The file name cannot be nothing. Please specify a file name and try again.", vbOKOnly + vbInformation, "File name")
                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                     MsgBox("El nombre del archivo no puede ser nada. Por favor, especifique un nombre de archivo e inténtelo de nuevo", vbOKOnly + vbInformation, "Nombre de archivo")
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                    MsgBox("Le nom du fichier ne peut être rien. Veuillez spécifier un nom de fichier et réessayer.", vbOKOnly + vbInformation, "Nom de fichier")
                 End If
             End If
         End If
@@ -2577,81 +2753,105 @@ Public Class MainForm
     End Sub
 
     Private Sub TextBox3_TextChanged(sender As Object, e As EventArgs) Handles TextBox3.TextChanged
-        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             NameLabel.Text = "Name: " & TextBox3.Text
-        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
             NameLabel.Text = "Nombre: " & TextBox3.Text
-        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            NameLabel.Text = "Nom : " & TextBox3.Text
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 NameLabel.Text = "Name: " & TextBox3.Text
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 NameLabel.Text = "Nombre: " & TextBox3.Text
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                NameLabel.Text = "Nom : " & TextBox3.Text
             End If
         End If
         If TextBox4.Text.EndsWith("\") Then
             If TextBox4.Text.Contains(" ") Then
-                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                     ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Path will contain quotes"
-                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                     ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". La ruta contendrá comillas"
-                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                    ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Le chemin contiendra des guillemets"
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Path will contain quotes"
                     ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                         ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". La ruta contendrá comillas"
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                        ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Le chemin contiendra des guillemets"
                     End If
                 End If
             Else
-                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                     ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
-                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                     ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
-                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                    ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
                     ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                         ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                        ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
                     End If
                 End If
             End If
         Else
             If TextBox4.Text.Contains(" ") Then
-                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                     ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote & ". Path will contain quotes"
-                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                     ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote & ". La ruta contendrá comillas"
-                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                    ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote & ". Le chemin contiendra des guillemets"
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote & ". Path will contain quotes"
                     ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                         ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote & ". La ruta contendrá comillas"
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                        ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote & ". Le chemin contiendra des guillemets"
                     End If
                 End If
             Else
-                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                     ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote
-                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                     ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote
-                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                    ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote
                     ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                         ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                        ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote
                     End If
                 End If
             End If
         End If
         If TextBox3.Text = "" Then
             Button6.Enabled = False
-            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                 MsgBox("The file name cannot be nothing. Please specify a file name and try again.", vbOKOnly + vbInformation, "File name")
-            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                 MsgBox("El nombre del archivo no puede ser nada. Por favor, especifique un nombre de archivo e inténtelo de nuevo", vbOKOnly + vbInformation, "Nombre de archivo")
-            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                MsgBox("Le nom du fichier ne peut être rien. Veuillez spécifier un nom de fichier et réessayer.", vbOKOnly + vbInformation, "Nom de fichier")
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                 If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                     MsgBox("The file name cannot be nothing. Please specify a file name and try again.", vbOKOnly + vbInformation, "File name")
                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                     MsgBox("El nombre del archivo no puede ser nada. Por favor, especifique un nombre de archivo e inténtelo de nuevo", vbOKOnly + vbInformation, "Nombre de archivo")
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                    MsgBox("Le nom du fichier ne peut être rien. Veuillez spécifier un nom de fichier et réessayer.", vbOKOnly + vbInformation, "Nom de fichier")
                 End If
             End If
         Else
@@ -2732,15 +2932,19 @@ Public Class MainForm
     End Sub
 
     Private Sub AdminLabel_MouseHover(sender As Object, e As EventArgs) Handles AdminLabel.MouseHover
-        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             ConglomerateToolTip.SetToolTip(AdminLabel, "This program is running with administrative privileges")
-        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
             ConglomerateToolTip.SetToolTip(AdminLabel, "Este programa se está ejecutando con privilegios administrativos")
-        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            ConglomerateToolTip.SetToolTip(AdminLabel, "Ce programme est exécuté avec des privilèges administratifs")
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 ConglomerateToolTip.SetToolTip(AdminLabel, "This program is running with administrative privileges")
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 ConglomerateToolTip.SetToolTip(AdminLabel, "Este programa se está ejecutando con privilegios administrativos")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                ConglomerateToolTip.SetToolTip(AdminLabel, "Ce programme est exécuté avec des privilèges administratifs")
             End If
         End If
     End Sub
@@ -2773,57 +2977,73 @@ Public Class MainForm
     End Sub
 
     Private Sub minBox_MouseHover(sender As Object, e As EventArgs) Handles minBox.MouseHover
-        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             ConglomerateToolTip.SetToolTip(minBox, "Minimize")
-        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
             ConglomerateToolTip.SetToolTip(minBox, "Minimizar")
-        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            ConglomerateToolTip.SetToolTip(minBox, "Minimiser")
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 ConglomerateToolTip.SetToolTip(minBox, "Minimize")
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 ConglomerateToolTip.SetToolTip(minBox, "Minimizar")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                ConglomerateToolTip.SetToolTip(minBox, "Minimiser")
             End If
         End If
     End Sub
 
     Private Sub maxBox_MouseHover(sender As Object, e As EventArgs) Handles maxBox.MouseHover
         If WindowState = FormWindowState.Normal Then
-            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                 ConglomerateToolTip.SetToolTip(maxBox, "Maximize")
-            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                 ConglomerateToolTip.SetToolTip(maxBox, "Maximizar")
-            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                ConglomerateToolTip.SetToolTip(maxBox, "Maximiser")
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                 If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                     ConglomerateToolTip.SetToolTip(maxBox, "Maximize")
                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                     ConglomerateToolTip.SetToolTip(maxBox, "Maximizar")
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                    ConglomerateToolTip.SetToolTip(maxBox, "Maximiser")
                 End If
             End If
         ElseIf WindowState = FormWindowState.Maximized Then
-            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                 ConglomerateToolTip.SetToolTip(maxBox, "Restore down")
-            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                 ConglomerateToolTip.SetToolTip(maxBox, "Restaurar tamaño")
-            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                ConglomerateToolTip.SetToolTip(maxBox, "Restaurer en bas")
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                 If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                     ConglomerateToolTip.SetToolTip(maxBox, "Restore down")
                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                     ConglomerateToolTip.SetToolTip(maxBox, "Restaurar tamaño")
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                    ConglomerateToolTip.SetToolTip(maxBox, "Restaurer en bas")
                 End If
             End If
         End If
     End Sub
 
     Private Sub closeBox_MouseHover(sender As Object, e As EventArgs) Handles closeBox.MouseHover
-        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             ConglomerateToolTip.SetToolTip(closeBox, "Close")
-        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
             ConglomerateToolTip.SetToolTip(closeBox, "Cerrar")
-        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            ConglomerateToolTip.SetToolTip(closeBox, "Fermer")
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 ConglomerateToolTip.SetToolTip(closeBox, "Close")
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 ConglomerateToolTip.SetToolTip(closeBox, "Cerrar")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                ConglomerateToolTip.SetToolTip(closeBox, "Fermer")
             End If
         End If
     End Sub
@@ -2849,19 +3069,25 @@ Public Class MainForm
         DelFileCount = 0
         WarningText.Clear()
         ErrorText.Clear()
-        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             Label82.Text = "Progress"
-            Label83.Text = "That' s all the information we need right now. The installer creation will take a few minutes, so please be patient."
-        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+            Label83.Text = "That's all the information we need right now. The installer creation will take a few minutes, so please be patient."
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
             Label82.Text = "Progreso"
-            Label83.Text = "Ésta es toda la información que necesitamos en este momento. Esto tardará unos minutos, por lo que sea paciente, por favor."
-        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            Label83.Text = "Ésta es toda la información que necesitamos en este momento. Esto tardará unos minutos, por lo que sea paciente."
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            Label82.Text = "Progrès"
+            Label83.Text = "C'est toute l'information dont nous avons besoin pour le moment. La création de l'installateur prendra quelques minutes, alors soyez patient."
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 Label82.Text = "Progress"
-                Label83.Text = "That' s all the information we need right now. The installer creation will take a few minutes, so please be patient."
+                Label83.Text = "That's all the information we need right now. The installer creation will take a few minutes, so please be patient."
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 Label82.Text = "Progreso"
-                Label83.Text = "Ésta es toda la información que necesitamos en este momento. Esto tardará unos minutos, por lo que sea paciente, por favor."
+                Label83.Text = "Ésta es toda la información que necesitamos en este momento. Esto tardará unos minutos, por lo que sea paciente."
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                Label82.Text = "Progrès"
+                Label83.Text = "C'est toute l'information dont nous avons besoin pour le moment. La création de l'installateur prendra quelques minutes, alors soyez patient."
             End If
         End If
         DisableBackPic()
@@ -2881,19 +3107,25 @@ Public Class MainForm
         InstallerProgressBar.Visible = True
         CheckBox4.Visible = False
         LogViewLink.Visible = False
-        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             Button10.Text = "Cancel"
             InstSTLabel.Text = "The installer might take some time to create"
-        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
             Button10.Text = "Cancelar"
             InstSTLabel.Text = "El instalador podría tardar algo de tiempo para crearse"
-        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            Button10.Text = "Annuler"
+            InstSTLabel.Text = "L'installateur peut prendre un certain temps pour créer"
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 Button10.Text = "Cancel"
                 InstSTLabel.Text = "The installer might take some time to create"
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 Button10.Text = "Cancelar"
                 InstSTLabel.Text = "El instalador podría tardar algo de tiempo para crearse"
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                Button10.Text = "Annuler"
+                InstSTLabel.Text = "L'installateur peut prendre un certain temps pour créer"
             End If
         End If
         ProgressPanel.Visible = True
@@ -3015,15 +3247,19 @@ Public Class MainForm
             Label84.ForeColor = Color.White
         End If
         Label84.Font = New Font("Segoe UI", 9.75, FontStyle.Bold)
-        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             InstSTLabel.Text = "Ready to copy the files to the local disk"
-        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
             InstSTLabel.Text = "Preparados para copiar los archivos al disco local"
-        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            InstSTLabel.Text = "Prêt à copier les fichiers sur le disque local"
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 InstSTLabel.Text = "Ready to copy the files to the local disk"
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 InstSTLabel.Text = "Preparados para copiar los archivos al disco local"
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                InstSTLabel.Text = "Prêt à copier les fichiers sur le disque local"
             End If
         End If
         BringToFront()
@@ -3033,15 +3269,19 @@ Public Class MainForm
         FileCopyPanel.Visible = False
         BringToFront()
         If FileCopyPanel.DialogResult = Windows.Forms.DialogResult.Yes Then
-            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                 InstSTLabel.Text = "Copying the ISO files to the local disk..."
-            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                 InstSTLabel.Text = "Copiando los archivos ISO al disco local..."
-            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                InstSTLabel.Text = "Copier les fichiers ISO sur le disque local..."
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                 If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                     InstSTLabel.Text = "Copying the ISO files to the local disk..."
                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                     InstSTLabel.Text = "Copiando los archivos ISO al disco local..."
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                    InstSTLabel.Text = "Copier les fichiers ISO sur le disque local..."
                 End If
             End If
             LogBox.AppendText(CrLf & "Copying the ISO files to the local disk...")
@@ -3057,15 +3297,19 @@ Public Class MainForm
                 End If
             Catch DNFEx As DirectoryNotFoundException
                 LogBox.AppendText(" Failed")
-                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                     InstSTLabel.Text = "Failed to copy the ISO files to the local disk."
-                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                     InstSTLabel.Text = "Falló la copia de los archivos ISO al disco local."
-                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                    InstSTLabel.Text = "Échec de la copie des fichiers ISO sur le disque local."
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         InstSTLabel.Text = "Failed to copy the ISO files to the local disk."
                     ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                         InstSTLabel.Text = "Falló la copia de los archivos ISO al disco local."
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                        InstSTLabel.Text = "Échec de la copie des fichiers ISO sur le disque local."
                     End If
                 End If
                 BringToFront()
@@ -3099,15 +3343,19 @@ Public Class MainForm
                         End If
                     Catch DNFEx2 As DirectoryNotFoundException
                         LogBox.AppendText(" Failed")
-                        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                             InstSTLabel.Text = "Failed to copy the ISO files to the local disk."
-                        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                             InstSTLabel.Text = "Falló la copia de los archivos ISO al disco local."
-                        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                            InstSTLabel.Text = "Échec de la copie des fichiers ISO sur le disque local."
+                        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                                 InstSTLabel.Text = "Failed to copy the ISO files to the local disk."
                             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                                 InstSTLabel.Text = "Falló la copia de los archivos ISO al disco local."
+                            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                                InstSTLabel.Text = "Échec de la copie des fichiers ISO sur le disque local."
                             End If
                         End If
                         BringToFront()
@@ -3118,15 +3366,19 @@ Public Class MainForm
                         BringToFront()
                     Catch FNFEx2 As FileNotFoundException
                         LogBox.AppendText(" Failed")
-                        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                             InstSTLabel.Text = "Failed to copy the ISO files to the local disk."
-                        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                             InstSTLabel.Text = "Falló la copia de los archivos ISO al disco local."
-                        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                            InstSTLabel.Text = "Échec de la copie des fichiers ISO sur le disque local."
+                        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                                 InstSTLabel.Text = "Failed to copy the ISO files to the local disk."
                             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                                 InstSTLabel.Text = "Falló la copia de los archivos ISO al disco local."
+                            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                                InstSTLabel.Text = "Échec de la copie des fichiers ISO sur le disque local."
                             End If
                         End If
                         BringToFront()
@@ -3139,15 +3391,19 @@ Public Class MainForm
                 End If
             Catch FNFEx As FileNotFoundException
                 LogBox.AppendText(" Failed")
-                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                     InstSTLabel.Text = "Failed to copy the ISO files to the local disk."
-                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                     InstSTLabel.Text = "Falló la copia de los archivos ISO al disco local."
-                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                    InstSTLabel.Text = "Échec de la copie des fichiers ISO sur le disque local."
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         InstSTLabel.Text = "Failed to copy the ISO files to the local disk."
                     ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                         InstSTLabel.Text = "Falló la copia de los archivos ISO al disco local."
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                        InstSTLabel.Text = "Échec de la copie des fichiers ISO sur le disque local."
                     End If
                 End If
                 BringToFront()
@@ -3181,15 +3437,19 @@ Public Class MainForm
                         End If
                     Catch DNFEx2 As DirectoryNotFoundException
                         LogBox.AppendText(" Failed")
-                        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                             InstSTLabel.Text = "Failed to copy the ISO files to the local disk."
-                        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                             InstSTLabel.Text = "Falló la copia de los archivos ISO al disco local."
-                        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                            InstSTLabel.Text = "Échec de la copie des fichiers ISO sur le disque local."
+                        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                                 InstSTLabel.Text = "Failed to copy the ISO files to the local disk."
                             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                                 InstSTLabel.Text = "Falló la copia de los archivos ISO al disco local."
+                            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                                InstSTLabel.Text = "Échec de la copie des fichiers ISO sur le disque local."
                             End If
                         End If
                         BringToFront()
@@ -3200,15 +3460,19 @@ Public Class MainForm
                         BringToFront()
                     Catch FNFEx2 As FileNotFoundException
                         LogBox.AppendText(" Failed")
-                        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                             InstSTLabel.Text = "Failed to copy the ISO files to the local disk."
-                        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                             InstSTLabel.Text = "Falló la copia de los archivos ISO al disco local."
-                        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                            InstSTLabel.Text = "Échec de la copie des fichiers ISO sur le disque local."
+                        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                                 InstSTLabel.Text = "Failed to copy the ISO files to the local disk."
                             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                                 InstSTLabel.Text = "Falló la copia de los archivos ISO al disco local."
+                            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                                InstSTLabel.Text = "Échec de la copie des fichiers ISO sur le disque local."
                             End If
                         End If
                         BringToFront()
@@ -3221,15 +3485,19 @@ Public Class MainForm
                 End If
             End Try
         ElseIf FileCopyPanel.DialogResult = Windows.Forms.DialogResult.No Then
-            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                 InstSTLabel.Text = "Skipping file copy..."
-            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                 InstSTLabel.Text = "Omitiendo la copia de archivos..."
-            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                InstSTLabel.Text = "Sauter la copie du fichier..."
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                 If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                     InstSTLabel.Text = "Skipping file copy..."
                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                     InstSTLabel.Text = "Omitiendo la copia de archivos..."
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                    InstSTLabel.Text = "Sauter la copie du fichier..."
                 End If
             End If
             ' This is done for testing if the source drive is still mounted
@@ -3254,28 +3522,36 @@ Public Class MainForm
             Label85.ForeColor = Color.White
         End If
         Label85.Font = New Font("Segoe UI", 9.75, FontStyle.Bold)
-        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             InstSTLabel.Text = "Gathering instructions..."
-        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
             InstSTLabel.Text = "Recopilando instrucciones..."
-        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            InstSTLabel.Text = "Rassembler les instructions..."
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 InstSTLabel.Text = "Gathering instructions..."
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 InstSTLabel.Text = "Recopilando instrucciones..."
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                InstSTLabel.Text = "Rassembler les instructions..."
             End If
         End If
         LogBox.AppendText(CrLf & "Gathering instructions necessary to create the installer...")
         LogBox.AppendText(" Done")
-        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             InstSTLabel.Text = "Instructions gathered"
-        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
             InstSTLabel.Text = "Instrucciones recopiladas"
-        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            InstSTLabel.Text = "Instructions recueillies"
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 InstSTLabel.Text = "Instructions gathered"
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 InstSTLabel.Text = "Instrucciones recopiladas"
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                InstSTLabel.Text = "Instructions recueillies"
             End If
         End If
         InstallerProgressBar.Value = 15
@@ -3289,15 +3565,19 @@ Public Class MainForm
             Label86.ForeColor = Color.White
         End If
         Label86.Font = New Font("Segoe UI", 9.75, FontStyle.Bold)
-        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             InstSTLabel.Text = "Extracting the necessary files from the ISO images..."
-        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
             InstSTLabel.Text = "Extrayendo los archivos necesarios de las imágenes ISO..."
-        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            InstSTLabel.Text = "Extraire les fichiers nécessaires des images ISO..."
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 InstSTLabel.Text = "Extracting the necessary files from the ISO images..."
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 InstSTLabel.Text = "Extrayendo los archivos necesarios de las imágenes ISO..."
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                InstSTLabel.Text = "Extraire les fichiers nécessaires des images ISO..."
             End If
         End If
         LogBox.AppendText(CrLf & "Extracting the necessary contents from the ISO images using the " & ComboBox5.SelectedItem & " method...")
@@ -3334,15 +3614,19 @@ Public Class MainForm
             End If
             Process.Start(".\temp.bat").WaitForExit()
         End If
-        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             InstSTLabel.Text = "Necessary files extracted"
-        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
             InstSTLabel.Text = "Archivos necesarios extraídos"
-        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            InstSTLabel.Text = "Fichiers nécessaires extraits"
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 InstSTLabel.Text = "Necessary files extracted"
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 InstSTLabel.Text = "Archivos necesarios extraídos"
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                InstSTLabel.Text = "Fichiers nécessaires extraits"
             End If
         End If
         LogBox.AppendText(CrLf & "Finished extracting files.")
@@ -3356,15 +3640,19 @@ Public Class MainForm
             Label87.ForeColor = Color.White
         End If
         Label87.Font = New Font("Segoe UI", 9.75, FontStyle.Bold)
-        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             InstSTLabel.Text = "Creating the custom installer..."
-        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
             InstSTLabel.Text = "Creando el instalador personalizado..."
-        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            InstSTLabel.Text = "Création de l'installateur personnalisé..."
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 InstSTLabel.Text = "Creating the custom installer..."
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 InstSTLabel.Text = "Creando el instalador personalizado..."
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                InstSTLabel.Text = "Création de l'installateur personnalisé..."
             End If
         End If
         LogBox.AppendText(CrLf & "Creating the custom installer using the " & ComboBox5.SelectedItem & " method...")
@@ -3470,15 +3758,19 @@ Public Class MainForm
             Process.Start(".\temp.bat").WaitForExit()
         End If
         LogBox.AppendText(" Done")
-        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             InstSTLabel.Text = "Finished creating the installer. Now deleting temporary files..."
-        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
             InstSTLabel.Text = "Se finalizó la creación del instalador. Ahora se están eliminando los archivos temporales..."
-        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            InstSTLabel.Text = "A fini la création de l'installateur. Maintenant, supprimer les fichiers temporaires..."
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 InstSTLabel.Text = "Finished creating the installer. Now deleting temporary files..."
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 InstSTLabel.Text = "Se finalizó la creación del instalador. Ahora se están eliminando los archivos temporales..."
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                InstSTLabel.Text = "A fini la création de l'installateur. Maintenant, supprimer les fichiers temporaires..."
             End If
         End If
         InstallerProgressBar.Value = 75
@@ -3643,6 +3935,7 @@ Public Class MainForm
                         My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: " & CrLf & ErrorText.Text, True)
                     End If
                 Else
+                    File.Delete(".\inst.log")
                     My.Computer.FileSystem.WriteAllText(".\inst.log", LogBox.Text, True)
                     If WarningText.Text = "" Then
                         My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: none", True)
@@ -3669,15 +3962,19 @@ Public Class MainForm
                 My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: " & CrLf & ErrorText.Text, True)
             End If
         End If
-        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             Notify.ShowBalloonTip(5, "Finished creating the custom installer", "Please read the details in the main window", ToolTipIcon.Info)
-        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
             Notify.ShowBalloonTip(5, "Se terminó la creación del instalador", "Por favor, lea los detalles en la ventana principal", ToolTipIcon.Info)
-        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            Notify.ShowBalloonTip(5, "A fini la création de l'installateur personnalisé.", "Veuillez lire les détails dans la fenêtre principale", ToolTipIcon.Info)
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 Notify.ShowBalloonTip(5, "Finished creating the custom installer", "Please read the details in the main window", ToolTipIcon.Info)
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 Notify.ShowBalloonTip(5, "Se terminó la creación del instalador", "Por favor, lea los detalles en la ventana principal", ToolTipIcon.Info)
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                Notify.ShowBalloonTip(5, "A fini la création de l'installateur personnalisé.", "Veuillez lire les détails dans la fenêtre principale", ToolTipIcon.Info)
             End If
         End If
         CheckPic5.Visible = True
@@ -3685,45 +3982,59 @@ Public Class MainForm
         Label88.Font = New Font("Segoe UI", 9.75)
         Label88.ForeColor = Color.DimGray
         My.Computer.Audio.Play(My.Resources.Win11, AudioPlayMode.Background)
-        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             Label82.Text = "Finish"
-        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
             Label82.Text = "Final"
-        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            Label82.Text = "Fin"
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 Label82.Text = "Finish"
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 Label82.Text = "Final"
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                Label82.Text = "Fin"
             End If
         End If
         CompPic.Visible = True
-        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             Label83.Text = "The custom installer was created at the specified location. Please read the details below."
-        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
             Label83.Text = "El instalador modificado fue creado en la ubicación especificada. Por favor, lea los detalles abajo."
-        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            Label83.Text = "L'installateur personnalisé a été créé à l'emplacement spécifié. Veuillez lire les détails ci-dessous."
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 Label83.Text = "The custom installer was created at the specified location. Please read the details below."
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 Label83.Text = "El instalador modificado fue creado en la ubicación especificada. Por favor, lea los detalles abajo."
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                Label83.Text = "L'installateur personnalisé a été créé à l'emplacement spécifié. Veuillez lire les détails ci-dessous."
             End If
         End If
         Label112.Text = TextBox3.Text & ".iso"
         TargetInstallerLinkLabel.Text = TextBox4.Text
         Label113.Text = EnInstCreateTime
-        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             Label114.Text = "Warnings: " & WarnCount
             Label115.Text = "Errors: " & ErrorCount
-        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
             Label114.Text = "Advertencias: " & WarnCount
             Label115.Text = "Errores: " & ErrorCount
-        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            Label114.Text = "Avertissements : " & WarnCount
+            Label115.Text = "Erreurs : " & ErrorCount
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 Label114.Text = "Warnings: " & WarnCount
                 Label115.Text = "Errors: " & ErrorCount
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 Label114.Text = "Advertencias: " & WarnCount
                 Label115.Text = "Errores: " & ErrorCount
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                Label114.Text = "Avertissements : " & WarnCount
+                Label115.Text = "Erreurs : " & ErrorCount
             End If
         End If
         TableLayoutPanel3.Visible = True
@@ -3745,15 +4056,19 @@ Public Class MainForm
         Button9.Visible = False
         LogViewLink.Visible = True
         InstallerCreationMethodToolStripMenuItem.Enabled = True
-        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             Button10.Text = "OK"
-        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
             Button10.Text = "Aceptar"
-        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            Button10.Text = "OK"
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 Button10.Text = "OK"
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 Button10.Text = "Aceptar"
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                Button10.Text = "OK"
             End If
         End If
         If TextBox4.Text.EndsWith("\") Then
@@ -3761,15 +4076,19 @@ Public Class MainForm
         Else
             InstHistPanel.InstallerListView.Items.Add(TextBox4.Text & "\" & TextBox3.Text & ".iso").SubItems.Add(EnInstCreateTime)
         End If
-        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             InstHistPanel.InstallerEntryLabel.Text = "Installer history entries: " & InstHistPanel.InstallerListView.Items.Count
-        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
             InstHistPanel.InstallerEntryLabel.Text = "Entradas en el historial del instalador: " & InstHistPanel.InstallerListView.Items.Count
-        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            InstHistPanel.InstallerEntryLabel.Text = "Entrées de l'historique de l'installateur : " & InstHistPanel.InstallerListView.Items.Count
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 InstHistPanel.InstallerEntryLabel.Text = "Installer history entries: " & InstHistPanel.InstallerListView.Items.Count
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 InstHistPanel.InstallerEntryLabel.Text = "Entradas en el historial del instalador: " & InstHistPanel.InstallerListView.Items.Count
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                InstHistPanel.InstallerEntryLabel.Text = "Entrées de l'historique de l'installateur : " & InstHistPanel.InstallerListView.Items.Count
             End If
         End If
         PictureBox5.Visible = False
@@ -3814,68 +4133,88 @@ Public Class MainForm
     Private Sub TextBox4_TextChanged(sender As Object, e As EventArgs) Handles TextBox4.TextChanged
         If TextBox4.Text.EndsWith("\") Then
             If TextBox4.Text.Contains(" ") Then
-                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                     ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Path will contain quotes"
-                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                     ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". La ruta contendrá comillas"
-                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                    ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Le chemin contiendra des guillemets"
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Path will contain quotes"
                     ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                         ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". La ruta contendrá comillas"
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                        ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Le chemin contiendra des guillemets"
                     End If
                 End If
             Else
-                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
-                    ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
-                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
-                    ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
-                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+                    ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Path will contain quotes"
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+                    ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". La ruta contendrá comillas"
+                ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                    ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Le chemin contiendra des guillemets"
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
-                        ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
+                        ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Path will contain quotes"
                     ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
-                        ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
+                        ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". La ruta contendrá comillas"
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                        ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Le chemin contiendra des guillemets"
                     End If
                 End If
             End If
         Else
             If TextBox4.Text.Contains(" ") Then
-                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
-                    ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote & ". Path will contain quotes"
-                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
-                    ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote & ". La ruta contendrá comillas"
-                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+                    ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Path will contain quotes"
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+                    ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". La ruta contendrá comillas"
+                ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                    ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Le chemin contiendra des guillemets"
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
-                        ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote & ". Path will contain quotes"
+                        ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Path will contain quotes"
                     ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
-                        ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote & ". La ruta contendrá comillas"
+                        ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". La ruta contendrá comillas"
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                        ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Le chemin contiendra des guillemets"
                     End If
                 End If
             Else
-                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
-                    ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote
-                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
-                    ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote
-                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+                    ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Path will contain quotes"
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+                    ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". La ruta contendrá comillas"
+                ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                    ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Le chemin contiendra des guillemets"
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
-                        ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote
+                        ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Path will contain quotes"
                     ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
-                        ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote
+                        ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". La ruta contendrá comillas"
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                        ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Le chemin contiendra des guillemets"
                     End If
                 End If
             End If
         End If
         If TextBox4.Text = "" Then
             Button6.Enabled = False
-            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                 MsgBox("The path cannot be nothing. The program will instead use the user folder to store the target installer.", vbOKOnly + vbInformation, "Target installer path")
-            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                 MsgBox("La ruta no puede ser nada. El programa utilizará la carpeta de usuario para almacenar el instalador de destino", vbOKOnly + vbInformation, "Ruta del instalador de destino")
-            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                MsgBox("Le chemin ne peut pas être rien. Le programme utilisera plutôt le dossier de l'utilisateur pour enregistrer le programme d'installation cible.", vbOKOnly + vbInformation, "Chemin de l'installateur cible")
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                 If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                     MsgBox("The path cannot be nothing. The program will instead use the user folder to store the target installer.", vbOKOnly + vbInformation, "Target installer path")
                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                     MsgBox("La ruta no puede ser nada. El programa utilizará la carpeta de usuario para almacenar el instalador de destino", vbOKOnly + vbInformation, "Ruta del instalador de destino")
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                    MsgBox("Le chemin ne peut pas être rien. Le programme utilisera plutôt le dossier de l'utilisateur pour enregistrer le programme d'installation cible.", vbOKOnly + vbInformation, "Chemin de l'installateur cible")
                 End If
             End If
             If DialogResult.OK Then
@@ -4029,58 +4368,74 @@ Public Class MainForm
     End Sub
 
     Private Sub GroupBox8_MouseHover(sender As Object, e As EventArgs) Handles GroupBox8.MouseHover
-        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             ConglomerateToolTip.SetToolTip(GroupBox8, "These are the images used to create the custom installer")
-        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
             ConglomerateToolTip.SetToolTip(GroupBox8, "Éstas son las imágenes utilizadas para crear el instalador modificado")
-        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            ConglomerateToolTip.SetToolTip(GroupBox8, "Voici les images utilisées pour créer l'installateur personnalisé")
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 ConglomerateToolTip.SetToolTip(GroupBox8, "These are the images used to create the custom installer")
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 ConglomerateToolTip.SetToolTip(GroupBox8, "Éstas son las imágenes utilizadas para crear el instalador modificado")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                ConglomerateToolTip.SetToolTip(GroupBox8, "Voici les images utilisées pour créer l'installateur personnalisé")
             End If
         End If
     End Sub
 
     Private Sub GroupBox9_MouseHover(sender As Object, e As EventArgs) Handles GroupBox9.MouseHover
-        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             ConglomerateToolTip.SetToolTip(GroupBox9, "These are the settings used to create the custom installer. To change those, click " & Quote & "No" & Quote & ", and go to Settings (by clicking the gear) > Functionality")
-        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
             ConglomerateToolTip.SetToolTip(GroupBox9, "Éstas son las configuraciones empleadas para crear el instalador modificado. Para cambiarlas, haga clic en " & Quote & "No" & Quote & ", y ve a Configuración (haciendo clic en la tuerca) > Funcionalidad")
-        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            ConglomerateToolTip.SetToolTip(GroupBox9, "Il s'agit des paramètres utilisés pour créer le programme d'installation personnalisé. Pour les modifier, cliquez sur " & Quote & "Non" & Quote & ", puis allez dans Paramètres (en cliquant sur l'engrenage) > Fonctionnalité")
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 ConglomerateToolTip.SetToolTip(GroupBox9, "These are the settings used to create the custom installer. To change those, click " & Quote & "No" & Quote & ", and go to Settings (by clicking the gear) > Functionality")
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 ConglomerateToolTip.SetToolTip(GroupBox9, "Éstas son las configuraciones empleadas para crear el instalador modificado. Para cambiarlas, haga clic en " & Quote & "No" & Quote & ", y ve a Configuración (haciendo clic en la tuerca) > Funcionalidad")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                ConglomerateToolTip.SetToolTip(GroupBox9, "Il s'agit des paramètres utilisés pour créer le programme d'installation personnalisé. Pour les modifier, cliquez sur " & Quote & "Non" & Quote & ", puis allez dans Paramètres (en cliquant sur l'engrenage) > Fonctionnalité")
             End If
         End If
     End Sub
 
     Private Sub GroupBox11_MouseHover(sender As Object, e As EventArgs) Handles GroupBox11.MouseHover
-        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             ConglomerateToolTip.SetToolTip(GroupBox11, "This is where the custom installer will be saved. To change this setting, click " & Quote & "No" & Quote & ", and select a different path and name")
-        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
             ConglomerateToolTip.SetToolTip(GroupBox11, "En esta ubicación se guardará el instalador modificado. Para cambiar esta opción, haga clic en " & Quote & "No" & Quote & ", y especifique una ruta y nombre distintos")
-        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            ConglomerateToolTip.SetToolTip(GroupBox11, "C'est l'endroit où l'installateur personnalisé sera enregistré. Pour modifier ce paramètre, cliquez sur " & Quote & "Non" & Quote & ", puis sélectionnez un chemin et un nom différents")
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 ConglomerateToolTip.SetToolTip(GroupBox11, "This is where the custom installer will be saved. To change this setting, click " & Quote & "No" & Quote & ", and select a different path and name")
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 ConglomerateToolTip.SetToolTip(GroupBox11, "En esta ubicación se guardará el instalador modificado. Para cambiar esta opción, haga clic en " & Quote & "No" & Quote & ", y especifique una ruta y nombre distintos")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                ConglomerateToolTip.SetToolTip(GroupBox11, "C'est l'endroit où l'installateur personnalisé sera enregistré. Pour modifier ce paramètre, cliquez sur " & Quote & "Non" & Quote & ", puis sélectionnez un chemin et un nom différents")
             End If
         End If
     End Sub
 
     Private Sub ComboBox5_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox5.SelectedIndexChanged
         Label70.Text = ComboBox5.SelectedItem
-        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             Label33.Text = "Installer creation method: " & ComboBox5.SelectedItem
-        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
             Label33.Text = "Método de creación del instalador: " & ComboBox5.SelectedItem
-        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            Label33.Text = "Méthode de création de l'installateur : " & ComboBox5.SelectedItem
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 Label33.Text = "Installer creation method: " & ComboBox5.SelectedItem
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 Label33.Text = "Método de creación del instalador: " & ComboBox5.SelectedItem
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                Label33.Text = "Méthode de création de l'installateur : " & ComboBox5.SelectedItem
             End If
         End If
 
@@ -4119,25 +4474,29 @@ Public Class MainForm
                     Button6.Enabled = False
                 End If
             End If
-            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                 Win10PresenceSTLabel.Text = "This file is not necessary"
-            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                 Win10PresenceSTLabel.Text = "Este archivo no es necesario"
-            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                Win10PresenceSTLabel.Text = "Ce fichier n'est pas nécessaire"
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                 If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                     Win10PresenceSTLabel.Text = "This file is not necessary"
                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                     Win10PresenceSTLabel.Text = "Este archivo no es necesario"
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                    Win10PresenceSTLabel.Text = "Ce fichier n'est pas nécessaire"
                 End If
             End If
         Else
             TextBox2.Enabled = True
             If TextBox2.Text = "" Then
-                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                     Win10PresenceSTLabel.Text = "Presence status: unknown"
-                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                     Win10PresenceSTLabel.Text = "Estado de presencia: desconocido"
-                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         Win10PresenceSTLabel.Text = "Presence status: unknown"
                     ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
@@ -4146,27 +4505,35 @@ Public Class MainForm
                 End If
             Else
                 If File.Exists(TextBox2.Text) Then
-                    If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
-                        Win10PresenceSTLabel.Text = "Presence status: this file exists"
-                    ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
-                        Win10PresenceSTLabel.Text = "Estado de presencia: este archivo existe"
-                    ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                    If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+                        Win11PresenceSTLabel.Text = "Presence status: this file exists"
+                    ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+                        Win11PresenceSTLabel.Text = "Estado de presencia: este archivo existe"
+                    ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                        Win11PresenceSTLabel.Text = "Statut de présence : ce fichier existe"
+                    ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                         If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
-                            Win10PresenceSTLabel.Text = "Presence status: this file exists"
+                            Win11PresenceSTLabel.Text = "Presence status: this file exists"
                         ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
-                            Win10PresenceSTLabel.Text = "Estado de presencia: este archivo existe"
+                            Win11PresenceSTLabel.Text = "Estado de presencia: este archivo existe"
+                        ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                            Win11PresenceSTLabel.Text = "Statut de présence : ce fichier existe"
                         End If
                     End If
                 Else
-                    If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
-                        Win10PresenceSTLabel.Text = "Presence status: this file does not exist"
-                    ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
-                        Win10PresenceSTLabel.Text = "Estado de presencia: este archivo no existe"
-                    ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                    If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+                        Win11PresenceSTLabel.Text = "Presence status: this file does not exist"
+                    ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+                        Win11PresenceSTLabel.Text = "Estado de presencia: este archivo no existe"
+                    ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                        Win11PresenceSTLabel.Text = "Statut de présence : ce fichier n'existe pas"
+                    ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                         If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
-                            Win10PresenceSTLabel.Text = "Presence status: this file does not exist"
+                            Win11PresenceSTLabel.Text = "Presence status: this file does not exist"
                         ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
-                            Win10PresenceSTLabel.Text = "Estado de presencia: este archivo no existe"
+                            Win11PresenceSTLabel.Text = "Estado de presencia: este archivo no existe"
+                        ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                            Win11PresenceSTLabel.Text = "Statut de présence : ce fichier n'existe pas"
                         End If
                     End If
                 End If
@@ -4176,15 +4543,19 @@ Public Class MainForm
 
     Private Sub LabelSetButton_Click(sender As Object, e As EventArgs) Handles LabelSetButton.Click
         Label78.Text = LabelText.Text
-        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             Label34.Text = "Label: " & LabelText.Text
-        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
             Label34.Text = "Etiqueta: " & LabelText.Text
-        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            Label34.Text = "Étiquette : " & LabelText.Text
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 Label34.Text = "Label: " & LabelText.Text
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 Label34.Text = "Etiqueta: " & LabelText.Text
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                Label34.Text = "Étiquette : " & LabelText.Text
             End If
         End If
     End Sub
@@ -4396,15 +4767,19 @@ Public Class MainForm
 
     Private Sub SetDefaultButton_Click(sender As Object, e As EventArgs) Handles SetDefaultButton.Click
         LabelText.Text = "Windows11"
-        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             Label34.Text = "Label: " & LabelText.Text
-        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
             Label34.Text = "Etiqueta: " & LabelText.Text
-        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            Label34.Text = "Étiquette : " & LabelText.Text
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 Label34.Text = "Label: " & LabelText.Text
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 Label34.Text = "Etiqueta: " & LabelText.Text
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                Label34.Text = "Étiquette : " & LabelText.Text
             End If
         End If
     End Sub
@@ -4480,7 +4855,7 @@ Public Class MainForm
     End Sub
 
     Private Sub ComboBox4_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox4.SelectedIndexChanged
-        If ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+        If ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
             LangInt = 2
             If My.User.IsInRole(ApplicationServices.BuiltInRole.Administrator) Then
                 Text = "Instalador manual de Windows 11 (modo de administrador)"
@@ -4558,8 +4933,13 @@ Public Class MainForm
             Label77.Text = "Etiqueta del instalador:"
             Label78.Text = LabelText.Text
             Label79.Text = "¿Estas configuraciones son las correctas?"
-            Label82.Text = "Progreso"
-            Label83.Text = "Ésta es toda la información que necesitamos en este momento. Esto tardará unos minutos, por lo que sea paciente, por favor."
+            If InstCreateInt = 3 Then
+                Label82.Text = "Final"
+                Label83.Text = "El instalador modificado fue creado en la ubicación especificada. Por favor, lea los detalles abajo."
+            Else
+                Label82.Text = "Progreso"
+                Label83.Text = "Ésta es toda la información que necesitamos en este momento. Esto tardará unos minutos, por lo que sea paciente."
+            End If
             Label84.Text = "Preparando el espacio de trabajo"
             Label85.Text = "Obteniendo instrucciones"
             Label86.Text = "Extrayendo archivos de los instaladores"
@@ -4650,6 +5030,7 @@ Public Class MainForm
             LinkLabel10.Text = "Compruebe la página de Errores"
             LinkLabel11.Text = "Compruebe la rama Hummingbird"
             LinkLabel12.Text = "Hay algunas cosas que valen la pena revisar antes de continuar. Haga clic aquí para saber más."
+            LinkLabel17.Text = "Más opciones..."
             LogViewLink.Text = "Ver archivo de registro"
 
             ' GroupBoxes
@@ -4674,7 +5055,11 @@ Public Class MainForm
             Button6.Text = "Crear"
             Button8.Text = "Sí"
             Button9.Text = "Ocultar registro"
-            Button10.Text = "Cancelar"
+            If InstCreateInt = 3 Then
+                Button10.Text = "Aceptar"
+            Else
+                Button10.Text = "Cancelar"
+            End If
             Button11.Text = "Ayuda de métodos"
             Button12.Text = "Comprobar actualizaciones"
             Button13.Text = "Opciones avanzadas"
@@ -4705,19 +5090,21 @@ Public Class MainForm
             EnglishToolStripMenuItem.Checked = False
             SpanishToolStripMenuItem.Text = "Español"
             SpanishToolStripMenuItem.Checked = True
+            FrenchToolStripMenuItem.Text = "Francés"
+            FrenchToolStripMenuItem.Checked = False
             ColorModeToolStripMenuItem.Text = "Modo del color"
             AutomaticToolStripMenuItem.Text = "Automático"
             LightToolStripMenuItem.Text = "Claro"
             DarkToolStripMenuItem.Text = "Oscuro"
-            If ComboBox1.SelectedItem = "Automatic" Or ComboBox1.SelectedItem = "Automático" Then
+            If ComboBox1.SelectedItem = "Automatic" Or ComboBox1.SelectedItem = "Automático" Or ComboBox1.SelectedItem = "Automatique" Then
                 AutomaticToolStripMenuItem.Checked = True
                 LightToolStripMenuItem.Checked = False
                 DarkToolStripMenuItem.Checked = False
-            ElseIf ComboBox1.SelectedItem = "Light" Or ComboBox1.SelectedItem = "Claro" Then
+            ElseIf ComboBox1.SelectedItem = "Light" Or ComboBox1.SelectedItem = "Claro" Or ComboBox1.SelectedItem = "Lumière" Then
                 AutomaticToolStripMenuItem.Checked = False
                 LightToolStripMenuItem.Checked = True
                 DarkToolStripMenuItem.Checked = False
-            ElseIf ComboBox1.SelectedItem = "Dark" Or ComboBox1.SelectedItem = "Oscuro" Then
+            ElseIf ComboBox1.SelectedItem = "Dark" Or ComboBox1.SelectedItem = "Oscuro" Or ComboBox1.SelectedItem = "Sombre" Then
                 AutomaticToolStripMenuItem.Checked = False
                 LightToolStripMenuItem.Checked = False
                 DarkToolStripMenuItem.Checked = True
@@ -4784,15 +5171,15 @@ Public Class MainForm
             ComboBox4.Items.Remove("Automatic")
             ComboBox4.Items.Remove("English")
             ComboBox4.Items.Remove("Spanish")
-            If ComboBox4.Items.Count > 3 Then   ' There is a bug in this procedure where it would make duplicate items of the ComboBox. 
-                Do Until ComboBox4.Items.Count = 3  ' This fixes it
-                    ComboBox4.Items.RemoveAt(3)
+            If ComboBox4.Items.Count > 4 Then   ' There is a bug in this procedure where it would make duplicate items of the ComboBox. 
+                Do Until ComboBox4.Items.Count = 4  ' This fixes it
+                    ComboBox4.Items.RemoveAt(4)
                 Loop
             End If
 
             ' FolderBrowserDialog
             ImageFolderBrowser.Description = "Especifique un directorio para guardar el instalador de destino:"
-        ElseIf ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+        ElseIf ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             LangInt = 1
             If My.User.IsInRole(ApplicationServices.BuiltInRole.Administrator) Then
                 Text = "Windows 11 Manual Installer (administrator mode)"
@@ -4846,7 +5233,7 @@ Public Class MainForm
             Label42.Text = "Reset preferences"
             Label43.Text = "Creates a modified installer to install Windows 11 on unsupported systems"
             Label44.Text = "Create a custom installer"
-            Label45.Text = "Allows you to customize the program' s appearance or behavior"
+            Label45.Text = "Allows you to customize the program's appearance or behavior"
             Label47.Text = "Allows you to create a custom Windows 11 installer by yourself"
             Label48.Text = "Instructions"
             Label49.Text = "Learn how to use this program"
@@ -4872,7 +5259,13 @@ Public Class MainForm
             Label78.Text = LabelText.Text
             Label79.Text = "Are these settings OK?"
             Label82.Text = "Progress"
-            Label83.Text = "That' s all the information we need right now. The installer creation will take a few minutes, so please be patient."
+            If InstCreateInt = 3 Then
+                Label82.Text = "Finish"
+                Label83.Text = "The custom installer was created at the specified location. Please read the details below."
+            Else
+                Label82.Text = "Progress"
+                Label83.Text = "That's all the information we need right now. The installer creation will take a few minutes, so please be patient."
+            End If
             Label84.Text = "Preparing the workspace"
             Label85.Text = "Gathering instructions"
             Label86.Text = "Extracting installer files"
@@ -4962,6 +5355,7 @@ Public Class MainForm
             LinkLabel10.Text = "Check the Issues page"
             LinkLabel11.Text = "Check the Hummingbird branch"
             LinkLabel12.Text = "There are some things that are worth revising before continuing. Click here to learn more."
+            LinkLabel17.Text = "More options..."
             LogViewLink.Text = "View log file"
 
             ' GroupBoxes
@@ -4986,7 +5380,11 @@ Public Class MainForm
             Button6.Text = "Create"
             Button8.Text = "Yes"
             Button9.Text = "Hide log"
-            Button10.Text = "Cancel"
+            If InstCreateInt = 3 Then
+                Button10.Text = "OK"
+            Else
+                Button10.Text = "Cancel"
+            End If
             Button11.Text = "Method help"
             Button12.Text = "Check for updates"
             Button13.Text = "Advanced options"
@@ -5016,19 +5414,21 @@ Public Class MainForm
             EnglishToolStripMenuItem.Checked = True
             SpanishToolStripMenuItem.Text = "Spanish"
             SpanishToolStripMenuItem.Checked = False
+            FrenchToolStripMenuItem.Text = "French"
+            FrenchToolStripMenuItem.Checked = False
             ColorModeToolStripMenuItem.Text = "Color mode"
             AutomaticToolStripMenuItem.Text = "Automatic"
             LightToolStripMenuItem.Text = "Light"
             DarkToolStripMenuItem.Text = "Dark"
-            If ComboBox1.SelectedItem = "Automatic" Or ComboBox1.SelectedItem = "Automático" Then
+            If ComboBox1.SelectedItem = "Automatic" Or ComboBox1.SelectedItem = "Automático" Or ComboBox1.SelectedItem = "Automatique" Then
                 AutomaticToolStripMenuItem.Checked = True
                 LightToolStripMenuItem.Checked = False
                 DarkToolStripMenuItem.Checked = False
-            ElseIf ComboBox1.SelectedItem = "Light" Or ComboBox1.SelectedItem = "Claro" Then
+            ElseIf ComboBox1.SelectedItem = "Light" Or ComboBox1.SelectedItem = "Claro" Or ComboBox1.SelectedItem = "Lumière" Then
                 AutomaticToolStripMenuItem.Checked = False
                 LightToolStripMenuItem.Checked = True
                 DarkToolStripMenuItem.Checked = False
-            ElseIf ComboBox1.SelectedItem = "Dark" Or ComboBox1.SelectedItem = "Oscuro" Then
+            ElseIf ComboBox1.SelectedItem = "Dark" Or ComboBox1.SelectedItem = "Oscuro" Or ComboBox1.SelectedItem = "Sombre" Then
                 AutomaticToolStripMenuItem.Checked = False
                 LightToolStripMenuItem.Checked = False
                 DarkToolStripMenuItem.Checked = True
@@ -5091,17 +5491,350 @@ Public Class MainForm
             ComboBox4.Items.Add("Automatic")
             ComboBox4.Items.Add("English")
             ComboBox4.Items.Add("Spanish")
+            ComboBox4.Items.Add("French")
             ComboBox4.SelectedItem = "English"
             ComboBox4.Items.Remove("Automático")
             ComboBox4.Items.Remove("Inglés")
             ComboBox4.Items.Remove("Español")
-            If ComboBox4.Items.Count > 3 Then   ' There is a bug in this procedure where it would make duplicate items of the ComboBox. 
-                Do Until ComboBox4.Items.Count = 3  ' This fixes it
-                    ComboBox4.Items.RemoveAt(3)
+            ComboBox4.Items.Remove("Francés")
+            ComboBox4.Items.Remove("Automatique")
+            ComboBox4.Items.Remove("Anglais")
+            ComboBox4.Items.Remove("Espagnol")
+            ComboBox4.Items.Remove("Français")
+            If ComboBox4.Items.Count > 4 Then   ' There is a bug in this procedure where it would make duplicate items of the ComboBox. 
+                Do Until ComboBox4.Items.Count = 4  ' This fixes it
+                    ComboBox4.Items.RemoveAt(4)
                 Loop
             End If
             ImageFolderBrowser.Description = "Please specify the path to save the custom installer:"
-        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            LangInt = 3
+            If My.User.IsInRole(ApplicationServices.BuiltInRole.Administrator) Then
+                Text = "Installateur manuel de Windows 11 (mode administrateur)"
+            Else
+                Text = "Installateur manuel de Windows 11"
+            End If
+            Notify.Text = "Installateur manuel de Windows 11 - Prêt"
+            ' Labels
+            Label1.Text = "Bienvenue"
+            Label100.Text = "Instructions"
+            Label101.Text = "Aide"
+            Label102.Text = "À propos de"
+            Label104.Text = "Instructions"
+            scText.Text = "Le code source de ce programme peut être trouvé sur GitHub." & CrLf & CrLf & "- Ce projet peut être ouvert sur Visual Studio 2012 et plus récent, sans besoin de conversion." & CrLf & "- Le .NET Framework 4.8 Developer Pack doit être installé pour ouvrir ce projet." & CrLf & CrLf & "Vous souhaitez suggérer une nouvelle fonctionnalité à inclure dans une future version ? Vous avez rencontré un bogue que vous souhaitez signaler ? N'hésitez pas à faire part de vos commentaires ou (encore mieux) à contribuer (vous aurez besoin d'un compte GitHub). Vos commentaires sont essentiels." & CrLf & CrLf & "Vous voulez profiter des dernières fonctionnalités ? Consultez la branche Hummingbird ! Mises à jour hebdomadaires, nouvelles fonctionnalités et aperçu de l'avenir du programme."
+            Label106.Text = "Hummingbird version"
+            Label108.Text = "Installateur cible :"
+            Label109.Text = "Chemin de l'installateur cible :"
+
+            ' Label11 doesn't go here, as it's a ">". It will change its Left property instead.
+            Label110.Text = "Date de création de l'installateur cible :"
+            Label111.Text = "Avertissements et erreurs de l'installateur :"
+            Label114.Text = "Avertissements : " & WarnCount
+            Label115.Text = "Erreurs : " & ErrorCount
+
+            Label12.Text = "Personnalisation"
+
+            Label13.Text = "Mode couleur :"
+            Label14.Text = "Vous pouvez modifier ici la position de la barre de navigation. Position :"
+            ' Label16 will also change its Left property
+            Label17.Text = "Fonctionnalité"
+            Label19.Text = "Langue:"
+            Label2.Text = "Affiche des informations sur le programme"
+            Label20.Text = "Méthode de création de l'installateur :"
+            Label22.Text = "Compatibilité avec les plates-formes :"
+            ' Label23, 26 and 27 aren't affected in any matter
+            Label24.Text = "Vous pouvez définir ici une étiquette personnalisée pour votre image."
+            Label25.Text = "Étiquette :"
+            Label28.Text = "Échelle DPI à appliquer: " & TrackBar1.Value & "%"
+            Label3.Text = "Au moins un installateur est sur le point d'être créé"
+            Label30.Text = "Langue: " & ComboBox4.SelectedItem
+            Label31.Text = "Mode couleur: " & ComboBox1.SelectedItem
+            Label33.Text = "Méthode de création de l'installateur : " & ComboBox5.SelectedItem
+            Label34.Text = "Étiquette : " & LabelText.Text
+            LabelSetButton.PerformClick()
+            Label36.Text = "Modifiez les paramètres d'apparence, tels que la langue, le mode de couleur ou l'échelle DPI"
+            Label38.Text = "Modifier les paramètres relatifs à la façon dont le programme réalise l'installateur personnalisé"
+            Label39.Text = "Efface le journal de l'historique de l'installateur, qui est accessible en cliquant sur " & Quote & "Voir l'historique de l'installateur" & Quote & " dans le menu principal."
+            Label4.Text = "À propos de"
+            Label40.Text = "Effacer le journal"
+            Label41.Text = "Réinitialise toutes les préférences à leurs valeurs par défaut"
+            Label42.Text = "Réinitialiser les préférences"
+            Label43.Text = "Créer un installateur modifié pour installer Windows 11 sur des systèmes non pris en charge"
+            Label44.Text = "Créer un installateur personnalisé"
+            Label45.Text = "Permet de personnaliser l'apparence ou le comportement du programme"
+            Label47.Text = "Permet de créer soi-même un installateur personnalisé de Windows 11"
+            Label48.Text = "Instructions"
+            Label49.Text = "Apprenez à utiliser ce programme"
+            ' These lines of code affect Label5 and PictureBox11
+            Label50.Text = "Aide"
+            Label51.Text = "À propos de"
+            Label53.Text = "Installateur de Windows 11"
+            Label54.Text = "Installateur de Windows 10"
+            Label55.Text = "Installateur de Windows 11 :"
+            Label56.Text = "Installateur de Windows 10 :"
+            Label57.Text = "Options du fichier ISO"
+            Label58.Text = "Nom du fichier ISO :"
+            Label59.Text = "Lieu du fichier ISO :"
+            Label60.Text = "Lorsque vous êtes prêt, cliquez sur " & Quote & "Créer" & Quote
+            Label63.Text = "Vérifiez vos paramètres"
+            Label64.Text = "Lieu et nom :"
+            Label65.Text = "Image du Windows 11 :"
+            Label66.Text = "Image du Windows 10 :"
+            Label69.Text = "Méthode :"
+            ' Labels71 through 74 were deleted due to lack of functionality
+            Label75.Text = "Compatibilité avec les plates-formes :"
+            Label77.Text = "Étiquette de l'installateur :"
+            Label78.Text = LabelText.Text
+            Label79.Text = "Ces paramètres sont-ils corrects ?"
+            If InstCreateInt = 3 Then
+                Label82.Text = "Fin"
+                Label83.Text = "Le installateur personnalisé a été créé à l'emplacement spécifié. Veuillez lire les détails ci-dessous."
+            Else
+                Label82.Text = "Progrès"
+                Label83.Text = "C'est toute l'information dont nous avons besoin pour le moment. La création de l'installateur prendra quelques minutes, alors soyez patient."
+            End If
+            Label84.Text = "Préparation de l'espace de travail"
+            Label85.Text = "Rassemblement des instructions"
+            Label86.Text = "Extraction des fichiers d'installation"
+            Label87.Text = "Création de l'installateur"
+            Label88.Text = "Finir"
+            Label89.Text = "L'action effectuée en ce moment ne peut être annulée. Veuillez patienter..."
+            Label9.Text = "Paramètres"
+            If needsUpdates Then
+                Label91.Text = "Les mises à jour apportent de nouvelles fonctionnalités et des corrections de bogues à ce programme. Cliquez sur " & Quote & "Vérifier les mises à jour" & Quote & " pour vérifier les mises à jour du programme."
+            Else
+                If UpdateCheckDate = Nothing Then
+                    Label91.Text = "Pour vérifier les mises à jour du programme, cliquez sur " & Quote & "Vérifier les mises à jour" & Quote
+                Else
+                    If UpdateCheckDate.Day.Equals(14) And UpdateCheckDate.Month.Equals(3) Then
+                        Label91.Text = "Pour vérifier les mises à jour du programme, cliquez sur " & Quote & "Vérifier les mises à jour" & Quote & CrLf & "Dernière vérification des mises à jour effectuée le : π jour à " & UpdateCheckDate.ToLongTimeString
+                    Else
+                        Label91.Text = "Pour vérifier les mises à jour du programme, cliquez sur " & Quote & "Vérifier les mises à jour" & Quote & CrLf & "Dernière vérification des mises à jour effectuée le : " & UpdateCheckDate
+                    End If
+                End If
+            End If
+            Label92.Text = "Vous trouverez ici des informations détaillées sur les composants utilisés par le programme :"
+            Label97.Text = "Tous les composants présentés ici sont couverts par leurs propres termes de licence, et ce programme peut UNIQUEMENT redistribuer redistribuer des composants open-source."
+            AdminLabel.Text = "MODE ADMINISTRATEUR"
+            ProgramTitleLabel.Text = "Installateur manuel de Windows 11"
+            Last_Created_Inst_Label.Text = "Dernier installateur créé le :"
+
+            ' Labels that belong to main sections will adopt the text from the main panels
+            Label10.Text = Label9.Text
+            Label18.Text = Label9.Text
+            Label35.Text = Label12.Text
+            Label37.Text = Label17.Text
+            Label52.Text = Label50.Text
+            Label61.Text = Label44.Text
+            Label8.Text = Label44.Text
+            Label80.Text = Label44.Text
+            Label15.Text = Label1.Text
+            Label99.Text = Label44.Text
+
+            ' Miscelaneous labels
+            Label29.Text = Label12.Text
+            Label32.Text = Label17.Text
+            Label46.Text = Label9.Text
+            NameLabel.Text = "Nom : " & TextBox3.Text
+            If InstHistPanel.InstallerListView.Items.Count = 0 Then
+                Last_Inst_Time_Label.Text = "Aucune date n'est disponible"
+            End If
+            If File.Exists(TextBox1.Text) Then
+                Win11PresenceSTLabel.Text = "Statut de présence : ce fichier existe"
+            Else
+                Win11PresenceSTLabel.Text = "Statut de présence : ce fichier n'existe pas"
+            End If
+            If TextBox1.Text = "" Then
+                Win11PresenceSTLabel.Text = "Statut de présence : inconnu"
+            End If
+            If File.Exists(TextBox2.Text) Then
+                Win10PresenceSTLabel.Text = "Statut de présence : ce fichier existe"
+            Else
+                Win10PresenceSTLabel.Text = "Statut de présence : ce fichier n'existe pas"
+            End If
+            If TextBox2.Text = "" Then
+                Win10PresenceSTLabel.Text = "Statut de présence : inconnu"
+            End If
+            If TextBox4.Text.EndsWith("\") Then
+                If TextBox4.Text.Contains(" ") Then
+                    ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Le chemin contiendra des guillemets"
+                Else
+                    ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
+                End If
+            Else
+                If TextBox4.Text.Contains(" ") Then
+                    ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote & ". Le chemin contiendra des guillemets"
+                Else
+                    ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote
+                End If
+            End If
+
+            ' LinkLabels
+            LinkLabel1.Text = "Voir l'historique de l'installateur"
+            LinkLabel2.Text = "Continuer la creation de l'installateur"
+            LinkLabel3.Text = "Recherche sur Google"
+            LinkLabel4.Text = "Recherche sur DuckDuckGo"
+            LinkLabel5.Text = "Renommer"
+            LinkLabel6.Text = "Impossible d'obtenir le modèle d'ordinateur"
+            LinkLabel7.Text = "Les mises à jour sont disponibles. Cliquez ici pour en savoir plus."
+            LinkLabel8.Text = "Vérifiez le projet de ce programme"
+            LinkLabel9.Text = "Télécharger le Developer Pack"
+            LinkLabel10.Text = "Vérifiez la page des problèmes"
+            LinkLabel11.Text = "Vérifiez la branche Hummingbird"
+            LinkLabel12.Text = "Il y a certaines choses qui méritent d'être révisées avant de continuer. Cliquez ici pour en savoir plus."
+            LinkLabel17.Text = "Options supplémentaires..."
+            LogViewLink.Text = "Afficher le fichier journal"
+
+            ' GroupBoxes
+            GroupBox1.Text = "Position de la navigation"
+            GroupBox12.Text = "Options de la barre d'état système"
+            GroupBox3.Text = "Détails de la compatibilité avec la plate-forme"
+            GroupBox4.Text = "Options de l'étiquette"
+            GroupBox5.Text = "Options de mise à l'échelle DPI"
+            GroupBox6.Text = "Fichiers ISO"
+            GroupBox7.Text = "Options de l'image cible"
+            GroupBox8.Text = "Images"
+            GroupBox9.Text = "Options de création de l'installateur"
+            GroupBox10.Text = "Journal"
+            GroupBox11.Text = "Image cible"
+
+            ' Buttons
+            Button1.Text = "Appliquer l'échelle DPI"
+            Button2.Text = "Parcourir..."
+            Button3.Text = "Restaurer"
+            Button4.Text = "Parcourir..."
+            Button5.Text = "Parcourir..."
+            Button6.Text = "Créer"
+            Button8.Text = "Oui"
+            Button9.Text = "Cacher le journal"
+            If InstCreateInt = 3 Then
+                Button10.Text = "OK"
+            Else
+                Button10.Text = "Annuler"
+            End If
+            Button11.Text = "Aide à la méthode"
+            Button12.Text = "Vérifier les mises à jour"
+            Button13.Text = "Options avancées"
+            ScanButton.Text = "Scanner..."
+            LabelSetButton.Text = "Définir"
+            SetDefaultButton.Text = "Valeur par défaut"
+
+            ' CheckBoxes
+            CheckBox1.Text = "Afficher une fois la notification de la barre d'état système"
+            CheckBox3.Text = "À la fermeture, masquer dans la barre d'état système"
+            CheckBox4.Text = "Quitter le programme après avoir cliqué sur OK"
+
+            ' MenuStrip items
+            Windows11ManualInstallerToolStripMenuItem.Text = "Installateur manuel de Windows 11"
+            VersionToolStripMenuItem.Text = "version " & VerStr & " (version assemblée " & AVerStr & ")"
+            InstSTLabel.Text = "Statut de l'installateur"
+            StatusTSI.Text = "Aucun installateur n'est créé pour l'instant"
+            LastInstallerCreatedAtToolStripMenuItem.Text = "Dernier installateur créé à :"
+            If InstHistPanel.InstallerListView.Items.Count = 0 Then
+                IHDataToolStripMenuItem.Text = "Aucune donnée sur l'historique des installateurs n'est disponible pour l'instant"
+            End If
+            ViewInstallerHistoryToolStripMenuItem.Text = "Voir l'historique de l'installateur"
+            LanguageToolStripMenuItem.Text = "Langue"
+            AutomaticLanguageToolStripMenuItem.Text = "Automatique"
+            AutomaticLanguageToolStripMenuItem.Checked = False
+            EnglishToolStripMenuItem.Text = "Anglais"
+            EnglishToolStripMenuItem.Checked = False
+            SpanishToolStripMenuItem.Text = "Espagnol"
+            SpanishToolStripMenuItem.Checked = False
+            FrenchToolStripMenuItem.Text = "Français"
+            FrenchToolStripMenuItem.Checked = True
+            ColorModeToolStripMenuItem.Text = "Mode couleur"
+            AutomaticToolStripMenuItem.Text = "Automatique"
+            LightToolStripMenuItem.Text = "Lumière"
+            DarkToolStripMenuItem.Text = "Sombre"
+            If ComboBox1.SelectedItem = "Automatic" Or ComboBox1.SelectedItem = "Automático" Or ComboBox1.SelectedItem = "Automatique" Then
+                AutomaticToolStripMenuItem.Checked = True
+                LightToolStripMenuItem.Checked = False
+                DarkToolStripMenuItem.Checked = False
+            ElseIf ComboBox1.SelectedItem = "Light" Or ComboBox1.SelectedItem = "Claro" Or ComboBox1.SelectedItem = "Lumière" Then
+                AutomaticToolStripMenuItem.Checked = False
+                LightToolStripMenuItem.Checked = True
+                DarkToolStripMenuItem.Checked = False
+            ElseIf ComboBox1.SelectedItem = "Dark" Or ComboBox1.SelectedItem = "Oscuro" Or ComboBox1.SelectedItem = "Sombre" Then
+                AutomaticToolStripMenuItem.Checked = False
+                LightToolStripMenuItem.Checked = False
+                DarkToolStripMenuItem.Checked = True
+            End If
+            InstallerCreationMethodToolStripMenuItem.Text = "Méthode de création de l'installateur"
+            AOTSMI.Text = "Options avancées"
+            OpenToolStripMenuItem.Text = "Ouvrir"
+            ExitToolStripMenuItem.Text = "Sortir"
+
+
+            ' Positioning
+            Label11.Left = Label10.Left + Label10.Width + 6
+            Label12.Left = Label11.Left + Label11.Width
+            Label16.Left = Label18.Left + Label18.Width + 6
+            Label17.Left = Label16.Left + Label16.Width
+            Label62.Left = Label61.Left + Label61.Width + 6
+            Label63.Left = Label62.Left + Label62.Width + 4
+            Label81.Left = Label80.Left + Label80.Width + 6
+            Label82.Left = Label81.Left + Label81.Width + 4
+
+            ' TabPages
+            TabPage1.Text = "Aperçu"
+            TabPage2.Text = "Information sur les composants"
+            TabPage3.Text = "Code source"
+
+            ' RadioButtons
+            RadioButton3.Text = "Gauche"
+            RadioButton4.Text = "Haut"
+
+            ' TextBox positioning and size
+            TextBox1.Left = 241
+            TextBox1.Width = 339
+            TextBox2.Left = 241
+            TextBox2.Width = 339
+            TextBox3.Left = 195
+            TextBox3.Width = 483
+            TextBox4.Left = 189
+            TextBox4.Width = 523
+            LabelText.Left = 102
+            LabelText.Width = 231
+
+            ' Miscellaneous positioning and size
+            ComboBox5.Left = 342
+            ComboBox5.Width = 329
+
+            ' ComboBox relabelling
+            ComboBox1.Items.Clear()
+            ComboBox1.Items.Add("Automatique")
+            ComboBox1.Items.Add("Lumière")
+            ComboBox1.Items.Add("Sombre")
+            If ColorInt = 0 Then
+                ComboBox1.SelectedItem = "Automatique"
+            ElseIf ColorInt = 1 Then
+                ComboBox1.SelectedItem = "Lumière"
+            ElseIf ColorInt = 2 Then
+                ComboBox1.SelectedItem = "Sombre"
+            End If
+            ' This line of code freezes the program. Maybe because it's cold in Alaska now?
+            'ComboBox4.Items.Clear()
+            ComboBox4.Items.Add("Automatique")
+            ComboBox4.Items.Add("Anglais")
+            ComboBox4.Items.Add("Espagnol")
+            ComboBox4.Items.Add("Français")
+            ComboBox4.SelectedItem = "Français"
+            ComboBox4.Items.Remove("Automático")
+            ComboBox4.Items.Remove("Inglés")
+            ComboBox4.Items.Remove("Español")
+            ComboBox4.Items.Remove("Francés")
+            ComboBox4.Items.Remove("Automatic")
+            ComboBox4.Items.Remove("English")
+            ComboBox4.Items.Remove("Spanish")
+            ComboBox4.Items.Remove("French")
+            If ComboBox4.Items.Count > 4 Then   ' There is a bug in this procedure where it would make duplicate items of the ComboBox. 
+                Do Until ComboBox4.Items.Count = 4  ' This fixes it
+                    ComboBox4.Items.RemoveAt(4)
+                Loop
+            End If
+            ImageFolderBrowser.Description = "Veuillez spécifier le chemin pour enregistrer l'installateur personnalisé :"
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             LangInt = 0
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 If My.User.IsInRole(ApplicationServices.BuiltInRole.Administrator) Then
@@ -5181,7 +5914,13 @@ Public Class MainForm
                 Label78.Text = LabelText.Text
                 Label79.Text = "¿Estas configuraciones son las correctas?"
                 Label82.Text = "Progreso"
-                Label83.Text = "Ésta es toda la información que necesitamos en este momento. Esto tardará unos minutos, por lo que sea paciente, por favor."
+                If InstCreateInt = 3 Then
+                    Label82.Text = "Final"
+                    Label83.Text = "El instalador modificado fue creado en la ubicación especificada. Por favor, lea los detalles abajo."
+                Else
+                    Label82.Text = "Progreso"
+                    Label83.Text = "Ésta es toda la información que necesitamos en este momento. Esto tardará unos minutos, por lo que sea paciente."
+                End If
                 Label84.Text = "Preparando el espacio de trabajo"
                 Label85.Text = "Obteniendo instrucciones"
                 Label86.Text = "Extrayendo archivos de los instaladores"
@@ -5271,6 +6010,7 @@ Public Class MainForm
                 LinkLabel10.Text = "Compruebe la página de Errores"
                 LinkLabel11.Text = "Compruebe la rama Hummingbird"
                 LinkLabel12.Text = "Hay algunas cosas que valen la pena revisar antes de continuar. Haga clic aquí para saber más."
+                LinkLabel17.Text = "Más opciones..."
                 LogViewLink.Text = "Ver archivo de registro"
                 ' GroupBoxes
                 GroupBox1.Text = "Posición de navegación"
@@ -5294,7 +6034,11 @@ Public Class MainForm
                 Button6.Text = "Crear"
                 Button8.Text = "Sí"
                 Button9.Text = "Ocultar registro"
-                Button10.Text = "Cancelar"
+                If InstCreateInt = 3 Then
+                    Button10.Text = "Aceptar"
+                Else
+                    Button10.Text = "Cancelar"
+                End If
                 Button11.Text = "Ayuda de métodos"
                 Button12.Text = "Comprobar actualizaciones"
                 Button13.Text = "Opciones avanzadas"
@@ -5324,19 +6068,21 @@ Public Class MainForm
                 EnglishToolStripMenuItem.Checked = False
                 SpanishToolStripMenuItem.Text = "Español"
                 SpanishToolStripMenuItem.Checked = False
+                FrenchToolStripMenuItem.Text = "Francés"
+                FrenchToolStripMenuItem.Checked = False
                 ColorModeToolStripMenuItem.Text = "Modo del color"
                 AutomaticToolStripMenuItem.Text = "Automático"
                 LightToolStripMenuItem.Text = "Claro"
                 DarkToolStripMenuItem.Text = "Oscuro"
-                If ComboBox1.SelectedItem = "Automatic" Or ComboBox1.SelectedItem = "Automático" Then
+                If ComboBox1.SelectedItem = "Automatic" Or ComboBox1.SelectedItem = "Automático" Or ComboBox1.SelectedItem = "Automatique" Then
                     AutomaticToolStripMenuItem.Checked = True
                     LightToolStripMenuItem.Checked = False
                     DarkToolStripMenuItem.Checked = False
-                ElseIf ComboBox1.SelectedItem = "Light" Or ComboBox1.SelectedItem = "Claro" Then
+                ElseIf ComboBox1.SelectedItem = "Light" Or ComboBox1.SelectedItem = "Claro" Or ComboBox1.SelectedItem = "Lumière" Then
                     AutomaticToolStripMenuItem.Checked = False
                     LightToolStripMenuItem.Checked = True
                     DarkToolStripMenuItem.Checked = False
-                ElseIf ComboBox1.SelectedItem = "Dark" Or ComboBox1.SelectedItem = "Oscuro" Then
+                ElseIf ComboBox1.SelectedItem = "Dark" Or ComboBox1.SelectedItem = "Oscuro" Or ComboBox1.SelectedItem = "Sombre" Then
                     AutomaticToolStripMenuItem.Checked = False
                     LightToolStripMenuItem.Checked = False
                     DarkToolStripMenuItem.Checked = True
@@ -5403,9 +6149,9 @@ Public Class MainForm
                 ComboBox4.Items.Remove("Automatic")
                 ComboBox4.Items.Remove("English")
                 ComboBox4.Items.Remove("Spanish")
-                If ComboBox4.Items.Count > 3 Then   ' There is a bug in this procedure where it would make duplicate items of the ComboBox. 
-                    Do Until ComboBox4.Items.Count = 3  ' This fixes it
-                        ComboBox4.Items.RemoveAt(3)
+                If ComboBox4.Items.Count > 4 Then   ' There is a bug in this procedure where it would make duplicate items of the ComboBox. 
+                    Do Until ComboBox4.Items.Count = 4  ' This fixes it
+                        ComboBox4.Items.RemoveAt(4)
                     Loop
                 End If
                 ImageFolderBrowser.Description = "Especifique un directorio para guardar el instalador de destino:"
@@ -5462,7 +6208,7 @@ Public Class MainForm
                 Label42.Text = "Reset preferences"
                 Label43.Text = "Creates a modified installer to install Windows 11 on unsupported systems"
                 Label44.Text = "Create a custom installer"
-                Label45.Text = "Allows you to customize the program' s appearance or behavior"
+                Label45.Text = "Allows you to customize the program's appearance or behavior"
                 Label47.Text = "Allows you to create a custom Windows 11 installer by yourself"
                 Label48.Text = "Instructions"
                 Label49.Text = "Learn how to use this program"
@@ -5487,7 +6233,13 @@ Public Class MainForm
                 Label78.Text = LabelText.Text
                 Label79.Text = "Are these settings OK?"
                 Label82.Text = "Progress"
-                Label83.Text = "That' s all the information we need right now. The installer creation will take a few minutes, so please be patient."
+                If InstCreateInt = 3 Then
+                    Label82.Text = "Finish"
+                    Label83.Text = "The custom installer was created at the specified location. Please read the details below."
+                Else
+                    Label82.Text = "Progress"
+                    Label83.Text = "That's all the information we need right now. The installer creation will take a few minutes, so please be patient."
+                End If
                 Label84.Text = "Preparing the workspace"
                 Label85.Text = "Gathering instructions"
                 Label86.Text = "Extracting installer files"
@@ -5577,6 +6329,7 @@ Public Class MainForm
                 LinkLabel10.Text = "Check the Issues page"
                 LinkLabel11.Text = "Check the Hummingbird branch"
                 LinkLabel12.Text = "There are some things that are worth revising before continuing. Click here to learn more."
+                LinkLabel17.Text = "More options..."
                 LogViewLink.Text = "View log file"
 
                 ' GroupBoxes
@@ -5601,7 +6354,11 @@ Public Class MainForm
                 Button6.Text = "Create"
                 Button8.Text = "Yes"
                 Button9.Text = "Hide log"
-                Button10.Text = "Cancel"
+                If InstCreateInt = 3 Then
+                    Button10.Text = "OK"
+                Else
+                    Button10.Text = "Cancel"
+                End If
                 Button11.Text = "Method help"
                 Button12.Text = "Check for updates"
                 Button13.Text = "Advanced options"
@@ -5631,19 +6388,21 @@ Public Class MainForm
                 EnglishToolStripMenuItem.Checked = False
                 SpanishToolStripMenuItem.Text = "Spanish"
                 SpanishToolStripMenuItem.Checked = False
+                FrenchToolStripMenuItem.Text = "French"
+                FrenchToolStripMenuItem.Checked = False
                 ColorModeToolStripMenuItem.Text = "Color mode"
                 AutomaticToolStripMenuItem.Text = "Automatic"
                 LightToolStripMenuItem.Text = "Light"
                 DarkToolStripMenuItem.Text = "Dark"
-                If ComboBox1.SelectedItem = "Automatic" Or ComboBox1.SelectedItem = "Automático" Then
+                If ComboBox1.SelectedItem = "Automatic" Or ComboBox1.SelectedItem = "Automático" Or ComboBox1.SelectedItem = "Automatique" Then
                     AutomaticToolStripMenuItem.Checked = True
                     LightToolStripMenuItem.Checked = False
                     DarkToolStripMenuItem.Checked = False
-                ElseIf ComboBox1.SelectedItem = "Light" Or ComboBox1.SelectedItem = "Claro" Then
+                ElseIf ComboBox1.SelectedItem = "Light" Or ComboBox1.SelectedItem = "Claro" Or ComboBox1.SelectedItem = "Lumière" Then
                     AutomaticToolStripMenuItem.Checked = False
                     LightToolStripMenuItem.Checked = True
                     DarkToolStripMenuItem.Checked = False
-                ElseIf ComboBox1.SelectedItem = "Dark" Or ComboBox1.SelectedItem = "Oscuro" Then
+                ElseIf ComboBox1.SelectedItem = "Dark" Or ComboBox1.SelectedItem = "Oscuro" Or ComboBox1.SelectedItem = "Sombre" Then
                     AutomaticToolStripMenuItem.Checked = False
                     LightToolStripMenuItem.Checked = False
                     DarkToolStripMenuItem.Checked = True
@@ -5710,12 +6469,338 @@ Public Class MainForm
                 ComboBox4.Items.Remove("Automático")
                 ComboBox4.Items.Remove("Inglés")
                 ComboBox4.Items.Remove("Español")
-                If ComboBox4.Items.Count > 3 Then   ' There is a bug in this procedure where it would make duplicate items of the ComboBox. 
-                    Do Until ComboBox4.Items.Count = 3  ' This fixes it
-                        ComboBox4.Items.RemoveAt(3)
+                If ComboBox4.Items.Count > 4 Then   ' There is a bug in this procedure where it would make duplicate items of the ComboBox. 
+                    Do Until ComboBox4.Items.Count = 4  ' This fixes it
+                        ComboBox4.Items.RemoveAt(4)
                     Loop
                 End If
                 ImageFolderBrowser.Description = "Please specify the path to save the custom installer:"
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                If My.User.IsInRole(ApplicationServices.BuiltInRole.Administrator) Then
+                    Text = "Installateur manuel de Windows 11 (mode administrateur)"
+                Else
+                    Text = "Installateur manuel de Windows 11"
+                End If
+                Notify.Text = "Installateur manuel de Windows 11 - Prêt"
+                ' Labels
+                Label1.Text = "Bienvenue"
+                Label100.Text = "Instructions"
+                Label101.Text = "Aide"
+                Label102.Text = "À propos de"
+                Label104.Text = "Instructions"
+                scText.Text = "Le code source de ce programme peut être trouvé sur GitHub." & CrLf & CrLf & "- Ce projet peut être ouvert sur Visual Studio 2012 et plus récent, sans besoin de conversion." & CrLf & "- Le .NET Framework 4.8 Developer Pack doit être installé pour ouvrir ce projet." & CrLf & CrLf & "Vous souhaitez suggérer une nouvelle fonctionnalité à inclure dans une future version ? Vous avez rencontré un bogue que vous souhaitez signaler ? N'hésitez pas à faire part de vos commentaires ou (encore mieux) à contribuer (vous aurez besoin d'un compte GitHub). Vos commentaires sont essentiels." & CrLf & CrLf & "Vous voulez profiter des dernières fonctionnalités ? Consultez la branche Hummingbird ! Mises à jour hebdomadaires, nouvelles fonctionnalités et aperçu de l'avenir du programme."
+                Label106.Text = "Hummingbird version"
+                Label108.Text = "Installateur cible :"
+                Label109.Text = "Chemin de l'installateur cible :"
+
+                ' Label11 doesn't go here, as it's a ">". It will change its Left property instead.
+                Label110.Text = "Date de création de l'installateur cible :"
+                Label111.Text = "Avertissements et erreurs de l'installateur :"
+                Label114.Text = "Avertissements : " & WarnCount
+                Label115.Text = "Erreurs : " & ErrorCount
+
+                Label12.Text = "Personnalisation"
+
+                Label13.Text = "Mode couleur :"
+                Label14.Text = "Vous pouvez modifier ici la position de la barre de navigation. Position :"
+                ' Label16 will also change its Left property
+                Label17.Text = "Fonctionnalité"
+                Label19.Text = "Langue:"
+                Label2.Text = "Affiche des informations sur le programme"
+                Label20.Text = "Méthode de création de l'installateur :"
+                Label22.Text = "Compatibilité avec les plates-formes :"
+                ' Label23, 26 and 27 aren't affected in any matter
+                Label24.Text = "Vous pouvez définir ici une étiquette personnalisée pour votre image."
+                Label25.Text = "Étiquette :"
+                Label28.Text = "Échelle DPI à appliquer: " & TrackBar1.Value & "%"
+                Label3.Text = "Au moins un installateur est sur le point d'être créé"
+                Label30.Text = "Langue: " & ComboBox4.SelectedItem
+                Label31.Text = "Mode couleur: " & ComboBox1.SelectedItem
+                Label33.Text = "Méthode de création de l'installateur : " & ComboBox5.SelectedItem
+                Label34.Text = "Étiquette : " & LabelText.Text
+                LabelSetButton.PerformClick()
+                Label36.Text = "Modifiez les paramètres d'apparence, tels que la langue, le mode de couleur ou l'échelle DPI"
+                Label38.Text = "Modifier les paramètres relatifs à la façon dont le programme réalise l'installateur personnalisé"
+                Label39.Text = "Efface le journal de l'historique de l'installateur, qui est accessible en cliquant sur " & Quote & "Voir l'historique de l'installateur" & Quote & " dans le menu principal."
+                Label4.Text = "À propos de"
+                Label40.Text = "Effacer le journal"
+                Label41.Text = "Réinitialise toutes les préférences à leurs valeurs par défaut"
+                Label42.Text = "Réinitialiser les préférences"
+                Label43.Text = "Créer un installateur modifié pour installer Windows 11 sur des systèmes non pris en charge"
+                Label44.Text = "Créer un installateur personnalisé"
+                Label45.Text = "Permet de personnaliser l'apparence ou le comportement du programme"
+                Label47.Text = "Permet de créer soi-même un installateur personnalisé de Windows 11"
+                Label48.Text = "Instructions"
+                Label49.Text = "Apprenez à utiliser ce programme"
+                ' These lines of code affect Label5 and PictureBox11
+                Label50.Text = "Aide"
+                Label51.Text = "À propos de"
+                Label53.Text = "Installateur de Windows 11"
+                Label54.Text = "Installateur de Windows 10"
+                Label55.Text = "Installateur de Windows 11 :"
+                Label56.Text = "Installateur de Windows 10 :"
+                Label57.Text = "Options du fichier ISO"
+                Label58.Text = "Nom du fichier ISO :"
+                Label59.Text = "Lieu du fichier ISO :"
+                Label60.Text = "Lorsque vous êtes prêt, cliquez sur " & Quote & "Créer" & Quote
+                Label63.Text = "Vérifiez vos paramètres"
+                Label64.Text = "Lieu et nom :"
+                Label65.Text = "Image du Windows 11 :"
+                Label66.Text = "Image du Windows 10 :"
+                Label69.Text = "Méthode :"
+                ' Labels71 through 74 were deleted due to lack of functionality
+                Label75.Text = "Compatibilité avec les plates-formes :"
+                Label77.Text = "Étiquette de l'installateur :"
+                Label78.Text = LabelText.Text
+                Label79.Text = "Ces paramètres sont-ils corrects ?"
+                If InstCreateInt = 3 Then
+                    Label82.Text = "Fin"
+                    Label83.Text = "Le installateur personnalisé a été créé à l'emplacement spécifié. Veuillez lire les détails ci-dessous."
+                Else
+                    Label82.Text = "Progrès"
+                    Label83.Text = "C'est toute l'information dont nous avons besoin pour le moment. La création de l'installateur prendra quelques minutes, alors soyez patient."
+                End If
+                Label84.Text = "Préparation de l'espace de travail"
+                Label85.Text = "Rassemblement des instructions"
+                Label86.Text = "Extraction des fichiers d'installation"
+                Label87.Text = "Création de l'installateur"
+                Label88.Text = "Finir"
+                Label89.Text = "L'action effectuée en ce moment ne peut être annulée. Veuillez patienter..."
+                Label9.Text = "Paramètres"
+                If needsUpdates Then
+                    Label91.Text = "Les mises à jour apportent de nouvelles fonctionnalités et des corrections de bogues à ce programme. Cliquez sur " & Quote & "Vérifier les mises à jour" & Quote & " pour vérifier les mises à jour du programme."
+                Else
+                    If UpdateCheckDate = Nothing Then
+                        Label91.Text = "Pour vérifier les mises à jour du programme, cliquez sur " & Quote & "Vérifier les mises à jour" & Quote
+                    Else
+                        If UpdateCheckDate.Day.Equals(14) And UpdateCheckDate.Month.Equals(3) Then
+                            Label91.Text = "Pour vérifier les mises à jour du programme, cliquez sur " & Quote & "Vérifier les mises à jour" & Quote & CrLf & "Dernière vérification des mises à jour effectuée le : π jour à " & UpdateCheckDate.ToLongTimeString
+                        Else
+                            Label91.Text = "Pour vérifier les mises à jour du programme, cliquez sur " & Quote & "Vérifier les mises à jour" & Quote & CrLf & "Dernière vérification des mises à jour effectuée le : " & UpdateCheckDate
+                        End If
+                    End If
+                End If
+                Label92.Text = "Vous trouverez ici des informations détaillées sur les composants utilisés par le programme :"
+                Label97.Text = "Tous les composants présentés ici sont couverts par leurs propres termes de licence, et ce programme peut UNIQUEMENT redistribuer redistribuer des composants open-source."
+                AdminLabel.Text = "MODE ADMINISTRATEUR"
+                ProgramTitleLabel.Text = "Installateur manuel de Windows 11"
+                Last_Created_Inst_Label.Text = "Dernier installateur créé le :"
+
+                ' Labels that belong to main sections will adopt the text from the main panels
+                Label10.Text = Label9.Text
+                Label18.Text = Label9.Text
+                Label35.Text = Label12.Text
+                Label37.Text = Label17.Text
+                Label52.Text = Label50.Text
+                Label61.Text = Label44.Text
+                Label8.Text = Label44.Text
+                Label80.Text = Label44.Text
+                Label15.Text = Label1.Text
+                Label99.Text = Label44.Text
+
+                ' Miscelaneous labels
+                Label29.Text = Label12.Text
+                Label32.Text = Label17.Text
+                Label46.Text = Label9.Text
+                NameLabel.Text = "Nom : " & TextBox3.Text
+                If InstHistPanel.InstallerListView.Items.Count = 0 Then
+                    Last_Inst_Time_Label.Text = "Aucune date n'est disponible"
+                End If
+                If File.Exists(TextBox1.Text) Then
+                    Win11PresenceSTLabel.Text = "Statut de présence : ce fichier existe"
+                Else
+                    Win11PresenceSTLabel.Text = "Statut de présence : ce fichier n'existe pas"
+                End If
+                If TextBox1.Text = "" Then
+                    Win11PresenceSTLabel.Text = "Statut de présence : inconnu"
+                End If
+                If File.Exists(TextBox2.Text) Then
+                    Win10PresenceSTLabel.Text = "Statut de présence : ce fichier existe"
+                Else
+                    Win10PresenceSTLabel.Text = "Statut de présence : ce fichier n'existe pas"
+                End If
+                If TextBox2.Text = "" Then
+                    Win10PresenceSTLabel.Text = "Statut de présence : inconnu"
+                End If
+                If TextBox4.Text.EndsWith("\") Then
+                    If TextBox4.Text.Contains(" ") Then
+                        ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Le chemin contiendra des guillemets"
+                    Else
+                        ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
+                    End If
+                Else
+                    If TextBox4.Text.Contains(" ") Then
+                        ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote & ". Le chemin contiendra des guillemets"
+                    Else
+                        ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote
+                    End If
+                End If
+
+                ' LinkLabels
+                LinkLabel1.Text = "Voir l'historique de l'installateur"
+                LinkLabel2.Text = "Continuer la creation de l'installateur"
+                LinkLabel3.Text = "Recherche sur Google"
+                LinkLabel4.Text = "Recherche sur DuckDuckGo"
+                LinkLabel5.Text = "Renommer"
+                LinkLabel6.Text = "Impossible d'obtenir le modèle d'ordinateur"
+                LinkLabel7.Text = "Les mises à jour sont disponibles. Cliquez ici pour en savoir plus."
+                LinkLabel8.Text = "Vérifiez le projet de ce programme"
+                LinkLabel9.Text = "Télécharger le Developer Pack"
+                LinkLabel10.Text = "Vérifiez la page des problèmes"
+                LinkLabel11.Text = "Vérifiez la branche Hummingbird"
+                LinkLabel12.Text = "Il y a certaines choses qui méritent d'être révisées avant de continuer. Cliquez ici pour en savoir plus."
+                LinkLabel17.Text = "Options supplémentaires..."
+                LogViewLink.Text = "Afficher le fichier journal"
+
+                ' GroupBoxes
+                GroupBox1.Text = "Position de la navigation"
+                GroupBox12.Text = "Options de la barre d'état système"
+                GroupBox3.Text = "Détails de la compatibilité avec la plate-forme"
+                GroupBox4.Text = "Options de l'étiquette"
+                GroupBox5.Text = "Options de mise à l'échelle DPI"
+                GroupBox6.Text = "Fichiers ISO"
+                GroupBox7.Text = "Options de l'image cible"
+                GroupBox8.Text = "Images"
+                GroupBox9.Text = "Options de création de l'installateur"
+                GroupBox10.Text = "Journal"
+                GroupBox11.Text = "Image cible"
+
+                ' Buttons
+                Button1.Text = "Appliquer l'échelle DPI"
+                Button2.Text = "Parcourir..."
+                Button3.Text = "Restaurer"
+                Button4.Text = "Parcourir..."
+                Button5.Text = "Parcourir..."
+                Button6.Text = "Créer"
+                Button8.Text = "Oui"
+                Button9.Text = "Cacher le journal"
+                If InstCreateInt = 3 Then
+                    Button10.Text = "OK"
+                Else
+                    Button10.Text = "Annuler"
+                End If
+                Button11.Text = "Aide à la méthode"
+                Button12.Text = "Vérifier les mises à jour"
+                Button13.Text = "Options avancées"
+                ScanButton.Text = "Scanner..."
+                LabelSetButton.Text = "Définir"
+                SetDefaultButton.Text = "Valeur par défaut"
+
+                ' CheckBoxes
+                CheckBox1.Text = "Afficher une fois la notification de la barre d'état système"
+                CheckBox3.Text = "À la fermeture, masquer dans la barre d'état système"
+                CheckBox4.Text = "Quitter le programme après avoir cliqué sur OK"
+
+                ' MenuStrip items
+                Windows11ManualInstallerToolStripMenuItem.Text = "Installateur manuel de Windows 11"
+                VersionToolStripMenuItem.Text = "version " & VerStr & " (version assemblée " & AVerStr & ")"
+                InstSTLabel.Text = "Statut de l'installateur"
+                StatusTSI.Text = "Aucun installateur n'est créé pour l'instant"
+                LastInstallerCreatedAtToolStripMenuItem.Text = "Dernier installateur créé à :"
+                If InstHistPanel.InstallerListView.Items.Count = 0 Then
+                    IHDataToolStripMenuItem.Text = "Aucune donnée sur l'historique des installateurs n'est disponible pour l'instant"
+                End If
+                ViewInstallerHistoryToolStripMenuItem.Text = "Voir l'historique de l'installateur"
+                LanguageToolStripMenuItem.Text = "Langue"
+                AutomaticLanguageToolStripMenuItem.Text = "Automatique"
+                AutomaticLanguageToolStripMenuItem.Checked = False
+                EnglishToolStripMenuItem.Text = "Anglais"
+                EnglishToolStripMenuItem.Checked = False
+                SpanishToolStripMenuItem.Text = "Espagnol"
+                SpanishToolStripMenuItem.Checked = False
+                FrenchToolStripMenuItem.Text = "Français"
+                FrenchToolStripMenuItem.Checked = True
+                ColorModeToolStripMenuItem.Text = "Mode couleur"
+                AutomaticToolStripMenuItem.Text = "Automatique"
+                LightToolStripMenuItem.Text = "Lumière"
+                DarkToolStripMenuItem.Text = "Sombre"
+                If ComboBox1.SelectedItem = "Automatic" Or ComboBox1.SelectedItem = "Automático" Or ComboBox1.SelectedItem = "Automatique" Then
+                    AutomaticToolStripMenuItem.Checked = True
+                    LightToolStripMenuItem.Checked = False
+                    DarkToolStripMenuItem.Checked = False
+                ElseIf ComboBox1.SelectedItem = "Light" Or ComboBox1.SelectedItem = "Claro" Or ComboBox1.SelectedItem = "Lumière" Then
+                    AutomaticToolStripMenuItem.Checked = False
+                    LightToolStripMenuItem.Checked = True
+                    DarkToolStripMenuItem.Checked = False
+                ElseIf ComboBox1.SelectedItem = "Dark" Or ComboBox1.SelectedItem = "Oscuro" Or ComboBox1.SelectedItem = "Sombre" Then
+                    AutomaticToolStripMenuItem.Checked = False
+                    LightToolStripMenuItem.Checked = False
+                    DarkToolStripMenuItem.Checked = True
+                End If
+                InstallerCreationMethodToolStripMenuItem.Text = "Méthode de création de l'installateur"
+                AOTSMI.Text = "Options avancées"
+                OpenToolStripMenuItem.Text = "Ouvrir"
+                ExitToolStripMenuItem.Text = "Sortir"
+
+
+                ' Positioning
+                Label11.Left = Label10.Left + Label10.Width + 6
+                Label12.Left = Label11.Left + Label11.Width
+                Label16.Left = Label18.Left + Label18.Width + 6
+                Label17.Left = Label16.Left + Label16.Width
+                Label62.Left = Label61.Left + Label61.Width + 6
+                Label63.Left = Label62.Left + Label62.Width + 4
+                Label81.Left = Label80.Left + Label80.Width + 6
+                Label82.Left = Label81.Left + Label81.Width + 4
+
+                ' TabPages
+                TabPage1.Text = "Aperçu"
+                TabPage2.Text = "Information sur les composants"
+                TabPage3.Text = "Code source"
+
+                ' RadioButtons
+                RadioButton3.Text = "Gauche"
+                RadioButton4.Text = "Haut"
+
+                ' TextBox positioning and size
+                TextBox1.Left = 241
+                TextBox1.Width = 339
+                TextBox2.Left = 241
+                TextBox2.Width = 339
+                TextBox3.Left = 195
+                TextBox3.Width = 483
+                TextBox4.Left = 189
+                TextBox4.Width = 523
+                LabelText.Left = 77
+                LabelText.Width = 256
+
+                ' Miscellaneous positioning and size
+                ComboBox5.Left = 342
+                ComboBox5.Width = 329
+
+                ' ComboBox relabelling
+                ComboBox1.Items.Clear()
+                ComboBox1.Items.Add("Automatique")
+                ComboBox1.Items.Add("Lumière")
+                ComboBox1.Items.Add("Sombre")
+                If ColorInt = 0 Then
+                    ComboBox1.SelectedItem = "Automatique"
+                ElseIf ColorInt = 1 Then
+                    ComboBox1.SelectedItem = "Lumière"
+                ElseIf ColorInt = 2 Then
+                    ComboBox1.SelectedItem = "Sombre"
+                End If
+                ' This line of code freezes the program. Maybe because it's cold in Alaska now?
+                'ComboBox4.Items.Clear()
+                ComboBox4.Items.Add("Automatique")
+                ComboBox4.Items.Add("Anglais")
+                ComboBox4.Items.Add("Espagnol")
+                ComboBox4.Items.Add("Français")
+                ComboBox4.SelectedItem = "Français"
+                ComboBox4.Items.Remove("Automático")
+                ComboBox4.Items.Remove("Inglés")
+                ComboBox4.Items.Remove("Español")
+                ComboBox4.Items.Remove("Francés")
+                ComboBox4.Items.Remove("Automatic")
+                ComboBox4.Items.Remove("English")
+                ComboBox4.Items.Remove("Spanish")
+                ComboBox4.Items.Remove("French")
+                If ComboBox4.Items.Count > 4 Then   ' There is a bug in this procedure where it would make duplicate items of the ComboBox. 
+                    Do Until ComboBox4.Items.Count = 4  ' This fixes it
+                        ComboBox4.Items.RemoveAt(4)
+                    Loop
+                End If
+                ImageFolderBrowser.Description = "Veuillez spécifier le chemin pour enregistrer l'installateur personnalisé :"
             End If
         End If
         UpdatePanelProperties()
@@ -5733,28 +6818,36 @@ Public Class MainForm
     Private Sub Button12_Click(sender As Object, e As EventArgs) Handles Button12.Click
         UpdateCheckDate = Now
         Label91.Left = 96
-        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             Label91.Text = "Checking for updates..."
-        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
             Label91.Text = "Comprobando actualizaciones..."
-        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            Label91.Text = "Vérifier les mises à jour..."
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 Label91.Text = "Checking for updates..."
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 Label91.Text = "Comprobando actualizaciones..."
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                Label91.Text = "Vérifier les mises à jour..."
             End If
         End If
         ProgressRingPic.Visible = True
         If My.Computer.Network.IsAvailable = False Then
-            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                 MsgBox("You need to connect to a network to check for updates. Please connect your system to a network and try again", vbOKOnly + vbInformation, "Update check error")
-            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                 MsgBox("Necesita conectarse a una red para comprobar actualizaciones. Por favor, conecte su sistema a una red e inténtelo de nuevo.", vbOKOnly + vbInformation, "Error de comprobación de actualizaciones")
-            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                MsgBox("Vous devez vous connecter à un réseau pour vérifier les mises à jour. Veuillez connecter votre système à un réseau et réessayer", vbOKOnly + vbInformation, "Erreur de la vérification de la mise à jour")
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                 If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                     MsgBox("You need to connect to a network to check for updates. Please connect your system to a network and try again", vbOKOnly + vbInformation, "Update check error")
                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                     MsgBox("Necesita conectarse a una red para comprobar actualizaciones. Por favor, conecte su sistema a una red e inténtelo de nuevo.", vbOKOnly + vbInformation, "Error de comprobación de actualizaciones")
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                    MsgBox("Vous devez vous connecter à un réseau pour vérifier les mises à jour. Veuillez connecter votre système à un réseau et réessayer", vbOKOnly + vbInformation, "Erreur de la vérification de la mise à jour")
                 End If
             End If
         Else
@@ -5777,15 +6870,19 @@ Public Class MainForm
                 End Using
                 UpdateChoicePanel.TextBox2.Text = My.Computer.FileSystem.ReadAllText(".\latest")
                 If UpdateChoicePanel.TextBox1.Text = UpdateChoicePanel.TextBox2.Text Then
-                    If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                    If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                         MsgBox("No updates available", vbOKOnly + vbInformation, "Update check")
-                    ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                    ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                         MsgBox("No hay actualizaciones disponibles", vbOKOnly + vbInformation, "Comprobación de actualizaciones")
-                    ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                    ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                        MsgBox("Aucune mise à jour disponible", vbOKOnly + vbInformation, "Vérification de la mise à jour")
+                    ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                         If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                             MsgBox("No updates available", vbOKOnly + vbInformation, "Update check")
                         ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                             MsgBox("No hay actualizaciones disponibles", vbOKOnly + vbInformation, "Comprobación de actualizaciones")
+                        ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                            MsgBox("Aucune mise à jour disponible", vbOKOnly + vbInformation, "Vérification de la mise à jour")
                         End If
                     End If
                     Label91.Visible = True
@@ -5802,15 +6899,19 @@ Public Class MainForm
                         UpdateChoicePanel.TextBox1.Text = My.Computer.FileSystem.ReadAllText(".\version")
                         UpdateChoicePanel.TextBox2.Text = My.Computer.FileSystem.ReadAllText(".\latest")
                         If UpdateChoicePanel.TextBox1.Text = UpdateChoicePanel.TextBox2.Text Then
-                            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                                 MsgBox("No updates available", vbOKOnly + vbInformation, "Update check")
-                            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                                 MsgBox("No hay actualizaciones disponibles", vbOKOnly + vbInformation, "Comprobación de actualizaciones")
-                            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                            ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                                MsgBox("Aucune mise à jour disponible", vbOKOnly + vbInformation, "Vérification de la mise à jour")
+                            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                                 If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                                     MsgBox("No updates available", vbOKOnly + vbInformation, "Update check")
                                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                                     MsgBox("No hay actualizaciones disponibles", vbOKOnly + vbInformation, "Comprobación de actualizaciones")
+                                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                                    MsgBox("Aucune mise à jour disponible", vbOKOnly + vbInformation, "Vérification de la mise à jour")
                                 End If
                             End If
                             Label91.Visible = True
@@ -5820,15 +6921,19 @@ Public Class MainForm
                             LinkLabel7.Visible = True
                         End If
                     Catch ex As Exception
-                        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                             MsgBox("No updates available", vbOKOnly + vbInformation, "Update check")
-                        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                             MsgBox("No hay actualizaciones disponibles", vbOKOnly + vbInformation, "Comprobación de actualizaciones")
-                        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                            MsgBox("Aucune mise à jour disponible", vbOKOnly + vbInformation, "Vérification de la mise à jour")
+                        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                                 MsgBox("No updates available", vbOKOnly + vbInformation, "Update check")
                             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                                 MsgBox("No hay actualizaciones disponibles", vbOKOnly + vbInformation, "Comprobación de actualizaciones")
+                            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                                MsgBox("Aucune mise à jour disponible", vbOKOnly + vbInformation, "Vérification de la mise à jour")
                             End If
                         End If
                         Label91.Visible = True
@@ -5840,27 +6945,35 @@ Public Class MainForm
         ProgressRingPic.Visible = False
         Label91.Left = 57
         If UpdateCheckDate.Day.Equals(14) And UpdateCheckDate.Month.Equals(3) Then
-            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                 Label91.Text = "To check for any program updates, click " & Quote & "Check for updates" & Quote & CrLf & "Last update check performed on: π day at " & UpdateCheckDate.ToLongTimeString
-            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                 Label91.Text = "Para comprobar actualizaciones del programa, haga clic en " & Quote & "Comprobar actualizaciones" & Quote & CrLf & "Última comprobación de actualizaciones realizada en: día π en " & UpdateCheckDate.ToLongTimeString
-            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                Label91.Text = "Pour vérifier les mises à jour du programme, cliquez sur " & Quote & "Vérifier les mises à jour" & Quote & CrLf & "Dernière vérification des mises à jour effectuée le : π jour à " & UpdateCheckDate.ToLongTimeString
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                 If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                     Label91.Text = "To check for any program updates, click " & Quote & "Check for updates" & Quote & CrLf & "Last update check performed on: π day at " & UpdateCheckDate.ToLongTimeString
                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                     Label91.Text = "Para comprobar actualizaciones del programa, haga clic en " & Quote & "Comprobar actualizaciones" & Quote & CrLf & "Última comprobación de actualizaciones realizada en: día π en " & UpdateCheckDate.ToLongTimeString
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                    Label91.Text = "Pour vérifier les mises à jour du programme, cliquez sur " & Quote & "Vérifier les mises à jour" & Quote & CrLf & "Dernière vérification des mises à jour effectuée le : π jour à " & UpdateCheckDate.ToLongTimeString
                 End If
             End If
         Else
-            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                 Label91.Text = "To check for any program updates, click " & Quote & "Check for updates" & Quote & CrLf & "Last update check performed on: " & UpdateCheckDate
-            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                 Label91.Text = "Para comprobar actualizaciones del programa, haga clic en " & Quote & "Comprobar actualizaciones" & Quote & CrLf & "Última comprobación de actualizaciones realizada en: " & UpdateCheckDate
-            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                Label91.Text = "Pour vérifier les mises à jour du programme, cliquez sur " & Quote & "Vérifier les mises à jour" & Quote & CrLf & "Dernière vérification des mises à jour effectuée le : " & UpdateCheckDate
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                 If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                     Label91.Text = "To check for any program updates, click " & Quote & "Check for updates" & Quote & CrLf & "Last update check performed on: " & UpdateCheckDate
                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                     Label91.Text = "Para comprobar actualizaciones del programa, haga clic en " & Quote & "Comprobar actualizaciones" & Quote & CrLf & "Última comprobación de actualizaciones realizada en: " & UpdateCheckDate
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                    Label91.Text = "Pour vérifier les mises à jour du programme, cliquez sur " & Quote & "Vérifier les mises à jour" & Quote & CrLf & "Dernière vérification des mises à jour effectuée le : " & UpdateCheckDate
                 End If
             End If
         End If
@@ -5934,12 +7047,23 @@ Public Class MainForm
     End Sub
 
     Private Sub Button13_Click(sender As Object, e As EventArgs) Handles Button13.Click, AOTSMI.Click
-        BringToFront()
+        If Visible = False Or WindowState = FormWindowState.Minimized Then
+            Activate()
+            ShowInTaskbar = True
+            WindowState = FormWindowState.Normal
+            MiniModeDialog.Hide()
+            BringToFront()
+        End If
         BackSubPanel.Show()
         AdvancedOptionsPanel.ShowDialog()
         AdvancedOptionsPanel.Visible = True
         AdvancedOptionsPanel.Visible = False
         BringToFront()
+        If BackColor = Color.FromArgb(243, 243, 243) Then
+            closeBox.Image = New Bitmap(My.Resources.closebox)
+        ElseIf BackColor = Color.FromArgb(32, 32, 32) Then
+            closeBox.Image = New Bitmap(My.Resources.closebox_dark)
+        End If
     End Sub
 
     Private Sub LinkLabel7_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel7.LinkClicked
@@ -5977,15 +7101,19 @@ Public Class MainForm
             ISOFileDownloadPanel.Visible = False
             BringToFront()
         Else
-            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                 MsgBox("No network is available. Please connect your system to the Internet to access file downloads.", vbOKOnly + vbInformation, "A network connection is unavailable")
-            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                 MsgBox("No hay ninguna red disponible. Por favor, conecte su sistema a Internet para acceder a descargas de archivos.", vbOKOnly + vbInformation, "Una conexión de red no está disponible")
-            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                MsgBox("Aucun réseau n'est disponible. Veuillez connecter votre système à l'Internet pour accéder aux téléchargements de fichiers.", vbOKOnly + vbInformation, "Une connexion réseau est indisponible")
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                 If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                     MsgBox("No network is available. Please connect your system to the Internet to access file downloads.", vbOKOnly + vbInformation, "A network connection is unavailable")
                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                     MsgBox("No hay ninguna red disponible. Por favor, conecte su sistema a Internet para acceder a descargas de archivos.", vbOKOnly + vbInformation, "Una conexión de red no está disponible")
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                    MsgBox("Aucun réseau n'est disponible. Veuillez connecter votre système à l'Internet pour accéder aux téléchargements de fichiers.", vbOKOnly + vbInformation, "Une connexion réseau est indisponible")
                 End If
             End If
         End If
@@ -6040,39 +7168,51 @@ Public Class MainForm
 
     Sub ChangeColorInt()
         If ColorInt = 2 Then
-            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                 ComboBox1.SelectedItem = "Light"
-            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                 ComboBox1.SelectedItem = "Claro"
-            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                ComboBox1.SelectedItem = "Lumière"
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                 If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                     ComboBox1.SelectedItem = "Light"
                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                     ComboBox1.SelectedItem = "Claro"
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                    ComboBox1.SelectedItem = "Lumière"
                 End If
             End If
         ElseIf ColorInt = 1 Then
-            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                 ComboBox1.SelectedItem = "Dark"
-            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                 ComboBox1.SelectedItem = "Oscuro"
-            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                ComboBox1.SelectedItem = "Sombre"
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                 If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                     ComboBox1.SelectedItem = "Dark"
                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                     ComboBox1.SelectedItem = "Oscuro"
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                    ComboBox1.SelectedItem = "Sombre"
                 End If
             End If
         ElseIf ColorInt = 0 Then
-            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                 ComboBox1.SelectedItem = "Automatic"
-            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                 ComboBox1.SelectedItem = "Automático"
-            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+            ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                ComboBox1.SelectedItem = "Automatique"
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                 If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                     ComboBox1.SelectedItem = "Automatic"
                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                     ComboBox1.SelectedItem = "Automático"
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                    ComboBox1.SelectedItem = "Automatique"
                 End If
             End If
         End If
@@ -6125,7 +7265,7 @@ Public Class MainForm
     End Sub
 
     Private Sub LinkLabel12_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel12.LinkClicked
-        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             If TextBox1.ForeColor = Color.Crimson Then
                 If TextBox2.ForeColor = Color.Crimson Then
                     If TextBox3.ForeColor = Color.Crimson Then
@@ -6264,7 +7404,7 @@ Public Class MainForm
                        "- The Windows 11 and 10 installers you've provided are the same. Please provide a different one for both installers", _
                        vbOKOnly + vbCritical, "Path issues")
             End If
-        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
             If TextBox1.ForeColor = Color.Crimson Then
                 If TextBox2.ForeColor = Color.Crimson Then
                     If TextBox3.ForeColor = Color.Crimson Then
@@ -6403,7 +7543,7 @@ Public Class MainForm
                        "- Los instaladores proveídos de Windows 11 y 10 son iguales. Por favor, especifique archivos diferentes para ambos instaladores", _
                        vbOKOnly + vbCritical, "Errores de ruta")
             End If
-        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 If TextBox1.ForeColor = Color.Crimson Then
                     If TextBox2.ForeColor = Color.Crimson Then
@@ -6705,8 +7845,21 @@ Public Class MainForm
     End Sub
 
     Private Sub Label18_Click(sender As Object, e As EventArgs) Handles Label18.Click
-        Settings_FunctionalityPanel.Visible = False
-        SettingPanel.Visible = True
+        If MOLinkIsClicked Then
+            Settings_FunctionalityPanel.Visible = False
+            InstCreatePanel.Visible = True
+            ApplyNavBarImages()
+            PanelIndicatorPic.Anchor = CType((AnchorStyles.Top Or AnchorStyles.Left), AnchorStyles)
+            PanelIndicatorPic.Top = InstCreatePic.Top + 2
+            If BackColor = Color.FromArgb(243, 243, 243) Then
+                SettingsPic.Image = New Bitmap(My.Resources.settings)
+            ElseIf BackColor = Color.FromArgb(32, 32, 32) Then
+                SettingsPic.Image = New Bitmap(My.Resources.settings_dark)
+            End If
+        Else
+            Settings_FunctionalityPanel.Visible = False
+            SettingPanel.Visible = True
+        End If
         DisableBackPic()
     End Sub
 
@@ -6758,6 +7911,8 @@ Public Class MainForm
             ComboBox4.SelectedItem = "Automatic"
         ElseIf ComboBox4.Items.Contains("Automático") Then
             ComboBox4.SelectedItem = "Automático"
+        ElseIf ComboBox4.Items.Contains("Automatique") Then
+            ComboBox4.SelectedItem = "Automatique"
         End If
     End Sub
 
@@ -6767,6 +7922,8 @@ Public Class MainForm
             ComboBox4.SelectedItem = "English"
         ElseIf ComboBox4.Items.Contains("Inglés") Then
             ComboBox4.SelectedItem = "Inglés"
+        ElseIf ComboBox4.Items.Contains("Anglais") Then
+            ComboBox4.SelectedItem = "Anglais"
         End If
     End Sub
 
@@ -6776,6 +7933,8 @@ Public Class MainForm
             ComboBox4.SelectedItem = "Spanish"
         ElseIf ComboBox4.Items.Contains("Español") Then
             ComboBox4.SelectedItem = "Español"
+        ElseIf ComboBox4.Items.Contains("Espagnol") Then
+            ComboBox4.SelectedItem = "Espagnol"
         End If
     End Sub
 
@@ -6991,7 +8150,7 @@ Public Class MainForm
                 End If
             End If
             If AdvancedOptionsPanel.Visible = True Then
-                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                     AdvancedOptionsPanel.CheckBox1.Text = "Bypass Microsoft Account sign-in and forced Internet connection setup (22557+)"
                     AdvancedOptionsPanel.CheckBox2.Text = "Hide " & Quote & "System requirements not met" & Quote & " watermark (22557+)"
                     AdvancedOptionsPanel.Label1.Text = "Advanced options"
@@ -7002,7 +8161,7 @@ Public Class MainForm
                     AdvancedOptionsPanel.LinkLabel1.Text = "Read the full issue and a possible workaround"
                     AdvancedOptionsPanel.OK_Button.Text = "OK"
                     AdvancedOptionsPanel.Cancel_Button.Text = "Cancel"
-                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                     AdvancedOptionsPanel.CheckBox1.Text = "Omitir inicio de sesión con la cuenta de Microsoft y configuración forzada de Internet (22557+)"
                     AdvancedOptionsPanel.CheckBox2.Text = "Ocultar la marca de agua " & Quote & "Requisitos de sistema no cumplidos" & Quote & " (22557+)"
                     AdvancedOptionsPanel.Label1.Text = "Opciones avanzadas"
@@ -7013,7 +8172,7 @@ Public Class MainForm
                     AdvancedOptionsPanel.LinkLabel1.Text = "Lea la publicación completa y una posible solución"
                     AdvancedOptionsPanel.OK_Button.Text = "Aceptar"
                     AdvancedOptionsPanel.Cancel_Button.Text = "Cancelar"
-                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         AdvancedOptionsPanel.CheckBox1.Text = "Bypass Microsoft Account sign-in and forced Internet connection setup (22557+)"
                         AdvancedOptionsPanel.CheckBox2.Text = "Hide " & Quote & "System requirements not met" & Quote & " watermark (22557+)"
@@ -7039,17 +8198,17 @@ Public Class MainForm
                     End If
                 End If
             ElseIf DisclaimerPanel.Visible = True Then
-                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                     DisclaimerPanel.Label1.Text = "Disclaimer notice"
                     DisclaimerPanel.OK_Button.Text = "OK"
                     DisclaimerPanel.Exit_Button.Text = "Exit"
                     DisclaimerPanel.TextBox1.Text = "You must only use this tool on a system that you don't use productively." & CrLf & "Microsoft has warned that unsupported systems running Windows 11 might not recieve updates in the future." & CrLf & CrLf & "The modified installation images you create will also work on supported systems, but you can natively install Windows 11 on them, without performing modifications to the installation image." & CrLf & "If you have an unsupported system, don't upgrade it to Windows 11. Instead, you can perform a dual-boot, or use another system (that would be the best option anyway)" & CrLf & CrLf & "This tool MUST NOT be used to pirate Windows images, and the program developer recommends you get Windows legally." & CrLf & "The components used by the program are covered by their license agreements. These specify the rules for their use and redistribution." & CrLf & CrLf & "If you agree to this disclaimer notice and want to continue using the software, click OK. Otherwise, click Exit."
-                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                     DisclaimerPanel.Label1.Text = "Descargo de responsabilidad"
                     DisclaimerPanel.OK_Button.Text = "Aceptar"
                     DisclaimerPanel.Exit_Button.Text = "Salir"
                     DisclaimerPanel.TextBox1.Text = "Usted solo debe utilizar esta herramienta en un sistema que no use productivamente." & CrLf & "Microsoft ha avisado de que sistemas no soportados ejecutando Windows 11 podrían no recibir actualizaciones en el futuro." & CrLf & CrLf & "Las imágenes de instalación modificadas que usted cree también funcionarán en sistemas soportados, pero usted puede instalar Windows 11 de forma nativa en ellos, sin realizar modificaciones a la imagen de instalación." & CrLf & "Si usted tiene un sistema no soportado, no lo actualice a Windows 11. En vez de eso, puede realizar un arranque dual, o usar otro sistema (ésta sería la mejor opción de todas formas)" & CrLf & CrLf & "Esta herramienta NO DEBE ser usada para piratear imágenes de Windows, y el desarrollador del programa le recomienda obtener Windows legalmente." & CrLf & "Los componentes utilizados por el programa están protegidos por sus acuerdos de licencia. Éstos especifican las reglas de su uso y redistribución." & CrLf & CrLf & "Si acepta este descargo de responsabilidad y quiere continuar usando el software, haga clic en Aceptar. En caso contrario, haga clic en Salir."
-                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         DisclaimerPanel.Label1.Text = "Disclaimer notice"
                         DisclaimerPanel.OK_Button.Text = "OK"
@@ -7063,15 +8222,15 @@ Public Class MainForm
                     End If
                 End If
             ElseIf FileCopyPanel.Visible = True Then
-                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                     FileCopyPanel.Label1.Text = "File copy"
                     FileCopyPanel.Label2.Text = "To prevent file access errors while creating the custom installer, the source files will be copied to the local disk. These files will be deleted after the program has finished, to save disk space." & CrLf & "Do you want to do so?"
                     FileCopyPanel.OK_Button.Text = "Yes"
-                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                     FileCopyPanel.Label1.Text = "Copia de archivos"
                     FileCopyPanel.Label2.Text = "Para prevenir errores de acceso de archivo al crear el instalador modificado, los archivos de origen serán copiados al disco local. Éstos archivos serán borrados después de que el programa haya terminado, para ahorrar espacio en el disco." & CrLf & "¿Desea hacer esto?"
                     FileCopyPanel.OK_Button.Text = "Sí"
-                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         FileCopyPanel.Label1.Text = "File copy"
                         FileCopyPanel.Label2.Text = "To prevent file access errors while creating the custom installer, the source files will be copied to the local disk. These files will be deleted after the program has finished, to save disk space." & CrLf & "Do you want to do so?"
@@ -7083,15 +8242,15 @@ Public Class MainForm
                     End If
                 End If
             ElseIf InstCreateAbortPanel.Visible = True Then
-                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                     InstCreateAbortPanel.Label1.Text = "Cancel installer creation?"
                     InstCreateAbortPanel.Label2.Text = "Are you sure you want to cancel the installer creation process? This will delete any file modifications done at this time."
                     InstCreateAbortPanel.Yes_Button.Text = "Yes"
-                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                     InstCreateAbortPanel.Label1.Text = "¿Cancelar la creación del instalador?"
                     InstCreateAbortPanel.Label2.Text = "¿Está seguro de que quiere cancelar el proceso de creación del instalador? Esto borrará todas las modificaciones de archivos realizados en este momento."
                     InstCreateAbortPanel.Yes_Button.Text = "Sí"
-                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         InstCreateAbortPanel.Label1.Text = "Cancel installer creation?"
                         InstCreateAbortPanel.Label2.Text = "Are you sure you want to cancel the installer creation process? This will delete any file modifications done at this time."
@@ -7103,7 +8262,7 @@ Public Class MainForm
                     End If
                 End If
             ElseIf InstHistPanel.Visible = True Then
-                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                     InstHistPanel.Label1.Text = "Installer history"
                     InstHistPanel.InstallerEntryLabel.Text = "Installer history entries: " & InstHistPanel.InstallerListView.Items.Count
                     InstHistPanel.ColumnHeader1.Text = "Installer name and path"
@@ -7112,7 +8271,7 @@ Public Class MainForm
                     InstHistPanel.XMLExportOptn.Text = "Export to XML file..."
                     InstHistPanel.HTMLExportOptn.Text = "Export to HTML file..."
                     InstHistPanel.ExportOptnBtn.Text = "Export options"
-                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                     InstHistPanel.Label1.Text = "Historial de instaladores"
                     InstHistPanel.InstallerEntryLabel.Text = "Entradas en el historial de instaladores: " & InstHistPanel.InstallerListView.Items.Count
                     InstHistPanel.ColumnHeader1.Text = "Nombre y ruta del instalador"
@@ -7121,7 +8280,7 @@ Public Class MainForm
                     InstHistPanel.XMLExportOptn.Text = "Exportar a archivo XML..."
                     InstHistPanel.HTMLExportOptn.Text = "Exportar a archivo HTML..."
                     InstHistPanel.ExportOptnBtn.Text = "Opciones de exportación"
-                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         InstHistPanel.Label1.Text = "Installer history"
                         InstHistPanel.InstallerEntryLabel.Text = "Installer history entries: " & InstHistPanel.InstallerListView.Items.Count
@@ -7143,11 +8302,11 @@ Public Class MainForm
                     End If
                 End If
                 If InstHistPanel.InstallerListView.Items.Count = 0 Then
-                    If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                    If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                         InstHistPanel.InstallerEntryLabel.Text = "Installer history entries: " & InstHistPanel.InstallerListView.Items.Count & ". No installer history data is available."
-                    ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                    ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                         InstHistPanel.InstallerEntryLabel.Text = "Entradas en el historial de instaladores: " & InstHistPanel.InstallerListView.Items.Count & ". No hay datos disponibles sobre el historial de instaladores."
-                    ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                    ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                         If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                             InstHistPanel.InstallerEntryLabel.Text = "Installer history entries: " & InstHistPanel.InstallerListView.Items.Count & ". No installer history data is available."
                         ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
@@ -7156,7 +8315,7 @@ Public Class MainForm
                     End If
                 End If
             ElseIf ISOFileDownloadPanel.Visible = True Then
-                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                     ISOFileDownloadPanel.Label1.Text = "Download ISO files..."
                     ISOFileDownloadPanel.Label2.Text = "Download"
                     ISOFileDownloadPanel.Label4.Text = "Loading web component. Please wait..."
@@ -7165,7 +8324,7 @@ Public Class MainForm
                     ISOFileDownloadPanel.Button1.Text = "Retry"
                     ISOFileDownloadPanel.OK_Button.Text = "OK"
                     ISOFileDownloadPanel.Cancel_Button.Text = "Cancel"
-                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                     ISOFileDownloadPanel.Label1.Text = "Descargar archivos ISO..."
                     ISOFileDownloadPanel.Label2.Text = "Descargar"
                     ISOFileDownloadPanel.Label4.Text = "Cargando componente web. Por favor, espere..."
@@ -7174,7 +8333,7 @@ Public Class MainForm
                     ISOFileDownloadPanel.Button1.Text = "Reintentar"
                     ISOFileDownloadPanel.OK_Button.Text = "Aceptar"
                     ISOFileDownloadPanel.Cancel_Button.Text = "Cancelar"
-                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         ISOFileDownloadPanel.Label1.Text = "Download ISO files..."
                         ISOFileDownloadPanel.Label2.Text = "Download"
@@ -7196,7 +8355,7 @@ Public Class MainForm
                     End If
                 End If
             ElseIf ISOFileScanPanel.Visible = True Then
-                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                     ISOFileScanPanel.Label1.Text = "Scan for ISO images"
                     ISOFileScanPanel.Label2.Text = "Directory to scan:"
                     ISOFileScanPanel.TextBox1.Left = 150
@@ -7212,7 +8371,7 @@ Public Class MainForm
                     ISOFileScanPanel.OK_Button.Text = "OK"
                     ISOFileScanPanel.Cancel_Button.Text = "Cancel"
                     ISOFileScanPanel.ISOFolderScanner.Description = "Please select a directory to scan for ISO files:"
-                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                     ISOFileScanPanel.Label1.Text = "Escanear imágenes ISO"
                     ISOFileScanPanel.Label2.Text = "Directorio a escanear:"
                     ISOFileScanPanel.TextBox1.Left = 171
@@ -7228,7 +8387,7 @@ Public Class MainForm
                     ISOFileScanPanel.OK_Button.Text = "Aceptar"
                     ISOFileScanPanel.Cancel_Button.Text = "Cancelar"
                     ISOFileScanPanel.ISOFolderScanner.Description = "Por favor, elija un directorio para escanear archivos ISO:"
-                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         ISOFileScanPanel.Label1.Text = "Scan for ISO images"
                         ISOFileScanPanel.Label2.Text = "Directory to scan:"
@@ -7264,17 +8423,17 @@ Public Class MainForm
                     End If
                 End If
             ElseIf LogExistsPanel.Visible = True Then
-                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                     LogExistsPanel.Label1.Text = "A log file already exists"
                     LogExistsPanel.Label2.Text = "Do you want to append the current log contents to the log file, or do you want to delete the existing log file?"
                     LogExistsPanel.Yes_Button.Text = "Append to existing log file"
                     LogExistsPanel.No_Button.Text = "Delete existing log file"
-                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                     LogExistsPanel.Label1.Text = "Un archivo de registro ya existe"
                     LogExistsPanel.Label2.Text = "¿Desea anexar los contenidos del registro actual al archivo de registro, o desea borrar el archivo de registro existente?"
                     LogExistsPanel.Yes_Button.Text = "Anexar al archivo de registro existente"
                     LogExistsPanel.No_Button.Text = "Borrar archivo de registro existente"
-                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         LogExistsPanel.Label1.Text = "A log file already exists"
                         LogExistsPanel.Label2.Text = "Do you want to append the current log contents to the log file, or do you want to delete the existing log file?"
@@ -7288,17 +8447,17 @@ Public Class MainForm
                     End If
                 End If
             ElseIf LogMigratePanel.Visible = True Then
-                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                     LogMigratePanel.Label1.Text = "Migrate old log files"
                     LogMigratePanel.Label2.Text = "The Windows 11 Manual Installer has detected log files created by previous versions of the program. Version 2.0 uses a different log format. Do you want to migrate the contents of old files, and append current log contents to the log file?"
                     LogMigratePanel.Yes_Button.Text = "Migrate"
                     LogMigratePanel.No_Button.Text = "Don't migrate"
-                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                     LogMigratePanel.Label1.Text = "Migrar archivos de registro antiguos"
                     LogMigratePanel.Label2.Text = "El Instalador manual de Windows 11 ha detectado archivos de registro creados por versiones antiguas del programa. La versión 2.0 utiliza un formato de registro diferente. ¿Desea migrar los contenidos de los archivos antiguos, y anexar los contenidos actuales del registro al archivo de registro?"
                     LogMigratePanel.Yes_Button.Text = "Migrar"
                     LogMigratePanel.No_Button.Text = "No migrar"
-                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         LogMigratePanel.Label1.Text = "Migrate old log files"
                         LogMigratePanel.Label2.Text = "The Windows 11 Manual Installer has detected log files created by previous versions of the program. Version 2.0 uses a different log format. Do you want to migrate the contents of old files, and append current log contents to the log file?"
@@ -7314,15 +8473,15 @@ Public Class MainForm
             ElseIf MethodHelpPanel.Visible = True Then
                 ' If this is still present on stable release, fill this section
             ElseIf PrefResetPanel.Visible = True Then
-                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                     PrefResetPanel.Label1.Text = "Reset preferences?"
                     PrefResetPanel.Label2.Text = "This will reset ALL preferences to their default values (e.g., language or color mode)"
                     PrefResetPanel.Yes_Button.Text = "Yes"
-                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                     PrefResetPanel.Label1.Text = "¿Restablecer preferencias?"
                     PrefResetPanel.Label2.Text = "Esto restablecerá TODAS las preferencias a sus valores predeterminados (p.ej., el idioma o el modo de color)"
                     PrefResetPanel.Yes_Button.Text = "Sí"
-                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         PrefResetPanel.Label1.Text = "Reset preferences?"
                         PrefResetPanel.Label2.Text = "This will reset ALL preferences to their default values (e.g., language or color mode)"
@@ -7334,7 +8493,7 @@ Public Class MainForm
                     End If
                 End If
             ElseIf UpdateChoicePanel.Visible = True Then
-                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                     UpdateChoicePanel.Label1.Text = "Updates are available"
                     UpdateChoicePanel.Label2.Text = "You can decide when do you want to install this update"
                     UpdateChoicePanel.Label3.Text = "This version:"
@@ -7347,7 +8506,7 @@ Public Class MainForm
                     UpdateChoicePanel.TextBox1.Width = 702
                     UpdateChoicePanel.TextBox2.Left = 226
                     UpdateChoicePanel.TextBox2.Width = 653
-                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Then
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                     UpdateChoicePanel.Label1.Text = "Hay actualizaciones disponibles"
                     UpdateChoicePanel.Label2.Text = "Usted puede decidir cuándo quiere instalar esta actualización"
                     UpdateChoicePanel.Label3.Text = "Esta versión:"
@@ -7360,7 +8519,7 @@ Public Class MainForm
                     UpdateChoicePanel.TextBox1.Width = 701
                     UpdateChoicePanel.TextBox2.Left = 228
                     UpdateChoicePanel.TextBox2.Width = 651
-                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Then
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         UpdateChoicePanel.Label1.Text = "Updates are available"
                         UpdateChoicePanel.Label2.Text = "You can decide when do you want to install this update"
@@ -7420,5 +8579,81 @@ Public Class MainForm
             End Try
             MiniModeDialog.backPic.BackColor = BackColor
         End If
+    End Sub
+
+    Private Sub WelcomePic_MouseHover(sender As Object, e As EventArgs) Handles WelcomePic.MouseHover
+        ConglomerateToolTip.SetToolTip(WelcomePic, "Welcome page")
+    End Sub
+
+    Private Sub InstCreatePic_MouseHover(sender As Object, e As EventArgs) Handles InstCreatePic.MouseHover
+        ConglomerateToolTip.SetToolTip(InstCreatePic, "Create a custom installer")
+    End Sub
+
+    Private Sub InstructionPic_MouseHover(sender As Object, e As EventArgs) Handles InstructionPic.MouseHover
+        ConglomerateToolTip.SetToolTip(InstructionPic, "Instructions")
+    End Sub
+
+    Private Sub HelpPic_MouseHover(sender As Object, e As EventArgs) Handles HelpPic.MouseHover
+        ConglomerateToolTip.SetToolTip(HelpPic, "Help")
+    End Sub
+
+    Private Sub SettingsPic_MouseHover(sender As Object, e As EventArgs) Handles SettingsPic.MouseHover
+        ConglomerateToolTip.SetToolTip(SettingsPic, "Settings")
+    End Sub
+
+    Private Sub InfoPic_MouseHover(sender As Object, e As EventArgs) Handles InfoPic.MouseHover
+        ConglomerateToolTip.SetToolTip(InfoPic, "About")
+    End Sub
+
+    Private Sub FrenchToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FrenchToolStripMenuItem.Click
+        LangInt = 3
+        If ComboBox4.Items.Contains("French") Then
+            ComboBox4.SelectedItem = "French"
+        ElseIf ComboBox4.Items.Contains("Francés") Then
+            ComboBox4.SelectedItem = "Francés"
+        ElseIf ComboBox4.Items.Contains("Français") Then
+            ComboBox4.SelectedItem = "Français"
+        End If
+    End Sub
+
+    Private Sub x86_Pic_MouseHover(sender As Object, e As EventArgs) Handles x86_Pic.MouseHover
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+            MsgBox("The program has detected a 32-bit processor or a 32-bit operating system. The tool will still work, but the installer won't. You'll need a computer with a 64-bit processor to install Windows 11." & CrLf & "If it's the latter (you have a 32-bit OS on a 64-bit processor), you'll need to reinstall Windows.", vbOKOnly + vbInformation, "Incompatible installer architecture")
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+            MsgBox("El programa ha detectado un procesador o un sistema operativo de 32 bits. La herramienta todavía funcionará, pero el instalador no lo hará. Necesitará un ordenador con un procesador de 64 bits para instalar Windows 11." & CrLf & "Si es lo último (tiene un sistema operativo de 32 bits en un procesador de 64 bits), deberá reinstalar Windows.", vbOKOnly + vbInformation, "Arquitectura del instalador incompatible")
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                MsgBox("The program has detected a 32-bit processor or a 32-bit operating system. The tool will still work, but the installer won't. You'll need a computer with a 64-bit processor to install Windows 11." & CrLf & "If it's the latter (you have a 32-bit OS on a 64-bit processor), you'll need to reinstall Windows.", vbOKOnly + vbInformation, "Incompatible installer architecture")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                MsgBox("El programa ha detectado un procesador o un sistema operativo de 32 bits. La herramienta todavía funcionará, pero el instalador no lo hará. Necesitará un ordenador con un procesador de 64 bits para instalar Windows 11." & CrLf & "Si es lo último (tiene un sistema operativo de 32 bits en un procesador de 64 bits), deberá reinstalar Windows.", vbOKOnly + vbInformation, "Arquitectura del instalador incompatible")
+            End If
+        End If
+        ConglomerateToolTip.SetToolTip(x86_Pic, "This system contains a 32-bit processor or operating system. Click here to learn more.")
+    End Sub
+
+    Private Sub x86_Pic_Click(sender As Object, e As EventArgs) Handles x86_Pic.Click
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+            MsgBox("The program has detected a 32-bit processor or a 32-bit operating system. The tool will still work, but the installer won't. You'll need a computer with a 64-bit processor to install Windows 11." & CrLf & "If it's the latter (you have a 32-bit OS on a 64-bit processor), you'll need to reinstall Windows.", vbOKOnly + vbInformation, "Incompatible installer architecture")
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+            MsgBox("El programa ha detectado un procesador o un sistema operativo de 32 bits. La herramienta todavía funcionará, pero el instalador no lo hará. Necesitará un ordenador con un procesador de 64 bits para instalar Windows 11." & CrLf & "Si es lo último (tiene un sistema operativo de 32 bits en un procesador de 64 bits), deberá reinstalar Windows.", vbOKOnly + vbInformation, "Arquitectura del instalador incompatible")
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                MsgBox("The program has detected a 32-bit processor or a 32-bit operating system. The tool will still work, but the installer won't. You'll need a computer with a 64-bit processor to install Windows 11." & CrLf & "If it's the latter (you have a 32-bit OS on a 64-bit processor), you'll need to reinstall Windows.", vbOKOnly + vbInformation, "Incompatible installer architecture")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                MsgBox("El programa ha detectado un procesador o un sistema operativo de 32 bits. La herramienta todavía funcionará, pero el instalador no lo hará. Necesitará un ordenador con un procesador de 64 bits para instalar Windows 11." & CrLf & "Si es lo último (tiene un sistema operativo de 32 bits en un procesador de 64 bits), deberá reinstalar Windows.", vbOKOnly + vbInformation, "Arquitectura del instalador incompatible")
+            End If
+        End If
+    End Sub
+
+    Private Sub Win11FileSpecDialog_FileOk(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles Win11FileSpecDialog.FileOk
+        TextBox1.Text = Win11FileSpecDialog.FileName
+    End Sub
+
+    Private Sub Win10FileSpecDialog_FileOk(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles Win10FileSpecDialog.FileOk
+        TextBox2.Text = Win10FileSpecDialog.FileName
+    End Sub
+
+    Private Sub LinkLabel18_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel18.LinkClicked
+        MsgBox("Most of the functionality settings are disabled because an installer is being created. If you changed them right now, unexpected things related to the installer creation, which may negatively affect the result, will occur. After installer creation, these settings will be enabled once again", vbOKOnly + vbInformation, "Functionality settings")
     End Sub
 End Class
