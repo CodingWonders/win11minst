@@ -238,7 +238,7 @@ Partial Class ISOFileDownloadPanel
         Me.ContextMenuStrip1.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UAToolStripMenuItem, Me.BuildModeToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(156, 74)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(156, 52)
         '
         'UAToolStripMenuItem
         '
@@ -285,6 +285,7 @@ Partial Class ISOFileDownloadPanel
         'BuildPB
         '
         Me.BuildPB.Location = New System.Drawing.Point(32, 166)
+        Me.BuildPB.MarqueeAnimationSpeed = 10
         Me.BuildPB.Name = "BuildPB"
         Me.BuildPB.Size = New System.Drawing.Size(574, 23)
         Me.BuildPB.TabIndex = 4

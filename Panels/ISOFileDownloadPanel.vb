@@ -216,11 +216,6 @@ Public Class ISOFileDownloadPanel
 
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
         OpenFileDialog1.ShowDialog()
-        If DialogResult.OK Then
-            TextBox1.Text = OpenFileDialog1.FileName
-        Else
-            TextBox1.Text = ""
-        End If
     End Sub
 
     Private Sub BuildBW_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BuildBW.DoWork
@@ -262,6 +257,16 @@ Public Class ISOFileDownloadPanel
             Process.Start(".\temp.bat").WaitForExit()
             File.Delete(".\temp.bat")
         End Try
+    End Sub
+
+    Private Sub BuildBW_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles BuildBW.RunWorkerCompleted
+        BuildPB.Style = ProgressBarStyle.Blocks
+        BuildPB.Value = 100
         MsgBox("ISO file built successfully. You can find it in the application runtime directory: " & Directory.GetCurrentDirectory(), vbOKOnly + vbInformation, "File build completion")
+        BuildSTLabel.Text = "The build process has completed."
+    End Sub
+
+    Private Sub OpenFileDialog1_FileOk(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles OpenFileDialog1.FileOk
+        TextBox1.Text = OpenFileDialog1.FileName
     End Sub
 End Class
