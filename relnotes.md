@@ -1,12 +1,10 @@
 ## Windows 11 Manual Installer Release Notes
 
-
-
 Here you can see the feature list for each released version since `2.0.0100_220515`. If you want to take a look at the release notes for an older release, please look at **that specific release** (you can do this more easily by clicking the links at the bottom of the file)
 
 ### Updating the program
 ---
-Since version `2.0.0100_220529`, the program has had a built-in updater, which installs up-to-date versions (with new features and bugfixes).
+Since version `2.0.0100_220529`, the program has had a built-in updater, which installs up-to-date versions (with new features and bugfixes), and installs the necessary references to make the program work.
 
 To install updates when the program is open:
 
@@ -31,6 +29,33 @@ If updates are found:
 3. Wait a little bit for the program to update
 
 Congratulations, you have updated the program. If no updates are found, the program will continue startup.
+
+### 2.0.0100_220619
+---
+This version may not have many new features. As the date for the stable version of 2.0 is getting nearer, the following releases will focus more on bugfixes. Still, there are some new features you might find interesting
+
+#### **Bugfixes**
+
+- Fixed a bug that put external panels after clicking their context menu option (like the installer history or the functionality advanced options) to the top-left corner if the main window was minimized
+- Fixed a bug that caused a program exception if the user clicked "Cancel" on the file specification dialogs
+
+#### **New features**
+
+- Component version information is now displayed in the About screen
+- Functionality settings can now be accessed from the installer creation screen
+- When hovering over the side panel images, a description is shown
+- Added French translations
+
+    > Since releases are weekly, not a lot much was done for full French translations, so it will only apply on the main window (for now)
+
+- Began work on a revamped Instructions panel (although it can't be loaded yet)
+- Began improving program speed and fluidity
+- If the program is run on a 32-bit (x86) system, a 'processor' icon will appear next to the window buttons
+
+#### **Removed/stripped down features**
+
+There are no removed features from this release
+
 
 ### 2.0.0100_220612
 ---
