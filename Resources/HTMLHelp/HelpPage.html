@@ -1,28 +1,8 @@
 ﻿<!DOCTYPE html>
-<!-- Yeah, I'm the one who has both VMware and VirtualBox on the same computer -->
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
     <title>Windows 11 Manual Installer</title>
-    <style type="text/css">
-        .auto-style1 {
-            height: 23px;
-        }
-        .auto-style2 {
-            height: 23px;
-            }
-        .auto-style4 {
-            height: 23px;
-            width: 539px;
-        }
-        .auto-style5 {
-            height: 22px;
-            width: 539px;
-        }
-        .auto-style6 {
-            height: 22px;
-        }
-    </style>
     <style>
         body {
             background-color: rgb(249,249,249);
@@ -30,138 +10,130 @@
     </style>
 </head>
 <body>
-    <img src="./Resources/helpbanner.gif" class="center"/>
+    <img src="Resources/helpbanner.gif" class="center"/>
     <style>
         .center {
             display: block;
             margin-left: auto;
             margin-right: auto;
         }
+        .auto-style1 {
+            width: 438px;
+        }
+        .auto-style2 {
+            text-decoration: underline;
+        }
+        .auto-style3 {
+            width: 410px;
+        }
     </style>
     <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: center">Help documentation</h3>
     <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left:40px">
-        Help Documentation edition: Dec. 1, 2021 (v2.0.0100)</p>
+        Help Documentation edition: 2022/06/26 (v2.0.0100)</p>
     <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left:40px">
         Version 2.0.0100</p>
     <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left:40px; font-style:italic">
         This software uses 7-Zip. Copyright (C) 2021 Igor Pavlov. This software uses OSCDIMG. Copyright (C) 1993, 2012 Microsoft Corporation. This software uses DISM. Copyright (C) Microsoft Corporation.</p>
-    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; font-weight: bold;">
-        Contents:</p>
-    <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px;">
-        1. Changelog</h3>
-    <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px;">
-        2. Instructions</h3>
-    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px;">
-        2.1. Getting the ISO images</p>
-    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px;">
-        2.2. Installer creation</p>
-    <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px;">
-        3. (Special) Thanks</h3>
-    <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px;">
-        4. Miscellaneous (but important) files</h3>
-    <h2 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; ">
-        Changelog</h2>
-    <table style="width: 100%; font-family: Arial, Helvetica, sans-serif;">
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left:40px; font-style:italic">
+        <strong>NOTE: </strong>the screenshots shown in the Help documentation come from <span class="auto-style2">Hummingbird</span> releases. At the time of writing, a Stable release of Version 2.0 is not released yet.</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left:40px">
+        This documentation will help you get started with the Windows 11 Manual Installer</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left:40px">
+        &nbsp;</p>
+    <h2 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left:40px">
+        The Main Interface</h2>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left:40px">
+        The main interface received a facelift in version 2.0. When the program launches, you will be greeted by the Main Menu, which now shows the computer name, model, the last created installer time, the installer history, and the ability to continue installer creation.</p>
+    <img src="Resources/docs/win11minst-mainscr.png" style="height: 480px; width: 1015px;" class="center"/>
+    <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left:40px">
+        The Side Panel</h3>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left:40px">
+        To switch between options (referred to as &quot;Panels&quot;), the Side Panel images need to be used. In the image shown above, you can see a description of each image. You can also hover them to show a description, like shown below:</p>
+    <img src="Resources/docs/win11minst-sidepanelhover.png" style="height: 420px; width: 161px" class="center" />
+    <h2 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left:40px">
+        Create a custom installer</h2>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left:40px">
+        The installer creation is the program&#39;s premise (and the first option you will see on the Main Menu). It too has had a redesign from 1.0 versions. On this screen, you need to specify a Windows 11 ISO image and a Windows 10 ISO image. Later, you need to specify the name and path of the target installer.</p>
+    <img src="Resources/docs/win11minst-instcreate.png" style="height: 480px; width: 813px" class="center" />
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left:40px">
+        Version 2.0 allows you to scan a directory for ISO files, and also allows you to download Windows installation images from Microsoft's website 
+        (and also build them from files downloaded from UUP Dump (uupdump.net), if administrative privileges are present)</p>
+    <table style="width:auto" class="center">
         <tr>
-            <td class="auto-style2" style="border-spacing: 1px; text-align: center; font-family: Arial, Helvetica, sans-serif; font-weight: bold;">Version</td>
-            <td class="auto-style4" style="border-spacing: 1px; text-align: center; font-family: Arial, Helvetica, sans-serif; font-weight: bold;">Changes</td>
-            <td class="auto-style1" style="border-spacing: 1px; text-align: center; font-family: Arial, Helvetica, sans-serif; font-weight: bold;">Build Date</td>
-        </tr>
-        <tr>
-            <td class="auto-style2" style="border-spacing: 1px; text-align: center; font-family: Arial, Helvetica, sans-serif;">2.0.0100</td>
-            <td class="auto-style4" style="border-spacing: 1px;  font-family: Arial, Helvetica, sans-serif;">- Refined design, resembling a WinUI 3 application<br />
-                - Added installer history, an easier way to view your created installers <br />
-                - Added an ISO file scanner, allowing for easier installer searches <br />
-                - Added a new installer creation method: REGTWEAK <br />
-                Bugfixes: <br />
-                - The UEFI mode confirmation mode no longer shows twice</td>
-            <td class="auto-style1" style="border-spacing: 1px; text-align: center; font-family: Arial, Helvetica, sans-serif;">TBD</td>
-        </tr>
-        <tr>
-            <td class="auto-style2" style="border-spacing: 1px; text-align: center; font-family: Arial, Helvetica, sans-serif;">1.0.0136</td>
-            <td class="auto-style4" style="border-spacing: 1px;  font-family: Arial, Helvetica, sans-serif;">- Added a new design that resembles WinUI 3<br />
-                - Added ability to switch to both designs</td>
-            <td class="auto-style1" style="border-spacing: 1px; text-align: center; font-family: Arial, Helvetica, sans-serif;">Oct. 31, 2021</td>
-        </tr>
-        <tr>
-            <td class="auto-style2" style="font-family: Arial, Helvetica, sans-serif; text-align: center" rowspan="2">1.0.0135</td>
-            <td class="auto-style4">- Added ability to set a custom label for the installer<br />
-                - Added ability to use UEFI for platform compatibility<br />
-                - Updated help documentation</td>
-            <td class="auto-style1" style="text-align: center">Oct. 14, 2021</td>
-        </tr>
-        <tr>
-            <td class="auto-style5">Revision 1:<br />
-                - Fixed a bug where OSCDIMG would launch twice</td>
-            <td class="auto-style6" style="text-align: center">Oct. 15, 2021</td>
-        </tr>
-        <tr>
-            <td class="auto-style2" style="font-family: Arial, Helvetica, sans-serif; text-align: center" rowspan="2">1.0.0134</td>
-            <td class="auto-style4">- Added disclaimer notice<br />
-                - Added build date column to the documentation<br />
-                - Integrated more functionality</td>
-            <td class="auto-style1" style="text-align: center">Oct. 2, 2021</td>
-        </tr>
-        <tr>
-            <td class="auto-style4">Revision 1:<br />
-                - Added Spanish translations</td>
-            <td class="auto-style1" style="text-align: center">Oct. 6, 2021</td>
-        </tr>
-        <tr>
-            <td class="auto-style2" style="font-family: Arial, Helvetica, sans-serif; text-align: center">1.0.0133</td>
-            <td class="auto-style4">- Initial version</td>
-            <td class="auto-style1" style="text-align: center">Sep. 7, 2021</td>
-        </tr>
-        <tr>
-            <td class="auto-style1" style="font-family: Arial, Helvetica, sans-serif; text-align: left; font-weight: bold;" colspan="3">Bugs:<br />
-                - When using REGTWEAK as the installer creation method, and testing the custom installer on VMware, Setup will still block your system. In this case, please use one of the other methods. This is due to Setup still detecting components (if you&#39;re using builds 22000.194 or higher; or Nickel builds from 22458 onwards) on a hypervisor. This was tested on the leaked build (21996.1), 
-                in VirtualBox, and in a real PC; and this doesn&#39t happen.<img src="./Resources/HelpDoc_Win11_21996_REGTWEAK.png" class="center"/><p style="font-family: 'Times New Roman'; font-weight: normal; font-style: italic">Windows 11 custom installer done using REGTWEAK with CMD and REGEDIT open on VMware. Do note that this is the leaked build</p>
-    <img src="./Resources/HelpDoc_Win11_REGTWEAK.png" class="center"/><p style="font-family: 'Times New Roman'; font-weight: normal; font-style: italic">Windows 11 custom installer done using REGTWEAK with CMD and REGEDIT open on VMware. Do note that, although the registry entries were added, Setup will still block the VM</p>
-    <img src="./Resources/HelpDoc_Win11_REGTWEAK_VirtualBox.png" class="center"/><p style="font-family: 'Times New Roman'; font-weight: normal; font-style: italic">Windows 11 custom installer done using REGTWEAK with CMD and REGEDIT open on VirtualBox</p>
-                <br />
-                - Sometimes the model label will be blank. Do note that this method uses WMIC, which is being deprecated soon.<br />
-                </td>
+            <td class="auto-style1">
+    <img src="Resources/docs/win11minst-isofilescan.png" style="height: 240px; width: 407px" class="center" /></td>
+            <td>
+    <img src="Resources/docs/win11minst-isofiledown.png" style="height: 240px; width: 417px" /></td>
+            <td>
+                <img src="Resources/docs/win11minst-isofilebuild.png" style="height: 240px; width: 417px" class="center" />
+            </td>
         </tr>
     </table>
-    &nbsp;
-    <p style="font-family: Arial, Helvetica, sans-serif">
-        Here is a list of things to be added in the future:<br />
-        - support for &quot;wimlib-imagex&quot; (by default, the program will use the built-in &quot;DISM/IMAGEX&quot; tools in Windows</p>
-    <h2 style="font-family: Arial, Helvetica, sans-serif">
-        Features of this version:</h2>
-    <h4 style="font-family: Arial, Helvetica, sans-serif">
-        Redesigned user interface</h4>
-    <p style="font-family: Arial, Helvetica, sans-serif; margin-left: 40px;">
-        The user interface in this version got updated to resemble a WinUI 3 application, with simplified menus and carefully crafted panels and colors to obtain the look and feel of a WinUI 3 application.</p>
-    <h2 style="font-family: Arial, Helvetica, sans-serif">
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        Clicking &quot;More options...&quot; will go to the functionality settings, which are mentioned later in the documentation. After specifying the source installers and the target installer options, click &quot;Create&quot;. The program will make you confirm your settings.</p>
+    <img src="Resources/docs/win11minst-settingreview.png" style="height: 480px; width: 813px" class="center" />
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        If you confirm, the installer creation will take place. In Version 2.0, the installer creation process screen is not in a separate window anymore, and is now in the main window. However, the process is the same.</p>
+    <img src="Resources/docs/win11minst-instcreateproc.png" style="height: 480px; width: 813px" class="center" />
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        One of the changes in Version 2.0 is the ability to show or hide the installer creation log, and the program no longer freezes when creating the installer. The program will also show more detailed information on completion.</p>
+    <img src="Resources/docs/win11minst-instfinish.png" style="height: 480px; width: 813px" class="center" />
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        There is now a shortcut to open the log file, and you can now exit the program by clicking &quot;OK&quot;</p>
+    <h2 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        Settings</h2>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        The program follows the statement: &quot;Simple by default, but powerful when needed&quot;, meaning that you can configure it the way you like. Unlike Version 1.0.013x, settings in this version are on different sections.</p>
+    <img src="Resources/docs/win11minst-settings.png" style="height: 480px; width: 813px" class="center" />
+    <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        Personalization</h3>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        The personalization options consist on:</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        - Language, with added support for French</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        - Color mode: with the inclusion of &quot;Automatic&quot; (Windows 10 and 11)</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        - Navigation bar (Side Panel) position <strong>(new)</strong></p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        - DPI scale</p>
+    <table style="width:auto" class="center">
+        <tr>
+            <td class="auto-style3">
+    <img src="Resources/docs/win11minst-lightmode.png" style="height: 240px; width: 411px" class="center" /></td>
+            <td>
+    <img src="Resources/docs/win11minst-darkmode.png" style="height: 240px; width: 411px" class="center" /></td>
+            <td>
+                <img src="Resources/docs/win11minst-topnavbar.png" style="height: 240px; width: 349px" class="center" />
+            </td>
+        </tr>
+    </table>
+    <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        Functionality</h3>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        The functionality settings consist on:</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        - Installer creation method</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        - Installer label</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        - Platform compatibility</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        You can also access these settings by clicking &quot;More options...&quot; on the installer creation screen</p>
+    <img src="Resources/docs/win11minst-functionality.png" style="height: 480px; width: 813px" class="center"/>
+    <h2 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
         Instructions</h2>
-    <p style="font-family: Arial, Helvetica, sans-serif">
-        1. Download the images (Windows 11 and Windows 10 images)</p>
-    <p style="font-family: Arial, Helvetica, sans-serif">
-        2. Click &#39;Create a modified WIndows 11 installer&#39;</p>
-    <p style="font-family: Arial, Helvetica, sans-serif">
-        3. Specify the two Windows images</p>
-    <p style="font-family: Arial, Helvetica, sans-serif">
-        4. Specify where you want to save the custom image</p>
-    <p style="font-family: Arial, Helvetica, sans-serif">
-        5. Let the program do the magic</p>
-    <p style="font-family: Arial, Helvetica, sans-serif; font-weight: bold;">
-        That&#39;s it!</p>
-    <h2 style="font-family: Arial, Helvetica, sans-serif">
-        (Special) Thanks</h2>
-    <p style="font-family: Arial, Helvetica, sans-serif">
-        - Microsoft, for making me write this tool</p>
-    <p style="font-family: Arial, Helvetica, sans-serif">
-        - My family and friends</p>
-    <h2 style="font-family: Arial, Helvetica, sans-serif">
-        Miscellaneous (but important) files</h2>
-    <p style="font-family: Arial, Helvetica, sans-serif">
-        These files are crucial for the installer creation:</p>
-    <p style="font-family: Arial, Helvetica, sans-serif">
-        - 7z.exe: the main ISO extractor</p>
-    <p style="font-family: Arial, Helvetica, sans-serif">
-        - 7z.dll: a critical component to 7-Zip</p>
-    <p style="font-family: Arial, Helvetica, sans-serif">
-        - OSCDIMG: the ISO creator</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        This screen shows instructions on how to make a custom Windows 11 installer by yourself, while trying to be as helpful as possible.</p>
+    <h2 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        Help</h2>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        This screen shows the Help documentation (what you are reading right now)</p>
+    <img src="Resources/docs/win11minst-help.png" style="height: 480px; width: 813px" class="center" />
+    <h2 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        About</h2>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        Shows program information, like the product and assembly versions, the icon sources, the component versions, and where can the source code be found</p>
+    <img src="Resources/docs/win11minst-info.png" style="height: 480px; width: 813px" class="center" />
     </body>
 </html>
