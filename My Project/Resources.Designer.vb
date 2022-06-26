@@ -273,6 +273,26 @@ Namespace My.Resources
         '''<summary>
         '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         '''</summary>
+        Friend ReadOnly Property cross_dark() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("cross_dark", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property cross_light() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("cross_light", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        '''</summary>
         Friend ReadOnly Property darkmode() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("darkmode", resourceCulture)
@@ -476,46 +496,6 @@ Namespace My.Resources
         Friend ReadOnly Property helpbanner() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("helpbanner", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property helpbanner_dark() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("helpbanner_dark", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property HelpDoc_Win11_21996_REGTWEAK() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("HelpDoc_Win11_21996_REGTWEAK", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property HelpDoc_Win11_REGTWEAK() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("HelpDoc_Win11_REGTWEAK", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property HelpDoc_Win11_REGTWEAK_VirtualBox() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("HelpDoc_Win11_REGTWEAK_VirtualBox", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -1393,6 +1373,26 @@ Namespace My.Resources
         '''<summary>
         '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         '''</summary>
+        Friend ReadOnly Property topnavbar_x86_dark() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("topnavbar_x86_dark", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property topnavbar_x86_light() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("topnavbar_x86_light", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        '''</summary>
         Friend ReadOnly Property unknown_drive() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("unknown_drive", resourceCulture)
@@ -1495,6 +1495,166 @@ Namespace My.Resources
         Friend ReadOnly Property win11inst_pic() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("win11inst_pic", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property win11minst_darkmode() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("win11minst_darkmode", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property win11minst_functionality() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("win11minst_functionality", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property win11minst_help() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("win11minst_help", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property win11minst_info() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("win11minst_info", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property win11minst_instcreate() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("win11minst_instcreate", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property win11minst_instcreateproc() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("win11minst_instcreateproc", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property win11minst_instfinish() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("win11minst_instfinish", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property win11minst_isofilebuild() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("win11minst_isofilebuild", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property win11minst_isofiledown() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("win11minst_isofiledown", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property win11minst_isofilescan() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("win11minst_isofilescan", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property win11minst_lightmode() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("win11minst_lightmode", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property win11minst_mainscr() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("win11minst_mainscr", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property win11minst_settingreview() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("win11minst_settingreview", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property win11minst_settings() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("win11minst_settings", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property win11minst_sidepanelhover() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("win11minst_sidepanelhover", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property win11minst_topnavbar() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("win11minst_topnavbar", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
