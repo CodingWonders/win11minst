@@ -72,6 +72,10 @@ This is the first version that surpasses 5 MB in size, so the idea of putting it
 ![win11minst_6mAo24YxU0](https://user-images.githubusercontent.com/101426328/175825495-e34d6fcf-3fba-444d-a72e-9accd08ae134.png)
 
 - The 'processor' icon, introduced in version `2.0.0100_220619`, is now visible when the navigation bar is placed on the top
+
+![win11minst_processor_topnav](https://user-images.githubusercontent.com/101426328/175825824-870cdf78-d680-4218-89f3-8d4ac0f35f5c.png)
+![win11minst_procdesc_topnav](https://user-images.githubusercontent.com/101426328/175825827-d8511ef6-cd1a-42ba-8368-0c945ae832ab.png)
+
 - Updated Help documentation, to make it more useful
 
 #### **Removed/stripped down features**
