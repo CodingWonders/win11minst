@@ -12,6 +12,8 @@
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
     <PublishUrl>publicar\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -24,10 +26,8 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -69,11 +69,10 @@
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>
-    </AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>win11minst.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System">
@@ -405,6 +404,7 @@
     <None Include="prog_bin\regtweak.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Resources\HTMLHelp\Resources\helpbanner.gif" />
     <None Include="settings.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -419,9 +419,61 @@
     <None Include="Win11Inst.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="win11minst.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon3.ico" />
+    <Content Include="Resources\HTMLHelp\Resources\docs\win11minst-darkmode.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\docs\win11minst-functionality.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\docs\win11minst-help.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\HTMLHelp\Resources\docs\win11minst-info.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="Resources\HTMLHelp\Resources\docs\win11minst-instcreate.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\docs\win11minst-instcreateproc.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\docs\win11minst-instfinish.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\docs\win11minst-isofilebuild.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\docs\win11minst-isofiledown.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\docs\win11minst-isofilescan.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\docs\win11minst-lightmode.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\docs\win11minst-settingreview.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\docs\win11minst-settings.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\docs\win11minst-sidepanelhover.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\docs\win11minst-topnavbar.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\HTMLHelp\Resources\docs\win11minst-mainscr.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\topnavbar_x86_light.png" />
+    <None Include="Resources\topnavbar_x86_dark.png" />
+    <None Include="Resources\scan_button.png" />
     <None Include="Resources\x86_light.png" />
     <None Include="Resources\x86_dark.png" />
     <None Include="Resources\prev_step_dark.png" />
@@ -475,22 +527,11 @@
     <None Include="Resources\export_light.png" />
     <None Include="Resources\first_step_dark.png" />
     <None Include="Resources\first_step_light.png" />
+    <None Include="Resources\cross_dark.png" />
+    <None Include="Resources\cross_light.png" />
     <Content Include="Resources\HTMLHelp\HelpPage.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Resources\HTMLHelp\Resources\helpbanner_dark.gif" />
-    <None Include="Resources\HTMLHelp\Resources\HelpDoc_Win11_REGTWEAK_VirtualBox.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\HTMLHelp\Resources\HelpDoc_Win11_REGTWEAK.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\HTMLHelp\Resources\HelpDoc_Win11_21996_REGTWEAK.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\HTMLHelp\Resources\helpbanner.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Resources\progressring_indeterminate.gif" />
     <None Include="Resources\NotifyIconRes_Light.ico" />
     <None Include="Resources\NotifyIconRes_Dark.ico" />
