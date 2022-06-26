@@ -32,6 +32,7 @@ Congratulations, you have updated the program. If no updates are found, the prog
 
 ### 2.0.0100_220626
 ---
+This is the first version that surpasses 5 MB in size, so the idea of putting it on a floppy disk is thrown out of a window (no pun intended)
 
 #### **Bugfixes**
 
