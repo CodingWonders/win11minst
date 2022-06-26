@@ -4,6 +4,16 @@ Imports Microsoft.VisualBasic.ControlChars
 Public Class AdvancedOptionsPanel
 
     Private Sub OK_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OK_Button.Click
+        If CheckBox1.Checked = True Then
+            MainForm.UseBypassNRO = True
+        Else
+            MainForm.UseBypassNRO = False
+        End If
+        If CheckBox2.Checked = True Then
+            MainForm.UseSV2 = True
+        Else
+            MainForm.UseSV2 = False
+        End If
         Me.DialogResult = System.Windows.Forms.DialogResult.OK
         Me.Close()
         BackSubPanel.Close()
