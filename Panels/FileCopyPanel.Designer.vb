@@ -50,11 +50,11 @@ Partial Class FileCopyPanel
         Me.OK_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.OK_Button.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.OK_Button.ForeColor = System.Drawing.Color.White
-        Me.OK_Button.Location = New System.Drawing.Point(501, 24)
+        Me.OK_Button.Location = New System.Drawing.Point(171, 24)
         Me.OK_Button.Name = "OK_Button"
-        Me.OK_Button.Size = New System.Drawing.Size(91, 32)
+        Me.OK_Button.Size = New System.Drawing.Size(256, 32)
         Me.OK_Button.TabIndex = 1
-        Me.OK_Button.Text = "Yes"
+        Me.OK_Button.Text = "Yes, copy source files"
         Me.OK_Button.UseVisualStyleBackColor = False
         '
         'Cancel_Button
@@ -62,11 +62,11 @@ Partial Class FileCopyPanel
         Me.Cancel_Button.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Cancel_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Cancel_Button.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Cancel_Button.Location = New System.Drawing.Point(598, 24)
+        Me.Cancel_Button.Location = New System.Drawing.Point(433, 24)
         Me.Cancel_Button.Name = "Cancel_Button"
-        Me.Cancel_Button.Size = New System.Drawing.Size(91, 32)
+        Me.Cancel_Button.Size = New System.Drawing.Size(256, 32)
         Me.Cancel_Button.TabIndex = 3
-        Me.Cancel_Button.Text = "No"
+        Me.Cancel_Button.Text = "No, skip file copy"
         Me.Cancel_Button.UseVisualStyleBackColor = True
         '
         'Label1
