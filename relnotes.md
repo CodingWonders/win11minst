@@ -48,6 +48,7 @@ This is the first version that surpasses 5 MB in size, so the idea of putting it
 - As a result of the first bugfix, the functionality settings will be disabled when an installer creation process is in place, until after completion
 
 ![win11minst_pdmZEaPmre](https://user-images.githubusercontent.com/101426328/175825358-06603216-5321-4314-8afb-7f08c720e9cc.png)
+
 ![win11minst_7zrKP0OLGF](https://user-images.githubusercontent.com/101426328/175825383-ba84a3e5-0409-4a80-8d39-1a7f435c7e92.png)
 
 - Improved French translations
@@ -74,6 +75,7 @@ This is the first version that surpasses 5 MB in size, so the idea of putting it
 - The 'processor' icon, introduced in version `2.0.0100_220619`, is now visible when the navigation bar is placed on the top
 
 ![win11minst_processor_topnav](https://user-images.githubusercontent.com/101426328/175825824-870cdf78-d680-4218-89f3-8d4ac0f35f5c.png)
+
 ![win11minst_procdesc_topnav](https://user-images.githubusercontent.com/101426328/175825827-d8511ef6-cd1a-42ba-8368-0c945ae832ab.png)
 
 - Updated Help documentation, to make it more useful
