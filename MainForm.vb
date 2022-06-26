@@ -12,9 +12,9 @@ Imports System.Threading
 Public Class MainForm
     Private isMouseDown As Boolean = False
     Private mouseOffset As Point
-    Dim VerStr As String = "2.0.0100_220619"    ' Reported version
+    Dim VerStr As String = "2.0.0100_220626"    ' Reported version
     Dim AVerStr As String = My.Application.Info.Version.ToString()     ' Assembly version
-    Dim VDescStr As String = "Even though we all hated Internet Explorer, it brought the Internet to a mainstream audience"
+    Dim VDescStr As String = Quote & "Modern, fresh, clean, beautiful." & Quote & " - Panos Panay, 2021/06/24. Can we get Windows 11 on a Genesis? At least we have Windows 95 on it."
     Dim OffEcho As String = "@echo off"
     Dim wmiget As String
     Dim StDebugTime As Date = Now
@@ -66,8 +66,7 @@ Public Class MainForm
     Dim NotifyNum As Integer
     Dim isHummingbird As Boolean = True
     Dim needsUpdates As Boolean
-    Dim WndLeft As Point
-    Dim WndTop As Point
+    Dim WndPos As Point
     Dim SevenZipVer As FileVersionInfo
     Dim SevenZipStr As String
     Dim OSCDIMGVer As FileVersionInfo
@@ -75,6 +74,11 @@ Public Class MainForm
     Dim DismVer As FileVersionInfo
     Dim DismStr As String
     Dim MOLinkIsClicked As Boolean
+    Dim WarnStr As String
+    Dim ErrStr As String
+    Public UseBypassNRO As Boolean
+    Public UseSV2 As Boolean
+    Dim Win11InstLabel As String
 
     ' Left mouse button pressed
     Private Sub titlePanel_MouseDown(sender As Object, e As MouseEventArgs) Handles titlePanel.MouseDown, TitleBar.MouseDown
@@ -338,8 +342,7 @@ Public Class MainForm
 
     Private Sub maxBox_Click(sender As Object, e As EventArgs) Handles maxBox.Click
         If WindowState = FormWindowState.Normal Then
-            WndLeft = New Point(Left)
-            WndTop = New Point(Top)
+            WndPos = New Point(Left, Top)
             MaximumSize = Screen.FromControl(Me).WorkingArea.Size
             WindowState = FormWindowState.Maximized
             If BackColor = Color.FromArgb(243, 243, 243) Then
@@ -348,8 +351,8 @@ Public Class MainForm
                 maxBox.Image = New Bitmap(My.Resources.restdownbox_dark)
             End If
         ElseIf WindowState = FormWindowState.Maximized Then
-            If Left = 0 And Top = 0 Then
-                Location = New Point(WndLeft.X, WndTop.Y)
+            If Left = 0 Or Top = 0 Then
+                Location = New Point(WndPos)
             End If
             WindowState = FormWindowState.Normal
             If BackColor = Color.FromArgb(243, 243, 243) Then
@@ -622,7 +625,19 @@ Public Class MainForm
         DismStr = DismVer.FileVersion
     End Sub
 
+    Public Sub ConvertCompArch()
+        File.Delete(".\prog_bin\7z.exe")
+        File.Delete(".\prog_bin\7z.dll")
+        If File.Exists("\Program Files\7-Zip\7z.exe") And File.Exists("\Program Files\7-Zip\7z.dll") Then
+            File.Copy("\Program Files\7-Zip\7z.exe", ".\prog_bin\7z.exe")
+            File.Copy("\Program Files\7-Zip\7z.dll", ".\prog_bin\7z.dll")
+        Else
+            MissingComponentsDialog.ShowDialog()
+        End If
+    End Sub
+
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Control.CheckForIllegalCrossThreadCalls = False
         KillCmdWnd()
         VersionToolStripMenuItem.Text = "version " & VerStr & " (assembly version " & AVerStr & ")"
         Label72.Text = "version " & VerStr & " (assembly version " & AVerStr & ")"
@@ -653,7 +668,17 @@ Public Class MainForm
         If Not Directory.Exists(".\prog_bin") Then
             MissingComponentsDialog.ShowDialog()
         Else
-            If Not File.Exists(".\prog_bin\7z.exe") And Not File.Exists(".\prog_bin\7z.dll") Or Not File.Exists(".\prog_bin\oscdimg.exe") Then
+            If Not File.Exists(".\prog_bin\7z.exe") Then
+                MissingComponentsDialog.ShowDialog()
+            Else
+                If Environment.Is64BitOperatingSystem = False Then
+                    ConvertCompArch()
+                End If
+            End If
+            If Not File.Exists(".\prog_bin\7z.dll") Then
+                MissingComponentsDialog.ShowDialog()
+            End If
+            If Not File.Exists(".\prog_bin\oscdimg.exe") Then
                 MissingComponentsDialog.ShowDialog()
             End If
         End If
@@ -999,6 +1024,7 @@ Public Class MainForm
         If Environment.Is64BitOperatingSystem = False Then
             x86_Pic.Visible = True
             AdminLabel.Left = 832
+            TopNavbar_x86_Pic.Visible = True
         End If
         Visible = True
         BringToFront()
@@ -1267,6 +1293,11 @@ Public Class MainForm
         PictureBox10.Image = InstructionPic.Image
         PictureBox33.Image = HelpPic.Image
         PictureBox34.Image = InfoPic.Image
+        If BackColor = Color.FromArgb(243, 243, 243) Then
+            TopNavbar_x86_Pic.Image = New Bitmap(My.Resources.topnavbar_x86_light)
+        ElseIf BackColor = Color.FromArgb(32, 32, 32) Then
+            TopNavbar_x86_Pic.Image = New Bitmap(My.Resources.topnavbar_x86_dark)
+        End If
     End Sub
 
     Private Sub LogoPic_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles LogoPic.MouseDoubleClick
@@ -1508,6 +1539,23 @@ Public Class MainForm
             LinkLabel18.LinkColor = Color.FromArgb(76, 194, 255)
             TargetInstallerLinkLabel.LinkColor = Color.FromArgb(76, 194, 255)
             LogViewLink.LinkColor = Color.FromArgb(76, 194, 255)
+
+            ' Progress Labels
+            If Not Label84.ForeColor = Color.DimGray Then
+                Label84.ForeColor = ForeColor
+            End If
+            If Not Label85.ForeColor = Color.DimGray Then
+                Label85.ForeColor = ForeColor
+            End If
+            If Not Label86.ForeColor = Color.DimGray Then
+                Label86.ForeColor = ForeColor
+            End If
+            If Not Label87.ForeColor = Color.DimGray Then
+                Label87.ForeColor = ForeColor
+            End If
+            If Not Label88.ForeColor = Color.DimGray Then
+                Label88.ForeColor = ForeColor
+            End If
         ElseIf ComboBox1.SelectedItem = "Light" Or ComboBox1.SelectedItem = "Claro" Or ComboBox1.SelectedItem = "Lumière" Then
             ColorInt = 2
             If RadioButton3.Checked = True Then
@@ -1660,6 +1708,23 @@ Public Class MainForm
             LinkLabel18.LinkColor = Color.FromArgb(1, 92, 186)
             TargetInstallerLinkLabel.LinkColor = Color.FromArgb(1, 92, 186)
             LogViewLink.LinkColor = Color.FromArgb(1, 92, 186)
+
+            ' Progress Labels
+            If Not Label84.ForeColor = Color.DimGray Then
+                Label84.ForeColor = ForeColor
+            End If
+            If Not Label85.ForeColor = Color.DimGray Then
+                Label85.ForeColor = ForeColor
+            End If
+            If Not Label86.ForeColor = Color.DimGray Then
+                Label86.ForeColor = ForeColor
+            End If
+            If Not Label87.ForeColor = Color.DimGray Then
+                Label87.ForeColor = ForeColor
+            End If
+            If Not Label88.ForeColor = Color.DimGray Then
+                Label88.ForeColor = ForeColor
+            End If
         ElseIf ComboBox1.SelectedItem = "Automatic" Or ComboBox1.SelectedItem = "Automático" Or ComboBox1.SelectedItem = "Automatique" Then
             ColorInt = 0
             Try
@@ -1683,7 +1748,6 @@ Public Class MainForm
                     Dim rkColorMode As RegistryKey = Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", False)
                     Dim ColorStr As String = rkColorMode.GetValue("AppsUseLightTheme").ToString()
                     rkColorMode.Close()
-
                     If ColorStr = "0" Then
                         If RadioButton3.Checked = True Then
                             PictureBox2.Image = New Bitmap(My.Resources.NavBar_LeftPos_Dark)
@@ -1825,6 +1889,23 @@ Public Class MainForm
                         LinkLabel18.LinkColor = Color.FromArgb(76, 194, 255)
                         TargetInstallerLinkLabel.LinkColor = Color.FromArgb(76, 194, 255)
                         LogViewLink.LinkColor = Color.FromArgb(76, 194, 255)
+
+                        ' Progress Labels
+                        If Not Label84.ForeColor = Color.DimGray Then
+                            Label84.ForeColor = ForeColor
+                        End If
+                        If Not Label85.ForeColor = Color.DimGray Then
+                            Label85.ForeColor = ForeColor
+                        End If
+                        If Not Label86.ForeColor = Color.DimGray Then
+                            Label86.ForeColor = ForeColor
+                        End If
+                        If Not Label87.ForeColor = Color.DimGray Then
+                            Label87.ForeColor = ForeColor
+                        End If
+                        If Not Label88.ForeColor = Color.DimGray Then
+                            Label88.ForeColor = ForeColor
+                        End If
                     ElseIf ColorStr = "1" Then
                         If RadioButton3.Checked = True Then
                             PictureBox2.Image = New Bitmap(My.Resources.NavBar_LeftPos_Light)
@@ -1966,14 +2047,39 @@ Public Class MainForm
                         LinkLabel18.LinkColor = Color.FromArgb(1, 92, 186)
                         TargetInstallerLinkLabel.LinkColor = Color.FromArgb(1, 92, 186)
                         LogViewLink.LinkColor = Color.FromArgb(1, 92, 186)
+
+                        ' Progress Labels
+                        If Not Label84.ForeColor = Color.DimGray Then
+                            Label84.ForeColor = ForeColor
+                        End If
+                        If Not Label85.ForeColor = Color.DimGray Then
+                            Label85.ForeColor = ForeColor
+                        End If
+                        If Not Label86.ForeColor = Color.DimGray Then
+                            Label86.ForeColor = ForeColor
+                        End If
+                        If Not Label87.ForeColor = Color.DimGray Then
+                            Label87.ForeColor = ForeColor
+                        End If
+                        If Not Label88.ForeColor = Color.DimGray Then
+                            Label88.ForeColor = ForeColor
+                        End If
                     End If
                 Else
-                    If My.Computer.Info.OSFullName.Contains("Windows 7") Then
-                        MsgBox("This feature is not supported on Windows 7", vbOKOnly + vbInformation, "Automatic color mode")
-                    ElseIf My.Computer.Info.OSFullName.Contains("Windows 8") Or My.Computer.Info.OSFullName.Contains("Windows 8.1") Then
-                        MsgBox("This feature is not supported on Windows 8/8.1", vbOKOnly + vbInformation, "Automatic color mode")
-                    ElseIf My.Computer.Info.OSFullName.Contains("Windows Server 2008") Or My.Computer.Info.OSFullName.Contains("Windows Server 2012") Then
-                        MsgBox("This feature is not supported on Windows Server 2008/2012", vbOKOnly + vbInformation, "Automatic color mode")
+                    If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+                        ComboBox1.SelectedItem = "Light"
+                    ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+                        ComboBox1.SelectedItem = "Claro"
+                    ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                        ComboBox1.SelectedItem = "Lumière"
+                    ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+                        If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                            ComboBox1.SelectedItem = "Light"
+                        ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                            ComboBox1.SelectedItem = "Claro"
+                        ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                            ComboBox1.SelectedItem = "Lumière"
+                        End If
                     End If
                 End If
             Catch NREx As NullReferenceException
@@ -2005,7 +2111,13 @@ Public Class MainForm
         PanelIndicatorPic.Top = SettingsPic.Top + 2
         PanelIndicatorPic.Anchor = CType((AnchorStyles.Bottom Or AnchorStyles.Left), AnchorStyles)
         WelcomePanel.Visible = False
-        InstCreatePanel.Visible = False
+        If InstCreateInt = 0 Then
+            InstCreatePanel.Visible = False
+        ElseIf InstCreateInt = 1 Then
+            SettingReviewPanel.Visible = False
+        ElseIf InstCreateInt = 2 Or InstCreateInt = 3 Then
+            ProgressPanel.Visible = False
+        End If
         HelpPanel.Visible = False
         InstrPanel.Visible = False
         SettingPanel.Visible = True
@@ -2372,6 +2484,14 @@ Public Class MainForm
         ApplyNavBarImages()
     End Sub
 
+    Sub DetectInstLabel()
+        File.WriteAllText(".\temp.bat", OffEcho & CrLf & ".\prog_bin\7z l " & Quote & TextBox1.Text & Quote & " | findstr " & Quote & "Comment" & Quote & " > label.txt", ASCII)
+        Process.Start(".\temp.bat").WaitForExit()
+        Win11InstLabel = My.Computer.FileSystem.ReadAllText(".\label.txt").Replace("Comment = ", "").Trim()
+        LabelText.Text = Win11InstLabel
+        File.Delete(".\temp.bat")
+    End Sub
+
     Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles TextBox1.TextChanged
         If File.Exists(TextBox1.Text) Then
             If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
@@ -2390,6 +2510,9 @@ Public Class MainForm
                 End If
             End If
             TextBox1.ForeColor = ForeColor
+            If CheckBox2.Checked = True Then
+                DetectInstLabel()
+            End If
             If Not ComboBox5.SelectedItem = "REGTWEAK" Then
                 If File.Exists(TextBox2.Text) Then
                     Button6.Enabled = True
@@ -2456,6 +2579,9 @@ Public Class MainForm
                     End If
                 End If
                 TextBox1.ForeColor = ForeColor
+                If CheckBox2.Checked = True Then
+                    DetectInstLabel()
+                End If
                 If Not ComboBox5.SelectedItem = "REGTWEAK" Then
                     If File.Exists(TextBox2.Text) Then
                         Button6.Enabled = True
@@ -3064,6 +3190,40 @@ Public Class MainForm
         End If
     End Sub
 
+    Sub DisableFunctionality()
+        Label20.Enabled = False
+        ComboBox5.Enabled = False
+        Button11.Enabled = False
+        GroupBox4.Enabled = False
+        GroupBox3.Enabled = False
+        Button13.Enabled = False
+        RadioButton1.Enabled = False
+        RadioButton2.Enabled = False
+        LinkLabel18.Visible = True
+    End Sub
+
+    Sub EnableFunctionality()
+        Label20.Enabled = True
+        ComboBox5.Enabled = True
+        Button11.Enabled = True
+        GroupBox4.Enabled = True
+        GroupBox3.Enabled = True
+        Button13.Enabled = True
+        RadioButton1.Enabled = True
+        RadioButton2.Enabled = True
+        LinkLabel18.Visible = False
+    End Sub
+
+    Sub DisableCancellation()
+        Label89.Visible = True
+        Button10.Enabled = False
+    End Sub
+
+    Sub EnableCancellation()
+        Label89.Visible = False
+        Button10.Enabled = True
+    End Sub
+
     Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
         FileCount = 0
         DelFileCount = 0
@@ -3090,6 +3250,9 @@ Public Class MainForm
                 Label83.Text = "C'est toute l'information dont nous avons besoin pour le moment. La création de l'installateur prendra quelques minutes, alors soyez patient."
             End If
         End If
+        PictureBox5.Visible = False
+        Label3.Visible = False
+        LinkLabel2.Visible = False
         DisableBackPic()
         TableLayoutPanel3.Visible = False
         InstallerCreationMethodToolStripMenuItem.Enabled = False
@@ -3144,7 +3307,7 @@ Public Class MainForm
         ' If an installer creation process is incomplete (due to an exception or user cancellation), delete
         ' everything
         If Directory.Exists(".\temp") Then
-            LogBox.AppendText(CrLf & "Looks like an installer was being created, but something interrumpted the process. Deleting everything...")
+            LogBox.AppendText(CrLf & "[" & Now & "] " & "Looks like an installer was being created, but something interrumpted the process. Deleting everything...")
             For Each deletedFile In My.Computer.FileSystem.GetFiles(".\temp", FileIO.SearchOption.SearchAllSubDirectories)
                 Try
                     File.Delete(deletedFile)
@@ -3224,21 +3387,21 @@ Public Class MainForm
         Label87.Font = New Font("Segoe UI", 9.75)
         Label88.ForeColor = Color.DimGray
         Label88.Font = New Font("Segoe UI", 9.75)
-        LogBox.AppendText(CrLf & "Started installer creation at: " & StInstCreateTime)
-        LogBox.AppendText(CrLf & CrLf & "Installer creation options:")      ' Show inst. creation options
-        LogBox.AppendText(CrLf & "- Windows 11 image: " & ControlChars.Quote & TextBox1.Text & ControlChars.Quote)
-        LogBox.AppendText(CrLf & "- Windows 10 image: " & ControlChars.Quote & TextBox2.Text & ControlChars.Quote)
+        LogBox.AppendText(CrLf & "[" & Now & "] " & "Started installer creation at: " & StInstCreateTime)
+        LogBox.AppendText(CrLf & "[" & Now & "] " & CrLf & "Installer creation options:")      ' Show inst. creation options
+        LogBox.AppendText(CrLf & "[" & Now & "] " & "- Windows 11 image: " & ControlChars.Quote & TextBox1.Text & ControlChars.Quote)
+        LogBox.AppendText(CrLf & "[" & Now & "] " & "- Windows 10 image: " & ControlChars.Quote & TextBox2.Text & ControlChars.Quote)
         If RadioButton1.Checked = True Then
-            LogBox.AppendText(CrLf & "- Platform compatibility: BIOS/UEFI-CSM (platform ID: 0x00)")
+            LogBox.AppendText(CrLf & "[" & Now & "] " & "- Platform compatibility: BIOS/UEFI-CSM (platform ID: 0x00)")
         Else
-            LogBox.AppendText(CrLf & "- Platform compatibility: UEFI (platform ID: 0xEF)")
+            LogBox.AppendText(CrLf & "[" & Now & "] " & "- Platform compatibility: UEFI (platform ID: 0xEF)")
         End If
-        LogBox.AppendText(CrLf & "- Installer creation method: " & ComboBox5.SelectedItem)
-        LogBox.AppendText(CrLf & "- Installer label: " & LabelText.Text)
+        LogBox.AppendText(CrLf & "[" & Now & "] " & "- Installer creation method: " & ComboBox5.SelectedItem)
+        LogBox.AppendText(CrLf & "[" & Now & "] " & "- Installer label: " & LabelText.Text)
         If TextBox4.Text.EndsWith("\") Then
-            LogBox.AppendText(CrLf & "- Target image (location and name): " & ControlChars.Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & ControlChars.Quote)
+            LogBox.AppendText(CrLf & "[" & Now & "] " & "- Target image (location and name): " & ControlChars.Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & ControlChars.Quote)
         Else
-            LogBox.AppendText(CrLf & "- Target image (location and name): " & ControlChars.Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & ControlChars.Quote)
+            LogBox.AppendText(CrLf & "[" & Now & "] " & "- Target image (location and name): " & ControlChars.Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & ControlChars.Quote)
         End If
 
         If BackColor = Color.FromArgb(243, 243, 243) Then
@@ -3262,6 +3425,7 @@ Public Class MainForm
                 InstSTLabel.Text = "Prêt à copier les fichiers sur le disque local"
             End If
         End If
+        DisableFunctionality()
         BringToFront()
         BackSubPanel.Show()
         FileCopyPanel.ShowDialog()
@@ -3269,6 +3433,7 @@ Public Class MainForm
         FileCopyPanel.Visible = False
         BringToFront()
         If FileCopyPanel.DialogResult = Windows.Forms.DialogResult.Yes Then
+            DisableCancellation()
             If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                 InstSTLabel.Text = "Copying the ISO files to the local disk..."
             ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
@@ -3284,18 +3449,18 @@ Public Class MainForm
                     InstSTLabel.Text = "Copier les fichiers ISO sur le disque local..."
                 End If
             End If
-            LogBox.AppendText(CrLf & "Copying the ISO files to the local disk...")
+            LogBox.AppendText(CrLf & "[" & Now & "] " & "Copying the ISO files to the local disk...")
             Try
                 If ComboBox5.SelectedItem = "REGTWEAK" Then
                     File.Copy(TextBox1.Text, ".\Win11.iso")
-                    LogBox.AppendText(" Done")
                 Else
                     File.Copy(TextBox1.Text, ".\Win11.iso")
                     LogBox.AppendText(" 1/2...")
                     File.Copy(TextBox2.Text, ".\Win10.iso")
-                    LogBox.AppendText(" 2/2 Done")
                 End If
+                EnableCancellation()
             Catch DNFEx As DirectoryNotFoundException
+
                 LogBox.AppendText(" Failed")
                 If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                     InstSTLabel.Text = "Failed to copy the ISO files to the local disk."
@@ -3483,6 +3648,7 @@ Public Class MainForm
                         BringToFront()
                     End Try
                 End If
+                EnableCancellation()
             End Try
         ElseIf FileCopyPanel.DialogResult = Windows.Forms.DialogResult.No Then
             If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
@@ -3537,7 +3703,7 @@ Public Class MainForm
                 InstSTLabel.Text = "Rassembler les instructions..."
             End If
         End If
-        LogBox.AppendText(CrLf & "Gathering instructions necessary to create the installer...")
+        LogBox.AppendText(CrLf & "[" & Now & "] " & "Gathering instructions necessary to create the installer...")
         LogBox.AppendText(" Done")
         If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             InstSTLabel.Text = "Instructions gathered"
@@ -3580,23 +3746,26 @@ Public Class MainForm
                 InstSTLabel.Text = "Extraire les fichiers nécessaires des images ISO..."
             End If
         End If
-        LogBox.AppendText(CrLf & "Extracting the necessary contents from the ISO images using the " & ComboBox5.SelectedItem & " method...")
+        LogBox.AppendText(CrLf & "[" & Now & "] " & "Extracting the necessary contents from the ISO images using the " & ComboBox5.SelectedItem & " method...")
+        ExtractionBW.RunWorkerAsync()
+    End Sub
+
+    Private Sub ExtractionBW_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles ExtractionBW.DoWork
         If ComboBox5.SelectedItem = "WIMR" Then
             If File.Exists(".\Win11.iso") And File.Exists(".\Win10.iso") Then
                 If Win11ESD = 1 Then
-                    LogBox.AppendText(CrLf & Quote & "There are data after the end of archive" & Quote & " warnings can be safely ignored.")
+                    LogBox.AppendText(CrLf & "[" & Now & "] " & Quote & "There are data after the end of archive" & Quote & " warnings can be safely ignored.")
                     File.WriteAllText(".\temp.bat", OffEcho & CrLf & W11IESDISOEx_Local & CrLf & W10ISOEx_Local, ASCII)
                 ElseIf Win11ESD = 0 Then
                     File.WriteAllText(".\temp.bat", OffEcho & CrLf & W11IWIMISOEx_Local & CrLf & W10ISOEx_Local, ASCII)
                 End If
             Else
                 If Win11ESD = 1 Then
-                    LogBox.AppendText(CrLf & Quote & "There are data after the end of archive" & Quote & " warnings can be safely ignored.")
+                    LogBox.AppendText(CrLf & "[" & Now & "] " & Quote & "There are data after the end of archive" & Quote & " warnings can be safely ignored.")
                     File.WriteAllText(".\temp.bat", OffEcho & CrLf & W11IESDISOEx & CrLf & W10ISOEx, ASCII)
                 ElseIf Win11ESD = 0 Then
                     File.WriteAllText(".\temp.bat", OffEcho & CrLf & W11IWIMISOEx & CrLf & W10ISOEx, ASCII)
                 End If
-
             End If
             Process.Start(".\temp.bat").WaitForExit()
         ElseIf ComboBox5.SelectedItem = "DLLR" Then
@@ -3614,6 +3783,9 @@ Public Class MainForm
             End If
             Process.Start(".\temp.bat").WaitForExit()
         End If
+    End Sub
+
+    Private Sub ExtractionBW_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles ExtractionBW.RunWorkerCompleted
         If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             InstSTLabel.Text = "Necessary files extracted"
         ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
@@ -3629,7 +3801,7 @@ Public Class MainForm
                 InstSTLabel.Text = "Fichiers nécessaires extraits"
             End If
         End If
-        LogBox.AppendText(CrLf & "Finished extracting files.")
+        LogBox.AppendText(CrLf & "[" & Now & "] " & "Finished extracting files.")
         InstallerProgressBar.Value = 25
         CheckPic3.Visible = True
         Label86.Font = New Font("Segoe UI", 9.75)
@@ -3655,47 +3827,51 @@ Public Class MainForm
                 InstSTLabel.Text = "Création de l'installateur personnalisé..."
             End If
         End If
-        LogBox.AppendText(CrLf & "Creating the custom installer using the " & ComboBox5.SelectedItem & " method...")
+        InstCreationBW.RunWorkerAsync()
+    End Sub
+
+    Private Sub InstCreationBW_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles InstCreationBW.DoWork
+        LogBox.AppendText(CrLf & "[" & Now & "] " & "Creating the custom installer using the " & ComboBox5.SelectedItem & " method...")
         If ComboBox5.SelectedItem = "WIMR" Then
             If File.Exists(".\temp\sources\install.wim") Then
-                LogBox.AppendText(CrLf & "Deleting " & Quote & "install.wim" & Quote & " from the Windows 10 installation media...")
+                LogBox.AppendText(CrLf & "[" & Now & "] " & "Deleting " & Quote & "install.wim" & Quote & " from the Windows 10 installation media...")
                 File.Delete(".\temp\sources\install.wim")
             ElseIf File.Exists(".\temp\sources\install.esd") Then
-                LogBox.AppendText(CrLf & "Deleting " & Quote & "install.esd" & Quote & " from the Windows 10 installation media...")
+                LogBox.AppendText(CrLf & "[" & Now & "] " & "Deleting " & Quote & "install.esd" & Quote & " from the Windows 10 installation media...")
                 File.Delete(".\temp\sources\install.esd")
             End If
             LogBox.AppendText(" Done")
             If Win11ESD = 1 Then
-                LogBox.AppendText(CrLf & "Moving " & Quote & "install.esd" & Quote & " from the Windows 11 installation media to the Windows 10 installer...")
+                LogBox.AppendText(CrLf & "[" & Now & "] " & "Moving " & Quote & "install.esd" & Quote & " from the Windows 11 installation media to the Windows 10 installer...")
                 File.Move(".\install.esd", ".\temp\sources\install.esd")
             ElseIf Win11ESD = 0 Then
-                LogBox.AppendText(CrLf & "Moving " & Quote & "install.wim" & Quote & " from the Windows 11 installation media to the Windows 10 installer...")
+                LogBox.AppendText(CrLf & "[" & Now & "] " & "Moving " & Quote & "install.wim" & Quote & " from the Windows 11 installation media to the Windows 10 installer...")
                 File.Move(".\install.wim", ".\temp\sources\install.wim")
             End If
             LogBox.AppendText(" Done")
             InstallerProgressBar.Value = 50
         ElseIf ComboBox5.SelectedItem = "DLLR" Then
-            LogBox.AppendText(CrLf & "Deleting " & Quote & "appraiser.dll" & Quote & " and " & Quote & "appraiserres.dll" & Quote & " from the Windows 11 installation media...")
+            LogBox.AppendText(CrLf & "[" & Now & "] " & "Deleting " & Quote & "appraiser.dll" & Quote & " and " & Quote & "appraiserres.dll" & Quote & " from the Windows 11 installation media...")
             File.Delete(".\temp\sources\appraiser.dll")
             LogBox.AppendText(" 1/2...")
             File.Delete(".\temp\sources\appraiserres.dll")
             LogBox.AppendText(" 2/2 Done")
-            LogBox.AppendText(CrLf & "Moving " & Quote & "appraiser.dll" & Quote & " and " & Quote & "appraiserres.dll" & Quote & " from the Windows 10 installation media to the Windows 11 installer...")
+            LogBox.AppendText(CrLf & "[" & Now & "] " & "Moving " & Quote & "appraiser.dll" & Quote & " and " & Quote & "appraiserres.dll" & Quote & " from the Windows 10 installation media to the Windows 11 installer...")
             File.Move(".\appraiser.dll", ".\temp\sources\appraiser.dll")
             LogBox.AppendText(" 1/2...")
             File.Move(".\appraiserres.dll", ".\temp\sources\appraiserres.dll")
             LogBox.AppendText(" 2/2 Done")
             InstallerProgressBar.Value = 50
         ElseIf ComboBox5.SelectedItem = "REGTWEAK" Then
-            LogBox.AppendText(CrLf & "Moving " & Quote & "boot.wim" & Quote & " from the Windows 11 installation media...")
+            LogBox.AppendText(CrLf & "[" & Now & "] " & "Moving " & Quote & "boot.wim" & Quote & " from the Windows 11 installation media...")
             File.Move(".\temp\sources\boot.wim", ".\boot.wim")
             LogBox.AppendText(" Done" & CrLf & "Creating the WIM file mount point folder...")
             Directory.CreateDirectory(".\wimmount")
             LogBox.AppendText(" Done" & CrLf & "Launching the REGTWEAK script...")
-            If AdvancedOptionsPanel.CheckBox1.Checked = True Then   ' Prepare boot.wim (and install.wim, if necessary) for surgery
-                If AdvancedOptionsPanel.CheckBox2.Checked = True Then
+            If UseBypassNRO = True Then   ' Prepare boot.wim (and install.wim, if necessary) for surgery
+                If UseSV2 = True Then
                     If Win11ESD = 1 Then
-                        LogBox.AppendText(CrLf & "WARNING: the program has detected ESD files on the Windows 11 image. Proceeding with normal options...")
+                        LogBox.AppendText(CrLf & "[" & Now & "] " & "WARNING: the program has detected ESD files on the Windows 11 image. Proceeding with normal options...")
                         WarnCount += 1
                         WarningText.AppendText(Now & " - The program attempted to run the REGTWEAK script with advanced options, but one of the source images contains ESD files. These cannot be mounted by DISM")
                         AdvancedOptionsPanel.CheckBox1.Checked = False
@@ -3707,7 +3883,7 @@ Public Class MainForm
                     End If
                 Else
                     If Win11ESD = 1 Then
-                        LogBox.AppendText(CrLf & "WARNING: the program has detected ESD files on the Windows 11 image. Proceeding with normal options...")
+                        LogBox.AppendText(CrLf & "[" & Now & "] " & "WARNING: the program has detected ESD files on the Windows 11 image. Proceeding with normal options...")
                         WarnCount += 1
                         WarningText.AppendText(Now & " - The program attempted to run the REGTWEAK script with advanced options, but one of the source images contains ESD files. These cannot be mounted by DISM")
                         AdvancedOptionsPanel.CheckBox1.Checked = False
@@ -3718,9 +3894,9 @@ Public Class MainForm
                     End If
                 End If
             Else
-                If AdvancedOptionsPanel.CheckBox2.Checked = True Then
+                If UseSV2 = True Then
                     If Win11ESD = 1 Then
-                        LogBox.AppendText(CrLf & "WARNING: the program has detected ESD files on the Windows 11 image. Proceeding with normal options...")
+                        LogBox.AppendText(CrLf & "[" & Now & "] " & "WARNING: the program has detected ESD files on the Windows 11 image. Proceeding with normal options...")
                         WarnCount += 1
                         WarningText.AppendText(Now & " - The program attempted to run the REGTWEAK script with advanced options, but one of the source images contains ESD files. These cannot be mounted by DISM")
                         AdvancedOptionsPanel.CheckBox2.Checked = False
@@ -3733,51 +3909,24 @@ Public Class MainForm
                     Process.Start(".\prog_bin\regtweak.bat").WaitForExit()
                 End If
             End If
-            LogBox.AppendText(CrLf & "Finished running the REGTWEAK script." & CrLf & "Moving " & Quote & "boot.wim" & Quote & " to the Windows 11 installer...")
+            LogBox.AppendText(CrLf & "[" & Now & "] " & "Finished running the REGTWEAK script." & CrLf & "Moving " & Quote & "boot.wim" & Quote & " to the Windows 11 installer...")
             File.Move(".\boot.wim", ".\temp\sources\boot.wim")      ' Move boot.wim after operations done
             LogBox.AppendText(" Done")
             InstallerProgressBar.Value = 50
         End If
-        LogBox.AppendText(CrLf & "Creating the installer using OSCDIMG...")
-        If RadioButton1.Checked = True Then
-            File.WriteAllText(".\temp.bat", OffEcho & CrLf & OSCDIMG_CSM, ASCII)
-            Process.Start(".\temp.bat").WaitForExit()
-        Else
-            If File.Exists(".\temp\boot\Efisys.bin") Then
-                File.WriteAllText(".\temp.bat", OffEcho & CrLf & OSCDIMG_UEFI, ASCII)
-            Else
-                LogBox.AppendText(CrLf & "WARNING: file: " & Quote & "\boot\Efisys.bin" & Quote & " is not present in the temporary installer. Using the fallback BIOS/UEFI-CSM method...")
-                WarnCount += 1
-                If WarningText.Text = "" Then
-                    WarningText.AppendText(Now & " - To make installers compatible with modern systems (UEFI), the program needs " & Quote & "\boot\Efisys.bin" & Quote & ", which it could not find")
-                Else
-                    WarningText.AppendText(CrLf & Now & " - To make installers compatible with modern systems (UEFI), the program needs " & Quote & "\boot\Efisys.bin" & Quote & ", which it could not find")
-                End If
-                File.WriteAllText(".\temp.bat", OffEcho & CrLf & OSCDIMG_CSM, ASCII)
-            End If
-            Process.Start(".\temp.bat").WaitForExit()
-        End If
-        LogBox.AppendText(" Done")
-        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
-            InstSTLabel.Text = "Finished creating the installer. Now deleting temporary files..."
-        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
-            InstSTLabel.Text = "Se finalizó la creación del instalador. Ahora se están eliminando los archivos temporales..."
-        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
-            InstSTLabel.Text = "A fini la création de l'installateur. Maintenant, supprimer les fichiers temporaires..."
-        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
-            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
-                InstSTLabel.Text = "Finished creating the installer. Now deleting temporary files..."
-            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
-                InstSTLabel.Text = "Se finalizó la creación del instalador. Ahora se están eliminando los archivos temporales..."
-            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
-                InstSTLabel.Text = "A fini la création de l'installateur. Maintenant, supprimer les fichiers temporaires..."
-            End If
-        End If
+    End Sub
+
+    Private Sub InstCreationBW_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles InstCreationBW.RunWorkerCompleted
+        OSCDIMGBW.RunWorkerAsync()
+    End Sub
+
+    Private Sub FileDeletionBW_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles FileDeletionBW.DoWork
+        DisableCancellation()
         InstallerProgressBar.Value = 75
         CheckPic4.Visible = True
         Label87.ForeColor = Color.DimGray
         Label87.Font = New Font("Segoe UI", 9.75)
-        LogBox.AppendText(CrLf & "Gathering file count...")
+        LogBox.AppendText(CrLf & "[" & Now & "] " & "Gathering file count...")
         If BackColor = Color.FromArgb(243, 243, 243) Then
             Label88.ForeColor = Color.Black
         ElseIf BackColor = Color.FromArgb(32, 32, 32) Then
@@ -3791,7 +3940,7 @@ Public Class MainForm
             DelFileCount += 1
             MessageCount += 1
             Try
-                LogBox.AppendText(CrLf & "Deleted file: " & DelFileCount & "/" & FileCount)
+                LogBox.AppendText(CrLf & "[" & Now & "] " & "Deleted file: " & DelFileCount & "/" & FileCount)
                 File.Delete(deletedFile)
             Catch PTLEx As PathTooLongException
                 EmergencyFileDeleteCount += 1
@@ -3804,7 +3953,7 @@ Public Class MainForm
                 File.WriteAllText(".\emergencydelete.bat", OffEcho & "del " & Quote & deletedFile & Quote & " /f /q", ASCII)
                 Process.Start(".\emergencydelete.bat").WaitForExit()
                 File.Delete(".\emergencydelete.bat")
-                LogBox.AppendText(CrLf & "Deleted file: " & DelFileCount & "/" & FileCount & ". Files that had to be deleted manually: " & EmergencyFileDeleteCount)
+                LogBox.AppendText(CrLf & "[" & Now & "] " & "Deleted file: " & DelFileCount & "/" & FileCount & ". Files that had to be deleted manually: " & EmergencyFileDeleteCount)
             Catch DNFDelEx As DirectoryNotFoundException
                 WarnCount += 1
                 If WarningText.Text = "" Then
@@ -3816,14 +3965,14 @@ Public Class MainForm
                 File.WriteAllText(".\emergencydelete.bat", OffEcho & "del " & Quote & deletedFile & Quote & " /f /q", ASCII)
                 Process.Start(".\emergencydelete.bat").WaitForExit()
                 File.Delete(".\emergencydelete.bat")
-                LogBox.AppendText(CrLf & "Deleted file: " & DelFileCount & "/" & FileCount & ". Files that had to be deleted manually: " & EmergencyFileDeleteCount)
+                LogBox.AppendText(CrLf & "[" & Now & "] " & "Deleted file: " & DelFileCount & "/" & FileCount & ". Files that had to be deleted manually: " & EmergencyFileDeleteCount)
             End Try
         Next
-        LogBox.AppendText(CrLf & "Temporary folder cleaned. Deleting it...")
+        LogBox.AppendText(CrLf & "[" & Now & "] " & "Temporary folder cleaned. Deleting it...")
         Try
             Directory.Delete(".\temp")
         Catch IOEx As IOException
-            LogBox.AppendText(CrLf & "Exception: 'IOException' caught at runtime, performing emergency method...")
+            LogBox.AppendText(CrLf & "[" & Now & "] " & "Exception: 'IOException' caught at runtime, performing emergency method...")
             WarnCount += 1
             If WarningText.Text = "" Then
                 WarningText.AppendText(Now & " - An exception ocurred while deleting the temporary directory. The program has attempted an alternative folder deletion method")
@@ -3835,7 +3984,7 @@ Public Class MainForm
         End Try
         LogBox.AppendText(" Done")
         If File.Exists(".\Win11.iso") And File.Exists(".\Win10.iso") Then
-            LogBox.AppendText(CrLf & "Deleting previously copied installers from the local disk...")
+            LogBox.AppendText(CrLf & "[" & Now & "] " & "Deleting previously copied installers from the local disk...")
             File.Delete(".\Win11.iso")
             LogBox.AppendText(" 1/2...")
             File.Delete(".\Win10.iso")
@@ -3844,9 +3993,14 @@ Public Class MainForm
         If Directory.Exists(".\wimmount") Then
             Directory.Delete(".\wimmount")
         End If
-        LogBox.AppendText(CrLf & "Deleting temporarily created scripts...")
+        LogBox.AppendText(CrLf & "[" & Now & "] " & "Deleting temporarily created scripts...")
         File.Delete(".\temp.bat")
         LogBox.AppendText(" Done")
+        WarnStr = WarningText.Text.ToString()
+    End Sub
+
+    Private Sub FileDeletionBW_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles FileDeletionBW.RunWorkerCompleted
+        EnableCancellation()
         InstallerProgressBar.Value = 100
         EnInstCreateTime = Now
         LogBox.AppendText(CrLf & "Finished creating the installer. Details:" & CrLf & "Began installer creation at: " & StInstCreateTime & CrLf & "Ended installer creation at: " & EnInstCreateTime & CrLf & "Message(s): " & MessageCount & ". Warning(s): " & WarnCount & ". Error(s): " & ErrorCount & ".")
@@ -3869,12 +4023,20 @@ Public Class MainForm
                         My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf, True)
                         My.Computer.FileSystem.WriteAllText(".\inst.log", LogBox.Text, True)
                         If WarningText.Text = "" Then
-                            My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: none", True)
+                            If WarnStr = "" Then
+                                My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: none", True)
+                            Else
+                                My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: " & CrLf & WarnStr, True)
+                            End If
                         Else
                             My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: " & CrLf & WarningText.Text, True)
                         End If
                         If ErrorText.Text = "" Then
-                            My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: none", True)
+                            If ErrStr = "" Then
+                                My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: none", True)
+                            Else
+                                My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: " & CrLf & ErrStr, True)
+                            End If
                         Else
                             My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: " & CrLf & ErrorText.Text, True)
                         End If
@@ -3886,12 +4048,20 @@ Public Class MainForm
                         My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf, True)
                         My.Computer.FileSystem.WriteAllText(".\inst.log", LogBox.Text, True)
                         If WarningText.Text = "" Then
-                            My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: none", True)
+                            If WarnStr = "" Then
+                                My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: none", True)
+                            Else
+                                My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: " & CrLf & WarnStr, True)
+                            End If
                         Else
                             My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: " & CrLf & WarningText.Text, True)
                         End If
                         If ErrorText.Text = "" Then
-                            My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: none", True)
+                            If ErrStr = "" Then
+                                My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: none", True)
+                            Else
+                                My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: " & CrLf & ErrStr, True)
+                            End If
                         Else
                             My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: " & CrLf & ErrorText.Text, True)
                         End If
@@ -3902,12 +4072,20 @@ Public Class MainForm
                     My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf, True)
                     My.Computer.FileSystem.WriteAllText(".\inst.log", LogBox.Text, True)
                     If WarningText.Text = "" Then
-                        My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: none", True)
+                        If WarnStr = "" Then
+                            My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: none", True)
+                        Else
+                            My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: " & CrLf & WarnStr, True)
+                        End If
                     Else
                         My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: " & CrLf & WarningText.Text, True)
                     End If
                     If ErrorText.Text = "" Then
-                        My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: none", True)
+                        If ErrStr = "" Then
+                            My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: none", True)
+                        Else
+                            My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: " & CrLf & ErrStr, True)
+                        End If
                     Else
                         My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: " & CrLf & ErrorText.Text, True)
                     End If
@@ -3925,12 +4103,20 @@ Public Class MainForm
                     My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf, True)
                     My.Computer.FileSystem.WriteAllText(".\inst.log", LogBox.Text, True)
                     If WarningText.Text = "" Then
-                        My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: none", True)
+                        If WarnStr = "" Then
+                            My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: none", True)
+                        Else
+                            My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: " & CrLf & WarnStr, True)
+                        End If
                     Else
                         My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: " & CrLf & WarningText.Text, True)
                     End If
                     If ErrorText.Text = "" Then
-                        My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: none", True)
+                        If ErrStr = "" Then
+                            My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: none", True)
+                        Else
+                            My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: " & CrLf & ErrStr, True)
+                        End If
                     Else
                         My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: " & CrLf & ErrorText.Text, True)
                     End If
@@ -3938,12 +4124,20 @@ Public Class MainForm
                     File.Delete(".\inst.log")
                     My.Computer.FileSystem.WriteAllText(".\inst.log", LogBox.Text, True)
                     If WarningText.Text = "" Then
-                        My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: none", True)
+                        If WarnStr = "" Then
+                            My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: none", True)
+                        Else
+                            My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: " & CrLf & WarnStr, True)
+                        End If
                     Else
                         My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: " & CrLf & WarningText.Text, True)
                     End If
                     If ErrorText.Text = "" Then
-                        My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: none", True)
+                        If ErrStr = "" Then
+                            My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: none", True)
+                        Else
+                            My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: " & CrLf & ErrStr, True)
+                        End If
                     Else
                         My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: " & CrLf & ErrorText.Text, True)
                     End If
@@ -3952,12 +4146,20 @@ Public Class MainForm
         Else
             My.Computer.FileSystem.WriteAllText(".\inst.log", LogBox.Text, True)
             If WarningText.Text = "" Then
-                My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: none", True)
+                If WarnStr = "" Then
+                    My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: none", True)
+                Else
+                    My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: " & CrLf & WarnStr, True)
+                End If
             Else
                 My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & "Warnings: " & CrLf & WarningText.Text, True)
             End If
             If ErrorText.Text = "" Then
-                My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: none", True)
+                If ErrStr = "" Then
+                    My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: none", True)
+                Else
+                    My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: " & CrLf & ErrStr, True)
+                End If
             Else
                 My.Computer.FileSystem.WriteAllText(".\inst.log", CrLf & CrLf & "Errors: " & CrLf & ErrorText.Text, True)
             End If
@@ -4091,9 +4293,60 @@ Public Class MainForm
                 InstHistPanel.InstallerEntryLabel.Text = "Entrées de l'historique de l'installateur : " & InstHistPanel.InstallerListView.Items.Count
             End If
         End If
+        If WarningText.Text = "" Then
+            WarningText.Text = WarnStr
+        End If
+        If ErrorText.Text = "" Then
+            ErrorText.Text = ErrStr
+        End If
         PictureBox5.Visible = False
         Label3.Visible = False
         LinkLabel2.Visible = False
+        EnableFunctionality()
+    End Sub
+
+    Private Sub OSCDIMGBW_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles OSCDIMGBW.DoWork
+        DisableCancellation()
+        LogBox.AppendText(CrLf & "[" & Now & "] " & "Creating the installer using OSCDIMG...")
+        If RadioButton1.Checked = True Then
+            File.WriteAllText(".\temp.bat", OffEcho & CrLf & OSCDIMG_CSM, ASCII)
+            Process.Start(".\temp.bat").WaitForExit()
+        Else
+            If File.Exists(".\temp\boot\Efisys.bin") Then
+                File.WriteAllText(".\temp.bat", OffEcho & CrLf & OSCDIMG_UEFI, ASCII)
+            Else
+                LogBox.AppendText(CrLf & "[" & Now & "] " & "WARNING: file: " & Quote & "\boot\Efisys.bin" & Quote & " is not present in the temporary installer. Using the fallback BIOS/UEFI-CSM method...")
+                WarnCount += 1
+                If WarningText.Text = "" Then
+                    WarningText.AppendText(Now & " - To make installers compatible with modern systems (UEFI), the program needs " & Quote & "\boot\Efisys.bin" & Quote & ", which it could not find")
+                Else
+                    WarningText.AppendText(CrLf & Now & " - To make installers compatible with modern systems (UEFI), the program needs " & Quote & "\boot\Efisys.bin" & Quote & ", which it could not find")
+                End If
+                File.WriteAllText(".\temp.bat", OffEcho & CrLf & OSCDIMG_CSM, ASCII)
+            End If
+            Process.Start(".\temp.bat").WaitForExit()
+        End If
+        LogBox.AppendText(" Done")
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+            InstSTLabel.Text = "Finished creating the installer. Now deleting temporary files..."
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+            InstSTLabel.Text = "Se finalizó la creación del instalador. Ahora se están eliminando los archivos temporales..."
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            InstSTLabel.Text = "A fini la création de l'installateur. Maintenant, supprimer les fichiers temporaires..."
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                InstSTLabel.Text = "Finished creating the installer. Now deleting temporary files..."
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                InstSTLabel.Text = "Se finalizó la creación del instalador. Ahora se están eliminando los archivos temporales..."
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                InstSTLabel.Text = "A fini la création de l'installateur. Maintenant, supprimer les fichiers temporaires..."
+            End If
+        End If
+    End Sub
+
+    Private Sub OSCDIMGBW_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles OSCDIMGBW.RunWorkerCompleted
+        EnableCancellation()
+        FileDeletionBW.RunWorkerAsync()
     End Sub
 
     Private Sub Label61_Click(sender As Object, e As EventArgs) Handles Label61.Click
@@ -4111,14 +4364,44 @@ Public Class MainForm
     End Sub
 
     Private Sub Button9_Click(sender As Object, e As EventArgs) Handles Button9.Click
-        If Button9.Text = "Hide log" Then
-            Button9.Text = "Show log"
+        If Button9.Text = "Hide log" Or Button9.Text = "Ocultar registro" Or Button9.Text = "Cacher le journal" Then
+            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+                Button9.Text = "Show log"
+            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+                Button9.Text = "Mostrar registro"
+            ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                Button9.Text = "Afficher le journal"
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+                If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                    Button9.Text = "Show log"
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                    Button9.Text = "Mostrar registro"
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                    Button9.Text = "Afficher le journal"
+                End If
+            End If
             GroupBox10.Visible = False
             Button9.Top = GroupBox10.Top + GroupBox10.Height
-        ElseIf Button9.Text = "Show log" Then
-            Button9.Text = "Hide log"
+            Button9.Anchor = CType((AnchorStyles.Bottom Or AnchorStyles.Right), AnchorStyles)
+        ElseIf Button9.Text = "Show log" Or Button9.Text = "Mostrar registro" Or Button9.Text = "Afficher le journal" Then
+            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+                Button9.Text = "Hide log"
+            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+                Button9.Text = "Mostrar registro"
+            ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                Button9.Text = "Cacher le journal"
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+                If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                    Button9.Text = "Hide log"
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                    Button9.Text = "Mostrar registro"
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                    Button9.Text = "Cacher le journal"
+                End If
+            End If
             GroupBox10.Visible = True
             Button9.Top = GroupBox10.Top - 4
+            Button9.Anchor = CType((AnchorStyles.Top Or AnchorStyles.Right), AnchorStyles)
         End If
     End Sub
 
@@ -4820,7 +5103,7 @@ Public Class MainForm
         If LabelText.Text = "Windows11" Then
             SetDefaultButton.Enabled = False
         Else
-            SetDefaultButton.Enabled = True
+            SetDefaultButton.Enabled = CheckBox2.Checked = False
         End If
     End Sub
 
@@ -5031,6 +5314,8 @@ Public Class MainForm
             LinkLabel11.Text = "Compruebe la rama Hummingbird"
             LinkLabel12.Text = "Hay algunas cosas que valen la pena revisar antes de continuar. Haga clic aquí para saber más."
             LinkLabel17.Text = "Más opciones..."
+            LinkLabel18.Text = "La mayoría de las opciones de funcionalidad no están disponibles en este momento. ¿Por qué?"
+            LinkLabel18.LinkArea = New LinkArea(82, 9)
             LogViewLink.Text = "Ver archivo de registro"
 
             ' GroupBoxes
@@ -5054,7 +5339,11 @@ Public Class MainForm
             Button5.Text = "Examinar..."
             Button6.Text = "Crear"
             Button8.Text = "Sí"
-            Button9.Text = "Ocultar registro"
+            If GroupBox10.Visible = True Then
+                Button9.Text = "Ocultar registro"
+            Else
+                Button9.Text = "Mostrar registro"
+            End If
             If InstCreateInt = 3 Then
                 Button10.Text = "Aceptar"
             Else
@@ -5070,6 +5359,7 @@ Public Class MainForm
 
             ' CheckBoxes
             CheckBox1.Text = "Mostrar notificación de bandeja del sistema una vez"
+            CheckBox2.Text = "Utilizar la etiqueta del instalador de Windows 11"
             CheckBox3.Text = "Al cerrarse, ocultar en la bandeja del sistema"
             CheckBox4.Text = "Cerrar programa después de hacer clic en Aceptar"
 
@@ -5356,6 +5646,8 @@ Public Class MainForm
             LinkLabel11.Text = "Check the Hummingbird branch"
             LinkLabel12.Text = "There are some things that are worth revising before continuing. Click here to learn more."
             LinkLabel17.Text = "More options..."
+            LinkLabel18.Text = "Most of the functionality settings are disabled right now. Why?"
+            LinkLabel18.LinkArea = New LinkArea(59, 4)
             LogViewLink.Text = "View log file"
 
             ' GroupBoxes
@@ -5379,7 +5671,11 @@ Public Class MainForm
             Button5.Text = "Browse..."
             Button6.Text = "Create"
             Button8.Text = "Yes"
-            Button9.Text = "Hide log"
+            If GroupBox10.Visible = True Then
+                Button9.Text = "Hide log"
+            Else
+                Button9.Text = "Show log"
+            End If
             If InstCreateInt = 3 Then
                 Button10.Text = "OK"
             Else
@@ -5394,6 +5690,7 @@ Public Class MainForm
 
             ' CheckBoxes
             CheckBox1.Text = "Show system tray notification once"
+            CheckBox2.Text = "Use the Windows 11 installer label"
             CheckBox3.Text = "When closing, hide in system tray"
             CheckBox4.Text = "Exit the program after I click OK"
 
@@ -5683,6 +5980,8 @@ Public Class MainForm
             LinkLabel11.Text = "Vérifiez la branche Hummingbird"
             LinkLabel12.Text = "Il y a certaines choses qui méritent d'être révisées avant de continuer. Cliquez ici pour en savoir plus."
             LinkLabel17.Text = "Options supplémentaires..."
+            LinkLabel18.Text = "La plupart des paramètres de fonctionnalité sont désactivés pour le moment. Pourquoi ?"
+            LinkLabel18.LinkArea = New LinkArea(76, 10)
             LogViewLink.Text = "Afficher le fichier journal"
 
             ' GroupBoxes
@@ -5706,7 +6005,11 @@ Public Class MainForm
             Button5.Text = "Parcourir..."
             Button6.Text = "Créer"
             Button8.Text = "Oui"
-            Button9.Text = "Cacher le journal"
+            If GroupBox10.Visible = True Then
+                Button9.Text = "Cacher le journal"
+            Else
+                Button9.Text = "Afficher le journal"
+            End If
             If InstCreateInt = 3 Then
                 Button10.Text = "OK"
             Else
@@ -5721,6 +6024,7 @@ Public Class MainForm
 
             ' CheckBoxes
             CheckBox1.Text = "Afficher une fois la notification de la barre d'état système"
+            CheckBox2.Text = "Utiliser l'étiquette d'installation de Windows 11"
             CheckBox3.Text = "À la fermeture, masquer dans la barre d'état système"
             CheckBox4.Text = "Quitter le programme après avoir cliqué sur OK"
 
@@ -6011,6 +6315,8 @@ Public Class MainForm
                 LinkLabel11.Text = "Compruebe la rama Hummingbird"
                 LinkLabel12.Text = "Hay algunas cosas que valen la pena revisar antes de continuar. Haga clic aquí para saber más."
                 LinkLabel17.Text = "Más opciones..."
+                LinkLabel18.Text = "La mayoría de las opciones de funcionalidad no están disponibles en este momento. ¿Por qué?"
+                LinkLabel18.LinkArea = New LinkArea(82, 9)
                 LogViewLink.Text = "Ver archivo de registro"
                 ' GroupBoxes
                 GroupBox1.Text = "Posición de navegación"
@@ -6033,7 +6339,11 @@ Public Class MainForm
                 Button5.Text = "Examinar..."
                 Button6.Text = "Crear"
                 Button8.Text = "Sí"
-                Button9.Text = "Ocultar registro"
+                If GroupBox10.Visible = True Then
+                    Button9.Text = "Ocultar registro"
+                Else
+                    Button9.Text = "Mostrar registro"
+                End If
                 If InstCreateInt = 3 Then
                     Button10.Text = "Aceptar"
                 Else
@@ -6048,6 +6358,7 @@ Public Class MainForm
 
                 ' CheckBoxes
                 CheckBox1.Text = "Mostrar notificación de bandeja del sistema una vez"
+                CheckBox2.Text = "Utilizar la etiqueta del instalador de Windows 11"
                 CheckBox3.Text = "Al cerrarse, ocultar en la bandeja del sistema"
                 CheckBox4.Text = "Cerrar programa después de hacer clic en Aceptar"
 
@@ -6330,6 +6641,8 @@ Public Class MainForm
                 LinkLabel11.Text = "Check the Hummingbird branch"
                 LinkLabel12.Text = "There are some things that are worth revising before continuing. Click here to learn more."
                 LinkLabel17.Text = "More options..."
+                LinkLabel18.Text = "Most of the functionality settings are disabled right now. Why?"
+                LinkLabel18.LinkArea = New LinkArea(59, 4)
                 LogViewLink.Text = "View log file"
 
                 ' GroupBoxes
@@ -6353,7 +6666,11 @@ Public Class MainForm
                 Button5.Text = "Browse..."
                 Button6.Text = "Create"
                 Button8.Text = "Yes"
-                Button9.Text = "Hide log"
+                If GroupBox10.Visible = True Then
+                    Button9.Text = "Hide log"
+                Else
+                    Button9.Text = "Show log"
+                End If
                 If InstCreateInt = 3 Then
                     Button10.Text = "OK"
                 Else
@@ -6368,6 +6685,7 @@ Public Class MainForm
 
                 ' CheckBoxes
                 CheckBox1.Text = "Show system tray notification once"
+                CheckBox2.Text = "Use the Windows 11 installer label"
                 CheckBox3.Text = "When closing, hide in system tray"
                 CheckBox4.Text = "Exit the program after I click OK"
 
@@ -6650,6 +6968,8 @@ Public Class MainForm
                 LinkLabel11.Text = "Vérifiez la branche Hummingbird"
                 LinkLabel12.Text = "Il y a certaines choses qui méritent d'être révisées avant de continuer. Cliquez ici pour en savoir plus."
                 LinkLabel17.Text = "Options supplémentaires..."
+                LinkLabel18.Text = "La plupart des paramètres de fonctionnalité sont désactivés pour le moment. Pourquoi ?"
+                LinkLabel18.LinkArea = New LinkArea(76, 10)
                 LogViewLink.Text = "Afficher le fichier journal"
 
                 ' GroupBoxes
@@ -6673,7 +6993,11 @@ Public Class MainForm
                 Button5.Text = "Parcourir..."
                 Button6.Text = "Créer"
                 Button8.Text = "Oui"
-                Button9.Text = "Cacher le journal"
+                If GroupBox10.Visible = True Then
+                    Button9.Text = "Cacher le journal"
+                Else
+                    Button9.Text = "Afficher le journal"
+                End If
                 If InstCreateInt = 3 Then
                     Button10.Text = "OK"
                 Else
@@ -6688,6 +7012,7 @@ Public Class MainForm
 
                 ' CheckBoxes
                 CheckBox1.Text = "Afficher une fois la notification de la barre d'état système"
+                CheckBox2.Text = "Utiliser l'étiquette d'installation de Windows 11"
                 CheckBox3.Text = "À la fermeture, masquer dans la barre d'état système"
                 CheckBox4.Text = "Quitter le programme après avoir cliqué sur OK"
 
@@ -8225,20 +8550,24 @@ Public Class MainForm
                 If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                     FileCopyPanel.Label1.Text = "File copy"
                     FileCopyPanel.Label2.Text = "To prevent file access errors while creating the custom installer, the source files will be copied to the local disk. These files will be deleted after the program has finished, to save disk space." & CrLf & "Do you want to do so?"
-                    FileCopyPanel.OK_Button.Text = "Yes"
+                    FileCopyPanel.OK_Button.Text = "Yes, copy source files"
+                    FileCopyPanel.Cancel_Button.Text = "No, skip file copy"
                 ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                     FileCopyPanel.Label1.Text = "Copia de archivos"
                     FileCopyPanel.Label2.Text = "Para prevenir errores de acceso de archivo al crear el instalador modificado, los archivos de origen serán copiados al disco local. Éstos archivos serán borrados después de que el programa haya terminado, para ahorrar espacio en el disco." & CrLf & "¿Desea hacer esto?"
-                    FileCopyPanel.OK_Button.Text = "Sí"
+                    FileCopyPanel.OK_Button.Text = "Sí, copiar archivos de origen"
+                    FileCopyPanel.Cancel_Button.Text = "No, omitir la copia de archivos"
                 ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         FileCopyPanel.Label1.Text = "File copy"
                         FileCopyPanel.Label2.Text = "To prevent file access errors while creating the custom installer, the source files will be copied to the local disk. These files will be deleted after the program has finished, to save disk space." & CrLf & "Do you want to do so?"
-                        FileCopyPanel.OK_Button.Text = "Yes"
+                        FileCopyPanel.OK_Button.Text = "Yes, copy source files"
+                        FileCopyPanel.Cancel_Button.Text = "No, skip file copy"
                     ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                         FileCopyPanel.Label1.Text = "Copia de archivos"
                         FileCopyPanel.Label2.Text = "Para prevenir errores de acceso de archivo al crear el instalador modificado, los archivos de origen serán copiados al disco local. Éstos archivos serán borrados después de que el programa haya terminado, para ahorrar espacio en el disco." & CrLf & "¿Desea hacer esto?"
-                        FileCopyPanel.OK_Button.Text = "Sí"
+                        FileCopyPanel.OK_Button.Text = "Sí, copiar archivos de origen"
+                        FileCopyPanel.Cancel_Button.Text = "No, omitir la copia de archivos"
                     End If
                 End If
             ElseIf InstCreateAbortPanel.Visible = True Then
@@ -8616,31 +8945,38 @@ Public Class MainForm
         End If
     End Sub
 
-    Private Sub x86_Pic_MouseHover(sender As Object, e As EventArgs) Handles x86_Pic.MouseHover
+    Private Sub x86_Pic_MouseHover(sender As Object, e As EventArgs) Handles x86_Pic.MouseHover, TopNavbar_x86_Pic.Click
         If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
-            MsgBox("The program has detected a 32-bit processor or a 32-bit operating system. The tool will still work, but the installer won't. You'll need a computer with a 64-bit processor to install Windows 11." & CrLf & "If it's the latter (you have a 32-bit OS on a 64-bit processor), you'll need to reinstall Windows.", vbOKOnly + vbInformation, "Incompatible installer architecture")
+            ConglomerateToolTip.SetToolTip(x86_Pic, "This system contains a 32-bit processor or operating system. Click here to learn more.")
         ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
-            MsgBox("El programa ha detectado un procesador o un sistema operativo de 32 bits. La herramienta todavía funcionará, pero el instalador no lo hará. Necesitará un ordenador con un procesador de 64 bits para instalar Windows 11." & CrLf & "Si es lo último (tiene un sistema operativo de 32 bits en un procesador de 64 bits), deberá reinstalar Windows.", vbOKOnly + vbInformation, "Arquitectura del instalador incompatible")
+            ConglomerateToolTip.SetToolTip(x86_Pic, "Este sistema contiene un procesador o sistema operativo de 32 bits. Haga clic aquí para saber más.")
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            ConglomerateToolTip.SetToolTip(x86_Pic, "Ce système contient un processeur ou un système d'exploitation 32 bits. Cliquez ici pour en savoir plus.")
         ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
-                MsgBox("The program has detected a 32-bit processor or a 32-bit operating system. The tool will still work, but the installer won't. You'll need a computer with a 64-bit processor to install Windows 11." & CrLf & "If it's the latter (you have a 32-bit OS on a 64-bit processor), you'll need to reinstall Windows.", vbOKOnly + vbInformation, "Incompatible installer architecture")
+                ConglomerateToolTip.SetToolTip(x86_Pic, "This system contains a 32-bit processor or operating system. Click here to learn more.")
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
-                MsgBox("El programa ha detectado un procesador o un sistema operativo de 32 bits. La herramienta todavía funcionará, pero el instalador no lo hará. Necesitará un ordenador con un procesador de 64 bits para instalar Windows 11." & CrLf & "Si es lo último (tiene un sistema operativo de 32 bits en un procesador de 64 bits), deberá reinstalar Windows.", vbOKOnly + vbInformation, "Arquitectura del instalador incompatible")
+                ConglomerateToolTip.SetToolTip(x86_Pic, "Este sistema contiene un procesador o sistema operativo de 32 bits. Haga clic aquí para saber más.")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                ConglomerateToolTip.SetToolTip(x86_Pic, "Ce système contient un processeur ou un système d'exploitation 32 bits. Cliquez ici pour en savoir plus.")
             End If
         End If
-        ConglomerateToolTip.SetToolTip(x86_Pic, "This system contains a 32-bit processor or operating system. Click here to learn more.")
     End Sub
 
-    Private Sub x86_Pic_Click(sender As Object, e As EventArgs) Handles x86_Pic.Click
+    Private Sub x86_Pic_Click(sender As Object, e As EventArgs) Handles x86_Pic.Click, TopNavbar_x86_Pic.Click
         If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             MsgBox("The program has detected a 32-bit processor or a 32-bit operating system. The tool will still work, but the installer won't. You'll need a computer with a 64-bit processor to install Windows 11." & CrLf & "If it's the latter (you have a 32-bit OS on a 64-bit processor), you'll need to reinstall Windows.", vbOKOnly + vbInformation, "Incompatible installer architecture")
         ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
             MsgBox("El programa ha detectado un procesador o un sistema operativo de 32 bits. La herramienta todavía funcionará, pero el instalador no lo hará. Necesitará un ordenador con un procesador de 64 bits para instalar Windows 11." & CrLf & "Si es lo último (tiene un sistema operativo de 32 bits en un procesador de 64 bits), deberá reinstalar Windows.", vbOKOnly + vbInformation, "Arquitectura del instalador incompatible")
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            MsgBox("Le programme a détecté un processeur 32 bits ou un système d'exploitation 32 bits. L'outil fonctionnera toujours, mais pas le programme d'installation. Vous aurez besoin d'un ordinateur doté d'un processeur 64 bits pour installer Windows 11." & CrLf & "Si c'est le cas (vous avez un système d'exploitation 32 bits sur un processeur 64 bits), vous devrez réinstaller Windows.", vbOKOnly + vbInformation, "Architecture de l'installateur incompatible")
         ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 MsgBox("The program has detected a 32-bit processor or a 32-bit operating system. The tool will still work, but the installer won't. You'll need a computer with a 64-bit processor to install Windows 11." & CrLf & "If it's the latter (you have a 32-bit OS on a 64-bit processor), you'll need to reinstall Windows.", vbOKOnly + vbInformation, "Incompatible installer architecture")
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 MsgBox("El programa ha detectado un procesador o un sistema operativo de 32 bits. La herramienta todavía funcionará, pero el instalador no lo hará. Necesitará un ordenador con un procesador de 64 bits para instalar Windows 11." & CrLf & "Si es lo último (tiene un sistema operativo de 32 bits en un procesador de 64 bits), deberá reinstalar Windows.", vbOKOnly + vbInformation, "Arquitectura del instalador incompatible")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                MsgBox("Le programme a détecté un processeur 32 bits ou un système d'exploitation 32 bits. L'outil fonctionnera toujours, mais pas le programme d'installation. Vous aurez besoin d'un ordinateur doté d'un processeur 64 bits pour installer Windows 11." & CrLf & "Si c'est le cas (vous avez un système d'exploitation 32 bits sur un processeur 64 bits), vous devrez réinstaller Windows.", vbOKOnly + vbInformation, "Architecture de l'installateur incompatible")
             End If
         End If
     End Sub
@@ -8654,6 +8990,41 @@ Public Class MainForm
     End Sub
 
     Private Sub LinkLabel18_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel18.LinkClicked
-        MsgBox("Most of the functionality settings are disabled because an installer is being created. If you changed them right now, unexpected things related to the installer creation, which may negatively affect the result, will occur. After installer creation, these settings will be enabled once again", vbOKOnly + vbInformation, "Functionality settings")
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+            MsgBox("Most of the functionality settings are disabled because an installer is being created. If you changed them right now, unexpected things related to the installer creation, which may negatively affect the result, will occur. After installer creation, these settings will be enabled once again", vbOKOnly + vbInformation, "Functionality settings")
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+            MsgBox("La mayoría de las opciones de funcionalidad no están disponibles porque un instalador está siendo creado. Si las hubiese cambiado, cosas inesperadas relacionadas con la creación del instalador, que pueden afectar negativamente al resultado, ocurrirán. Después de la creación del instalador, estas opciones se habilitarán de nuevo", vbOKOnly + vbInformation, "Opciones de funcionalidad")
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            MsgBox("La plupart des paramètres de fonctionnalité sont désactivés car un installateur est en cours de création. Si vous les modifiez maintenant, des événements inattendus liés à la création de l'installateur, qui peuvent affecter négativement le résultat, se produiront. Après la création de l'installateur, ces paramètres seront à nouveau activés.", vbOKOnly + vbInformation, "Paramètres de fonctionnalité")
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                MsgBox("La mayoría de las opciones de funcionalidad no están disponibles porque un instalador está siendo creado. Si las hubiese cambiado, cosas inesperadas relacionadas con la creación del instalador, que pueden afectar negativamente al resultado, ocurrirán. Después de la creación del instalador, estas opciones se habilitarán de nuevo", vbOKOnly + vbInformation, "Opciones de funcionalidad")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                MsgBox("Most of the functionality settings are disabled because an installer is being created. If you changed them right now, unexpected things related to the installer creation, which may negatively affect the result, will occur. After installer creation, these settings will be enabled once again", vbOKOnly + vbInformation, "Functionality settings")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                MsgBox("La plupart des paramètres de fonctionnalité sont désactivés car un installateur est en cours de création. Si vous les modifiez maintenant, des événements inattendus liés à la création de l'installateur, qui peuvent affecter négativement le résultat, se produiront. Après la création de l'installateur, ces paramètres seront à nouveau activés.", vbOKOnly + vbInformation, "Paramètres de fonctionnalité")
+            End If
+        End If
+    End Sub
+
+    Private Sub CheckBox2_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox2.CheckedChanged
+        If CheckBox2.Checked = False Then
+            If LabelText.Text = "Windows11" Then
+                SetDefaultButton.Enabled = False
+            Else
+                SetDefaultButton.Enabled = True
+            End If
+        Else
+            SetDefaultButton.Enabled = False
+            If File.Exists(TextBox1.Text) Then
+                DetectInstLabel()
+            End If
+        End If
+        LabelText.Enabled = CheckBox2.Checked = False
+        LabelSetButton.Enabled = CheckBox2.Checked = False
+    End Sub
+
+    Private Sub Label74_Click(sender As Object, e As EventArgs) Handles Label74.Click
+        Process.Start("https://mikeyeldey.itch.io/mikeyeldey95")
     End Sub
 End Class
