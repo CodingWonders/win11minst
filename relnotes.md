@@ -30,6 +30,32 @@ If updates are found:
 
 Congratulations, you have updated the program. If no updates are found, the program will continue startup.
 
+### 2.0.0100_220626
+---
+
+#### **Bugfixes**
+
+- Fixed a bug that caused the program to freeze while creating the custom installer
+
+    > This issue affected 1.0 versions, and all 2.0 versions prior to this one. However, it may take a longer time for the program to reach the 'Finish' page, and may also stop responding for a little bit. In that case, just wait 10-15 seconds.
+
+- Fixed a bug that showed the "Incompatible installer architecture" dialog while hovering the 'processor' icon
+
+
+#### **New features**
+
+- As a result of the first bugfix, the functionality settings will be disabled when an installer creation process is in place, until after completion
+- Improved French translations
+- The installer creation log now shows the date and time of each action
+- The installer label from the Windows 11 installer specified can now be reused by your custom installer
+- When creating the ISO file using OSCDIMG, or when deleting files, the ability to cancel will be disabled
+- The 'processor' icon, introduced in version `2.0.0100_220619`, is now visible when the navigation bar is placed on the top
+- Updated Help documentation, to make it more useful
+
+#### **Removed/stripped down features**
+
+There are no removed features from this release
+
 ### 2.0.0100_220619
 ---
 This version may not have many new features. As the date for the stable version of 2.0 is getting nearer, the following releases will focus more on bugfixes. Still, there are some new features you might find interesting
