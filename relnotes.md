@@ -45,10 +45,31 @@ Congratulations, you have updated the program. If no updates are found, the prog
 #### **New features**
 
 - As a result of the first bugfix, the functionality settings will be disabled when an installer creation process is in place, until after completion
+
+![win11minst_pdmZEaPmre](https://user-images.githubusercontent.com/101426328/175825358-06603216-5321-4314-8afb-7f08c720e9cc.png)
+![win11minst_7zrKP0OLGF](https://user-images.githubusercontent.com/101426328/175825383-ba84a3e5-0409-4a80-8d39-1a7f435c7e92.png)
+
 - Improved French translations
 - The installer creation log now shows the date and time of each action
+
+```
+[26/06/2022 16:03:03] Gathering instructions necessary to create the installer... Done
+[26/06/2022 16:03:07] Extracting the necessary contents from the ISO images using the WIMR method...
+[26/06/2022 16:05:42] Finished extracting files.
+[26/06/2022 16:05:42] Creating the custom installer using the WIMR method...
+[26/06/2022 16:05:42] Deleting "install.wim" from the Windows 10 installation media... Done
+[26/06/2022 16:05:42] Moving "install.wim" from the Windows 11 installation media to the Windows 10 installer... Done
+[26/06/2022 16:05:42] Creating the installer using OSCDIMG... Done
+```
+
 - The installer label from the Windows 11 installer specified can now be reused by your custom installer
+
+![win11minst_42LQo9acpB](https://user-images.githubusercontent.com/101426328/175825483-bbbf0a8d-1656-4944-b76e-7a4ffd1cfe25.png)
+
 - When creating the ISO file using OSCDIMG, or when deleting files, the ability to cancel will be disabled
+
+![win11minst_6mAo24YxU0](https://user-images.githubusercontent.com/101426328/175825495-e34d6fcf-3fba-444d-a72e-9accd08ae134.png)
+
 - The 'processor' icon, introduced in version `2.0.0100_220619`, is now visible when the navigation bar is placed on the top
 - Updated Help documentation, to make it more useful
 
