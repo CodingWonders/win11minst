@@ -271,11 +271,25 @@ Do you want to enjoy the latest features? Check the Hummingbird branch! Weekly u
         AwAAAABJRU5ErkJggg==
 </value>
   </data>
+  <data name="Label6.Text" xml:space="preserve">
+    <value>These steps will provide you with the knowledge to create a custom installer by yourself, or to bypass Windows 11's system requirements.
+
+These instructions will be as easy to follow as possible, although some concepts can be technical.</value>
+  </data>
+  <data name="Label122.Text" xml:space="preserve">
+    <value>Before doing anything to the ISO files, you'll need to prepare a working directory.
+
+1. Create a folder where you're going to store the ISO files. It can be named the way you want
+2. Move the previously downloaded ISO files to that folder
+3. Inside the working directory, create a temporary directory that will hold the extracted files. It's best to name it "temp"
+
+It should look like this:</value>
+  </data>
   <metadata name="Notify.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
+    <value>269, 17</value>
   </metadata>
   <metadata name="NotifyIconCMS.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>102, 17</value>
+    <value>354, 17</value>
   </metadata>
   <data name="Notify.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -288,19 +302,34 @@ Do you want to enjoy the latest features? Check the Hummingbird branch! Weekly u
 </value>
   </data>
   <metadata name="Win11FileSpecDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>236, 17</value>
+    <value>488, 17</value>
   </metadata>
   <metadata name="Win10FileSpecDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>402, 17</value>
+    <value>654, 17</value>
   </metadata>
   <metadata name="ImageFolderBrowser.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>568, 17</value>
+    <value>17, 56</value>
   </metadata>
   <metadata name="ConglomerateToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>893, 17</value>
+    <value>342, 56</value>
   </metadata>
   <metadata name="AdditionalToolsCMS.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>731, 17</value>
+    <value>180, 56</value>
+  </metadata>
+  <metadata name="FileCopyBW.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="ExtractionBW.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>512, 56</value>
+  </metadata>
+  <metadata name="InstCreationBW.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>636, 56</value>
+  </metadata>
+  <metadata name="OSCDIMGBW.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 95</value>
+  </metadata>
+  <metadata name="FileDeletionBW.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>134, 17</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>111</value>
