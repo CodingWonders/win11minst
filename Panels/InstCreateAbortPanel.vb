@@ -15,15 +15,19 @@ Public Class InstCreateAbortPanel
     End Sub
 
     Private Sub FileNotFoundPanel_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then
+        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Or MainForm.ComboBox4.SelectedItem = "Anglais" Then
             Label1.Text = "Cancel installer creation?"
             Label2.Text = "Are you sure you want to cancel the installer creation process? This will delete any file modifications done at this time."
             Yes_Button.Text = "Yes"
-        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Then
+        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Or MainForm.ComboBox4.SelectedItem = "Espagnol" Then
             Label1.Text = "¿Cancelar la creación del instalador?"
             Label2.Text = "¿Está seguro de que quiere cancelar el proceso de creación del instalador? Esto borrará todas las modificaciones de archivos realizados en este momento."
             Yes_Button.Text = "Sí"
-        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Then
+        ElseIf MainForm.ComboBox4.SelectedItem = "French" Or MainForm.ComboBox4.SelectedItem = "Francés" Or MainForm.ComboBox4.SelectedItem = "Français" Then
+            Label1.Text = "Annuler la création de l'installateur ?"
+            Label2.Text = "Êtes-vous sûr de vouloir annuler le processus de création de l'installateur ? Cela supprimera toute modification de fichier effectuée à ce moment-là."
+            Yes_Button.Text = "Oui"
+        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Or MainForm.ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 Label1.Text = "Cancel installer creation?"
                 Label2.Text = "Are you sure you want to cancel the installer creation process? This will delete any file modifications done at this time."
@@ -32,6 +36,10 @@ Public Class InstCreateAbortPanel
                 Label1.Text = "¿Cancelar la creación del instalador?"
                 Label2.Text = "¿Está seguro de que quiere cancelar el proceso de creación del instalador? Esto borrará todas las modificaciones de archivos realizados en este momento."
                 Yes_Button.Text = "Sí"
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                Label1.Text = "Annuler la création de l'installateur ?"
+                Label2.Text = "Êtes-vous sûr de vouloir annuler le processus de création de l'installateur ? Cela supprimera toute modification de fichier effectuée à ce moment-là."
+                Yes_Button.Text = "Oui"
             End If
         End If
         Text = Label1.Text

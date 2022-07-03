@@ -59,15 +59,19 @@ Public Class ISOFileScanPanel
                                 ListBox1.Items.Clear()
                                 For Each foundFile In My.Computer.FileSystem.GetFiles(ISOFolderScanner.SelectedPath, FileIO.SearchOption.SearchTopLevelOnly, "*.iso")
                                     FoundFileNum = FoundFileNum + 1
-                                    If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then
+                                    If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Or MainForm.ComboBox4.SelectedItem = "Anglais" Then
                                         CounterLabel.Text = "Files found so far: " & FoundFileNum
-                                    ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Then
+                                    ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Or MainForm.ComboBox4.SelectedItem = "Espagnol" Then
                                         CounterLabel.Text = "Archivos encontrados hasta ahora: " & FoundFileNum
-                                    ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Then
+                                    ElseIf MainForm.ComboBox4.SelectedItem = "French" Or MainForm.ComboBox4.SelectedItem = "Francés" Or MainForm.ComboBox4.SelectedItem = "Français" Then
+                                        CounterLabel.Text = "Fichiers trouvés jusqu'ici : " & FoundFileNum
+                                    ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Or MainForm.ComboBox4.SelectedItem = "Automatique" Then
                                         If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                                             CounterLabel.Text = "Files found so far: " & FoundFileNum
                                         ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                                             CounterLabel.Text = "Archivos encontrados hasta ahora: " & FoundFileNum
+                                        ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                                            CounterLabel.Text = "Fichiers trouvés jusqu'ici : " & FoundFileNum
                                         End If
                                     End If
                                     ListBox1.Items.Add(foundFile)
@@ -90,15 +94,19 @@ Public Class ISOFileScanPanel
                                 ListBox1.Items.Clear()
                                 For Each foundFile In My.Computer.FileSystem.GetFiles(ISOFolderScanner.SelectedPath, FileIO.SearchOption.SearchTopLevelOnly, "*.iso")
                                     FoundFileNum = FoundFileNum + 1
-                                    If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then
+                                    If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Or MainForm.ComboBox4.SelectedItem = "Anglais" Then
                                         CounterLabel.Text = "Files found so far: " & FoundFileNum
-                                    ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Then
+                                    ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Or MainForm.ComboBox4.SelectedItem = "Espagnol" Then
                                         CounterLabel.Text = "Archivos encontrados hasta ahora: " & FoundFileNum
-                                    ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Then
+                                    ElseIf MainForm.ComboBox4.SelectedItem = "French" Or MainForm.ComboBox4.SelectedItem = "Francés" Or MainForm.ComboBox4.SelectedItem = "Français" Then
+                                        CounterLabel.Text = "Fichiers trouvés jusqu'ici : " & FoundFileNum
+                                    ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Or MainForm.ComboBox4.SelectedItem = "Automatique" Then
                                         If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                                             CounterLabel.Text = "Files found so far: " & FoundFileNum
                                         ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                                             CounterLabel.Text = "Archivos encontrados hasta ahora: " & FoundFileNum
+                                        ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                                            CounterLabel.Text = "Fichiers trouvés jusqu'ici : " & FoundFileNum
                                         End If
                                     End If
                                     ListBox1.Items.Add(foundFile)
@@ -122,15 +130,19 @@ Public Class ISOFileScanPanel
                             ListBox1.Items.Clear()
                             For Each foundFile In My.Computer.FileSystem.GetFiles(ISOFolderScanner.SelectedPath, FileIO.SearchOption.SearchTopLevelOnly, "*.iso")
                                 FoundFileNum = FoundFileNum + 1
-                                If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then
+                                If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Or MainForm.ComboBox4.SelectedItem = "Anglais" Then
                                     CounterLabel.Text = "Files found so far: " & FoundFileNum
-                                ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Then
+                                ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Or MainForm.ComboBox4.SelectedItem = "Espagnol" Then
                                     CounterLabel.Text = "Archivos encontrados hasta ahora: " & FoundFileNum
-                                ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Then
+                                ElseIf MainForm.ComboBox4.SelectedItem = "French" Or MainForm.ComboBox4.SelectedItem = "Francés" Or MainForm.ComboBox4.SelectedItem = "Français" Then
+                                    CounterLabel.Text = "Fichiers trouvés jusqu'ici : " & FoundFileNum
+                                ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Or MainForm.ComboBox4.SelectedItem = "Automatique" Then
                                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                                         CounterLabel.Text = "Files found so far: " & FoundFileNum
                                     ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                                         CounterLabel.Text = "Archivos encontrados hasta ahora: " & FoundFileNum
+                                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                                        CounterLabel.Text = "Fichiers trouvés jusqu'ici : " & FoundFileNum
                                     End If
                                 End If
                                 ListBox1.Items.Add(foundFile)
@@ -140,15 +152,19 @@ Public Class ISOFileScanPanel
                         For Each foundFile In My.Computer.FileSystem.GetFiles(ISOFolderScanner.SelectedPath, FileIO.SearchOption.SearchAllSubDirectories, "*.iso")
                             If Not foundFile.Contains("System Volume Information") Then
                                 FoundFileNum = FoundFileNum + 1
-                                If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then
+                                If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Or MainForm.ComboBox4.SelectedItem = "Anglais" Then
                                     CounterLabel.Text = "Files found so far: " & FoundFileNum
-                                ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Then
+                                ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Or MainForm.ComboBox4.SelectedItem = "Espagnol" Then
                                     CounterLabel.Text = "Archivos encontrados hasta ahora: " & FoundFileNum
-                                ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Then
+                                ElseIf MainForm.ComboBox4.SelectedItem = "French" Or MainForm.ComboBox4.SelectedItem = "Francés" Or MainForm.ComboBox4.SelectedItem = "Français" Then
+                                    CounterLabel.Text = "Fichiers trouvés jusqu'ici : " & FoundFileNum
+                                ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Or MainForm.ComboBox4.SelectedItem = "Automatique" Then
                                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                                         CounterLabel.Text = "Files found so far: " & FoundFileNum
                                     ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                                         CounterLabel.Text = "Archivos encontrados hasta ahora: " & FoundFileNum
+                                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                                        CounterLabel.Text = "Fichiers trouvés jusqu'ici : " & FoundFileNum
                                     End If
                                 End If
                                 ListBox1.Items.Add(foundFile)
@@ -173,15 +189,19 @@ Public Class ISOFileScanPanel
                         ListBox1.Items.Clear()
                         For Each foundFile In My.Computer.FileSystem.GetFiles(ISOFolderScanner.SelectedPath, FileIO.SearchOption.SearchTopLevelOnly, "*.iso")
                             FoundFileNum = FoundFileNum + 1
-                            If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then
+                            If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Or MainForm.ComboBox4.SelectedItem = "Anglais" Then
                                 CounterLabel.Text = "Files found so far: " & FoundFileNum
-                            ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Then
+                            ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Or MainForm.ComboBox4.SelectedItem = "Espagnol" Then
                                 CounterLabel.Text = "Archivos encontrados hasta ahora: " & FoundFileNum
-                            ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Then
+                            ElseIf MainForm.ComboBox4.SelectedItem = "French" Or MainForm.ComboBox4.SelectedItem = "Francés" Or MainForm.ComboBox4.SelectedItem = "Français" Then
+                                CounterLabel.Text = "Fichiers trouvés jusqu'ici : " & FoundFileNum
+                            ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Or MainForm.ComboBox4.SelectedItem = "Automatique" Then
                                 If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                                     CounterLabel.Text = "Files found so far: " & FoundFileNum
                                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                                     CounterLabel.Text = "Archivos encontrados hasta ahora: " & FoundFileNum
+                                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                                    CounterLabel.Text = "Fichiers trouvés jusqu'ici : " & FoundFileNum
                                 End If
                             End If
                             ListBox1.Items.Add(foundFile)
@@ -192,15 +212,19 @@ Public Class ISOFileScanPanel
                 Try
                     For Each foundFile In My.Computer.FileSystem.GetFiles(ISOFolderScanner.SelectedPath, FileIO.SearchOption.SearchTopLevelOnly, "*.iso")
                         FoundFileNum = FoundFileNum + 1
-                        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then
+                        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Or MainForm.ComboBox4.SelectedItem = "Anglais" Then
                             CounterLabel.Text = "Files found so far: " & FoundFileNum
-                        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Then
+                        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Or MainForm.ComboBox4.SelectedItem = "Espagnol" Then
                             CounterLabel.Text = "Archivos encontrados hasta ahora: " & FoundFileNum
-                        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Then
+                        ElseIf MainForm.ComboBox4.SelectedItem = "French" Or MainForm.ComboBox4.SelectedItem = "Francés" Or MainForm.ComboBox4.SelectedItem = "Français" Then
+                            CounterLabel.Text = "Fichiers trouvés jusqu'ici : " & FoundFileNum
+                        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Or MainForm.ComboBox4.SelectedItem = "Automatique" Then
                             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                                 CounterLabel.Text = "Files found so far: " & FoundFileNum
                             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                                 CounterLabel.Text = "Archivos encontrados hasta ahora: " & FoundFileNum
+                            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                                CounterLabel.Text = "Fichiers trouvés jusqu'ici : " & FoundFileNum
                             End If
                         End If
                         ListBox1.Items.Add(foundFile)
@@ -228,15 +252,19 @@ Public Class ISOFileScanPanel
                     End If
                 End If
             Else
-                If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then
+                If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Or MainForm.ComboBox4.SelectedItem = "Anglais" Then
                     CounterLabel.Text = "Files found so far: " & FoundFileNum
-                ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Then
+                ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Or MainForm.ComboBox4.SelectedItem = "Espagnol" Then
                     CounterLabel.Text = "Archivos encontrados hasta ahora: " & FoundFileNum
-                ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Then
+                ElseIf MainForm.ComboBox4.SelectedItem = "French" Or MainForm.ComboBox4.SelectedItem = "Francés" Or MainForm.ComboBox4.SelectedItem = "Français" Then
+                    CounterLabel.Text = "Fichiers trouvés jusqu'ici : " & FoundFileNum
+                ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Or MainForm.ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         CounterLabel.Text = "Files found so far: " & FoundFileNum
                     ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                         CounterLabel.Text = "Archivos encontrados hasta ahora: " & FoundFileNum
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                        CounterLabel.Text = "Fichiers trouvés jusqu'ici : " & FoundFileNum
                     End If
                 End If
             End If
@@ -260,7 +288,7 @@ Public Class ISOFileScanPanel
 
     Private Sub ISOFileScanPanel_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Button1.FlatStyle = FlatStyle.System
-        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then
+        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Or MainForm.ComboBox4.SelectedItem = "Anglais" Then
             Label1.Text = "Scan for ISO images"
             Label2.Text = "Directory to scan:"
             TextBox1.Left = 150
@@ -268,15 +296,13 @@ Public Class ISOFileScanPanel
             Label3.Text = "Scanning directory for ISO files..."
             Label5.Text = "This is a"
             Label4.Visible = True
-            RadioButton1.Left = 504
-            RadioButton2.Left = 599
             CounterLabel.Text = "Files found so far: " & FoundFileNum
             CheckBox1.Text = "Search subdirectories for ISO images"
             Button1.Text = "Browse..."
             OK_Button.Text = "OK"
             Cancel_Button.Text = "Cancel"
             ISOFolderScanner.Description = "Please select a directory to scan for ISO files:"
-        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Then
+        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Or MainForm.ComboBox4.SelectedItem = "Espagnol" Then
             Label1.Text = "Escanear imágenes ISO"
             Label2.Text = "Directorio a escanear:"
             TextBox1.Left = 171
@@ -284,15 +310,27 @@ Public Class ISOFileScanPanel
             Label3.Text = "Escaneando directorio por archivos ISO..."
             Label5.Text = "Este es un instalador de"
             Label4.Visible = False
-            RadioButton1.Left = 586
-            RadioButton2.Left = 681
             CounterLabel.Text = "Archivos encontrados hasta ahora: " & FoundFileNum
             CheckBox1.Text = "Buscar en subdirectorios por archivos ISO"
             Button1.Text = "Examinar..."
             OK_Button.Text = "Aceptar"
             Cancel_Button.Text = "Cancelar"
             ISOFolderScanner.Description = "Por favor, elija un directorio para escanear archivos ISO:"
-        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Then
+        ElseIf MainForm.ComboBox4.SelectedItem = "French" Or MainForm.ComboBox4.SelectedItem = "Francés" Or MainForm.ComboBox4.SelectedItem = "Français" Then
+            Label1.Text = "Recherche des images ISO"
+            Label2.Text = "Répertoire à scanner :"
+            TextBox1.Left = 171
+            TextBox1.Width = 447
+            Label3.Text = "Recherche de fichiers ISO dans le répertoire..."
+            Label5.Text = "Il s'agit d'un installateur de"
+            Label4.Visible = False
+            CounterLabel.Text = "Fichiers trouvés jusqu'ici : " & FoundFileNum
+            CheckBox1.Text = "Recherche d'images ISO dans les sous-répertoires"
+            Button1.Text = "Parcourir..."
+            OK_Button.Text = "OK"
+            Cancel_Button.Text = "Annuler"
+            ISOFolderScanner.Description = "Veuillez sélectionner un répertoire pour rechercher les fichiers ISO :"
+        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Or MainForm.ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 Label1.Text = "Scan for ISO images"
                 Label2.Text = "Directory to scan:"
@@ -301,8 +339,6 @@ Public Class ISOFileScanPanel
                 Label3.Text = "Scanning directory for ISO files..."
                 Label5.Text = "This is a"
                 Label4.Visible = True
-                RadioButton1.Left = 504
-                RadioButton2.Left = 599
                 CounterLabel.Text = "Files found so far: " & FoundFileNum
                 CheckBox1.Text = "Search subdirectories for ISO images"
                 Button1.Text = "Browse..."
@@ -317,14 +353,26 @@ Public Class ISOFileScanPanel
                 Label3.Text = "Escaneando directorio por archivos ISO..."
                 Label5.Text = "Este es un instalador de"
                 Label4.Visible = False
-                RadioButton1.Left = 586
-                RadioButton2.Left = 681
                 CounterLabel.Text = "Archivos encontrados hasta ahora: " & FoundFileNum
                 CheckBox1.Text = "Buscar en subdirectorios por archivos ISO"
                 Button1.Text = "Examinar..."
                 OK_Button.Text = "Aceptar"
                 Cancel_Button.Text = "Cancelar"
                 ISOFolderScanner.Description = "Por favor, elija un directorio para escanear archivos ISO:"
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                Label1.Text = "Recherche des images ISO"
+                Label2.Text = "Répertoire à scanner :"
+                TextBox1.Left = 171
+                TextBox1.Width = 447
+                Label3.Text = "Recherche de fichiers ISO dans le répertoire..."
+                Label5.Text = "Il s'agit d'un installateur de"
+                Label4.Visible = False
+                CounterLabel.Text = "Fichiers trouvés jusqu'ici : " & FoundFileNum
+                CheckBox1.Text = "Recherche d'images ISO dans les sous-répertoires"
+                Button1.Text = "Parcourir..."
+                OK_Button.Text = "OK"
+                Cancel_Button.Text = "Annuler"
+                ISOFolderScanner.Description = "Veuillez sélectionner un répertoire pour rechercher les fichiers ISO :"
             End If
         End If
         Text = Label1.Text
@@ -362,7 +410,21 @@ Public Class ISOFileScanPanel
     End Sub
 
     Private Sub PictureBox1_MouseHover(sender As Object, e As EventArgs) Handles PictureBox1.MouseHover
-        RefreshToolTip.SetToolTip(PictureBox1, "Click here to reload the file search results.")
+        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Or MainForm.ComboBox4.SelectedItem = "Anglais" Then
+            RefreshToolTip.SetToolTip(PictureBox1, "Click here to reload the file search results")
+        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Or MainForm.ComboBox4.SelectedItem = "Espagnol" Then
+            RefreshToolTip.SetToolTip(PictureBox1, "Haga clic aquí para recargar los resultados de la búsqueda de archivos")
+        ElseIf MainForm.ComboBox4.SelectedItem = "French" Or MainForm.ComboBox4.SelectedItem = "Francés" Or MainForm.ComboBox4.SelectedItem = "Français" Then
+            RefreshToolTip.SetToolTip(PictureBox1, "Cliquez ici pour recharger les résultats de la recherche de fichiers")
+        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Or MainForm.ComboBox4.SelectedItem = "Automatique" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                RefreshToolTip.SetToolTip(PictureBox1, "Click here to reload the file search results")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                RefreshToolTip.SetToolTip(PictureBox1, "Haga clic aquí para recargar los resultados de la búsqueda de archivos")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                RefreshToolTip.SetToolTip(PictureBox1, "Cliquez ici pour recharger les résultats de la recherche de fichiers")
+            End If
+        End If
     End Sub
 
     Private Sub PictureBox1_Click(sender As Object, e As EventArgs) Handles PictureBox1.Click
@@ -469,6 +531,24 @@ Public Class ISOFileScanPanel
                                 ListBox1.Items.Add(foundFile)
                             Next
                         End If
+                    Else
+                        For Each foundFile In My.Computer.FileSystem.GetFiles(ISOFolderScanner.SelectedPath, FileIO.SearchOption.SearchAllSubDirectories, "*.iso")
+                            If Not foundFile.Contains("System Volume Information") Then
+                                FoundFileNum = FoundFileNum + 1
+                                If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then
+                                    CounterLabel.Text = "Files found so far: " & FoundFileNum
+                                ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Then
+                                    CounterLabel.Text = "Archivos encontrados hasta ahora: " & FoundFileNum
+                                ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Then
+                                    If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                                        CounterLabel.Text = "Files found so far: " & FoundFileNum
+                                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                                        CounterLabel.Text = "Archivos encontrados hasta ahora: " & FoundFileNum
+                                    End If
+                                End If
+                                ListBox1.Items.Add(foundFile)
+                            End If
+                        Next
                     End If
                 Catch ex As UnauthorizedAccessException
                     MsgBox("Oops. An exception occured whilst scanning for ISO images. The process will be repeated again, however, this time, searching for the specified directory, without considering subdirectories.", vbOKOnly + vbCritical, Text)

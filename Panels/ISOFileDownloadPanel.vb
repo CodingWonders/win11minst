@@ -22,16 +22,16 @@ Public Class ISOFileDownloadPanel
     End Sub
 
     Private Sub ISOFileDownloadPanel_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then
+        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Or MainForm.ComboBox4.SelectedItem = "Anglais" Then
             Label1.Text = "Download ISO files..."
             Label2.Text = "Download"
             Label4.Text = "Loading web component. Please wait..."
-            Label5.Text = "We couldn 't load the web component." & CrLf & CrLf & "This can be caused by an unavailable Internet connection, or by a fault on the website backend. Please try again." & CrLf & "If the problem persists, please try to download the files manually by searching for " & Quote & "download windows 11" & Quote & " or " & Quote & "download windows 10" & Quote & " on the Internet."
+            Label5.Text = "We couldn't load the web component." & CrLf & CrLf & "This can be caused by an unavailable Internet connection, or by a fault on the website backend. Please try again." & CrLf & "If the problem persists, please try to download the files manually by searching for " & Quote & "download windows 11" & Quote & " or " & Quote & "download windows 10" & Quote & " on the Internet."
             GroupBox1.Text = "Error status"
             Button1.Text = "Retry"
             OK_Button.Text = "OK"
             Cancel_Button.Text = "Cancel"
-        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Then
+        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Or MainForm.ComboBox4.SelectedItem = "Espagnol" Then
             Label1.Text = "Descargar archivos ISO..."
             Label2.Text = "Descargar"
             Label4.Text = "Cargando componente web. Por favor, espere..."
@@ -40,12 +40,21 @@ Public Class ISOFileDownloadPanel
             Button1.Text = "Reintentar"
             OK_Button.Text = "Aceptar"
             Cancel_Button.Text = "Cancelar"
-        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Then
+        ElseIf MainForm.ComboBox4.SelectedItem = "French" Or MainForm.ComboBox4.SelectedItem = "Francés" Or MainForm.ComboBox4.SelectedItem = "Français" Then
+            Label1.Text = "Télécharger les fichiers ISO..."
+            Label2.Text = "Télécharger"
+            Label4.Text = "Chargement du composant web. Veuillez patienter..."
+            Label5.Text = "Nous n'avons pas pu charger le composant web." & CrLf & CrLf & "Cela peut être dû à une connexion Internet indisponible ou à une défaillance du backend du site Web. Veuillez réessayer." & CrLf & "Si le problème persiste, essayez de télécharger les fichiers manuellement en recherchant " & Quote & "télécharger windows 11" & Quote & " ou " & Quote & "télécharger windows 10" & Quote & " sur Internet."
+            GroupBox1.Text = "État d'erreur"
+            Button1.Text = "Réesayer"
+            OK_Button.Text = "OK"
+            Cancel_Button.Text = "Annuler"
+        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Or MainForm.ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 Label1.Text = "Download ISO files..."
                 Label2.Text = "Download"
                 Label4.Text = "Loading web component. Please wait..."
-                Label5.Text = "We couldn 't load the web component." & CrLf & CrLf & "This can be caused by an unavailable Internet connection, or by a fault on the website backend. Please try again." & CrLf & "If the problem persists, please try to download the files manually by searching for " & Quote & "download windows 11" & Quote & " or " & Quote & "download windows 10" & Quote & " on the Internet."
+                Label5.Text = "We couldn't load the web component." & CrLf & CrLf & "This can be caused by an unavailable Internet connection, or by a fault on the website backend. Please try again." & CrLf & "If the problem persists, please try to download the files manually by searching for " & Quote & "download windows 11" & Quote & " or " & Quote & "download windows 10" & Quote & " on the Internet."
                 GroupBox1.Text = "Error status"
                 Button1.Text = "Retry"
                 OK_Button.Text = "OK"
@@ -59,6 +68,15 @@ Public Class ISOFileDownloadPanel
                 Button1.Text = "Reintentar"
                 OK_Button.Text = "Aceptar"
                 Cancel_Button.Text = "Cancelar"
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                Label1.Text = "Télécharger les fichiers ISO..."
+                Label2.Text = "Télécharger"
+                Label4.Text = "Chargement du composant web. Veuillez patienter..."
+                Label5.Text = "Nous n'avons pas pu charger le composant web." & CrLf & CrLf & "Cela peut être dû à une connexion Internet indisponible ou à une défaillance du backend du site Web. Veuillez réessayer." & CrLf & "Si le problème persiste, essayez de télécharger les fichiers manuellement en recherchant " & Quote & "télécharger windows 11" & Quote & " ou " & Quote & "télécharger windows 10" & Quote & " sur Internet."
+                GroupBox1.Text = "État d'erreur"
+                Button1.Text = "Réesayer"
+                OK_Button.Text = "OK"
+                Cancel_Button.Text = "Annuler"
             End If
         End If
         Text = Label1.Text

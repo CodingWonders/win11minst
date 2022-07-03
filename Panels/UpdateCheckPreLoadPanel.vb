@@ -24,11 +24,9 @@ Public Class UpdateCheckPreLoadPanel
     End Sub
 
     Private Sub UpdateCheckPreLoadPanel_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        If My.Computer.Info.OSFullName.Contains("Windows 7") Or My.Computer.Info.OSFullName.Contains("Windows 8") Or My.Computer.Info.OSFullName.Contains("Windows 10") Then
-            UpdateCancelButton.FlatStyle = FlatStyle.System
-            Button1.FlatStyle = FlatStyle.System
-            Button2.FlatStyle = FlatStyle.System
-        End If
+        UpdateCancelButton.FlatStyle = FlatStyle.System
+        Button1.FlatStyle = FlatStyle.System
+        Button2.FlatStyle = FlatStyle.System
         If MainForm.BackColor = Color.FromArgb(243, 243, 243) Then
             BackColor = Color.FromArgb(243, 243, 243)
             ForeColor = Color.Black
@@ -40,7 +38,7 @@ Public Class UpdateCheckPreLoadPanel
             GroupBox1.ForeColor = Color.White
             closeBox.Image = New Bitmap(My.Resources.closebox_dark)
         End If
-        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then
+        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Or MainForm.ComboBox4.SelectedItem = "Anglais" Then
             Text = "Passive Update Check System - Checking for updates..."
             Label1.Text = "Checking for updates..."
             Label2.Text = "Your version:"
@@ -50,7 +48,7 @@ Public Class UpdateCheckPreLoadPanel
             GroupBox1.Text = "Version information"
             Button1.Text = "Install later"
             Button2.Text = "Install now"
-        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Then
+        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Or MainForm.ComboBox4.SelectedItem = "Espagnol" Then
             Text = "Sistema de comprobación pasiva de actualizaciones - Comprobando actualizaciones..."
             Label1.Text = "Comprobando actualizaciones..."
             Label2.Text = "Su versión:"
@@ -60,7 +58,17 @@ Public Class UpdateCheckPreLoadPanel
             GroupBox1.Text = "Información de versiones"
             Button1.Text = "Instalar después"
             Button2.Text = "Instalar ahora"
-        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Then
+        ElseIf MainForm.ComboBox4.SelectedItem = "French" Or MainForm.ComboBox4.SelectedItem = "Francés" Or MainForm.ComboBox4.SelectedItem = "Français" Then
+            Text = "Système de vérification passive des mises à jour - Vérification des mises à jour..."
+            Label1.Text = "Vérification des mises à jour..."
+            Label2.Text = "Votre version :"
+            Label3.Text = "Version actualisée :"
+            Label4.Text = "Canal de version : hummingbird"
+            Label5.Text = "Actions :"
+            GroupBox1.Text = "Informations sur la version"
+            Button1.Text = "Installer plus tard"
+            Button2.Text = "Installer maintenant"
+        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Or MainForm.ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 Text = "Passive Update Check System - Checking for updates..."
                 Label1.Text = "Checking for updates..."
@@ -81,6 +89,16 @@ Public Class UpdateCheckPreLoadPanel
                 GroupBox1.Text = "Información de versiones"
                 Button1.Text = "Instalar después"
                 Button2.Text = "Instalar ahora"
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                Text = "Système de vérification passive des mises à jour - Vérification des mises à jour..."
+                Label1.Text = "Vérification des mises à jour..."
+                Label2.Text = "Votre version :"
+                Label3.Text = "Version actualisée :"
+                Label4.Text = "Canal de version : hummingbird"
+                Label5.Text = "Actions :"
+                GroupBox1.Text = "Informations sur la version"
+                Button1.Text = "Installer plus tard"
+                Button2.Text = "Installer maintenant"
             End If
         End If
         CenterToScreen()
@@ -114,19 +132,25 @@ Public Class UpdateCheckPreLoadPanel
                     CenterToScreen()
                     ProgressRingPic.Visible = False
                     Label1.Left = 12
-                    If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then
+                    If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Or MainForm.ComboBox4.SelectedItem = "Anglais" Then
                         Text = "Passive Update Check System - Updates available"
                         Label1.Text = "A new version is available. Do you want to install it now?"
-                    ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Then
+                    ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Or MainForm.ComboBox4.SelectedItem = "Espagnol" Then
                         Text = "Sistema de comprobación pasiva de actualizaciones - Actualizaciones disponibles"
                         Label1.Text = "Hay una nueva versión disponible. ¿Desea instalarla ahora?"
-                    ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Then
+                    ElseIf MainForm.ComboBox4.SelectedItem = "French" Or MainForm.ComboBox4.SelectedItem = "Francés" Or MainForm.ComboBox4.SelectedItem = "Français" Then
+                        Text = "Système de vérification passive des mises à jour - Mises à jour disponibles"
+                        Label1.Text = "Une nouvelle version est disponible. Voulez-vous l'installer maintenant ?"
+                    ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Or MainForm.ComboBox4.SelectedItem = "Automatique" Then
                         If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                             Text = "Passive Update Check System - Updates available"
                             Label1.Text = "A new version is available. Do you want to install it now?"
                         ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                             Text = "Sistema de comprobación pasiva de actualizaciones - Actualizaciones disponibles"
                             Label1.Text = "Hay una nueva versión disponible. ¿Desea instalarla ahora?"
+                        ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                            Text = "Système de vérification passive des mises à jour - Mises à jour disponibles"
+                            Label1.Text = "Une nouvelle version est disponible. Voulez-vous l'installer maintenant ?"
                         End If
                     End If
                     UpdateCancelButton.Visible = False
@@ -146,19 +170,25 @@ Public Class UpdateCheckPreLoadPanel
                             CenterToScreen()
                             ProgressRingPic.Visible = False
                             Label1.Left = 12
-                            If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then
+                            If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Or MainForm.ComboBox4.SelectedItem = "Anglais" Then
                                 Text = "Passive Update Check System - Updates available"
                                 Label1.Text = "A new version is available. Do you want to install it now?"
-                            ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Then
+                            ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Or MainForm.ComboBox4.SelectedItem = "Espagnol" Then
                                 Text = "Sistema de comprobación pasiva de actualizaciones - Actualizaciones disponibles"
                                 Label1.Text = "Hay una nueva versión disponible. ¿Desea instalarla ahora?"
-                            ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Then
+                            ElseIf MainForm.ComboBox4.SelectedItem = "French" Or MainForm.ComboBox4.SelectedItem = "Francés" Or MainForm.ComboBox4.SelectedItem = "Français" Then
+                                Text = "Système de vérification passive des mises à jour - Mises à jour disponibles"
+                                Label1.Text = "Une nouvelle version est disponible. Voulez-vous l'installer maintenant ?"
+                            ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Or MainForm.ComboBox4.SelectedItem = "Automatique" Then
                                 If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                                     Text = "Passive Update Check System - Updates available"
                                     Label1.Text = "A new version is available. Do you want to install it now?"
                                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                                     Text = "Sistema de comprobación pasiva de actualizaciones - Actualizaciones disponibles"
                                     Label1.Text = "Hay una nueva versión disponible. ¿Desea instalarla ahora?"
+                                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                                    Text = "Système de vérification passive des mises à jour - Mises à jour disponibles"
+                                    Label1.Text = "Une nouvelle version est disponible. Voulez-vous l'installer maintenant ?"
                                 End If
                             End If
                             UpdateCancelButton.Visible = False
@@ -185,15 +215,19 @@ Public Class UpdateCheckPreLoadPanel
             Try
                 Win11MinstDown.DownloadFile("https://github.com/CodingWonders/win11minst/blob/hummingbird/bin/Debug/win11minst.exe?raw=true", ".\win11minst_new.exe")
             Catch ex As Exception
-                If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then
+                If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Or MainForm.ComboBox4.SelectedItem = "Anglais" Then
                     MsgBox("We could not download the new version for you. You will have to do this manually. You can still use the current version.", vbOKOnly + vbCritical, "Update download failure")
-                ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Then
+                ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Or MainForm.ComboBox4.SelectedItem = "Espagnol" Then
                     MsgBox("No pudimos descargar la nueva versión por usted. Tendrá que hacer esto manualmente. Aun así, todavía puede utilizar la versión actual.", vbOKOnly + vbCritical, "Error de descarga de la actualización")
-                ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Then
+                ElseIf MainForm.ComboBox4.SelectedItem = "French" Or MainForm.ComboBox4.SelectedItem = "Francés" Or MainForm.ComboBox4.SelectedItem = "Français" Then
+                    MsgBox("Nous n'avons pas pu télécharger la nouvelle version pour vous. Vous devrez le faire manuellement. Vous pouvez toujours utiliser la version actuelle.", vbOKOnly + vbCritical, "Échec du téléchargement de la mise à jour")
+                ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Or MainForm.ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         MsgBox("We could not download the new version for you. You will have to do this manually. You can still use the current version.", vbOKOnly + vbCritical, "Update download failure")
                     ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                         MsgBox("No pudimos descargar la nueva versión por usted. Tendrá que hacer esto manualmente. Aun así, todavía puede utilizar la versión actual.", vbOKOnly + vbCritical, "Error de descarga de la actualización")
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                        MsgBox("Nous n'avons pas pu télécharger la nouvelle version pour vous. Vous devrez le faire manuellement. Vous pouvez toujours utiliser la version actuelle.", vbOKOnly + vbCritical, "Échec du téléchargement de la mise à jour")
                     End If
                 End If
                 If DialogResult.OK Then
@@ -201,44 +235,65 @@ Public Class UpdateCheckPreLoadPanel
                 End If
             End Try
         End Using
-        Using RefDown As New WebClient()
+        Using NewVerDown As New WebClient()
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
             Try
                 If File.Exists(".\new.zip") Then
                     File.Delete(".\new.zip")
                 End If
-                RefDown.DownloadFile("https://github.com/CodingWonders/win11minst/releases/download/" & VerTag & "/win11minst.zip", ".\new.zip")
+                NewVerDown.DownloadFile("https://github.com/CodingWonders/win11minst/releases/download/" & VerTag & "/win11minst.zip", ".\new.zip")
                 File.SetAttributes(".\new.zip", FileAttributes.Hidden)
-                Directory.CreateDirectory(".\ref")
-                File.WriteAllText(".\ex.bat", "@echo off" & CrLf & ".\prog_bin\7z e .\new.zip " & Quote & "*.dll" & Quote & " -o.\ref", ASCII)
+                Directory.CreateDirectory(".\new")
+                File.WriteAllText(".\ex.bat", "@echo off" & CrLf & ".\prog_bin\7z x .\new.zip -o.\new", ASCII)
                 Process.Start(".\ex.bat").WaitForExit()
                 File.Delete(".\ex.bat")
+                File.Delete(".\new.zip")
             Catch ex As Exception
 
             End Try
         End Using
-        My.Computer.FileSystem.WriteAllText(".\upd.bat", "@echo off" & CrLf & _
-                                                    "echo Updating the program. Please wait..." & CrLf & _
-                                                    "del .\version && del .\latest" & CrLf & _
-                                                    "move /y .\ref\*.dll ." & CrLf & _
-                                                    "move .\win11minst.exe .\win11minst_old_v" & My.Application.Info.Version.ToString() & ".exe" & CrLf & _
-                                                    "move .\win11minst_new.exe .\win11minst.exe" & CrLf & _
-                                                    "ping -n 3 127.0.0.1 > nul" & CrLf & _
-                                                    "rd .\ref" & CrLf & _
-                                                    "win11minst & del .\upd.bat & exit", False, ASCII)
-        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then
+        Using PUCSUpdate As New WebClient()
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
+            Try
+                PUCSUpdate.DownloadFile("https://github.com/CodingWonders/win11minst/blob/hummingbird/upd/PassiveUpdateCheckSys/Win11Minst/upd.exe?raw=true", ".\upd.exe")
+            Catch ex As Exception
+                If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Or MainForm.ComboBox4.SelectedItem = "Anglais" Then
+                    MsgBox("We could not download the new version for you. You will have to do this manually. You can still use the current version.", vbOKOnly + vbCritical, "Update download failure")
+                ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Or MainForm.ComboBox4.SelectedItem = "Espagnol" Then
+                    MsgBox("No pudimos descargar la nueva versión por usted. Tendrá que hacer esto manualmente. Aun así, todavía puede utilizar la versión actual.", vbOKOnly + vbCritical, "Error de descarga de la actualización")
+                ElseIf MainForm.ComboBox4.SelectedItem = "French" Or MainForm.ComboBox4.SelectedItem = "Francés" Or MainForm.ComboBox4.SelectedItem = "Français" Then
+                    MsgBox("Nous n'avons pas pu télécharger la nouvelle version pour vous. Vous devrez le faire manuellement. Vous pouvez toujours utiliser la version actuelle.", vbOKOnly + vbCritical, "Échec du téléchargement de la mise à jour")
+                ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Or MainForm.ComboBox4.SelectedItem = "Automatique" Then
+                    If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                        MsgBox("We could not download the new version for you. You will have to do this manually. You can still use the current version.", vbOKOnly + vbCritical, "Update download failure")
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                        MsgBox("No pudimos descargar la nueva versión por usted. Tendrá que hacer esto manualmente. Aun así, todavía puede utilizar la versión actual.", vbOKOnly + vbCritical, "Error de descarga de la actualización")
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                        MsgBox("Nous n'avons pas pu télécharger la nouvelle version pour vous. Vous devrez le faire manuellement. Vous pouvez toujours utiliser la version actuelle.", vbOKOnly + vbCritical, "Échec du téléchargement de la mise à jour")
+                    End If
+                End If
+                If DialogResult.OK Then
+                    Me.Close()
+                End If
+            End Try
+        End Using
+        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Or MainForm.ComboBox4.SelectedItem = "Anglais" Then
             MsgBox("The program update process will take place when you click " & Quote & "OK" & Quote & "." & CrLf & CrLf & "The program will exit, and the update will proceed." & CrLf & "If you do not like the up-to-date version, or if the update did not go successfully, a backup of the old version will be made.", vbOKOnly + vbInformation, "Beginning the update...")
-        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Then
+        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Or MainForm.ComboBox4.SelectedItem = "Espagnol" Then
             MsgBox("El proceso de actualización del programa ocurrirá cuando haga clic en " & Quote & "Aceptar" & Quote & "." & CrLf & CrLf & "El programa se cerrará, y la actualización comenzará." & CrLf & "Si no le gusta la versión actualizada, o si la actualización no fue como se esperaba, una copia de la versión antigua será realizada.", vbOKOnly + vbInformation, "Comenzando la actualización...")
-        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Then
+        ElseIf MainForm.ComboBox4.SelectedItem = "French" Or MainForm.ComboBox4.SelectedItem = "Francés" Or MainForm.ComboBox4.SelectedItem = "Français" Then
+            MsgBox("Le processus de mise à jour du programme aura lieu lorsque vous cliquerez sur " & Quote & "OK" & Quote & "." & CrLf & CrLf & "Le programme se fermera et la mise à jour se poursuivra." & CrLf & "Si la version actualisée ne vous convient pas, ou si la mise à jour ne s'est pas déroulée avec succès, une sauvegarde de l'ancienne version sera effectuée.", vbOKOnly + vbInformation, "Début de la mise à jour...")
+        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Or MainForm.ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 MsgBox("The program update process will take place when you click " & Quote & "OK" & Quote & "." & CrLf & CrLf & "The program will exit, and the update will proceed." & CrLf & "If you do not like the up-to-date version, or if the update did not go successfully, a backup of the old version will be made.", vbOKOnly + vbInformation, "Beginning the update...")
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 MsgBox("El proceso de actualización del programa ocurrirá cuando haga clic en " & Quote & "Aceptar" & Quote & "." & CrLf & CrLf & "El programa se cerrará, y la actualización comenzará." & CrLf & "Si no le gusta la versión actualizada, o si la actualización no fue como se esperaba, una copia de la versión antigua será realizada.", vbOKOnly + vbInformation, "Comenzando la actualización...")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                MsgBox("Le processus de mise à jour du programme aura lieu lorsque vous cliquerez sur " & Quote & "OK" & Quote & "." & CrLf & CrLf & "Le programme se fermera et la mise à jour se poursuivra." & CrLf & "Si la version actualisée ne vous convient pas, ou si la mise à jour ne s'est pas déroulée avec succès, une sauvegarde de l'ancienne version sera effectuée.", vbOKOnly + vbInformation, "Début de la mise à jour...")
             End If
         End If
         If DialogResult.OK Then
-            Process.Start(".\upd.bat")
+            Process.Start(".\upd.exe")
             End
         End If
     End Sub
@@ -285,15 +340,19 @@ Public Class UpdateCheckPreLoadPanel
     End Sub
 
     Private Sub closeBox_MouseHover(sender As Object, e As EventArgs) Handles closeBox.MouseHover
-        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then
+        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Or MainForm.ComboBox4.SelectedItem = "Anglais" Then
             closeToolTip.SetToolTip(closeBox, "Exit")
-        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Then
+        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Or MainForm.ComboBox4.SelectedItem = "Espagnol" Then
             closeToolTip.SetToolTip(closeBox, "Salir")
-        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Then
+        ElseIf MainForm.ComboBox4.SelectedItem = "French" Or MainForm.ComboBox4.SelectedItem = "Francés" Or MainForm.ComboBox4.SelectedItem = "Français" Then
+            closeToolTip.SetToolTip(closeBox, "Sortir")
+        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Or MainForm.ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 closeToolTip.SetToolTip(closeBox, "Exit")
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 closeToolTip.SetToolTip(closeBox, "Salir")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                closeToolTip.SetToolTip(closeBox, "Sortir")
             End If
         End If
     End Sub

@@ -29,7 +29,6 @@ Partial Class AdvancedOptionsPanel
         Me.Label1 = New System.Windows.Forms.Label()
         Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.Label3 = New System.Windows.Forms.Label()
         Me.CheckBox2 = New System.Windows.Forms.CheckBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
@@ -106,16 +105,6 @@ Partial Class AdvancedOptionsPanel
         Me.Label2.Text = "Bypasses Microsoft Account sign-in and forced Internet connection setup on Window" & _
     "s 11 Pro (Nickel builds 22557 onwards)"
         '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(54, 163)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(398, 20)
-        Me.Label3.TabIndex = 6
-        Me.Label3.Text = "Note: the program must be run with administrative privileges"
-        '
         'CheckBox2
         '
         Me.CheckBox2.AutoSize = True
@@ -168,7 +157,6 @@ Partial Class AdvancedOptionsPanel
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(720, 480)
         Me.Controls.Add(Me.LinkLabel1)
-        Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.Label2)
@@ -196,7 +184,6 @@ Partial Class AdvancedOptionsPanel
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents CheckBox1 As System.Windows.Forms.CheckBox
     Friend WithEvents Label2 As System.Windows.Forms.Label
-    Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents CheckBox2 As System.Windows.Forms.CheckBox
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents Label5 As System.Windows.Forms.Label

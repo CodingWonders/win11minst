@@ -126,13 +126,13 @@ Partial Class ISOFileDownloadPanel
         '
         'Label2
         '
-        Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Segoe UI", 11.25!)
-        Me.Label2.Location = New System.Drawing.Point(473, 31)
+        Me.Label2.Location = New System.Drawing.Point(370, 31)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(78, 20)
+        Me.Label2.Size = New System.Drawing.Size(181, 20)
         Me.Label2.TabIndex = 8
         Me.Label2.Text = "Download"
+        Me.Label2.TextAlign = System.Drawing.ContentAlignment.TopRight
         '
         'ModeSelectComboBox
         '

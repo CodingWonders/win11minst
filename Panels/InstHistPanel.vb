@@ -7,7 +7,7 @@ Public Class InstHistPanel
     Dim LVData As New DataTable("InstallerHistory")
 
     Private Sub InstHistPanel_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then
+        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Or MainForm.ComboBox4.SelectedItem = "Anglais" Then
             Label1.Text = "Installer history"
             InstallerEntryLabel.Text = "Installer history entries: " & InstallerListView.Items.Count
             ColumnHeader1.Text = "Installer name and path"
@@ -16,7 +16,7 @@ Public Class InstHistPanel
             XMLExportOptn.Text = "Export to XML file..."
             HTMLExportOptn.Text = "Export to HTML file..."
             ExportOptnBtn.Text = "Export options"
-        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Then
+        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Or MainForm.ComboBox4.SelectedItem = "Espagnol" Then
             Label1.Text = "Historial de instaladores"
             InstallerEntryLabel.Text = "Entradas en el historial de instaladores: " & InstallerListView.Items.Count
             ColumnHeader1.Text = "Nombre y ruta del instalador"
@@ -25,7 +25,16 @@ Public Class InstHistPanel
             XMLExportOptn.Text = "Exportar a archivo XML..."
             HTMLExportOptn.Text = "Exportar a archivo HTML..."
             ExportOptnBtn.Text = "Opciones de exportación"
-        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Then
+        ElseIf MainForm.ComboBox4.SelectedItem = "French" Or MainForm.ComboBox4.SelectedItem = "Francés" Or MainForm.ComboBox4.SelectedItem = "Français" Then
+            Label1.Text = "Historique de l'installateur"
+            InstallerEntryLabel.Text = "Entrées de l'historique de l'installateur : " & InstallerListView.Items.Count
+            ColumnHeader1.Text = "Nom et chemin de l'installateur"
+            ColumnHeader2.Text = "Date et heure de création"
+            OK_Button.Text = "OK"
+            XMLExportOptn.Text = "Exporter vers un fichier XML..."
+            HTMLExportOptn.Text = "Exporter vers un fichier HTML..."
+            ExportOptnBtn.Text = "Options d'exportation"
+        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Or MainForm.ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 Label1.Text = "Installer history"
                 InstallerEntryLabel.Text = "Installer history entries: " & InstallerListView.Items.Count
@@ -44,6 +53,15 @@ Public Class InstHistPanel
                 XMLExportOptn.Text = "Exportar a archivo XML..."
                 HTMLExportOptn.Text = "Exportar a archivo HTML..."
                 ExportOptnBtn.Text = "Opciones de exportación"
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                Label1.Text = "Historique de l'installateur"
+                InstallerEntryLabel.Text = "Entrées de l'historique de l'installateur : " & InstallerListView.Items.Count
+                ColumnHeader1.Text = "Nom et chemin de l'installateur"
+                ColumnHeader2.Text = "Date et heure de création"
+                OK_Button.Text = "OK"
+                XMLExportOptn.Text = "Exporter vers un fichier XML..."
+                HTMLExportOptn.Text = "Exporter vers un fichier HTML..."
+                ExportOptnBtn.Text = "Options d'exportation"
             End If
         End If
         Text = Label1.Text
@@ -71,15 +89,19 @@ Public Class InstHistPanel
             ExportOptnBtn.ForeColor = Color.White
         End If
         If InstallerListView.Items.Count = 0 Then
-            If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then
+            If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Or MainForm.ComboBox4.SelectedItem = "Anglais" Then
                 InstallerEntryLabel.Text = "Installer history entries: " & InstallerListView.Items.Count & ". No installer history data is available."
-            ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Then
+            ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Or MainForm.ComboBox4.SelectedItem = "Espagnol" Then
                 InstallerEntryLabel.Text = "Entradas en el historial de instaladores: " & InstallerListView.Items.Count & ". No hay datos disponibles sobre el historial de instaladores."
-            ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Then
+            ElseIf MainForm.ComboBox4.SelectedItem = "French" Or MainForm.ComboBox4.SelectedItem = "Francés" Or MainForm.ComboBox4.SelectedItem = "Français" Then
+                InstallerEntryLabel.Text = "Entrées de l'historique de l'installateur : " & InstallerListView.Items.Count & ". Aucune donnée sur l'historique de l'installateur n'est disponible."
+            ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Or MainForm.ComboBox4.SelectedItem = "Automatique" Then
                 If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                     InstallerEntryLabel.Text = "Installer history entries: " & InstallerListView.Items.Count & ". No installer history data is available."
                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                     InstallerEntryLabel.Text = "Entradas en el historial de instaladores: " & InstallerListView.Items.Count & ". No hay datos disponibles sobre el historial de instaladores."
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                    InstallerEntryLabel.Text = "Entrées de l'historique de l'installateur : " & InstallerListView.Items.Count & ". Aucune donnée sur l'historique de l'installateur n'est disponible."
                 End If
             End If
         End If

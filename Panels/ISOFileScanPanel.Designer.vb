@@ -178,12 +178,12 @@ Partial Class ISOFileScanPanel
         '
         'Label5
         '
-        Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(450, 362)
+        Me.Label5.Location = New System.Drawing.Point(327, 362)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(48, 15)
+        Me.Label5.Size = New System.Drawing.Size(171, 15)
         Me.Label5.TabIndex = 9
         Me.Label5.Text = "This is a"
+        Me.Label5.TextAlign = System.Drawing.ContentAlignment.TopRight
         '
         'RadioButton1
         '

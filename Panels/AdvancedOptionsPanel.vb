@@ -26,40 +26,45 @@ Public Class AdvancedOptionsPanel
     End Sub
 
     Private Sub AdvancedOptionsPanel_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ' This was a condition, but when I opened this solution in VS2022, IntelliCode suggested this.
-        ' It's more efficient, and it works!
         CheckBox1.Enabled = My.User.IsInRole(ApplicationServices.BuiltInRole.Administrator)
         CheckBox2.Enabled = My.User.IsInRole(ApplicationServices.BuiltInRole.Administrator)
-        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then
+        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Or MainForm.ComboBox4.SelectedItem = "Anglais" Then
             CheckBox1.Text = "Bypass Microsoft Account sign-in and forced Internet connection setup (22557+)"
             CheckBox2.Text = "Hide " & Quote & "System requirements not met" & Quote & " watermark (22557+)"
             Label1.Text = "Advanced options"
             Label2.Text = "Bypasses Microsoft Account sign-in and forced Internet connection setup on Windows 11 Pro (Nickel builds 22557 onwards)"
-            Label3.Text = "Note: the program must be run with administrative privileges"
-            Label4.Text = "Hides the " & Quote & "System requirements not met" & Quote & " watermark on Nickel builds 22557 onwards and Windows Server" & Quote & "Copper" & Quote & " builds 25057 onwards"
+            Label4.Text = "Hides the " & Quote & "System requirements not met" & Quote & " watermark on Nickel builds 22557 onwards and Copper builds 25115 onwards"
             Label5.Text = "Enabling this option is not recommended yet, as it doesn't work as intended."
             LinkLabel1.Text = "Read the full issue and a possible workaround"
             OK_Button.Text = "OK"
             Cancel_Button.Text = "Cancel"
-        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Then
+        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Or MainForm.ComboBox4.SelectedItem = "Espagnol" Then
             CheckBox1.Text = "Omitir inicio de sesión con la cuenta de Microsoft y configuración forzada de Internet (22557+)"
             CheckBox2.Text = "Ocultar la marca de agua " & Quote & "Requisitos de sistema no cumplidos" & Quote & " (22557+)"
             Label1.Text = "Opciones avanzadas"
             Label2.Text = "Omite el inicio de sesión con la cuenta de Microsoft y la configuración forzada de Internet en Windows 11 Pro (compilaciones de Nickel 22557 en adelante)"
-            Label3.Text = "Nota: el programa debe ejecutarse con privilegios administrativos"
-            Label4.Text = "Oculta la marca de agua " & Quote & "Requisitos de sistema no cumplidos" & Quote & " en compilaciones de Nickel 22557 en adelante y en compilaciones Windows Server " & Quote & "Copper" & Quote & " 25057 en adelante"
+            Label4.Text = "Oculta la marca de agua " & Quote & "Requisitos de sistema no cumplidos" & Quote & " en compilaciones de Nickel 22557 en adelante y Copper 25115 en adelante"
             Label5.Text = "Todavía no es recomendable habilitar esta opción, ya que no funciona como se esperaba."
             LinkLabel1.Text = "Lea la publicación completa y una posible solución"
             OK_Button.Text = "Aceptar"
             Cancel_Button.Text = "Cancelar"
-        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Then
+        ElseIf MainForm.ComboBox4.SelectedItem = "French" Or MainForm.ComboBox4.SelectedItem = "Francés" Or MainForm.ComboBox4.SelectedItem = "Français" Then
+            CheckBox1.Text = "Contourner l'ouverture de session du compte Microsoft et la configuration forcée de la connexion Internet (22557+)"
+            CheckBox2.Text = "Masquer le filigrane " & Quote & "Configuration requise non respectée" & Quote & " (22557+)"
+            Label1.Text = "Options avancées"
+            Label2.Text = "Contournement de l'ouverture de session du compte Microsoft et de la configuration forcée de la connexion Internet sur Windows 11 Pro (Nickel builds 22557 et suivants)"
+            Label4.Text = "Masque le filigrane " & Quote & "Configuration requise non respectée" & Quote & " sur les builds 22557 et suivantes de Nickel et 25115 et suivantes de Copper"
+            Label5.Text = "L'activation de cette option n'est pas encore recommandée, car elle ne fonctionne pas comme prévu."
+            LinkLabel1.Text = "Lisez l'intégralité du problème et une solution de contournement possible."
+            OK_Button.Text = "OK"
+            Cancel_Button.Text = "Annuler"
+        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Or MainForm.ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 CheckBox1.Text = "Bypass Microsoft Account sign-in and forced Internet connection setup (22557+)"
                 CheckBox2.Text = "Hide " & Quote & "System requirements not met" & Quote & " watermark (22557+)"
                 Label1.Text = "Advanced options"
                 Label2.Text = "Bypasses Microsoft Account sign-in and forced Internet connection setup on Windows 11 Pro (Nickel builds 22557 onwards)"
-                Label3.Text = "Note: the program must be run with administrative privileges"
-                Label4.Text = "Hides the " & Quote & "System requirements not met" & Quote & " watermark on Nickel builds 22557 onwards and Windows Server" & Quote & "Copper" & Quote & " builds 25057 onwards"
+                Label4.Text = "Hides the " & Quote & "System requirements not met" & Quote & " watermark on Nickel builds 22557 onwards and Copper builds 25115 onwards"
                 Label5.Text = "Enabling this option is not recommended yet, as it doesn't work as intended."
                 LinkLabel1.Text = "Read the full issue and a possible workaround"
                 OK_Button.Text = "OK"
@@ -69,12 +74,21 @@ Public Class AdvancedOptionsPanel
                 CheckBox2.Text = "Ocultar la marca de agua " & Quote & "Requisitos de sistema no cumplidos" & Quote & " (22557+)"
                 Label1.Text = "Opciones avanzadas"
                 Label2.Text = "Omite el inicio de sesión con la cuenta de Microsoft y la configuración forzada de Internet en Windows 11 Pro (compilaciones de Nickel 22557 en adelante)"
-                Label3.Text = "Nota: el programa debe ejecutarse con privilegios administrativos"
-                Label4.Text = "Oculta la marca de agua " & Quote & "Requisitos de sistema no cumplidos" & Quote & " en compilaciones de Nickel 22557 en adelante y en compilaciones Windows Server " & Quote & "Copper" & Quote & " 25057 en adelante"
+                Label4.Text = "Oculta la marca de agua " & Quote & "Requisitos de sistema no cumplidos" & Quote & " en compilaciones de Nickel 22557 en adelante y Copper 25115 en adelante"
                 Label5.Text = "Todavía no es recomendable habilitar esta opción, ya que no funciona como se esperaba."
                 LinkLabel1.Text = "Lea la publicación completa y una posible solución"
                 OK_Button.Text = "Aceptar"
                 Cancel_Button.Text = "Cancelar"
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                CheckBox1.Text = "Contourner l'ouverture de session du compte Microsoft et la configuration forcée de la connexion Internet (22557+)"
+                CheckBox2.Text = "Masquer le filigrane " & Quote & "Configuration requise non respectée" & Quote & " (22557+)"
+                Label1.Text = "Options avancées"
+                Label2.Text = "Contournement de l'ouverture de session du compte Microsoft et de la configuration forcée de la connexion Internet sur Windows 11 Pro (Nickel builds 22557 et suivants)"
+                Label4.Text = "Masque le filigrane " & Quote & "Configuration requise non respectée" & Quote & " sur les builds 22557 et suivantes de Nickel et 25115 et suivantes de Copper"
+                Label5.Text = "L'activation de cette option n'est pas encore recommandée, car elle ne fonctionne pas comme prévu."
+                LinkLabel1.Text = "Lisez l'intégralité du problème et une solution de contournement possible."
+                OK_Button.Text = "OK"
+                Cancel_Button.Text = "Annuler"
             End If
         End If
         Text = Label1.Text
