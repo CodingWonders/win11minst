@@ -38,6 +38,7 @@ Congratulations, you have updated the program. If no updates are found, the prog
 - Fixed a bug that caused the updater to stay open after the update process
 - Fixed a bug that would terminate (kill) the Windows 11 Manual Installer process after updating to a new version
 - Fixed a bug that would not find any files after checking the 'Search on subdirectories' option in the scan dialog
+- Fixed a bug that would incorrectly show `Path will contain quotes` when changing either the target installer name or location
 
 #### **New features**
 
@@ -57,6 +58,8 @@ Passive Update Check System (PUCS) version 0.5.0.0, for the Windows 11 Manual In
 ```
 
 - Began work on the Windows 11 Manual Installer PE, although no PE download functionality has been added to the main program yet
+
+- External panels now support French
 
 #### **Removed/stripped down features**
 
