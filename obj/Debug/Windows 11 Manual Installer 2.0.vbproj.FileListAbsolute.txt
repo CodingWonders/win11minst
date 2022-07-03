@@ -103,7 +103,6 @@ C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\obj\Debug\Windows_11_Manu
 C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\obj\Debug\Windows_11_Manual_Installer_2._0.LogMigratePanel.resources
 C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\obj\Debug\Windows_11_Manual_Installer_2._0.MissingComponentsDialog.resources
 C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\obj\Debug\Windows_11_Manual_Installer_2._0.MethodHelpPanel.resources
-C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\obj\Debug\Windows_11_Manual_Installer_2._0.PECreationPanel.resources
 C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\obj\Debug\Windows_11_Manual_Installer_2._0.PrefResetPanel.resources
 C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\obj\Debug\Windows_11_Manual_Installer_2._0.UpdateCheckPreLoadPanel.resources
 C:\Users\cpnie\Desktop\STORAGE\GitHub\repos\win11minst\obj\Debug\Windows_11_Manual_Installer_2._0.UpdateChoicePanel.resources
