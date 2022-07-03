@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Panels",
-    "\\prog_bin"
+    "\\upd",
+    "\\upd\\PassiveUpdateCheckSys"
   ],
+  "SelectedNode": "\\upd\\PassiveUpdateCheckSys\\Module1.vb",
   "PreviewInSolutionExplorer": false
 }

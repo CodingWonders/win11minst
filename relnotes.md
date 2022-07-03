@@ -30,6 +30,40 @@ If updates are found:
 
 Congratulations, you have updated the program. If no updates are found, the program will continue startup.
 
+### 2.0.0100_220703
+---
+
+#### **Bugfixes**
+
+- Fixed a bug that caused the updater to stay open after the update process
+- Fixed a bug that would terminate (kill) the Windows 11 Manual Installer process after updating to a new version
+- Fixed a bug that would not find any files after checking the 'Search on subdirectories' option in the scan dialog
+
+#### **New features**
+
+- The update system has been refined and fixes the two bugs mentioned above
+
+```
+Passive Update Check System (PUCS) version 0.5.0.0, for the Windows 11 Manual Installer
+
+  Beginning program update. Please wait...
+
+    Old version: 2.0.0100.2264
+    New version: 2.0.0100.2271
+
+  Updating the program...
+
+  The update process has completed. Launching the Windows 11 Manual Installer, version 2.0.0100.2271...
+```
+
+- Began work on the Windows 11 Manual Installer PE, although no PE download functionality has been added to the main program yet
+
+#### **Removed/stripped down features**
+
+There are no removed features from this release
+
+
+
 ### 2.0.0100_220626
 ---
 This is the first version that surpasses 5 MB in size, so the idea of putting it on a floppy disk is thrown out of a window (no pun intended)
