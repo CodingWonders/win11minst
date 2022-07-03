@@ -30,7 +30,6 @@ If updates are found:
 
 Congratulations, you have updated the program. If no updates are found, the program will continue startup.
 
-<<<<<<< HEAD
 ### 2.0.0100_220703
 ---
 
@@ -68,8 +67,6 @@ There are no removed features from this release
 
 
 
-=======
->>>>>>> parent of 91223a5 (PE creation panel)
 ### 2.0.0100_220626
 ---
 This is the first version that surpasses 5 MB in size, so the idea of putting it on a floppy disk is thrown out of a window (no pun intended)
