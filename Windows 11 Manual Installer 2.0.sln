@@ -5,38 +5,20 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Windows 11 Manual Installer
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "PassiveUpdateCheckSys", "upd\PassiveUpdateCheckSys\PassiveUpdateCheckSys.vbproj", "{59347EC2-CCD9-4496-A1F5-A6704A4645F5}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "win11minst-pe", "pe\win11minst-pe\win11minst-pe.vbproj", "{8C189BE5-7B69-4EC4-A8F2-966B4390D5DB}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
-		Debug|x64 = Debug|x64
 		Release|Any CPU = Release|Any CPU
-		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{401F6B7C-D704-433F-9C02-AA4D89E983CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{401F6B7C-D704-433F-9C02-AA4D89E983CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{401F6B7C-D704-433F-9C02-AA4D89E983CE}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{401F6B7C-D704-433F-9C02-AA4D89E983CE}.Debug|x64.Build.0 = Debug|Any CPU
 		{401F6B7C-D704-433F-9C02-AA4D89E983CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{401F6B7C-D704-433F-9C02-AA4D89E983CE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{401F6B7C-D704-433F-9C02-AA4D89E983CE}.Release|x64.ActiveCfg = Release|Any CPU
-		{59347EC2-CCD9-4496-A1F5-A6704A4645F5}.Debug|Any CPU.ActiveCfg = Win11Minst|Any CPU
-		{59347EC2-CCD9-4496-A1F5-A6704A4645F5}.Debug|Any CPU.Build.0 = Win11Minst|Any CPU
-		{59347EC2-CCD9-4496-A1F5-A6704A4645F5}.Debug|x64.ActiveCfg = Win11Minst|Any CPU
-		{59347EC2-CCD9-4496-A1F5-A6704A4645F5}.Debug|x64.Build.0 = Win11Minst|Any CPU
+		{59347EC2-CCD9-4496-A1F5-A6704A4645F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59347EC2-CCD9-4496-A1F5-A6704A4645F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59347EC2-CCD9-4496-A1F5-A6704A4645F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59347EC2-CCD9-4496-A1F5-A6704A4645F5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{59347EC2-CCD9-4496-A1F5-A6704A4645F5}.Release|x64.ActiveCfg = Release|Any CPU
-		{8C189BE5-7B69-4EC4-A8F2-966B4390D5DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8C189BE5-7B69-4EC4-A8F2-966B4390D5DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8C189BE5-7B69-4EC4-A8F2-966B4390D5DB}.Debug|x64.ActiveCfg = Debug|x64
-		{8C189BE5-7B69-4EC4-A8F2-966B4390D5DB}.Debug|x64.Build.0 = Debug|x64
-		{8C189BE5-7B69-4EC4-A8F2-966B4390D5DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8C189BE5-7B69-4EC4-A8F2-966B4390D5DB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8C189BE5-7B69-4EC4-A8F2-966B4390D5DB}.Release|x64.ActiveCfg = Release|x64
-		{8C189BE5-7B69-4EC4-A8F2-966B4390D5DB}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

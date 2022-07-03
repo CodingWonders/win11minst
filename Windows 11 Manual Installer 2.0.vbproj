@@ -72,8 +72,7 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>
-    </AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>win11minst.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System">
@@ -247,12 +246,6 @@
     <Compile Include="Panels\MethodHelpPanel.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Panels\PECreationPanel.Designer.vb">
-      <DependentUpon>PECreationPanel.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Panels\PECreationPanel.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Panels\PrefResetPanel.Designer.vb">
       <DependentUpon>PrefResetPanel.vb</DependentUpon>
     </Compile>
@@ -373,9 +366,6 @@
     <EmbeddedResource Include="Panels\MethodHelpPanel.resx">
       <DependentUpon>MethodHelpPanel.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Panels\PECreationPanel.resx">
-      <DependentUpon>PECreationPanel.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Panels\PrefResetPanel.resx">
       <DependentUpon>PrefResetPanel.vb</DependentUpon>
     </EmbeddedResource>
@@ -429,6 +419,7 @@
     <None Include="Win11Inst.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="win11minst.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon3.ico" />
