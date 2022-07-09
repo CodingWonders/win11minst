@@ -12,9 +12,9 @@ Imports System.Threading
 Public Class MainForm
     Private isMouseDown As Boolean = False
     Private mouseOffset As Point
-    Dim VerStr As String = "2.0.0100_220626"    ' Reported version
+    Dim VerStr As String = "2.0.0100_220703"    ' Reported version. Change this when 'latest' has been committed and published to the repository, to avoid update confusion
     Dim AVerStr As String = My.Application.Info.Version.ToString()     ' Assembly version
-    Dim VDescStr As String = Quote & "Modern, fresh, clean, beautiful." & Quote & " - Panos Panay, 2021/06/24. Can we get Windows 11 on a Genesis? At least we have Windows 95 on it."
+    Dim VDescStr As String = "If you want to install Windows 11 on unsupported systems, there's an app for that"
     Dim OffEcho As String = "@echo off"
     Dim wmiget As String
     Dim StDebugTime As Date = Now
@@ -79,6 +79,21 @@ Public Class MainForm
     Public UseBypassNRO As Boolean
     Public UseSV2 As Boolean
     Dim Win11InstLabel As String
+    Dim IsPureEnglish As Boolean
+    Dim drInfo As DriveInfo
+    Public drLetter As String
+    Dim GBSpace As Double
+    Public GBStr As String = Math.Round(GBSpace, 2)
+    Dim Win11_File As FileInfo
+    Dim Win11_FileSize As Double
+    Public Win11_GBSize As String
+    Dim Win10_File As FileInfo
+    Dim Win10_FileSize As Double
+    Public Win10_GBSize As String
+    Dim TotalISO_GBSize As Double
+    Public TotalISO_Str As String
+    Dim HTMLname As String
+    Dim HTMLInstrName As String
 
     ' Left mouse button pressed
     Private Sub titlePanel_MouseDown(sender As Object, e As MouseEventArgs) Handles titlePanel.MouseDown, TitleBar.MouseDown
@@ -607,15 +622,6 @@ Public Class MainForm
         File.WriteAllText(".\settings.ini", SettingLoadForm.TextBox2.Text, ASCII)
     End Sub
 
-    Sub KillCmdWnd()    ' After updating to a newer version, a CMD window will still be open. This solves it
-        File.WriteAllText(".\kill.bat", "@echo off" & CrLf & "taskkill /f /im cmd.exe /t", ASCII)
-        Dim KillCmd As New ProcessStartInfo()
-        KillCmd.WorkingDirectory = Directory.GetCurrentDirectory()
-        KillCmd.CreateNoWindow = True
-        KillCmd.FileName = ".\kill.bat"
-        Dim KillCmdProc As Process = Process.Start(KillCmd)
-    End Sub
-
     Public Sub DetectCompVersion()
         SevenZipVer = FileVersionInfo.GetVersionInfo(".\prog_bin\7z.exe")
         SevenZipStr = SevenZipVer.FileVersion
@@ -636,9 +642,15 @@ Public Class MainForm
         End If
     End Sub
 
+    Sub DeleteUpdateInstaller()
+        File.Delete(".\upd.exe")
+    End Sub
+
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Control.CheckForIllegalCrossThreadCalls = False
-        KillCmdWnd()
+        If File.Exists(".\upd.exe") Then
+            DeleteUpdateInstaller()
+        End If
         VersionToolStripMenuItem.Text = "version " & VerStr & " (assembly version " & AVerStr & ")"
         Label72.Text = "version " & VerStr & " (assembly version " & AVerStr & ")"
         Label74.Visible = True
@@ -731,11 +743,8 @@ Public Class MainForm
             End If
         End If
         Notify.Visible = True
-        Dim HTMLname As String = "HelpPage.html"
-        With WebBrowser1
-            .ScriptErrorsSuppressed = True
-            .Url = New Uri(String.Format("file:///{0}{1}{2}/", Directory.GetCurrentDirectory(), "/Resources/HTMLHelp/", HTMLname))
-        End With
+        HTMLname = "HelpPage.html"
+        WebBrowser1.ScriptErrorsSuppressed = True
         NameLabel.Text = "Name: " & TextBox3.Text
         Label28.Text = "DPI scale to be applied: " & TrackBar1.Value & "%"
         InstCreateInt = 0
@@ -1237,6 +1246,26 @@ Public Class MainForm
                 WelcomePic.Image = New Bitmap(My.Resources.home_dark_filled)
                 InstCreatePic.Image = New Bitmap(My.Resources.inst_create_dark)
             End If
+        ElseIf HelpPanel.Visible = True Then
+            WelcomePanel.Visible = True
+            HelpPanel.Visible = False
+            If BackColor = Color.FromArgb(243, 243, 243) Then
+                WelcomePic.Image = New Bitmap(My.Resources.home_filled)
+                HelpPic.Image = New Bitmap(My.Resources.help)
+            ElseIf BackColor = Color.FromArgb(32, 32, 32) Then
+                WelcomePic.Image = New Bitmap(My.Resources.home_dark_filled)
+                HelpPic.Image = New Bitmap(My.Resources.help_dark)
+            End If
+        ElseIf InstrPanel.Visible = True Then
+            WelcomePanel.Visible = True
+            InstrPanel.Visible = False
+            If BackColor = Color.FromArgb(243, 243, 243) Then
+                WelcomePic.Image = New Bitmap(My.Resources.home_filled)
+                InstructionPic.Image = New Bitmap(My.Resources.instructions)
+            ElseIf BackColor = Color.FromArgb(32, 32, 32) Then
+                WelcomePic.Image = New Bitmap(My.Resources.home_dark_filled)
+                InstructionPic.Image = New Bitmap(My.Resources.instructions_dark)
+            End If
         End If
         WelcomeTopBarPic.Visible = True
         InstCreateTopBarPic.Visible = False
@@ -1396,6 +1425,7 @@ Public Class MainForm
             ProgressPanel.BackColor = Color.FromArgb(39, 39, 39)
             SettingPanel.BackColor = Color.FromArgb(39, 39, 39)
             WelcomePanel.BackColor = Color.FromArgb(39, 39, 39)
+            InstrPanel.BackColor = Color.FromArgb(39, 39, 39)
             ForeColor = Color.White
             Panel_Border_Pic.Image = New Bitmap(My.Resources.panel_corner_black)
             x86_Pic.Image = New Bitmap(My.Resources.x86_dark)
@@ -1556,6 +1586,10 @@ Public Class MainForm
             If Not Label88.ForeColor = Color.DimGray Then
                 Label88.ForeColor = ForeColor
             End If
+            HTMLname = "HelpPage_DM.html"
+            WebBrowser1.Url = New Uri(String.Format("file:///{0}{1}{2}", Directory.GetCurrentDirectory(), "/Resources/HTMLHelp/", HTMLname))
+            HTMLInstrName = "InstrPage_DM.html"
+            WebBrowser2.Url = New Uri(String.Format("file:///{0}{1}{2}", Directory.GetCurrentDirectory(), "/Resources/HTMLHelp/", HTMLInstrName))
         ElseIf ComboBox1.SelectedItem = "Light" Or ComboBox1.SelectedItem = "Claro" Or ComboBox1.SelectedItem = "Lumière" Then
             ColorInt = 2
             If RadioButton3.Checked = True Then
@@ -1575,6 +1609,7 @@ Public Class MainForm
             ProgressPanel.BackColor = Color.FromArgb(249, 249, 249)
             SettingPanel.BackColor = Color.FromArgb(249, 249, 249)
             WelcomePanel.BackColor = Color.FromArgb(249, 249, 249)
+            InstrPanel.BackColor = Color.FromArgb(249, 249, 249)
             ForeColor = Color.Black
             Panel_Border_Pic.Image = New Bitmap(My.Resources.panel_corner_white)
             x86_Pic.Image = New Bitmap(My.Resources.x86_light)
@@ -1725,6 +1760,10 @@ Public Class MainForm
             If Not Label88.ForeColor = Color.DimGray Then
                 Label88.ForeColor = ForeColor
             End If
+            HTMLname = "HelpPage.html"
+            WebBrowser1.Url = New Uri(String.Format("file:///{0}{1}{2}", Directory.GetCurrentDirectory(), "/Resources/HTMLHelp/", HTMLname))
+            HTMLInstrName = "InstrPage.html"
+            WebBrowser2.Url = New Uri(String.Format("file:///{0}{1}{2}", Directory.GetCurrentDirectory(), "/Resources/HTMLHelp/", HTMLInstrName))
         ElseIf ComboBox1.SelectedItem = "Automatic" Or ComboBox1.SelectedItem = "Automático" Or ComboBox1.SelectedItem = "Automatique" Then
             ColorInt = 0
             Try
@@ -1765,6 +1804,7 @@ Public Class MainForm
                         ProgressPanel.BackColor = Color.FromArgb(39, 39, 39)
                         SettingPanel.BackColor = Color.FromArgb(39, 39, 39)
                         WelcomePanel.BackColor = Color.FromArgb(39, 39, 39)
+                        InstrPanel.BackColor = Color.FromArgb(39, 39, 39)
                         ForeColor = Color.White
                         Panel_Border_Pic.Image = New Bitmap(My.Resources.panel_corner_black)
                         x86_Pic.Image = New Bitmap(My.Resources.x86_dark)
@@ -1906,6 +1946,10 @@ Public Class MainForm
                         If Not Label88.ForeColor = Color.DimGray Then
                             Label88.ForeColor = ForeColor
                         End If
+                        HTMLname = "HelpPage_DM.html"
+                        WebBrowser1.Url = New Uri(String.Format("file:///{0}{1}{2}", Directory.GetCurrentDirectory(), "/Resources/HTMLHelp/", HTMLname))
+                        HTMLInstrName = "InstrPage_DM.html"
+                        WebBrowser2.Url = New Uri(String.Format("file:///{0}{1}{2}", Directory.GetCurrentDirectory(), "/Resources/HTMLHelp/", HTMLInstrName))
                     ElseIf ColorStr = "1" Then
                         If RadioButton3.Checked = True Then
                             PictureBox2.Image = New Bitmap(My.Resources.NavBar_LeftPos_Light)
@@ -1923,6 +1967,7 @@ Public Class MainForm
                         ProgressPanel.BackColor = Color.FromArgb(249, 249, 249)
                         SettingPanel.BackColor = Color.FromArgb(249, 249, 249)
                         WelcomePanel.BackColor = Color.FromArgb(249, 249, 249)
+                        InstrPanel.BackColor = Color.FromArgb(249, 249, 249)
                         ForeColor = Color.Black
                         Panel_Border_Pic.Image = New Bitmap(My.Resources.panel_corner_white)
                         x86_Pic.Image = New Bitmap(My.Resources.x86_light)
@@ -2064,6 +2109,10 @@ Public Class MainForm
                         If Not Label88.ForeColor = Color.DimGray Then
                             Label88.ForeColor = ForeColor
                         End If
+                        HTMLname = "HelpPage.html"
+                        WebBrowser1.Url = New Uri(String.Format("file:///{0}{1}{2}", Directory.GetCurrentDirectory(), "/Resources/HTMLHelp/", HTMLname))
+                        HTMLInstrName = "InstrPage.html"
+                        WebBrowser2.Url = New Uri(String.Format("file:///{0}{1}{2}", Directory.GetCurrentDirectory(), "/Resources/HTMLHelp/", HTMLInstrName))
                     End If
                 Else
                     If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
@@ -2220,7 +2269,7 @@ Public Class MainForm
         DisableBackPic()
     End Sub
 
-    Private Sub PictureBox14_Click(sender As Object, e As EventArgs) Handles PictureBox14.Click
+    Private Sub PictureBox14_Click(sender As Object, e As EventArgs) Handles PictureBox14.Click, Label37.Click, Label38.Click, PictureBox16.Click
         MOLinkIsClicked = False
         EnableBackPic()
         LogoPic.Left = 48
@@ -2355,7 +2404,7 @@ Public Class MainForm
         End If
     End Sub
 
-    Private Sub PictureBox17_Click(sender As Object, e As EventArgs) Handles PictureBox17.Click
+    Private Sub PictureBox17_Click(sender As Object, e As EventArgs) Handles PictureBox17.Click, Label40.Click, Label39.Click, PictureBox4.Click
         InstHistPanel.InstallerListView.Items.Clear()
         InstHistPanel.InstallerEntryLabel.Text = "Installer history entries: " & InstHistPanel.InstallerListView.Items.Count
     End Sub
@@ -2489,6 +2538,8 @@ Public Class MainForm
         Process.Start(".\temp.bat").WaitForExit()
         Win11InstLabel = My.Computer.FileSystem.ReadAllText(".\label.txt").Replace("Comment = ", "").Trim()
         LabelText.Text = Win11InstLabel
+        LabelSetButton.PerformClick()
+        File.Delete(".\label.txt")
         File.Delete(".\temp.bat")
     End Sub
 
@@ -2520,6 +2571,9 @@ Public Class MainForm
                     Button6.Enabled = False
                 End If
             End If
+            Win11_File = New FileInfo(TextBox1.Text)
+            Win11_FileSize = Win11_File.Length / (1024 ^ 3)
+            Win11_GBSize = Math.Round(Win11_FileSize, 2)
         Else
             If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                 Win11PresenceSTLabel.Text = "Presence status: this file does not exist"
@@ -2589,6 +2643,9 @@ Public Class MainForm
                         Button6.Enabled = False
                     End If
                 End If
+                Win11_File = New FileInfo(TextBox1.Text)
+                Win11_FileSize = Win11_File.Length / (1024 ^ 3)
+                Win11_GBSize = Math.Round(Win11_FileSize, 2)
             Else
                 If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                     Win11PresenceSTLabel.Text = "Presence status: this file does not exist"
@@ -2664,6 +2721,9 @@ Public Class MainForm
             Else
                 Button6.Enabled = False
             End If
+            Win10_File = New FileInfo(TextBox2.Text)
+            Win10_FileSize = Win10_File.Length / (1024 ^ 3)
+            Win10_GBSize = Math.Round(Win10_FileSize, 2)
         Else
             If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                 Win10PresenceSTLabel.Text = "Presence status: this file does not exist"
@@ -2731,6 +2791,9 @@ Public Class MainForm
                     Else
                         Button6.Enabled = False
                     End If
+                    Win10_File = New FileInfo(TextBox2.Text)
+                    Win10_FileSize = Win10_File.Length / (1024 ^ 3)
+                    Win10_GBSize = Math.Round(Win10_FileSize, 2)
                 Else
                     If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                         Win10PresenceSTLabel.Text = "Presence status: this file does not exist"
@@ -2784,7 +2847,6 @@ Public Class MainForm
                 End If
             End If
         End If
-
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
@@ -2824,7 +2886,6 @@ Public Class MainForm
                 Loop
             End If
         End If
-
         If TextBox3.Text = "" Then
             If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                 MsgBox("The file name cannot be nothing. Please specify a file name and try again.", vbOKOnly + vbInformation, "File name")
@@ -2846,24 +2907,52 @@ Public Class MainForm
         ' the path does not exist, it will use the user folder to store the target image.
         ' This is not recommended if the end user doesn't have enough space on his/her local disk, so
         ' he/she must consider putting the target image on a different path
-        If TextBox4.Text = "" Or Not Directory.Exists(TextBox4.Text) Then
-            TextBox4.Text = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)
+
+        ' This was modified, as in this version (2.0.0100_220710) the detection is more complex
+        If TextBox4.Text = "" Then
+            Button5.PerformClick()
+        ElseIf Not Directory.Exists(TextBox4.Text) Then
+            BackSubPanel.Show()
+            NonExistentTargetDirPanel.ShowDialog()
+            NonExistentTargetDirPanel.Visible = True
+            NonExistentTargetDirPanel.Visible = False
+            BringToFront()
+            If NonExistentTargetDirPanel.DialogResult = Windows.Forms.DialogResult.OK Then
+                TextBox4.Text = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)
+            ElseIf NonExistentTargetDirPanel.DialogResult = Windows.Forms.DialogResult.Cancel Then
+                Exit Sub
+            ElseIf NonExistentTargetDirPanel.DialogResult = Windows.Forms.DialogResult.Retry Then
+                Button5.PerformClick()
+            End If
         End If
         Label67.Text = TextBox1.Text
         Label68.Text = TextBox2.Text
-        InstCreateInt = 1
-        InstCreatePanel.Visible = False
-        EnableBackPic()
-        SettingReviewPanel.Visible = True
-        Label3.Visible = True
-        LinkLabel2.Visible = True
-        PictureBox5.Visible = True
-        If TextBox4.Text.EndsWith("\") Then
-            Label90.Text = TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso"
+        drInfo = New DriveInfo(Path.GetPathRoot(TextBox4.Text))
+        drLetter = Path.GetPathRoot(TextBox4.Text)
+        GBSpace = drInfo.AvailableFreeSpace / (1024 ^ 3)
+        GBStr = Math.Round(GBSpace, 2)
+        TotalISO_GBSize = CDbl(Win11_GBSize) + CDbl(Win10_GBSize)
+        TotalISO_Str = Math.Round(TotalISO_GBSize, 2)
+        If CDbl(GBStr) < CDbl(TotalISO_Str) Then
+            BackSubPanel.Show()
+            LowSpacePanel.ShowDialog()
+            LowSpacePanel.Visible = True
+            LowSpacePanel.Visible = False
+            BringToFront()
         Else
-            Label90.Text = TextBox4.Text & "\" & TextBox3.Text & ".iso"
+            InstCreateInt = 1
+            InstCreatePanel.Visible = False
+            EnableBackPic()
+            SettingReviewPanel.Visible = True
+            Label3.Visible = True
+            LinkLabel2.Visible = True
+            PictureBox5.Visible = True
+            If TextBox4.Text.EndsWith("\") Then
+                Label90.Text = TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso"
+            Else
+                Label90.Text = TextBox4.Text & "\" & TextBox3.Text & ".iso"
+            End If
         End If
-
     End Sub
 
     Private Sub Label61_MouseEnter(sender As Object, e As EventArgs) Handles Label61.MouseEnter
@@ -2895,7 +2984,7 @@ Public Class MainForm
             End If
         End If
         If TextBox4.Text.EndsWith("\") Then
-            If TextBox4.Text.Contains(" ") Then
+            If TextBox3.Text.Contains(" ") Then
                 If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                     ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Path will contain quotes"
                 ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
@@ -2912,24 +3001,42 @@ Public Class MainForm
                     End If
                 End If
             Else
-                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
-                    ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
-                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
-                    ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
-                ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
-                    ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
-                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
-                    If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                If TextBox4.Text.Contains(" ") Then
+                    If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+                        ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Path will contain quotes"
+                    ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+                        ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". La ruta contendrá comillas"
+                    ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                        ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Le chemin contiendra des guillemets"
+                    ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+                        If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                            ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Path will contain quotes"
+                        ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                            ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". La ruta contendrá comillas"
+                        ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                            ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Le chemin contiendra des guillemets"
+                        End If
+                    End If
+                Else
+                    If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                         ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
-                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                    ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                         ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
-                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                    ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
                         ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
+                    ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+                        If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                            ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
+                        ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                            ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
+                        ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                            ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
+                        End If
                     End If
                 End If
             End If
         Else
-            If TextBox4.Text.Contains(" ") Then
+            If TextBox3.Text.Contains(" ") Then
                 If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                     ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote & ". Path will contain quotes"
                 ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
@@ -2946,19 +3053,37 @@ Public Class MainForm
                     End If
                 End If
             Else
-                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
-                    ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote
-                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
-                    ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote
-                ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
-                    ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote
-                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
-                    If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                If TextBox4.Text.Contains(" ") Then
+                    If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+                        ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote & ". Path will contain quotes"
+                    ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+                        ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote & ". La ruta contendrá comillas"
+                    ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                        ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote & ". Le chemin contiendra des guillemets"
+                    ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+                        If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                            ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote & ". Path will contain quotes"
+                        ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                            ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote & ". La ruta contendrá comillas"
+                        ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                            ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote & ". Le chemin contiendra des guillemets"
+                        End If
+                    End If
+                Else
+                    If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                         ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote
-                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                    ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                         ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote
-                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                    ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
                         ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote
+                    ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+                        If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                            ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote
+                        ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                            ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote
+                        ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                            ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text & "\" & TextBox3.Text & ".iso" & Quote
+                        End If
                     End If
                 End If
             End If
@@ -3212,6 +3337,7 @@ Public Class MainForm
         RadioButton1.Enabled = True
         RadioButton2.Enabled = True
         LinkLabel18.Visible = False
+
     End Sub
 
     Sub DisableCancellation()
@@ -3449,6 +3575,7 @@ Public Class MainForm
                     InstSTLabel.Text = "Copier les fichiers ISO sur le disque local..."
                 End If
             End If
+            Refresh()
             LogBox.AppendText(CrLf & "[" & Now & "] " & "Copying the ISO files to the local disk...")
             Try
                 If ComboBox5.SelectedItem = "REGTWEAK" Then
@@ -3865,9 +3992,9 @@ Public Class MainForm
         ElseIf ComboBox5.SelectedItem = "REGTWEAK" Then
             LogBox.AppendText(CrLf & "[" & Now & "] " & "Moving " & Quote & "boot.wim" & Quote & " from the Windows 11 installation media...")
             File.Move(".\temp\sources\boot.wim", ".\boot.wim")
-            LogBox.AppendText(" Done" & CrLf & "Creating the WIM file mount point folder...")
+            LogBox.AppendText(" Done" & CrLf & "[" & Now & "] " & "Creating the WIM file mount point folder...")
             Directory.CreateDirectory(".\wimmount")
-            LogBox.AppendText(" Done" & CrLf & "Launching the REGTWEAK script...")
+            LogBox.AppendText(" Done" & CrLf & "[" & Now & "] " & "Launching the REGTWEAK script...")
             If UseBypassNRO = True Then   ' Prepare boot.wim (and install.wim, if necessary) for surgery
                 If UseSV2 = True Then
                     If Win11ESD = 1 Then
@@ -3909,7 +4036,7 @@ Public Class MainForm
                     Process.Start(".\prog_bin\regtweak.bat").WaitForExit()
                 End If
             End If
-            LogBox.AppendText(CrLf & "[" & Now & "] " & "Finished running the REGTWEAK script." & CrLf & "Moving " & Quote & "boot.wim" & Quote & " to the Windows 11 installer...")
+            LogBox.AppendText(CrLf & "[" & Now & "] " & "Finished running the REGTWEAK script." & CrLf & "[" & Now & "] " & "Moving " & Quote & "boot.wim" & Quote & " to the Windows 11 installer...")
             File.Move(".\boot.wim", ".\temp\sources\boot.wim")      ' Move boot.wim after operations done
             LogBox.AppendText(" Done")
             InstallerProgressBar.Value = 50
@@ -4432,19 +4559,37 @@ Public Class MainForm
                     End If
                 End If
             Else
-                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
-                    ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Path will contain quotes"
-                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
-                    ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". La ruta contendrá comillas"
-                ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
-                    ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Le chemin contiendra des guillemets"
-                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
-                    If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                If TextBox3.Text.Contains(" ") Then
+                    If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                         ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Path will contain quotes"
-                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                    ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                         ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". La ruta contendrá comillas"
-                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                    ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
                         ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Le chemin contiendra des guillemets"
+                    ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+                        If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                            ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Path will contain quotes"
+                        ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                            ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". La ruta contendrá comillas"
+                        ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                            ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Le chemin contiendra des guillemets"
+                        End If
+                    End If
+                Else
+                    If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+                        ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
+                    ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+                        ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
+                    ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                        ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
+                    ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+                        If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                            ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
+                        ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                            ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
+                        ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                            ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
+                        End If
                     End If
                 End If
             End If
@@ -4466,19 +4611,37 @@ Public Class MainForm
                     End If
                 End If
             Else
-                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
-                    ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Path will contain quotes"
-                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
-                    ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". La ruta contendrá comillas"
-                ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
-                    ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Le chemin contiendra des guillemets"
-                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
-                    If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                If TextBox3.Text.Contains(" ") Then
+                    If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                         ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Path will contain quotes"
-                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                    ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                         ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". La ruta contendrá comillas"
-                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                    ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
                         ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Le chemin contiendra des guillemets"
+                    ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+                        If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                            ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Path will contain quotes"
+                        ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                            ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". La ruta contendrá comillas"
+                        ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                            ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote & ". Le chemin contiendra des guillemets"
+                        End If
+                    End If
+                Else
+                    If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+                        ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
+                    ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+                        ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
+                    ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                        ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
+                    ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+                        If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                            ImgPathLabel.Text = "The image will be saved to: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
+                        ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                            ImgPathLabel.Text = "La imagen será guardada en: " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
+                        ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                            ImgPathLabel.Text = "L'image sera enregistrée sur : " & Quote & TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso" & Quote
+                        End If
                     End If
                 End If
             End If
@@ -4972,6 +5135,30 @@ Public Class MainForm
 
     Private Sub PictureBox25_Click(sender As Object, e As EventArgs) Handles PictureBox25.Click, Label48.Click, Label47.Click, PictureBox24.Click
         PanelIndicatorPic.Anchor = CType((AnchorStyles.Top Or AnchorStyles.Left), AnchorStyles)
+        PanelIndicatorPic.Top = InstructionPic.Top + 2
+        WelcomePanel.Visible = False
+        SettingPanel.Visible = False
+        Settings_FunctionalityPanel.Visible = False
+        Settings_PersonalizationPanel.Visible = False
+        HelpPanel.Visible = False
+        InfoPanel.Visible = False
+        InstrPanel.Visible = True
+        SettingReviewPanel.Visible = False
+        If BackColor = Color.FromArgb(243, 243, 243) Then
+            InstCreatePic.Image = New Bitmap(My.Resources.inst_create)
+            WelcomePic.Image = New Bitmap(My.Resources.home)
+            SettingsPic.Image = New Bitmap(My.Resources.settings)
+            InstructionPic.Image = New Bitmap(My.Resources.instructions_filled)
+            HelpPic.Image = New Bitmap(My.Resources.help)
+            InfoPic.Image = New Bitmap(My.Resources.info)
+        Else
+            InstCreatePic.Image = New Bitmap(My.Resources.inst_create_dark)
+            WelcomePic.Image = New Bitmap(My.Resources.home_dark)
+            SettingsPic.Image = New Bitmap(My.Resources.settings_dark)
+            InstructionPic.Image = New Bitmap(My.Resources.instructions_dark_filled)
+            HelpPic.Image = New Bitmap(My.Resources.help_dark)
+            InfoPic.Image = New Bitmap(My.Resources.info_dark)
+        End If
     End Sub
 
     Private Sub PictureBox27_Click(sender As Object, e As EventArgs) Handles PictureBox27.Click, Label50.Click, Label49.Click, PictureBox26.Click
@@ -5523,8 +5710,8 @@ Public Class MainForm
             Label42.Text = "Reset preferences"
             Label43.Text = "Creates a modified installer to install Windows 11 on unsupported systems"
             Label44.Text = "Create a custom installer"
-            Label45.Text = "Allows you to customize the program's appearance or behavior"
-            Label47.Text = "Allows you to create a custom Windows 11 installer by yourself"
+            Label45.Text = "Lets you customize the program's appearance or behavior"
+            Label47.Text = "Lets you create a custom Windows 11 installer by yourself"
             Label48.Text = "Instructions"
             Label49.Text = "Learn how to use this program"
             ' These lines of code affect Label5 and PictureBox11
@@ -6519,8 +6706,8 @@ Public Class MainForm
                 Label42.Text = "Reset preferences"
                 Label43.Text = "Creates a modified installer to install Windows 11 on unsupported systems"
                 Label44.Text = "Create a custom installer"
-                Label45.Text = "Allows you to customize the program's appearance or behavior"
-                Label47.Text = "Allows you to create a custom Windows 11 installer by yourself"
+                Label45.Text = "Lets you customize the program's appearance or behavior"
+                Label47.Text = "Lets you create a custom Windows 11 installer by yourself"
                 Label48.Text = "Instructions"
                 Label49.Text = "Learn how to use this program"
                 Label50.Text = "Help"
@@ -7128,6 +7315,15 @@ Public Class MainForm
                 ImageFolderBrowser.Description = "Veuillez spécifier le chemin pour enregistrer l'installateur personnalisé :"
             End If
         End If
+        If LangInt <> 3 Then
+            If LangInt = 0 And My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                Button7.Text = "Non"
+            Else
+                Button7.Text = "No"
+            End If
+        Else
+            Button7.Text = "Non"
+        End If
         UpdatePanelProperties()
     End Sub
 
@@ -7365,6 +7561,32 @@ Public Class MainForm
 
     Private Sub InstructionPic_Click(sender As Object, e As EventArgs) Handles InstructionPic.Click
         PanelIndicatorPic.Anchor = CType((AnchorStyles.Top Or AnchorStyles.Left), AnchorStyles)
+        WelcomePanel.Visible = False
+        SettingPanel.Visible = False
+        Settings_FunctionalityPanel.Visible = False
+        Settings_PersonalizationPanel.Visible = False
+        HelpPanel.Visible = False
+        InfoPanel.Visible = False
+        InstrPanel.Visible = True
+        InstCreatePanel.Visible = False
+        SettingReviewPanel.Visible = False
+        ProgressPanel.Visible = False
+        If BackColor = Color.FromArgb(243, 243, 243) Then
+            InstCreatePic.Image = New Bitmap(My.Resources.inst_create)
+            WelcomePic.Image = New Bitmap(My.Resources.home)
+            SettingsPic.Image = New Bitmap(My.Resources.settings)
+            InstructionPic.Image = New Bitmap(My.Resources.instructions_filled)
+            HelpPic.Image = New Bitmap(My.Resources.help)
+            InfoPic.Image = New Bitmap(My.Resources.info)
+        Else
+            InstCreatePic.Image = New Bitmap(My.Resources.inst_create_dark)
+            WelcomePic.Image = New Bitmap(My.Resources.home_dark)
+            SettingsPic.Image = New Bitmap(My.Resources.settings_dark)
+            InstructionPic.Image = New Bitmap(My.Resources.instructions_dark_filled)
+            HelpPic.Image = New Bitmap(My.Resources.help_dark)
+            InfoPic.Image = New Bitmap(My.Resources.info_dark)
+        End If
+        PanelIndicatorPic.Top = InstructionPic.Top + 2
     End Sub
 
     Private Sub LinkLabel6_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel6.LinkClicked
@@ -8264,7 +8486,11 @@ Public Class MainForm
     End Sub
 
     Private Sub LogViewLink_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LogViewLink.LinkClicked
-        Process.Start(".\inst.log")
+        Try
+            Process.Start(".\inst.log")
+        Catch ex As Exception
+            MessageBox.Show("The log file could not be opened. The file may have been deleted.", "Log file error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
     Private Sub TextBox1_DragEnter(sender As Object, e As DragEventArgs) Handles TextBox1.DragEnter
@@ -8310,7 +8536,7 @@ Public Class MainForm
                     DisclaimerPanel.Panel1.BackColor = Color.FromArgb(243, 243, 243)
                     DisclaimerPanel.TextBox1.BackColor = Color.White
                     DisclaimerPanel.TextBox1.ForeColor = Color.Black
-                    DisclaimerPanel.BackColor = Color.FromArgb(1, 92, 186)
+                    DisclaimerPanel.OK_Button.BackColor = Color.FromArgb(1, 92, 186)
                     DisclaimerPanel.OK_Button.ForeColor = Color.White
                 ElseIf FileCopyPanel.Visible = True Then
                     FileCopyPanel.BackColor = Color.White
@@ -8364,12 +8590,25 @@ Public Class MainForm
                     LogMigratePanel.Panel1.BackColor = Color.FromArgb(243, 243, 243)
                     LogMigratePanel.Yes_Button.BackColor = Color.FromArgb(1, 92, 186)
                     LogMigratePanel.Yes_Button.ForeColor = Color.White
+                ElseIf LowSpacePanel.Visible = True Then
+                    LowSpacePanel.BackColor = Color.White
+                    LowSpacePanel.ForeColor = Color.Black
+                    LowSpacePanel.Panel1.BackColor = Color.FromArgb(243, 243, 243)
+                    LowSpacePanel.OK_Button.BackColor = Color.FromArgb(1, 92, 186)
+                    LowSpacePanel.OK_Button.ForeColor = Color.White
+                    LowSpacePanel.LinkLabel1.LinkColor = Color.FromArgb(1, 92, 186)
                 ElseIf MethodHelpPanel.Visible = True Then
                     MethodHelpPanel.BackColor = Color.White
                     MethodHelpPanel.ForeColor = Color.Black
                     MethodHelpPanel.Panel1.BackColor = Color.FromArgb(243, 243, 243)
                     MethodHelpPanel.OK_Button.BackColor = Color.FromArgb(1, 92, 186)
                     MethodHelpPanel.OK_Button.ForeColor = Color.White
+                ElseIf NonExistentTargetDirPanel.Visible = True Then
+                    NonExistentTargetDirPanel.BackColor = Color.White
+                    NonExistentTargetDirPanel.ForeColor = Color.Black
+                    NonExistentTargetDirPanel.Panel1.BackColor = Color.FromArgb(243, 243, 243)
+                    NonExistentTargetDirPanel.OK_Button.BackColor = Color.FromArgb(1, 92, 186)
+                    NonExistentTargetDirPanel.OK_Button.ForeColor = Color.White
                 ElseIf PrefResetPanel.Visible = True Then
                     PrefResetPanel.BackColor = Color.White
                     PrefResetPanel.ForeColor = Color.Black
@@ -8399,7 +8638,7 @@ Public Class MainForm
                     DisclaimerPanel.Panel1.BackColor = Color.FromArgb(32, 32, 32)
                     DisclaimerPanel.TextBox1.BackColor = Color.FromArgb(43, 43, 43)
                     DisclaimerPanel.TextBox1.ForeColor = Color.White
-                    DisclaimerPanel.BackColor = Color.FromArgb(76, 194, 255)
+                    DisclaimerPanel.OK_Button.BackColor = Color.FromArgb(76, 194, 255)
                     DisclaimerPanel.OK_Button.ForeColor = Color.Black
                 ElseIf FileCopyPanel.Visible = True Then
                     FileCopyPanel.BackColor = Color.FromArgb(43, 43, 43)
@@ -8453,12 +8692,25 @@ Public Class MainForm
                     LogMigratePanel.Panel1.BackColor = Color.FromArgb(32, 32, 32)
                     LogMigratePanel.Yes_Button.BackColor = Color.FromArgb(76, 194, 255)
                     LogMigratePanel.Yes_Button.ForeColor = Color.Black
+                ElseIf LowSpacePanel.Visible = True Then
+                    LowSpacePanel.BackColor = Color.FromArgb(43, 43, 43)
+                    LowSpacePanel.ForeColor = Color.White
+                    LowSpacePanel.Panel1.BackColor = Color.FromArgb(32, 32, 32)
+                    LowSpacePanel.OK_Button.BackColor = Color.FromArgb(76, 194, 255)
+                    LowSpacePanel.OK_Button.ForeColor = Color.Black
+                    LowSpacePanel.LinkLabel1.LinkColor = Color.FromArgb(76, 194, 255)
                 ElseIf MethodHelpPanel.Visible = True Then
                     MethodHelpPanel.BackColor = Color.FromArgb(43, 43, 43)
                     MethodHelpPanel.ForeColor = Color.White
                     MethodHelpPanel.Panel1.BackColor = Color.FromArgb(32, 32, 32)
                     MethodHelpPanel.OK_Button.BackColor = Color.FromArgb(76, 194, 255)
                     MethodHelpPanel.OK_Button.ForeColor = Color.Black
+                ElseIf NonExistentTargetDirPanel.Visible = True Then
+                    NonExistentTargetDirPanel.BackColor = Color.FromArgb(43, 43, 43)
+                    NonExistentTargetDirPanel.ForeColor = Color.White
+                    NonExistentTargetDirPanel.Panel1.BackColor = Color.FromArgb(32, 32, 32)
+                    NonExistentTargetDirPanel.OK_Button.BackColor = Color.FromArgb(76, 194, 255)
+                    NonExistentTargetDirPanel.OK_Button.ForeColor = Color.Black
                 ElseIf PrefResetPanel.Visible = True Then
                     PrefResetPanel.BackColor = Color.FromArgb(43, 43, 43)
                     PrefResetPanel.ForeColor = Color.White
@@ -8480,8 +8732,7 @@ Public Class MainForm
                     AdvancedOptionsPanel.CheckBox2.Text = "Hide " & Quote & "System requirements not met" & Quote & " watermark (22557+)"
                     AdvancedOptionsPanel.Label1.Text = "Advanced options"
                     AdvancedOptionsPanel.Label2.Text = "Bypasses Microsoft Account sign-in and forced Internet connection setup on Windows 11 Pro (Nickel builds 22557 onwards)"
-                    AdvancedOptionsPanel.Label3.Text = "Note: the program must be run with administrative privileges"
-                    AdvancedOptionsPanel.Label4.Text = "Hides the " & Quote & "System requirements not met" & Quote & " watermark on Nickel builds 22557 onwards and Windows Server" & Quote & "Copper" & Quote & " builds 25057 onwards"
+                    AdvancedOptionsPanel.Label4.Text = "Hides the " & Quote & "System requirements not met" & Quote & " watermark on Nickel builds 22557 onwards and Copper builds 25115 onwards"
                     AdvancedOptionsPanel.Label5.Text = "Enabling this option is not recommended yet, as it doesn't work as intended."
                     AdvancedOptionsPanel.LinkLabel1.Text = "Read the full issue and a possible workaround"
                     AdvancedOptionsPanel.OK_Button.Text = "OK"
@@ -8491,20 +8742,28 @@ Public Class MainForm
                     AdvancedOptionsPanel.CheckBox2.Text = "Ocultar la marca de agua " & Quote & "Requisitos de sistema no cumplidos" & Quote & " (22557+)"
                     AdvancedOptionsPanel.Label1.Text = "Opciones avanzadas"
                     AdvancedOptionsPanel.Label2.Text = "Omite el inicio de sesión con la cuenta de Microsoft y la configuración forzada de Internet en Windows 11 Pro (compilaciones de Nickel 22557 en adelante)"
-                    AdvancedOptionsPanel.Label3.Text = "Nota: el programa debe ejecutarse con privilegios administrativos"
-                    AdvancedOptionsPanel.Label4.Text = "Oculta la marca de agua " & Quote & "Requisitos de sistema no cumplidos" & Quote & " en compilaciones de Nickel 22557 en adelante y en compilaciones Windows Server " & Quote & "Copper" & Quote & " 25057 en adelante"
+                    AdvancedOptionsPanel.Label4.Text = "Oculta la marca de agua " & Quote & "Requisitos de sistema no cumplidos" & Quote & " en compilaciones de Nickel 22557 en adelante y Copper 25115 en adelante"
                     AdvancedOptionsPanel.Label5.Text = "Todavía no es recomendable habilitar esta opción, ya que no funciona como se esperaba."
                     AdvancedOptionsPanel.LinkLabel1.Text = "Lea la publicación completa y una posible solución"
                     AdvancedOptionsPanel.OK_Button.Text = "Aceptar"
                     AdvancedOptionsPanel.Cancel_Button.Text = "Cancelar"
+                ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                    AdvancedOptionsPanel.CheckBox1.Text = "Contourner l'ouverture de session du compte Microsoft et la configuration forcée de la connexion Internet (22557+)"
+                    AdvancedOptionsPanel.CheckBox2.Text = "Masquer le filigrane " & Quote & "Configuration requise non respectée" & Quote & " (22557+)"
+                    AdvancedOptionsPanel.Label1.Text = "Options avancées"
+                    AdvancedOptionsPanel.Label2.Text = "Contournement de l'ouverture de session du compte Microsoft et de la configuration forcée de la connexion Internet sur Windows 11 Pro (Nickel builds 22557 et suivants)"
+                    AdvancedOptionsPanel.Label4.Text = "Masque le filigrane " & Quote & "Configuration requise non respectée" & Quote & " sur les builds 22557 et suivantes de Nickel et 25115 et suivantes de Copper"
+                    AdvancedOptionsPanel.Label5.Text = "L'activation de cette option n'est pas encore recommandée, car elle ne fonctionne pas comme prévu."
+                    AdvancedOptionsPanel.LinkLabel1.Text = "Lisez l'intégralité du problème et une solution de contournement possible."
+                    AdvancedOptionsPanel.OK_Button.Text = "OK"
+                    AdvancedOptionsPanel.Cancel_Button.Text = "Annuler"
                 ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         AdvancedOptionsPanel.CheckBox1.Text = "Bypass Microsoft Account sign-in and forced Internet connection setup (22557+)"
                         AdvancedOptionsPanel.CheckBox2.Text = "Hide " & Quote & "System requirements not met" & Quote & " watermark (22557+)"
                         AdvancedOptionsPanel.Label1.Text = "Advanced options"
                         AdvancedOptionsPanel.Label2.Text = "Bypasses Microsoft Account sign-in and forced Internet connection setup on Windows 11 Pro (Nickel builds 22557 onwards)"
-                        AdvancedOptionsPanel.Label3.Text = "Note: the program must be run with administrative privileges"
-                        AdvancedOptionsPanel.Label4.Text = "Hides the " & Quote & "System requirements not met" & Quote & " watermark on Nickel builds 22557 onwards and Windows Server" & Quote & "Copper" & Quote & " builds 25057 onwards"
+                        AdvancedOptionsPanel.Label4.Text = "Hides the " & Quote & "System requirements not met" & Quote & " watermark on Nickel builds 22557 onwards and Copper builds 25115 onwards"
                         AdvancedOptionsPanel.Label5.Text = "Enabling this option is not recommended yet, as it doesn't work as intended."
                         AdvancedOptionsPanel.LinkLabel1.Text = "Read the full issue and a possible workaround"
                         AdvancedOptionsPanel.OK_Button.Text = "OK"
@@ -8514,12 +8773,21 @@ Public Class MainForm
                         AdvancedOptionsPanel.CheckBox2.Text = "Ocultar la marca de agua " & Quote & "Requisitos de sistema no cumplidos" & Quote & " (22557+)"
                         AdvancedOptionsPanel.Label1.Text = "Opciones avanzadas"
                         AdvancedOptionsPanel.Label2.Text = "Omite el inicio de sesión con la cuenta de Microsoft y la configuración forzada de Internet en Windows 11 Pro (compilaciones de Nickel 22557 en adelante)"
-                        AdvancedOptionsPanel.Label3.Text = "Nota: el programa debe ejecutarse con privilegios administrativos"
-                        AdvancedOptionsPanel.Label4.Text = "Oculta la marca de agua " & Quote & "Requisitos de sistema no cumplidos" & Quote & " en compilaciones de Nickel 22557 en adelante y en compilaciones Windows Server " & Quote & "Copper" & Quote & " 25057 en adelante"
+                        AdvancedOptionsPanel.Label4.Text = "Oculta la marca de agua " & Quote & "Requisitos de sistema no cumplidos" & Quote & " en compilaciones de Nickel 22557 en adelante y Copper 25115 en adelante"
                         AdvancedOptionsPanel.Label5.Text = "Todavía no es recomendable habilitar esta opción, ya que no funciona como se esperaba."
                         AdvancedOptionsPanel.LinkLabel1.Text = "Lea la publicación completa y una posible solución"
                         AdvancedOptionsPanel.OK_Button.Text = "Aceptar"
                         AdvancedOptionsPanel.Cancel_Button.Text = "Cancelar"
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                        AdvancedOptionsPanel.CheckBox1.Text = "Contourner l'ouverture de session du compte Microsoft et la configuration forcée de la connexion Internet (22557+)"
+                        AdvancedOptionsPanel.CheckBox2.Text = "Masquer le filigrane " & Quote & "Configuration requise non respectée" & Quote & " (22557+)"
+                        AdvancedOptionsPanel.Label1.Text = "Options avancées"
+                        AdvancedOptionsPanel.Label2.Text = "Contournement de l'ouverture de session du compte Microsoft et de la configuration forcée de la connexion Internet sur Windows 11 Pro (Nickel builds 22557 et suivants)"
+                        AdvancedOptionsPanel.Label4.Text = "Masque le filigrane " & Quote & "Configuration requise non respectée" & Quote & " sur les builds 22557 et suivantes de Nickel et 25115 et suivantes de Copper"
+                        AdvancedOptionsPanel.Label5.Text = "L'activation de cette option n'est pas encore recommandée, car elle ne fonctionne pas comme prévu."
+                        AdvancedOptionsPanel.LinkLabel1.Text = "Lisez l'intégralité du problème et une solution de contournement possible."
+                        AdvancedOptionsPanel.OK_Button.Text = "OK"
+                        AdvancedOptionsPanel.Cancel_Button.Text = "Annuler"
                     End If
                 End If
             ElseIf DisclaimerPanel.Visible = True Then
@@ -8533,6 +8801,11 @@ Public Class MainForm
                     DisclaimerPanel.OK_Button.Text = "Aceptar"
                     DisclaimerPanel.Exit_Button.Text = "Salir"
                     DisclaimerPanel.TextBox1.Text = "Usted solo debe utilizar esta herramienta en un sistema que no use productivamente." & CrLf & "Microsoft ha avisado de que sistemas no soportados ejecutando Windows 11 podrían no recibir actualizaciones en el futuro." & CrLf & CrLf & "Las imágenes de instalación modificadas que usted cree también funcionarán en sistemas soportados, pero usted puede instalar Windows 11 de forma nativa en ellos, sin realizar modificaciones a la imagen de instalación." & CrLf & "Si usted tiene un sistema no soportado, no lo actualice a Windows 11. En vez de eso, puede realizar un arranque dual, o usar otro sistema (ésta sería la mejor opción de todas formas)" & CrLf & CrLf & "Esta herramienta NO DEBE ser usada para piratear imágenes de Windows, y el desarrollador del programa le recomienda obtener Windows legalmente." & CrLf & "Los componentes utilizados por el programa están protegidos por sus acuerdos de licencia. Éstos especifican las reglas de su uso y redistribución." & CrLf & CrLf & "Si acepta este descargo de responsabilidad y quiere continuar usando el software, haga clic en Aceptar. En caso contrario, haga clic en Salir."
+                ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                    DisclaimerPanel.Label1.Text = "Avis de non-responsabilité"
+                    DisclaimerPanel.OK_Button.Text = "OK"
+                    DisclaimerPanel.Exit_Button.Text = "Quitter"
+                    DisclaimerPanel.TextBox1.Text = "Vous ne devez utiliser cet outil que sur un système que vous n'utilisez pas de manière productive." & CrLf & "Microsoft a averti que les systèmes non pris en charge fonctionnant sous Windows 11 pourraient ne pas recevoir de mises à jour à l'avenir." & CrLf & CrLf & "Les images d'installation modifiées que vous créez fonctionneront également sur les systèmes pris en charge, mais vous pourrez y installer Windows 11 en mode natif, sans avoir à modifier l'image d'installation." & CrLf & "Si vous avez un système non pris en charge, ne le mettez pas à niveau vers Windows 11. Au lieu de cela, vous pouvez effectuer un dual-boot, ou utiliser un autre système (ce qui serait de toute façon la meilleure option)." & CrLf & CrLf & "Cet outil NE DOIT PAS être utilisé pour pirater des images Windows, et le développeur du programme vous recommande d'obtenir Windows légalement." & CrLf & "Les composants utilisés par le programme sont couverts par leurs conditions de licence. Ceux-ci spécifient les règles pour leur utilisation et leur redistribution." & CrLf & CrLf & "Si vous acceptez cet avis de non-responsabilité et souhaitez continuer à utiliser le logiciel, cliquez sur OK. Sinon, cliquez sur Quitter."
                 ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         DisclaimerPanel.Label1.Text = "Disclaimer notice"
@@ -8544,6 +8817,11 @@ Public Class MainForm
                         DisclaimerPanel.OK_Button.Text = "Aceptar"
                         DisclaimerPanel.Exit_Button.Text = "Salir"
                         DisclaimerPanel.TextBox1.Text = "Usted solo debe utilizar esta herramienta en un sistema que no use productivamente." & CrLf & "Microsoft ha avisado de que sistemas no soportados ejecutando Windows 11 podrían no recibir actualizaciones en el futuro." & CrLf & CrLf & "Las imágenes de instalación modificadas que usted cree también funcionarán en sistemas soportados, pero usted puede instalar Windows 11 de forma nativa en ellos, sin realizar modificaciones a la imagen de instalación." & CrLf & "Si usted tiene un sistema no soportado, no lo actualice a Windows 11. En vez de eso, puede realizar un arranque dual, o usar otro sistema (ésta sería la mejor opción de todas formas)" & CrLf & CrLf & "Esta herramienta NO DEBE ser usada para piratear imágenes de Windows, y el desarrollador del programa le recomienda obtener Windows legalmente." & CrLf & "Los componentes utilizados por el programa están protegidos por sus acuerdos de licencia. Éstos especifican las reglas de su uso y redistribución." & CrLf & CrLf & "Si acepta este descargo de responsabilidad y quiere continuar usando el software, haga clic en Aceptar. En caso contrario, haga clic en Salir."
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                        DisclaimerPanel.Label1.Text = "Avis de non-responsabilité"
+                        DisclaimerPanel.OK_Button.Text = "OK"
+                        DisclaimerPanel.Exit_Button.Text = "Quitter"
+                        DisclaimerPanel.TextBox1.Text = "Vous ne devez utiliser cet outil que sur un système que vous n'utilisez pas de manière productive." & CrLf & "Microsoft a averti que les systèmes non pris en charge fonctionnant sous Windows 11 pourraient ne pas recevoir de mises à jour à l'avenir." & CrLf & CrLf & "Les images d'installation modifiées que vous créez fonctionneront également sur les systèmes pris en charge, mais vous pourrez y installer Windows 11 en mode natif, sans avoir à modifier l'image d'installation." & CrLf & "Si vous avez un système non pris en charge, ne le mettez pas à niveau vers Windows 11. Au lieu de cela, vous pouvez effectuer un dual-boot, ou utiliser un autre système (ce qui serait de toute façon la meilleure option)." & CrLf & CrLf & "Cet outil NE DOIT PAS être utilisé pour pirater des images Windows, et le développeur du programme vous recommande d'obtenir Windows légalement." & CrLf & "Les composants utilisés par le programme sont couverts par leurs conditions de licence. Ceux-ci spécifient les règles pour leur utilisation et leur redistribution." & CrLf & CrLf & "Si vous acceptez cet avis de non-responsabilité et souhaitez continuer à utiliser le logiciel, cliquez sur OK. Sinon, cliquez sur Quitter."
                     End If
                 End If
             ElseIf FileCopyPanel.Visible = True Then
@@ -8557,6 +8835,11 @@ Public Class MainForm
                     FileCopyPanel.Label2.Text = "Para prevenir errores de acceso de archivo al crear el instalador modificado, los archivos de origen serán copiados al disco local. Éstos archivos serán borrados después de que el programa haya terminado, para ahorrar espacio en el disco." & CrLf & "¿Desea hacer esto?"
                     FileCopyPanel.OK_Button.Text = "Sí, copiar archivos de origen"
                     FileCopyPanel.Cancel_Button.Text = "No, omitir la copia de archivos"
+                ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                    FileCopyPanel.Label1.Text = "Copie des fichiers"
+                    FileCopyPanel.Label2.Text = "Pour éviter les erreurs d'accès aux fichiers lors de la création de l'installateur personnalisé, les fichiers sources seront copiés sur le disque local. Ces fichiers seront supprimés une fois le programme terminé, afin de conserver l'espace disque." & CrLf & "Voulez-vous procéder ainsi ?"
+                    FileCopyPanel.OK_Button.Text = "Oui, copier les fichiers sources"
+                    FileCopyPanel.Cancel_Button.Text = "Non, ignorer la copie des fichiers"
                 ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         FileCopyPanel.Label1.Text = "File copy"
@@ -8568,6 +8851,11 @@ Public Class MainForm
                         FileCopyPanel.Label2.Text = "Para prevenir errores de acceso de archivo al crear el instalador modificado, los archivos de origen serán copiados al disco local. Éstos archivos serán borrados después de que el programa haya terminado, para ahorrar espacio en el disco." & CrLf & "¿Desea hacer esto?"
                         FileCopyPanel.OK_Button.Text = "Sí, copiar archivos de origen"
                         FileCopyPanel.Cancel_Button.Text = "No, omitir la copia de archivos"
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                        FileCopyPanel.Label1.Text = "Copie des fichiers"
+                        FileCopyPanel.Label2.Text = "Pour éviter les erreurs d'accès aux fichiers lors de la création de l'installateur personnalisé, les fichiers sources seront copiés sur le disque local. Ces fichiers seront supprimés une fois le programme terminé, afin de conserver l'espace disque." & CrLf & "Voulez-vous procéder ainsi ?"
+                        FileCopyPanel.OK_Button.Text = "Oui, copier les fichiers sources"
+                        FileCopyPanel.Cancel_Button.Text = "Non, ignorer la copie des fichiers"
                     End If
                 End If
             ElseIf InstCreateAbortPanel.Visible = True Then
@@ -8579,6 +8867,10 @@ Public Class MainForm
                     InstCreateAbortPanel.Label1.Text = "¿Cancelar la creación del instalador?"
                     InstCreateAbortPanel.Label2.Text = "¿Está seguro de que quiere cancelar el proceso de creación del instalador? Esto borrará todas las modificaciones de archivos realizados en este momento."
                     InstCreateAbortPanel.Yes_Button.Text = "Sí"
+                ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                    InstCreateAbortPanel.Label1.Text = "Annuler la création de l'installateur ?"
+                    InstCreateAbortPanel.Label2.Text = "Êtes-vous sûr de vouloir annuler le processus de création de l'installateur ? Cela supprimera toute modification de fichier effectuée à ce moment-là."
+                    InstCreateAbortPanel.Yes_Button.Text = "Oui"
                 ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         InstCreateAbortPanel.Label1.Text = "Cancel installer creation?"
@@ -8588,6 +8880,10 @@ Public Class MainForm
                         InstCreateAbortPanel.Label1.Text = "¿Cancelar la creación del instalador?"
                         InstCreateAbortPanel.Label2.Text = "¿Está seguro de que quiere cancelar el proceso de creación del instalador? Esto borrará todas las modificaciones de archivos realizados en este momento."
                         InstCreateAbortPanel.Yes_Button.Text = "Sí"
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                        InstCreateAbortPanel.Label1.Text = "Annuler la création de l'installateur ?"
+                        InstCreateAbortPanel.Label2.Text = "Êtes-vous sûr de vouloir annuler le processus de création de l'installateur ? Cela supprimera toute modification de fichier effectuée à ce moment-là."
+                        InstCreateAbortPanel.Yes_Button.Text = "Oui"
                     End If
                 End If
             ElseIf InstHistPanel.Visible = True Then
@@ -8609,6 +8905,15 @@ Public Class MainForm
                     InstHistPanel.XMLExportOptn.Text = "Exportar a archivo XML..."
                     InstHistPanel.HTMLExportOptn.Text = "Exportar a archivo HTML..."
                     InstHistPanel.ExportOptnBtn.Text = "Opciones de exportación"
+                ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                    InstHistPanel.Label1.Text = "Historique de l'installateur"
+                    InstHistPanel.InstallerEntryLabel.Text = "Entrées de l'historique de l'installateur : " & InstHistPanel.InstallerListView.Items.Count
+                    InstHistPanel.ColumnHeader1.Text = "Nom et chemin de l'installateur"
+                    InstHistPanel.ColumnHeader2.Text = "Date et heure de création"
+                    InstHistPanel.OK_Button.Text = "OK"
+                    InstHistPanel.XMLExportOptn.Text = "Exporter vers un fichier XML..."
+                    InstHistPanel.HTMLExportOptn.Text = "Exporter vers un fichier HTML..."
+                    InstHistPanel.ExportOptnBtn.Text = "Options d'exportation"
                 ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         InstHistPanel.Label1.Text = "Installer history"
@@ -8628,6 +8933,15 @@ Public Class MainForm
                         InstHistPanel.XMLExportOptn.Text = "Exportar a archivo XML..."
                         InstHistPanel.HTMLExportOptn.Text = "Exportar a archivo HTML..."
                         InstHistPanel.ExportOptnBtn.Text = "Opciones de exportación"
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                        InstHistPanel.Label1.Text = "Historique de l'installateur"
+                        InstHistPanel.InstallerEntryLabel.Text = "Entrées de l'historique de l'installateur : " & InstHistPanel.InstallerListView.Items.Count
+                        InstHistPanel.ColumnHeader1.Text = "Nom et chemin de l'installateur"
+                        InstHistPanel.ColumnHeader2.Text = "Date et heure de création"
+                        InstHistPanel.OK_Button.Text = "OK"
+                        InstHistPanel.XMLExportOptn.Text = "Exporter vers un fichier XML..."
+                        InstHistPanel.HTMLExportOptn.Text = "Exporter vers un fichier HTML..."
+                        InstHistPanel.ExportOptnBtn.Text = "Options d'exportation"
                     End If
                 End If
                 If InstHistPanel.InstallerListView.Items.Count = 0 Then
@@ -8635,11 +8949,15 @@ Public Class MainForm
                         InstHistPanel.InstallerEntryLabel.Text = "Installer history entries: " & InstHistPanel.InstallerListView.Items.Count & ". No installer history data is available."
                     ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                         InstHistPanel.InstallerEntryLabel.Text = "Entradas en el historial de instaladores: " & InstHistPanel.InstallerListView.Items.Count & ". No hay datos disponibles sobre el historial de instaladores."
+                    ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                        InstHistPanel.InstallerEntryLabel.Text = "Entrées de l'historique de l'installateur : " & InstHistPanel.InstallerListView.Items.Count & ". Aucune donnée sur l'historique de l'installateur n'est disponible."
                     ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                         If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                             InstHistPanel.InstallerEntryLabel.Text = "Installer history entries: " & InstHistPanel.InstallerListView.Items.Count & ". No installer history data is available."
                         ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                             InstHistPanel.InstallerEntryLabel.Text = "Entradas en el historial de instaladores: " & InstHistPanel.InstallerListView.Items.Count & ". No hay datos disponibles sobre el historial de instaladores."
+                        ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                            InstHistPanel.InstallerEntryLabel.Text = "Entrées de l'historique de l'installateur : " & InstHistPanel.InstallerListView.Items.Count & ". Aucune donnée sur l'historique de l'installateur n'est disponible."
                         End If
                     End If
                 End If
@@ -8648,7 +8966,7 @@ Public Class MainForm
                     ISOFileDownloadPanel.Label1.Text = "Download ISO files..."
                     ISOFileDownloadPanel.Label2.Text = "Download"
                     ISOFileDownloadPanel.Label4.Text = "Loading web component. Please wait..."
-                    ISOFileDownloadPanel.Label5.Text = "We couldn 't load the web component." & CrLf & CrLf & "This can be caused by an unavailable Internet connection, or by a fault on the website backend. Please try again." & CrLf & "If the problem persists, please try to download the files manually by searching for " & Quote & "download windows 11" & Quote & " or " & Quote & "download windows 10" & Quote & " on the Internet."
+                    ISOFileDownloadPanel.Label5.Text = "We couldn't load the web component." & CrLf & CrLf & "This can be caused by an unavailable Internet connection, or by a fault on the website backend. Please try again." & CrLf & "If the problem persists, please try to download the files manually by searching for " & Quote & "download windows 11" & Quote & " or " & Quote & "download windows 10" & Quote & " on the Internet."
                     ISOFileDownloadPanel.GroupBox1.Text = "Error status"
                     ISOFileDownloadPanel.Button1.Text = "Retry"
                     ISOFileDownloadPanel.OK_Button.Text = "OK"
@@ -8662,12 +8980,21 @@ Public Class MainForm
                     ISOFileDownloadPanel.Button1.Text = "Reintentar"
                     ISOFileDownloadPanel.OK_Button.Text = "Aceptar"
                     ISOFileDownloadPanel.Cancel_Button.Text = "Cancelar"
+                ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                    ISOFileDownloadPanel.Label1.Text = "Télécharger les fichiers ISO..."
+                    ISOFileDownloadPanel.Label2.Text = "Télécharger"
+                    ISOFileDownloadPanel.Label4.Text = "Chargement du composant web. Veuillez patienter..."
+                    ISOFileDownloadPanel.Label5.Text = "Nous n'avons pas pu charger le composant web." & CrLf & CrLf & "Cela peut être dû à une connexion Internet indisponible ou à une défaillance du backend du site Web. Veuillez réessayer." & CrLf & "Si le problème persiste, essayez de télécharger les fichiers manuellement en recherchant " & Quote & "télécharger windows 11" & Quote & " ou " & Quote & "télécharger windows 10" & Quote & " sur Internet."
+                    ISOFileDownloadPanel.GroupBox1.Text = "État d'erreur"
+                    ISOFileDownloadPanel.Button1.Text = "Réesayer"
+                    ISOFileDownloadPanel.OK_Button.Text = "OK"
+                    ISOFileDownloadPanel.Cancel_Button.Text = "Annuler"
                 ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         ISOFileDownloadPanel.Label1.Text = "Download ISO files..."
                         ISOFileDownloadPanel.Label2.Text = "Download"
                         ISOFileDownloadPanel.Label4.Text = "Loading web component. Please wait..."
-                        ISOFileDownloadPanel.Label5.Text = "We couldn 't load the web component." & CrLf & CrLf & "This can be caused by an unavailable Internet connection, or by a fault on the website backend. Please try again." & CrLf & "If the problem persists, please try to download the files manually by searching for " & Quote & "download windows 11" & Quote & " or " & Quote & "download windows 10" & Quote & " on the Internet."
+                        ISOFileDownloadPanel.Label5.Text = "We couldn't load the web component." & CrLf & CrLf & "This can be caused by an unavailable Internet connection, or by a fault on the website backend. Please try again." & CrLf & "If the problem persists, please try to download the files manually by searching for " & Quote & "download windows 11" & Quote & " or " & Quote & "download windows 10" & Quote & " on the Internet."
                         ISOFileDownloadPanel.GroupBox1.Text = "Error status"
                         ISOFileDownloadPanel.Button1.Text = "Retry"
                         ISOFileDownloadPanel.OK_Button.Text = "OK"
@@ -8681,6 +9008,15 @@ Public Class MainForm
                         ISOFileDownloadPanel.Button1.Text = "Reintentar"
                         ISOFileDownloadPanel.OK_Button.Text = "Aceptar"
                         ISOFileDownloadPanel.Cancel_Button.Text = "Cancelar"
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                        ISOFileDownloadPanel.Label1.Text = "Télécharger les fichiers ISO..."
+                        ISOFileDownloadPanel.Label2.Text = "Télécharger"
+                        ISOFileDownloadPanel.Label4.Text = "Chargement du composant web. Veuillez patienter..."
+                        ISOFileDownloadPanel.Label5.Text = "Nous n'avons pas pu charger le composant web." & CrLf & CrLf & "Cela peut être dû à une connexion Internet indisponible ou à une défaillance du backend du site Web. Veuillez réessayer." & CrLf & "Si le problème persiste, essayez de télécharger les fichiers manuellement en recherchant " & Quote & "télécharger windows 11" & Quote & " ou " & Quote & "télécharger windows 10" & Quote & " sur Internet."
+                        ISOFileDownloadPanel.GroupBox1.Text = "État d'erreur"
+                        ISOFileDownloadPanel.Button1.Text = "Réesayer"
+                        ISOFileDownloadPanel.OK_Button.Text = "OK"
+                        ISOFileDownloadPanel.Cancel_Button.Text = "Annuler"
                     End If
                 End If
             ElseIf ISOFileScanPanel.Visible = True Then
@@ -8692,8 +9028,6 @@ Public Class MainForm
                     ISOFileScanPanel.Label3.Text = "Scanning directory for ISO files..."
                     ISOFileScanPanel.Label5.Text = "This is a"
                     ISOFileScanPanel.Label4.Visible = True
-                    ISOFileScanPanel.RadioButton1.Left = 504
-                    ISOFileScanPanel.RadioButton2.Left = 599
                     ISOFileScanPanel.CounterLabel.Text = "Files found so far: " & ISOFileScanPanel.FoundFileNum
                     ISOFileScanPanel.CheckBox1.Text = "Search subdirectories for ISO images"
                     ISOFileScanPanel.Button1.Text = "Browse..."
@@ -8708,14 +9042,26 @@ Public Class MainForm
                     ISOFileScanPanel.Label3.Text = "Escaneando directorio por archivos ISO..."
                     ISOFileScanPanel.Label5.Text = "Este es un instalador de"
                     ISOFileScanPanel.Label4.Visible = False
-                    ISOFileScanPanel.RadioButton1.Left = 586
-                    ISOFileScanPanel.RadioButton2.Left = 681
                     ISOFileScanPanel.CounterLabel.Text = "Archivos encontrados hasta ahora: " & ISOFileScanPanel.FoundFileNum
                     ISOFileScanPanel.CheckBox1.Text = "Buscar en subdirectorios por archivos ISO"
                     ISOFileScanPanel.Button1.Text = "Examinar..."
                     ISOFileScanPanel.OK_Button.Text = "Aceptar"
                     ISOFileScanPanel.Cancel_Button.Text = "Cancelar"
                     ISOFileScanPanel.ISOFolderScanner.Description = "Por favor, elija un directorio para escanear archivos ISO:"
+                ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                    ISOFileScanPanel.Label1.Text = "Recherche des images ISO"
+                    ISOFileScanPanel.Label2.Text = "Répertoire à scanner :"
+                    ISOFileScanPanel.TextBox1.Left = 171
+                    ISOFileScanPanel.TextBox1.Width = 447
+                    ISOFileScanPanel.Label3.Text = "Recherche de fichiers ISO dans le répertoire..."
+                    ISOFileScanPanel.Label5.Text = "Il s'agit d'un installateur de"
+                    ISOFileScanPanel.Label4.Visible = False
+                    ISOFileScanPanel.CounterLabel.Text = "Fichiers trouvés jusqu'ici : " & ISOFileScanPanel.FoundFileNum
+                    ISOFileScanPanel.CheckBox1.Text = "Recherche d'images ISO dans les sous-répertoires"
+                    ISOFileScanPanel.Button1.Text = "Parcourir..."
+                    ISOFileScanPanel.OK_Button.Text = "OK"
+                    ISOFileScanPanel.Cancel_Button.Text = "Annuler"
+                    ISOFileScanPanel.ISOFolderScanner.Description = "Veuillez sélectionner un répertoire pour rechercher les fichiers ISO :"
                 ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         ISOFileScanPanel.Label1.Text = "Scan for ISO images"
@@ -8725,8 +9071,6 @@ Public Class MainForm
                         ISOFileScanPanel.Label3.Text = "Scanning directory for ISO files..."
                         ISOFileScanPanel.Label5.Text = "This is a"
                         ISOFileScanPanel.Label4.Visible = True
-                        ISOFileScanPanel.RadioButton1.Left = 504
-                        ISOFileScanPanel.RadioButton2.Left = 599
                         ISOFileScanPanel.CounterLabel.Text = "Files found so far: " & ISOFileScanPanel.FoundFileNum
                         ISOFileScanPanel.CheckBox1.Text = "Search subdirectories for ISO images"
                         ISOFileScanPanel.Button1.Text = "Browse..."
@@ -8741,14 +9085,26 @@ Public Class MainForm
                         ISOFileScanPanel.Label3.Text = "Escaneando directorio por archivos ISO..."
                         ISOFileScanPanel.Label5.Text = "Este es un instalador de"
                         ISOFileScanPanel.Label4.Visible = False
-                        ISOFileScanPanel.RadioButton1.Left = 586
-                        ISOFileScanPanel.RadioButton2.Left = 681
                         ISOFileScanPanel.CounterLabel.Text = "Archivos encontrados hasta ahora: " & ISOFileScanPanel.FoundFileNum
                         ISOFileScanPanel.CheckBox1.Text = "Buscar en subdirectorios por archivos ISO"
                         ISOFileScanPanel.Button1.Text = "Examinar..."
                         ISOFileScanPanel.OK_Button.Text = "Aceptar"
                         ISOFileScanPanel.Cancel_Button.Text = "Cancelar"
                         ISOFileScanPanel.ISOFolderScanner.Description = "Por favor, elija un directorio para escanear archivos ISO:"
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                        ISOFileScanPanel.Label1.Text = "Recherche des images ISO"
+                        ISOFileScanPanel.Label2.Text = "Répertoire à scanner :"
+                        ISOFileScanPanel.TextBox1.Left = 171
+                        ISOFileScanPanel.TextBox1.Width = 447
+                        ISOFileScanPanel.Label3.Text = "Recherche de fichiers ISO dans le répertoire..."
+                        ISOFileScanPanel.Label5.Text = "Il s'agit d'un installateur de"
+                        ISOFileScanPanel.Label4.Visible = False
+                        ISOFileScanPanel.CounterLabel.Text = "Fichiers trouvés jusqu'ici : " & ISOFileScanPanel.FoundFileNum
+                        ISOFileScanPanel.CheckBox1.Text = "Recherche d'images ISO dans les sous-répertoires"
+                        ISOFileScanPanel.Button1.Text = "Parcourir..."
+                        ISOFileScanPanel.OK_Button.Text = "OK"
+                        ISOFileScanPanel.Cancel_Button.Text = "Annuler"
+                        ISOFileScanPanel.ISOFolderScanner.Description = "Veuillez sélectionner un répertoire pour rechercher les fichiers ISO :"
                     End If
                 End If
             ElseIf LogExistsPanel.Visible = True Then
@@ -8762,6 +9118,11 @@ Public Class MainForm
                     LogExistsPanel.Label2.Text = "¿Desea anexar los contenidos del registro actual al archivo de registro, o desea borrar el archivo de registro existente?"
                     LogExistsPanel.Yes_Button.Text = "Anexar al archivo de registro existente"
                     LogExistsPanel.No_Button.Text = "Borrar archivo de registro existente"
+                ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                    LogExistsPanel.Label1.Text = "Un fichier journal existe déjà"
+                    LogExistsPanel.Label2.Text = "Voulez-vous ajouter le contenu du journal actuel au fichier journal, ou voulez-vous supprimer le fichier journal existant ?"
+                    LogExistsPanel.Yes_Button.Text = "Ajouter au fichier journal existant"
+                    LogExistsPanel.No_Button.Text = "Supprimer le fichier journal existant"
                 ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         LogExistsPanel.Label1.Text = "A log file already exists"
@@ -8773,6 +9134,11 @@ Public Class MainForm
                         LogExistsPanel.Label2.Text = "¿Desea anexar los contenidos del registro actual al archivo de registro, o desea borrar el archivo de registro existente?"
                         LogExistsPanel.Yes_Button.Text = "Anexar al archivo de registro existente"
                         LogExistsPanel.No_Button.Text = "Borrar archivo de registro existente"
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                        LogExistsPanel.Label1.Text = "Un fichier journal existe déjà"
+                        LogExistsPanel.Label2.Text = "Voulez-vous ajouter le contenu du journal actuel au fichier journal, ou voulez-vous supprimer le fichier journal existant ?"
+                        LogExistsPanel.Yes_Button.Text = "Ajouter au fichier journal existant"
+                        LogExistsPanel.No_Button.Text = "Supprimer le fichier journal existant"
                     End If
                 End If
             ElseIf LogMigratePanel.Visible = True Then
@@ -8786,6 +9152,11 @@ Public Class MainForm
                     LogMigratePanel.Label2.Text = "El Instalador manual de Windows 11 ha detectado archivos de registro creados por versiones antiguas del programa. La versión 2.0 utiliza un formato de registro diferente. ¿Desea migrar los contenidos de los archivos antiguos, y anexar los contenidos actuales del registro al archivo de registro?"
                     LogMigratePanel.Yes_Button.Text = "Migrar"
                     LogMigratePanel.No_Button.Text = "No migrar"
+                ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                    LogMigratePanel.Label1.Text = "Migrer les anciens fichiers journaux"
+                    LogMigratePanel.Label2.Text = "L'installateur manuel de Windows 11 a détecté les fichiers journaux créés par les versions précédentes du programme. La version 2.0 utilise un format de journal différent. Voulez-vous migrer le contenu des anciens fichiers, et ajouter le contenu du journal actuel au fichier journal ?"
+                    LogMigratePanel.Yes_Button.Text = "Migrer"
+                    LogMigratePanel.No_Button.Text = "Ne pas migrer"
                 ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         LogMigratePanel.Label1.Text = "Migrate old log files"
@@ -8797,10 +9168,119 @@ Public Class MainForm
                         LogMigratePanel.Label2.Text = "El Instalador manual de Windows 11 ha detectado archivos de registro creados por versiones antiguas del programa. La versión 2.0 utiliza un formato de registro diferente. ¿Desea migrar los contenidos de los archivos antiguos, y anexar los contenidos actuales del registro al archivo de registro?"
                         LogMigratePanel.Yes_Button.Text = "Migrar"
                         LogMigratePanel.No_Button.Text = "No migrar"
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                        LogMigratePanel.Label1.Text = "Migrer les anciens fichiers journaux"
+                        LogMigratePanel.Label2.Text = "L'installateur manuel de Windows 11 a détecté les fichiers journaux créés par les versions précédentes du programme. La version 2.0 utilise un format de journal différent. Voulez-vous migrer le contenu des anciens fichiers, et ajouter le contenu du journal actuel au fichier journal ?"
+                        LogMigratePanel.Yes_Button.Text = "Migrer"
+                        LogMigratePanel.No_Button.Text = "Ne pas migrer"
+                    End If
+                End If
+            ElseIf LowSpacePanel.Visible = True Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+                    LowSpacePanel.Label1.Text = "Low space on selected target directory"
+                    LowSpacePanel.Label2.Text = "The drive where the target directory you have specified is located does not have enough space to store temporary files for installer creation." & CrLf & CrLf & _
+                        "Please choose another directory to save the custom installer, run the program from another location, or free up some space on the drive." & CrLf & _
+                        "Disk space information:" & CrLf & CrLf & _
+                        "- Total size of installers: " & TotalISO_Str & " GB" & CrLf & _
+                        "- Available disk space on " & Quote & drLetter & "\" & Quote & ": " & GBStr & " GB"
+                    LowSpacePanel.OK_Button.Text = "OK"
+                    LowSpacePanel.LinkLabel1.Text = "If this is an active Windows installation (where you have booted your computer to), you may consider using Disk Cleanup."
+                    LowSpacePanel.LinkLabel1.LinkArea = New LinkArea(101, 18)
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+                    LowSpacePanel.Label1.Text = "Poco espacio en directorio de destino señalado"
+                    LowSpacePanel.Label2.Text = "El dispositivo donde el directorio de destino que especificó está ubicado no tiene espacio suficiente para almacenar los archivos temporales para la creación del instalador." & CrLf & CrLf & _
+                        "Por favor, elija otro directorio para guardar el instalador modificado, ejecute el programa desde otra ubicación, o libere algo de espacio en el dispositivo." & CrLf & _
+                        "Información del espacio en disco:" & CrLf & CrLf & _
+                        "- Tamaño total de los instaladores: " & TotalISO_Str & " GB" & CrLf & _
+                        "- Espacio de disco disponible en " & Quote & drLetter & "\" & Quote & ": " & GBStr & " GB"
+                    LowSpacePanel.OK_Button.Text = "Aceptar"
+                    LowSpacePanel.LinkLabel1.Text = "Si esta es una instalación de Windows activa (donde usted inició su equipo), puede considerar utilizando Liberador de espacio en disco."
+                    LowSpacePanel.LinkLabel1.LinkArea = New LinkArea(105, 28)
+                ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                    LowSpacePanel.Label1.Text = "Espace insuffisant dans le répertoire cible sélectionné"
+                    LowSpacePanel.Label2.Text = "Le disque où se trouve le répertoire cible que vous avez spécifié n'a pas assez d'espace pour stocker les fichiers temporaires pour la création de l'installateur." & CrLf & CrLf & _
+                        "Veuillez choisir un autre répertoire pour enregistrer l'installateur personnalisé, exécuter le programme depuis un autre endroit ou libérer de l'espace sur le disque." & CrLf & _
+                        "Informations sur l'espace disque :" & CrLf & CrLf & _
+                        "- Taille totale des installateurs : " & TotalISO_Str & " Go" & CrLf & _
+                        "- Espace disque disponible sur " & Quote & drLetter & "\" & Quote & ": " & GBStr & " Go"
+                    LowSpacePanel.OK_Button.Text = "OK"
+                    LowSpacePanel.LinkLabel1.Text = "S'il s'agit d'une installation Windows active (où vous avez démarré votre ordinateur), vous pouvez envisager d'utiliser " & Quote & "Disk Cleanup" & Quote & "."
+                    LowSpacePanel.LinkLabel1.LinkArea = New LinkArea(111, 23)
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+                    If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                        LowSpacePanel.Label1.Text = "Low space on selected target directory"
+                        LowSpacePanel.Label2.Text = "The drive where the target directory you have specified is located does not have enough space to store temporary files for installer creation." & CrLf & CrLf & _
+                            "Please choose another directory to save the custom installer, run the program from another location, or free up some space on the drive." & CrLf & _
+                            "Disk space information:" & CrLf & CrLf & _
+                            "- Total size of installers: " & TotalISO_Str & " GB" & CrLf & _
+                            "- Available disk space on " & Quote & drLetter & "\" & Quote & ": " & GBStr & " GB"
+                        LowSpacePanel.OK_Button.Text = "OK"
+                        LowSpacePanel.LinkLabel1.Text = "If this is an active Windows installation (where you have booted your computer to), you may consider using Disk Cleanup."
+                        LowSpacePanel.LinkLabel1.LinkArea = New LinkArea(101, 18)
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                        LowSpacePanel.Label1.Text = "Poco espacio en directorio de destino señalado"
+                        LowSpacePanel.Label2.Text = "El dispositivo donde el directorio de destino que especificó está ubicado no tiene espacio suficiente para almacenar los archivos temporales para la creación del instalador." & CrLf & CrLf & _
+                            "Por favor, elija otro directorio para guardar el instalador modificado, ejecute el programa desde otra ubicación, o libere algo de espacio en el dispositivo." & CrLf & _
+                            "Información del espacio en disco:" & CrLf & CrLf & _
+                            "- Tamaño total de los instaladores: " & TotalISO_Str & " GB" & CrLf & _
+                            "- Espacio de disco disponible en " & Quote & drLetter & "\" & Quote & ": " & GBStr & " GB"
+                        LowSpacePanel.OK_Button.Text = "Aceptar"
+                        LowSpacePanel.LinkLabel1.Text = "Si esta es una instalación de Windows activa (donde usted inició su equipo), puede considerar utilizando Liberador de espacio en disco."
+                        LowSpacePanel.LinkLabel1.LinkArea = New LinkArea(105, 28)
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                        LowSpacePanel.Label1.Text = "Espace insuffisant dans le répertoire cible sélectionné"
+                        LowSpacePanel.Label2.Text = "Le disque où se trouve le répertoire cible que vous avez spécifié n'a pas assez d'espace pour stocker les fichiers temporaires pour la création de l'installateur." & CrLf & CrLf & _
+                            "Veuillez choisir un autre répertoire pour enregistrer l'installateur personnalisé, exécuter le programme depuis un autre endroit ou libérer de l'espace sur le disque." & CrLf & _
+                            "Informations sur l'espace disque :" & CrLf & CrLf & _
+                            "- Taille totale des installateurs : " & TotalISO_Str & " Go" & CrLf & _
+                            "- Espace disque disponible sur " & Quote & drLetter & "\" & Quote & ": " & GBStr & " Go"
+                        LowSpacePanel.OK_Button.Text = "OK"
+                        LowSpacePanel.LinkLabel1.Text = "S'il s'agit d'une installation Windows active (où vous avez démarré votre ordinateur), vous pouvez envisager d'utiliser " & Quote & "Disk Cleanup" & Quote & "."
+                        LowSpacePanel.LinkLabel1.LinkArea = New LinkArea(111, 23)
                     End If
                 End If
             ElseIf MethodHelpPanel.Visible = True Then
                 ' If this is still present on stable release, fill this section
+            ElseIf NonExistentTargetDirPanel.Visible = True Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+                    NonExistentTargetDirPanel.Label1.Text = "Non-existent target directory"
+                    NonExistentTargetDirPanel.Label2.Text = "The directory: " & Quote & TextBox4.Text & Quote & " does not exist. The drive containing it may be unavailable or the directory may not have been created yet. In cases like this, by default, the program will use the user directory. What do you want to do?"
+                    NonExistentTargetDirPanel.OK_Button.Text = "Use the user directory"
+                    NonExistentTargetDirPanel.Cancel_Button.Text = "Cancel"
+                    NonExistentTargetDirPanel.Retry_Button.Text = "Specify another directory"
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+                    NonExistentTargetDirPanel.Label1.Text = "Directorio de destino inexistente"
+                    NonExistentTargetDirPanel.Label2.Text = "El directorio: " & Quote & TextBox4.Text & Quote & " no existe. Quizá el disco que lo contiene no esté disponible o el directorio no haya sido creado todavía. En casos como este, por defecto, el programa utilizará el directorio de usuario. ¿Qué desea hacer?"
+                    NonExistentTargetDirPanel.OK_Button.Text = "Utilizar el directorio de usuario"
+                    NonExistentTargetDirPanel.Cancel_Button.Text = "Cancelar"
+                    NonExistentTargetDirPanel.Retry_Button.Text = "Especificar otro directorio"
+                ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                    NonExistentTargetDirPanel.Label1.Text = "Répertoire cible non existant"
+                    NonExistentTargetDirPanel.Label2.Text = "Le répertoire : " & Quote & TextBox4.Text & Quote & " n'existe pas. Le disque qui le contient est peut-être indisponible ou le répertoire n'a peut-être pas encore été créé. Dans des cas comme celui-ci, le programme utilisera par défaut le répertoire de l'utilisateur. Que voulez-vous faire ?"
+                    NonExistentTargetDirPanel.OK_Button.Text = "Utiliser le répertoire de l'utilisateur"
+                    NonExistentTargetDirPanel.Cancel_Button.Text = "Annuler"
+                    NonExistentTargetDirPanel.Retry_Button.Text = "Spécifier un autre répertoire"
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+                    If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                        NonExistentTargetDirPanel.Label1.Text = "Non-existent target directory"
+                        NonExistentTargetDirPanel.Label2.Text = "The directory: " & Quote & TextBox4.Text & Quote & " does not exist. The drive containing it may be unavailable or the directory may not have been created yet. In cases like this, by default, the program will use the user directory. What do you want to do?"
+                        NonExistentTargetDirPanel.OK_Button.Text = "Use the user directory"
+                        NonExistentTargetDirPanel.Cancel_Button.Text = "Cancel"
+                        NonExistentTargetDirPanel.Retry_Button.Text = "Specify another directory"
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                        NonExistentTargetDirPanel.Label1.Text = "Directorio de destino inexistente"
+                        NonExistentTargetDirPanel.Label2.Text = "El directorio: " & Quote & TextBox4.Text & Quote & " no existe. Quizá el disco que lo contiene no esté disponible o el directorio no haya sido creado todavía. En casos como este, por defecto, el programa utilizará el directorio de usuario. ¿Qué desea hacer?"
+                        NonExistentTargetDirPanel.OK_Button.Text = "Utilizar el directorio de usuario"
+                        NonExistentTargetDirPanel.Cancel_Button.Text = "Cancelar"
+                        NonExistentTargetDirPanel.Retry_Button.Text = "Especificar otro directorio"
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                        NonExistentTargetDirPanel.Label1.Text = "Répertoire cible non existant"
+                        NonExistentTargetDirPanel.Label2.Text = "Le répertoire : " & Quote & TextBox4.Text & Quote & " n'existe pas. Le disque qui le contient est peut-être indisponible ou le répertoire n'a peut-être pas encore été créé. Dans des cas comme celui-ci, le programme utilisera par défaut le répertoire de l'utilisateur. Que voulez-vous faire ?"
+                        NonExistentTargetDirPanel.OK_Button.Text = "Utiliser le répertoire de l'utilisateur"
+                        NonExistentTargetDirPanel.Cancel_Button.Text = "Annuler"
+                        NonExistentTargetDirPanel.Retry_Button.Text = "Spécifier un autre répertoire"
+                    End If
+                End If
             ElseIf PrefResetPanel.Visible = True Then
                 If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                     PrefResetPanel.Label1.Text = "Reset preferences?"
@@ -8810,6 +9290,10 @@ Public Class MainForm
                     PrefResetPanel.Label1.Text = "¿Restablecer preferencias?"
                     PrefResetPanel.Label2.Text = "Esto restablecerá TODAS las preferencias a sus valores predeterminados (p.ej., el idioma o el modo de color)"
                     PrefResetPanel.Yes_Button.Text = "Sí"
+                ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                    PrefResetPanel.Label1.Text = "Réinitialiser les préférences ?"
+                    PrefResetPanel.Label2.Text = "Cela réinitialisera TOUTES les préférences à leurs valeurs par défaut (par exemple, la langue ou le mode de couleur)."
+                    PrefResetPanel.Yes_Button.Text = "Oui"
                 ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         PrefResetPanel.Label1.Text = "Reset preferences?"
@@ -8819,6 +9303,10 @@ Public Class MainForm
                         PrefResetPanel.Label1.Text = "¿Restablecer preferencias?"
                         PrefResetPanel.Label2.Text = "Esto restablecerá TODAS las preferencias a sus valores predeterminados (p.ej., el idioma o el modo de color)"
                         PrefResetPanel.Yes_Button.Text = "Sí"
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                        PrefResetPanel.Label1.Text = "Réinitialiser les préférences ?"
+                        PrefResetPanel.Label2.Text = "Cela réinitialisera TOUTES les préférences à leurs valeurs par défaut (par exemple, la langue ou le mode de couleur)."
+                        PrefResetPanel.Yes_Button.Text = "Oui"
                     End If
                 End If
             ElseIf UpdateChoicePanel.Visible = True Then
@@ -8848,6 +9336,19 @@ Public Class MainForm
                     UpdateChoicePanel.TextBox1.Width = 701
                     UpdateChoicePanel.TextBox2.Left = 228
                     UpdateChoicePanel.TextBox2.Width = 651
+                ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                    UpdateChoicePanel.Label1.Text = "Mises à jour disponibles"
+                    UpdateChoicePanel.Label2.Text = "Vous pouvez décider quand vous voulez installer cette mise à jour."
+                    UpdateChoicePanel.Label3.Text = "Cette version :"
+                    UpdateChoicePanel.Label4.Text = "Version actualisée :"
+                    UpdateChoicePanel.Label5.Text = "Lorsque vous cliquez sur " & Quote & "Installer maintenant" & Quote & ", le programme se ferme et se met à jour avec la dernière version."
+                    UpdateChoicePanel.OK_Button.Text = "Installer maintenant"
+                    UpdateChoicePanel.Cancel_Button.Text = "Installer plus tard"
+                    UpdateChoicePanel.RelNotesLink.Text = "Voir les notes de publication"
+                    UpdateChoicePanel.TextBox1.Left = 190
+                    UpdateChoicePanel.TextBox1.Width = 689
+                    UpdateChoicePanel.TextBox2.Left = 222
+                    UpdateChoicePanel.TextBox2.Width = 657
                 ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                         UpdateChoicePanel.Label1.Text = "Updates are available"
@@ -8875,9 +9376,35 @@ Public Class MainForm
                         UpdateChoicePanel.TextBox1.Width = 701
                         UpdateChoicePanel.TextBox2.Left = 228
                         UpdateChoicePanel.TextBox2.Width = 651
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                        UpdateChoicePanel.Label1.Text = "Mises à jour disponibles"
+                        UpdateChoicePanel.Label2.Text = "Vous pouvez décider quand vous voulez installer cette mise à jour."
+                        UpdateChoicePanel.Label3.Text = "Cette version :"
+                        UpdateChoicePanel.Label4.Text = "Version actualisée :"
+                        UpdateChoicePanel.Label5.Text = "Lorsque vous cliquez sur " & Quote & "Installer maintenant" & Quote & ", le programme se ferme et se met à jour avec la dernière version."
+                        UpdateChoicePanel.OK_Button.Text = "Installer maintenant"
+                        UpdateChoicePanel.Cancel_Button.Text = "Installer plus tard"
+                        UpdateChoicePanel.RelNotesLink.Text = "Voir les notes de publication"
+                        UpdateChoicePanel.TextBox1.Left = 190
+                        UpdateChoicePanel.TextBox1.Width = 689
+                        UpdateChoicePanel.TextBox2.Left = 222
+                        UpdateChoicePanel.TextBox2.Width = 657
                     End If
                 End If
             End If
+            AdvancedOptionsPanel.Text = AdvancedOptionsPanel.Label1.Text
+            DisclaimerPanel.Text = DisclaimerPanel.Label1.Text
+            FileCopyPanel.Text = FileCopyPanel.Label1.Text
+            InstCreateAbortPanel.Text = InstCreateAbortPanel.Label1.Text
+            InstHistPanel.Text = InstHistPanel.Label1.Text
+            ISOFileDownloadPanel.Text = ISOFileDownloadPanel.Label1.Text
+            ISOFileScanPanel.Text = ISOFileScanPanel.Label1.Text
+            LogExistsPanel.Text = LogExistsPanel.Label1.Text
+            LogMigratePanel.Text = LogMigratePanel.Label1.Text
+            LowSpacePanel.Text = LowSpacePanel.Label1.Text
+            NonExistentTargetDirPanel.Text = NonExistentTargetDirPanel.Label1.Text
+            PrefResetPanel.Text = PrefResetPanel.Label1.Text
+            UpdateChoicePanel.Text = UpdateChoicePanel.Label1.Text
         End If
         If MiniModeDialog.Visible = True Then
             Try
@@ -9022,9 +9549,5 @@ Public Class MainForm
         End If
         LabelText.Enabled = CheckBox2.Checked = False
         LabelSetButton.Enabled = CheckBox2.Checked = False
-    End Sub
-
-    Private Sub Label74_Click(sender As Object, e As EventArgs) Handles Label74.Click
-        Process.Start("https://mikeyeldey.itch.io/mikeyeldey95")
     End Sub
 End Class
