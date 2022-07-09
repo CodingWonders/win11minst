@@ -280,12 +280,6 @@
   <data name="restdownbox_down" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\restdownbox_down.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Win11_LogoWhite" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Win11.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Win11_LogoDark" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Win11_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="back_arrow" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\back_arrow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -333,15 +327,6 @@
   </data>
   <data name="miniMode_TBRes" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\miniMode_TBRes.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="taskbarIconRightClick" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\taskbarIconRightClick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="taskbarMenuOpen" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\taskbarMenuOpen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="SysTray_Capture" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SysTray_Capture.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="win10inst_pic" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\win10inst_pic.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -606,5 +591,80 @@
   </data>
   <data name="win11minst_topnavbar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\htmlhelp\resources\docs\win11minst-topnavbar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="helpbanner_dm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\dm\helpbanner-dm.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_functionality_dm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\dm\docs\win11minst-functionality-dm.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_help_dm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\dm\docs\win11minst-help-dm.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_info_dm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\dm\docs\win11minst-info-dm.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_instcreateproc_dm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\dm\docs\win11minst-instcreateproc-dm.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_instcreate_dm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\dm\docs\win11minst-instcreate-dm.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_instfinish_dm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\dm\docs\win11minst-instfinish-dm.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_mainscr_dm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\dm\docs\win11minst-mainscr-dm.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_settingreview_dm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\dm\docs\win11minst-settingreview-dm.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_settings_dm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\dm\docs\win11minst-settings-dm.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_topnavbar_dm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\dm\docs\win11minst-topnavbar-dm.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_advoptn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\docs\win11minst-advoptn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_advoptn_dm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\dm\docs\win11minst-advoptn-dm.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_insthist" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\docs\win11minst-insthist.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_insthist_dm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\dm\docs\win11minst-insthist-dm.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_isofiledown_dm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\dm\docs\win11minst-isofiledown-dm.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_7zipdown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\instr\win11minst_7zipdown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_7z_dllr" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\instr\win11minst_7z_dllr.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_7z_regtweak" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\instr\win11minst_7z_regtweak.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_7z_wimr" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\instr\win11minst_7z_wimr.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_oscdimg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\instr\win11minst_oscdimg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_w10instdown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\instr\win11minst_w10instdown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_w11instdown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\instr\win11minst_w11instdown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_win11install" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\instr\win11minst_win11install.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_workdir" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\instr\win11minst_workdir.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
