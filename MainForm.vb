@@ -12,7 +12,7 @@ Imports System.Threading
 Public Class MainForm
     Private isMouseDown As Boolean = False
     Private mouseOffset As Point
-    Dim VerStr As String = "2.0.0100_220703"    ' Reported version. Change this when 'latest' has been committed and published to the repository, to avoid update confusion
+    Dim VerStr As String = "2.0.0100_220710"    ' Reported version. Change this when 'latest' has been committed and published to the repository, to avoid update confusion
     Dim AVerStr As String = My.Application.Info.Version.ToString()     ' Assembly version
     Dim VDescStr As String = "If you want to install Windows 11 on unsupported systems, there's an app for that"
     Dim OffEcho As String = "@echo off"
