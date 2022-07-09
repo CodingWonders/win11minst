@@ -30,6 +30,25 @@ If updates are found:
 
 Congratulations, you have updated the program. If no updates are found, the program will continue startup.
 
+### 2.0.0100_220710
+---
+
+#### **Bugfixes**
+
+- Fixed a bug that would not change external panel titles with the On-the-fly Panel Property Modification (a.k.a., changing the language when external panels were shown)
+- Fixed a bug that caused a `FileNotFound` exception when clicking on `View log file` if the log file had been previously deleted
+
+#### **New features**
+
+- If the target directory does not have enough space to store temporary files, a low space error will appear
+- If the target directory does not exist, the program will warn the user, instead of proceeding with the user directory
+- The Help documentation changes color modes when changing program's
+- The instruction panel is now accessible
+
+#### **Removed/stripped down features**
+
+- The PE version, as well as the PE creation panel (in its infancy), were removed due to lack of usefulness
+
 ### 2.0.0100_220703
 ---
 
