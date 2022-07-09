@@ -26,14 +26,17 @@
         .auto-style3 {
             width: 410px;
         }
+        .link_light {
+            color: rgb(1,92,186);
+        }
     </style>
     <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: center">Help documentation</h3>
     <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left:40px">
-        Help Documentation edition: 2022/07/03 (v2.0.0100)</p>
+        Help Documentation edition: 2022/07/10 (v2.0.0100)</p>
     <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left:40px">
         Version 2.0.0100</p>
     <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left:40px; font-style:italic">
-        This software uses 7-Zip. Copyright (C) 2021 Igor Pavlov. This software uses OSCDIMG. Copyright (C) 1993, 2012 Microsoft Corporation. This software uses DISM. Copyright (C) Microsoft Corporation. Each component is covered by its license terms</p>
+        This software uses 7-Zip. Copyright (C) Igor Pavlov. This software uses OSCDIMG. Copyright (C) 1993, 2012 Microsoft Corporation. This software uses DISM. Copyright (C) Microsoft Corporation. Each component is covered by its license terms</p>
     <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left:40px; font-style:italic">
         <strong>NOTE: </strong>the screenshots shown in the Help documentation come from <span class="auto-style2">Hummingbird</span> releases. At the time of writing, a Stable release of Version 2.0 is not released yet.</p>
     <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left:40px">
@@ -56,14 +59,14 @@
         The installer creation is the program&#39;s premise (and the first option you will see on the Main Menu). It too has had a redesign from 1.0 versions. On this screen, you need to specify a Windows 11 ISO image and a Windows 10 ISO image. Later, you need to specify the name and path of the target installer.</p>
     <img src="Resources/docs/win11minst-instcreate.png" style="height: 480px; width: 813px" class="center" />
     <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left:40px">
-        Version 2.0 allows you to scan a directory for ISO files, and also allows you to download Windows installation images from Microsoft's website 
+        Version 2.0 lets you scan a directory for ISO files, and also lets you download Windows installation images from Microsoft's website 
         (and also build them from files downloaded from UUP Dump (uupdump.net), if administrative privileges are present)</p>
     <table style="width:auto" class="center">
         <tr>
             <td class="auto-style1">
-    <img src="Resources/docs/win11minst-isofilescan.png" style="height: 240px; width: 407px" class="center" /></td>
+                <img src="Resources/docs/win11minst-isofilescan.png" style="height: 240px; width: 407px" class="center" /></td>
             <td>
-    <img src="Resources/docs/win11minst-isofiledown.png" style="height: 240px; width: 417px" class="center"/></td>
+                <img src="Resources/docs/win11minst-isofiledown.png" style="height: 240px; width: 417px" class="center"/></td>
             <td>
                 <img src="Resources/docs/win11minst-isofilebuild.png" style="height: 240px; width: 417px" class="center" />
             </td>
@@ -100,9 +103,9 @@
     <table style="width:auto" class="center">
         <tr>
             <td class="auto-style3">
-    <img src="Resources/docs/win11minst-lightmode.png" style="height: 240px; width: 411px" class="center" /></td>
+                <img src="Resources/docs/win11minst-lightmode.png" style="height: 240px; width: 411px" class="center" /></td>
             <td>
-    <img src="Resources/docs/win11minst-darkmode.png" style="height: 240px; width: 411px" class="center" /></td>
+                <img src="Resources/docs/win11minst-darkmode.png" style="height: 240px; width: 411px" class="center" /></td>
             <td>
                 <img src="Resources/docs/win11minst-topnavbar.png" style="height: 240px; width: 349px" class="center" />
             </td>
@@ -140,6 +143,17 @@
     <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
         Advanced options (REGTWEAK only)</h3>
     <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
-        The advanced options panel allows you to set additional options for the REGTWEAK installer creation method</p>
+        The advanced options panel lets you set additional options for the REGTWEAK installer creation method. It can be useful if you want to skip signing in with a Microsoft account on Windows 11 Pro, or if you want to hide the &quot;System requirements not met&quot; watermark. However, all of this is optional, and is ONLY visible if the program is being run with admin. privileges.</p>
+    <img src="Resources/docs/win11minst-advoptn.png" class="center" />
+    <h2 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        Installer history</h2>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        The installer history lets you see your recently created installers, as well as export them to an XML or HTML file.</p>
+    <img src="Resources/docs/win11minst-insthist.png" class="center" />
+    <h2 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        Image downloads</h2>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        Version 2.0 lets you download Windows 11 and 10 ISO files from Microsoft&#39;s website. If administrative privileges are present, the program also lets you build the images with files downloaded from UUP Dump (<a href="https://uupdump.net" target="_blank" class="link_light">uupdump.net</a>)</p>
+    <img src="Resources/docs/win11minst-isofiledown.png" class="center" />
     </body>
 </html>
