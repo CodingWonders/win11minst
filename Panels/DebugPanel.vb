@@ -9,8 +9,8 @@ Public Class DebugPanel
 
     Private Sub DebugPanel_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         If MainForm.BackColor = Color.FromArgb(243, 243, 243) Then
-            Me.BackColor = Color.White
-            Me.ForeColor = Color.Black
+            BackColor = Color.White
+            ForeColor = Color.Black
             TabPage1.BackColor = Color.White
             TabPage1.ForeColor = Color.Black
             TabPage2.BackColor = Color.White
@@ -23,8 +23,8 @@ Public Class DebugPanel
             OK_Button.BackColor = Color.FromArgb(1, 92, 186)
             OK_Button.ForeColor = Color.White
         ElseIf MainForm.BackColor = Color.FromArgb(32, 32, 32) Then
-            Me.BackColor = Color.FromArgb(43, 43, 43)
-            Me.ForeColor = Color.White
+            BackColor = Color.FromArgb(43, 43, 43)
+            ForeColor = Color.White
             TabPage1.BackColor = Color.FromArgb(43, 43, 43)
             TabPage1.ForeColor = Color.Black
             TabPage2.BackColor = Color.FromArgb(43, 43, 43)

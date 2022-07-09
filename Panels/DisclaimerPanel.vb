@@ -68,16 +68,16 @@ Public Class DisclaimerPanel
         End If
         Text = Label1.Text
         If MainForm.BackColor = Color.FromArgb(243, 243, 243) Then
-            Me.BackColor = Color.White
-            Me.ForeColor = Color.Black
+            BackColor = Color.White
+            ForeColor = Color.Black
             Panel1.BackColor = Color.FromArgb(243, 243, 243)
             TextBox1.BackColor = Color.White
             TextBox1.ForeColor = Color.Black
             OK_Button.BackColor = Color.FromArgb(1, 92, 186)
             OK_Button.ForeColor = Color.White
         ElseIf MainForm.BackColor = Color.FromArgb(32, 32, 32) Then
-            Me.BackColor = Color.FromArgb(43, 43, 43)
-            Me.ForeColor = Color.White
+            BackColor = Color.FromArgb(43, 43, 43)
+            ForeColor = Color.White
             Panel1.BackColor = Color.FromArgb(32, 32, 32)
             TextBox1.BackColor = Color.FromArgb(43, 43, 43)
             TextBox1.ForeColor = Color.White

@@ -66,8 +66,8 @@ Public Class InstHistPanel
         End If
         Text = Label1.Text
         If MainForm.BackColor = Color.FromArgb(243, 243, 243) Then
-            Me.BackColor = Color.White
-            Me.ForeColor = Color.Black
+            BackColor = Color.White
+            ForeColor = Color.Black
             Panel1.BackColor = Color.FromArgb(243, 243, 243)
             InstallerListView.ForeColor = Color.Black
             InstallerListView.BackColor = Color.White
@@ -77,8 +77,8 @@ Public Class InstHistPanel
             ExportOptnBtn.BackColor = Color.FromArgb(243, 243, 243)
             ExportOptnBtn.ForeColor = Color.Black
         ElseIf MainForm.BackColor = Color.FromArgb(32, 32, 32) Then
-            Me.BackColor = Color.FromArgb(43, 43, 43)
-            Me.ForeColor = Color.White
+            BackColor = Color.FromArgb(43, 43, 43)
+            ForeColor = Color.White
             Panel1.BackColor = Color.FromArgb(32, 32, 32)
             InstallerListView.ForeColor = Color.White
             InstallerListView.BackColor = Color.FromArgb(43, 43, 43)

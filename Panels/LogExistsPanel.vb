@@ -38,19 +38,19 @@ Public Class LogExistsPanel
         End If
         Text = Label1.Text
         If MainForm.BackColor = Color.FromArgb(243, 243, 243) Then
-            Me.BackColor = Color.White
-            Me.ForeColor = Color.Black
+            BackColor = Color.White
+            ForeColor = Color.Black
             Panel1.BackColor = Color.FromArgb(243, 243, 243)
             Yes_Button.BackColor = Color.FromArgb(1, 92, 186)
             Yes_Button.ForeColor = Color.White
         ElseIf MainForm.BackColor = Color.FromArgb(32, 32, 32) Then
-            Me.BackColor = Color.FromArgb(43, 43, 43)
-            Me.ForeColor = Color.White
+            BackColor = Color.FromArgb(43, 43, 43)
+            ForeColor = Color.White
             Panel1.BackColor = Color.FromArgb(32, 32, 32)
             Yes_Button.BackColor = Color.FromArgb(76, 194, 255)
             Yes_Button.ForeColor = Color.Black
         End If
-        My.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Exclamation)
+        Beep()
     End Sub
 
     Private Sub No_Button_Click(sender As Object, e As EventArgs) Handles No_Button.Click
