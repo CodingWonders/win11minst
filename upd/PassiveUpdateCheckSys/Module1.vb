@@ -38,6 +38,9 @@ Module Module1
             Process.Start("powershell", "Remove-Item -Path .\new -Recurse -Force").WaitForExit()
             DeleteTmpSettings()
             RestoreSettings()
+            If File.Exists(".\version") Then
+                File.Delete(".\version")
+            End If
             Thread.Sleep(3000)
             Process.Start(".\win11minst.exe")
             Console.WriteLine(CrLf & _
