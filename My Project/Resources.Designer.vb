@@ -39,7 +39,7 @@ Namespace My.Resources
         Friend ReadOnly Property ResourceManager() As Global.System.Resources.ResourceManager
             Get
                 If Object.ReferenceEquals(resourceMan, Nothing) Then
-                    Dim temp As Global.System.Resources.ResourceManager = New Global.System.Resources.ResourceManager("Windows_11_Manual_Installer_2._0.Resources", GetType(Resources).Assembly)
+                    Dim temp As Global.System.Resources.ResourceManager = New Global.System.Resources.ResourceManager("Windows_11_Manual_Installer.Resources", GetType(Resources).Assembly)
                     resourceMan = temp
                 End If
                 Return resourceMan
@@ -293,6 +293,16 @@ Namespace My.Resources
         '''<summary>
         '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         '''</summary>
+        Friend ReadOnly Property csvfile_cms() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("csvfile_cms", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        '''</summary>
         Friend ReadOnly Property darkmode() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("darkmode", resourceCulture)
@@ -406,16 +416,6 @@ Namespace My.Resources
         Friend ReadOnly Property first_step_dark() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("first_step_dark", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property first_step_light() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("first_step_light", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -546,6 +546,16 @@ Namespace My.Resources
         Friend ReadOnly Property home_filled() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("home_filled", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property htmlfile_cms() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("htmlfile_cms", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -736,16 +746,6 @@ Namespace My.Resources
         Friend ReadOnly Property last_step_dark() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("last_step_dark", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property last_step_light() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("last_step_light", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -1021,16 +1021,6 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property next_step_light() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("next_step_light", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
         '''  Busca un recurso adaptado de tipo System.Drawing.Icon similar a (Icono).
         '''</summary>
         Friend ReadOnly Property NotifyIconRes_Dark() As System.Drawing.Icon
@@ -1166,16 +1156,6 @@ Namespace My.Resources
         Friend ReadOnly Property prev_step_dark() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("prev_step_dark", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property prev_step_light() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("prev_step_light", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -1885,6 +1865,16 @@ Namespace My.Resources
         Friend ReadOnly Property x86_light() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("x86_light", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property xmlfile_cms() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("xmlfile_cms", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
