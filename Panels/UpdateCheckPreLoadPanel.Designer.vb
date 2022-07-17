@@ -28,6 +28,7 @@ Partial Class UpdateCheckPreLoadPanel
         Me.Label1 = New System.Windows.Forms.Label()
         Me.UpdateCancelButton = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.RelNotesLink = New System.Windows.Forms.LinkLabel()
         Me.TextBox2 = New System.Windows.Forms.TextBox()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -47,7 +48,7 @@ Partial Class UpdateCheckPreLoadPanel
         '
         'ProgressRingPic
         '
-        Me.ProgressRingPic.Image = Global.Windows_11_Manual_Installer_2._0.My.Resources.Resources.progressring_indeterminate
+        Me.ProgressRingPic.Image = Global.Windows_11_Manual_Installer.My.Resources.Resources.progressring_indeterminate
         Me.ProgressRingPic.Location = New System.Drawing.Point(12, 7)
         Me.ProgressRingPic.Name = "ProgressRingPic"
         Me.ProgressRingPic.Size = New System.Drawing.Size(42, 50)
@@ -79,6 +80,7 @@ Partial Class UpdateCheckPreLoadPanel
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.RelNotesLink)
         Me.GroupBox1.Controls.Add(Me.TextBox2)
         Me.GroupBox1.Controls.Add(Me.TextBox1)
         Me.GroupBox1.Controls.Add(Me.Label3)
@@ -92,6 +94,19 @@ Partial Class UpdateCheckPreLoadPanel
         Me.GroupBox1.TabIndex = 18
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Version information"
+        '
+        'RelNotesLink
+        '
+        Me.RelNotesLink.AutoEllipsis = True
+        Me.RelNotesLink.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
+        Me.RelNotesLink.LinkColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(92, Byte), Integer), CType(CType(186, Byte), Integer))
+        Me.RelNotesLink.Location = New System.Drawing.Point(268, 181)
+        Me.RelNotesLink.Name = "RelNotesLink"
+        Me.RelNotesLink.Size = New System.Drawing.Size(217, 23)
+        Me.RelNotesLink.TabIndex = 18
+        Me.RelNotesLink.TabStop = True
+        Me.RelNotesLink.Text = "View release notes"
+        Me.RelNotesLink.TextAlign = System.Drawing.ContentAlignment.TopRight
         '
         'TextBox2
         '
@@ -241,5 +256,6 @@ Partial Class UpdateCheckPreLoadPanel
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents closeBox As System.Windows.Forms.PictureBox
     Friend WithEvents closeToolTip As System.Windows.Forms.ToolTip
+    Friend WithEvents RelNotesLink As System.Windows.Forms.LinkLabel
 
 End Class

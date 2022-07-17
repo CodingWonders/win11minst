@@ -34,7 +34,7 @@ Partial Class InstProjectReuseDialog
         '
         'PictureBox1
         '
-        Me.PictureBox1.Image = Global.Windows_11_Manual_Installer_2._0.My.Resources.Resources.question_mark
+        Me.PictureBox1.Image = Global.Windows_11_Manual_Installer.My.Resources.Resources.question_mark
         Me.PictureBox1.Location = New System.Drawing.Point(30, 48)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(48, 48)

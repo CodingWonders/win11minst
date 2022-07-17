@@ -68,7 +68,7 @@ Partial Class MiniModeDialog
         '
         'PictureBox2
         '
-        Me.PictureBox2.Image = Global.Windows_11_Manual_Installer_2._0.My.Resources.Resources.miniMode_TBRes
+        Me.PictureBox2.Image = Global.Windows_11_Manual_Installer.My.Resources.Resources.miniMode_TBRes
         Me.PictureBox2.Location = New System.Drawing.Point(39, 28)
         Me.PictureBox2.Name = "PictureBox2"
         Me.PictureBox2.Size = New System.Drawing.Size(48, 48)
@@ -78,7 +78,7 @@ Partial Class MiniModeDialog
         '
         'tbPic
         '
-        Me.tbPic.Image = Global.Windows_11_Manual_Installer_2._0.My.Resources.Resources.tb_White
+        Me.tbPic.Image = Global.Windows_11_Manual_Installer.My.Resources.Resources.tb_White
         Me.tbPic.Location = New System.Drawing.Point(0, 498)
         Me.tbPic.Name = "tbPic"
         Me.tbPic.Size = New System.Drawing.Size(806, 48)
@@ -98,7 +98,7 @@ Partial Class MiniModeDialog
         '
         'PictureBox1
         '
-        Me.PictureBox1.Image = Global.Windows_11_Manual_Installer_2._0.My.Resources.Resources.context
+        Me.PictureBox1.Image = Global.Windows_11_Manual_Installer.My.Resources.Resources.context
         Me.PictureBox1.Location = New System.Drawing.Point(413, 218)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(322, 298)

@@ -36,6 +36,7 @@ Partial Class InstHistPanel
         Me.ExportOptionsCMS = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.XMLExportOptn = New System.Windows.Forms.ToolStripMenuItem()
         Me.HTMLExportOptn = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CSVExportOptn = New System.Windows.Forms.ToolStripMenuItem()
         Me.Panel1.SuspendLayout()
         Me.ExportOptionsCMS.SuspendLayout()
         Me.SuspendLayout()
@@ -61,7 +62,7 @@ Partial Class InstHistPanel
         Me.ExportOptnBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.ExportOptnBtn.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ExportOptnBtn.ForeColor = System.Drawing.Color.Black
-        Me.ExportOptnBtn.Image = Global.Windows_11_Manual_Installer_2._0.My.Resources.Resources.export_light
+        Me.ExportOptnBtn.Image = Global.Windows_11_Manual_Installer.My.Resources.Resources.export_light
         Me.ExportOptnBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.ExportOptnBtn.Location = New System.Drawing.Point(22, 24)
         Me.ExportOptnBtn.Name = "ExportOptnBtn"
@@ -130,22 +131,30 @@ Partial Class InstHistPanel
         'ExportOptionsCMS
         '
         Me.ExportOptionsCMS.Font = New System.Drawing.Font("Segoe UI", 11.25!)
-        Me.ExportOptionsCMS.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.XMLExportOptn, Me.HTMLExportOptn})
+        Me.ExportOptionsCMS.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.XMLExportOptn, Me.HTMLExportOptn, Me.CSVExportOptn})
         Me.ExportOptionsCMS.Name = "ExportOptionsCMS"
-        Me.ExportOptionsCMS.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.ExportOptionsCMS.Size = New System.Drawing.Size(217, 52)
+        Me.ExportOptionsCMS.Size = New System.Drawing.Size(217, 76)
         '
         'XMLExportOptn
         '
+        Me.XMLExportOptn.Image = Global.Windows_11_Manual_Installer.My.Resources.Resources.xmlfile_cms
         Me.XMLExportOptn.Name = "XMLExportOptn"
         Me.XMLExportOptn.Size = New System.Drawing.Size(216, 24)
         Me.XMLExportOptn.Text = "Export to XML file..."
         '
         'HTMLExportOptn
         '
+        Me.HTMLExportOptn.Image = Global.Windows_11_Manual_Installer.My.Resources.Resources.htmlfile_cms
         Me.HTMLExportOptn.Name = "HTMLExportOptn"
         Me.HTMLExportOptn.Size = New System.Drawing.Size(216, 24)
         Me.HTMLExportOptn.Text = "Export to HTML file..."
+        '
+        'CSVExportOptn
+        '
+        Me.CSVExportOptn.Image = Global.Windows_11_Manual_Installer.My.Resources.Resources.csvfile_cms
+        Me.CSVExportOptn.Name = "CSVExportOptn"
+        Me.CSVExportOptn.Size = New System.Drawing.Size(216, 24)
+        Me.CSVExportOptn.Text = "Export to CSV file..."
         '
         'InstHistPanel
         '
@@ -184,5 +193,6 @@ Partial Class InstHistPanel
     Friend WithEvents ExportOptionsCMS As System.Windows.Forms.ContextMenuStrip
     Friend WithEvents XMLExportOptn As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents HTMLExportOptn As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents CSVExportOptn As System.Windows.Forms.ToolStripMenuItem
 
 End Class

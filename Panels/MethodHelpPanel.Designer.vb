@@ -179,7 +179,7 @@ Partial Class MethodHelpPanel
         '
         'PictureBox1
         '
-        Me.PictureBox1.Image = Global.Windows_11_Manual_Installer_2._0.My.Resources.Resources.wimr_mh
+        Me.PictureBox1.Image = Global.Windows_11_Manual_Installer.My.Resources.Resources.wimr_mh
         Me.PictureBox1.Location = New System.Drawing.Point(26, 0)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(96, 96)
@@ -209,7 +209,7 @@ Partial Class MethodHelpPanel
         '
         'PictureBox2
         '
-        Me.PictureBox2.Image = Global.Windows_11_Manual_Installer_2._0.My.Resources.Resources.dllr_mh
+        Me.PictureBox2.Image = Global.Windows_11_Manual_Installer.My.Resources.Resources.dllr_mh
         Me.PictureBox2.Location = New System.Drawing.Point(26, 0)
         Me.PictureBox2.Name = "PictureBox2"
         Me.PictureBox2.Size = New System.Drawing.Size(96, 96)
@@ -239,7 +239,7 @@ Partial Class MethodHelpPanel
         '
         'PictureBox3
         '
-        Me.PictureBox3.Image = Global.Windows_11_Manual_Installer_2._0.My.Resources.Resources.regtweak_mh
+        Me.PictureBox3.Image = Global.Windows_11_Manual_Installer.My.Resources.Resources.regtweak_mh
         Me.PictureBox3.Location = New System.Drawing.Point(26, 0)
         Me.PictureBox3.Name = "PictureBox3"
         Me.PictureBox3.Size = New System.Drawing.Size(96, 96)

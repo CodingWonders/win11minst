@@ -242,14 +242,14 @@ Partial Class ISOFileDownloadPanel
         '
         'UAToolStripMenuItem
         '
-        Me.UAToolStripMenuItem.Image = Global.Windows_11_Manual_Installer_2._0.My.Resources.Resources.linux_ua
+        Me.UAToolStripMenuItem.Image = Global.Windows_11_Manual_Installer.My.Resources.Resources.linux_ua
         Me.UAToolStripMenuItem.Name = "UAToolStripMenuItem"
         Me.UAToolStripMenuItem.Size = New System.Drawing.Size(155, 24)
         Me.UAToolStripMenuItem.Text = "<ua>"
         '
         'BuildModeToolStripMenuItem
         '
-        Me.BuildModeToolStripMenuItem.Image = Global.Windows_11_Manual_Installer_2._0.My.Resources.Resources.build_mode
+        Me.BuildModeToolStripMenuItem.Image = Global.Windows_11_Manual_Installer.My.Resources.Resources.build_mode
         Me.BuildModeToolStripMenuItem.Name = "BuildModeToolStripMenuItem"
         Me.BuildModeToolStripMenuItem.Size = New System.Drawing.Size(155, 24)
         Me.BuildModeToolStripMenuItem.Text = "Build mode"

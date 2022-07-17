@@ -112,7 +112,7 @@ Partial Class UpdateChoicePanel
         '
         'PictureBox1
         '
-        Me.PictureBox1.Image = Global.Windows_11_Manual_Installer_2._0.My.Resources.Resources.update_screen_light
+        Me.PictureBox1.Image = Global.Windows_11_Manual_Installer.My.Resources.Resources.update_screen_light
         Me.PictureBox1.Location = New System.Drawing.Point(0, 0)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(960, 400)
@@ -160,7 +160,7 @@ Partial Class UpdateChoicePanel
         'PictureBox2
         '
         Me.PictureBox2.BackColor = System.Drawing.Color.Transparent
-        Me.PictureBox2.Image = Global.Windows_11_Manual_Installer_2._0.My.Resources.Resources.logo_wide
+        Me.PictureBox2.Image = Global.Windows_11_Manual_Installer.My.Resources.Resources.logo_wide
         Me.PictureBox2.Location = New System.Drawing.Point(86, 146)
         Me.PictureBox2.Name = "PictureBox2"
         Me.PictureBox2.Size = New System.Drawing.Size(793, 85)

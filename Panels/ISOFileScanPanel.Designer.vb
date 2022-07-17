@@ -150,6 +150,8 @@ Partial Class ISOFileScanPanel
         '
         Me.TextBox1.Location = New System.Drawing.Point(150, 73)
         Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.ReadOnly = True
+        Me.TextBox1.ShortcutsEnabled = False
         Me.TextBox1.Size = New System.Drawing.Size(468, 23)
         Me.TextBox1.TabIndex = 7
         '
@@ -209,7 +211,7 @@ Partial Class ISOFileScanPanel
         '
         'PictureBox1
         '
-        Me.PictureBox1.Image = Global.Windows_11_Manual_Installer_2._0.My.Resources.Resources.pref_reset
+        Me.PictureBox1.Image = Global.Windows_11_Manual_Installer.My.Resources.Resources.pref_reset
         Me.PictureBox1.Location = New System.Drawing.Point(724, 74)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(20, 20)
