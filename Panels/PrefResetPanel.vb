@@ -69,51 +69,45 @@ Public Class PrefResetPanel
     Private Sub Yes_Button_Click(sender As Object, e As EventArgs) Handles Yes_Button.Click
         ' Begin resetting preferences
         Yes_Button.Visible = False
-        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then
-            Label2.Text = "Resetting preferences. Please wait..."
-        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Then
-
-        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Then
-            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Or MainForm.ComboBox4.SelectedItem = "Anglais" Then
+            Label3.Text = "Resetting preferences. Please wait..."
+            No_Button.Text = "OK"
+        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Or MainForm.ComboBox4.SelectedItem = "Espagnol" Then
+            Label3.Text = "Restableciendo preferencias. Por favor, espere..."
+            No_Button.Text = "Aceptar"
+        ElseIf MainForm.ComboBox4.SelectedItem = "French" Or MainForm.ComboBox4.SelectedItem = "Francés" Or MainForm.ComboBox4.SelectedItem = "Français" Then
+            Label3.Text = "Réinitialisation des paramètres en cours. Veuillez patienter..."
+            No_Button.Text = "OK"
+        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Or MainForm.ComboBox4.SelectedItem = "Automatique" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                Label3.Text = "Resetting preferences. Please wait..."
+                No_Button.Text = "OK"
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                Label3.Text = "Restableciendo preferencias. Por favor, espere..."
                 No_Button.Text = "Aceptar"
-            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                Label3.Text = "Réinitialisation des paramètres en cours. Veuillez patienter..."
                 No_Button.Text = "OK"
             End If
         End If
         ProgressBar1.Value = 0
         ProgressBar1.Visible = True
         Label3.Visible = True
-
-        If MainForm.ComboBox1.Items.Contains("Automático") Then
+        MainForm.ResetSettings()
+        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Or MainForm.ComboBox4.SelectedItem = "Anglais" Then
+            Label3.Text = "The preferences have been reset successfully."
+        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Or MainForm.ComboBox4.SelectedItem = "Espagnol" Then
+            Label3.Text = "Las preferencias han sido restablecidas satisfactoriamente."
+        ElseIf MainForm.ComboBox4.SelectedItem = "French" Or MainForm.ComboBox4.SelectedItem = "Francés" Or MainForm.ComboBox4.SelectedItem = "Français" Then
+            Label3.Text = "Les paramètres ont été réinitialisés avec succès."
+        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Or MainForm.ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
-                MainForm.ComboBox1.Items.Add("Light" & _
-                                             "Dark" & _
-                                             "Automatic")
-                MainForm.ComboBox1.SelectedItem = "Automatic"
-                MainForm.ComboBox1.Items.Remove("Claro" & _
-                                                "Oscuro" & _
-                                                "Automático")
-                If MainForm.ComboBox1.Items.Count > 3 Then
-                    Do Until MainForm.ComboBox1.Items.Count = 3
-                        MainForm.ComboBox1.Items.RemoveAt(3)
-                    Loop
-                End If
+                Label3.Text = "The preferences have been reset successfully."
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
-
+                Label3.Text = "Las preferencias han sido restablecidas satisfactoriamente."
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                Label3.Text = "Les paramètres ont été réinitialisés avec succès."
             End If
         End If
-        If MainForm.BackColor = Color.FromArgb(243, 243, 243) Then
-            BackColor = Color.White
-            ForeColor = Color.Black
-            Panel1.BackColor = Color.FromArgb(243, 243, 243)
-        ElseIf MainForm.BackColor = Color.FromArgb(32, 32, 32) Then
-            BackColor = Color.FromArgb(43, 43, 43)
-            ForeColor = Color.White
-            Panel1.BackColor = Color.FromArgb(32, 32, 32)
-        End If
-        MainForm.ComboBox4.SelectedItem = "Automatic"
-        MainForm.LabelText.Text = "Windows11"
-        MainForm.LabelSetButton.PerformClick()
-        ProgressBar1.Value = 100
     End Sub
 End Class
