@@ -12,9 +12,9 @@ Imports System.Threading
 Public Class MainForm
     Private isMouseDown As Boolean = False
     Private mouseOffset As Point
-    Dim VerStr As String = "2.0.0100_220710"    ' Reported version. Change this when 'latest' has been committed and published to the repository, to avoid update confusion
-    Dim AVerStr As String = My.Application.Info.Version.ToString()     ' Assembly version
-    Dim VDescStr As String = "If you want to install Windows 11 on unsupported systems, there's an app for that"
+    Public VerStr As String = "2.0.0100_220717"    ' Reported version. Change this when 'latest' has been committed and published to the repository, to avoid update confusion
+    Public AVerStr As String = My.Application.Info.Version.ToString()     ' Assembly version
+    Dim VDescStr As String = ""
     Dim OffEcho As String = "@echo off"
     Dim wmiget As String
     Dim StDebugTime As Date = Now
@@ -94,6 +94,7 @@ Public Class MainForm
     Public TotalISO_Str As String
     Dim HTMLname As String
     Dim HTMLInstrName As String
+    Dim WasMaximized As Boolean
 
     ' Left mouse button pressed
     Private Sub titlePanel_MouseDown(sender As Object, e As MouseEventArgs) Handles titlePanel.MouseDown, TitleBar.MouseDown
@@ -202,6 +203,11 @@ Public Class MainForm
 
     Private Sub closeBox_Click(sender As Object, e As EventArgs) Handles closeBox.Click, LogoPic.MouseDoubleClick
         If CheckBox3.Checked = True Then
+            If WindowState = FormWindowState.Maximized Then
+                WasMaximized = True
+            Else
+                WasMaximized = False
+            End If
             ' The following code snippet determines the check state of "Don't show this again"
             If Not File.Exists(".\noshow") Then
                 MiniModeDialog.Show()
@@ -646,16 +652,38 @@ Public Class MainForm
         File.Delete(".\upd.exe")
     End Sub
 
+    Sub HideHummingbirdBranchPromotions()
+        LinkLabel11.Visible = False
+        TableLayoutPanel2.ColumnCount = 3
+    End Sub
+
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Control.CheckForIllegalCrossThreadCalls = False
         If File.Exists(".\upd.exe") Then
             DeleteUpdateInstaller()
         End If
+        If isHummingbird Then
+            HideHummingbirdBranchPromotions()
+        End If
         VersionToolStripMenuItem.Text = "version " & VerStr & " (assembly version " & AVerStr & ")"
         Label72.Text = "version " & VerStr & " (assembly version " & AVerStr & ")"
         Label74.Visible = True
         If VDescStr = "" Then
-            Label74.Text = "Blame Microsoft for pushing the system requirements, not your computer for not meeting them."
+            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+                Label74.Text = "Blame Microsoft for pushing the system requirements, not your computer for not meeting them."
+            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+                Label74.Text = "Eche la culpa a Microsoft por forzar los requisitos del sistema, no a su equipo por no conocerlos."
+            ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                Label74.Text = "C'est à Microsoft qu'il incombe d'imposer la configuration requise, et non à votre ordinateur de ne pas la respecter."
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+                If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                    Label74.Text = "Blame Microsoft for pushing the system requirements, not your computer for not meeting them."
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                    Label74.Text = "Eche la culpa a Microsoft por forzar los requisitos del sistema, no a su equipo por no conocerlos."
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                    Label74.Text = "C'est à Microsoft qu'il incombe d'imposer la configuration requise, et non à votre ordinateur de ne pas la respecter."
+                End If
+            End If
         Else
             Label74.Text = VDescStr
         End If
@@ -696,10 +724,19 @@ Public Class MainForm
         End If
         If File.Exists(".\version") Then
             needsUpdates = False
+            Try
+                My.Computer.FileSystem.WriteAllText(".\version", VerStr, False)
+            Catch ex As Exception
+                UpdateCheckPreLoadPanel.TextBox1.Text = VerStr
+            End Try
             UpdateCheckPreLoadPanel.ShowDialog()
         Else
             needsUpdates = True
-            My.Computer.FileSystem.WriteAllText(".\version", VerStr, False, ASCII)
+            Try
+                My.Computer.FileSystem.WriteAllText(".\version", VerStr, False)
+            Catch ex As Exception
+                UpdateCheckPreLoadPanel.TextBox1.Text = VerStr
+            End Try
         End If
         If needsUpdates Then
             If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
@@ -842,12 +879,25 @@ Public Class MainForm
         PictureBox4.BackColor = Color.Transparent
         PictureBox18.BackColor = Color.Transparent
 
-        ' This is for the top-right resize panel, to not make the
+        ' This is for the top-right resize panel, not to make the
         ' thought that someone has bitten the Close button (bite into an apple, not into a close button)
         TopRightResizePanel.BackColor = BackColor
         BottomRightResizePanel.BackColor = WelcomePanel.BackColor
-
-        StatusTSI.Text = "No installers are being created at this time"
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+            StatusTSI.Text = "No installers are being created at this time"
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+            StatusTSI.Text = "No se está creando ningún instalador en estos momentos"
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            StatusTSI.Text = "Aucun installateur n'est en cours de création pour le moment"
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                StatusTSI.Text = "No installers are being created at this time"
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                StatusTSI.Text = "No se está creando ningún instalador en estos momentos"
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                StatusTSI.Text = "Aucun installateur n'est en cours de création pour le moment"
+            End If
+        End If
         Dim rkWallPaper As RegistryKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", False)
         Dim WallpaperPath As String = rkWallPaper.GetValue("WallPaper").ToString()
         rkWallPaper.Close()
@@ -873,7 +923,6 @@ Public Class MainForm
             wmiform.TextBox1.Text = wmiform.TextBox1.Text.Replace("Model", "").Trim()
         End If
         Button6.Enabled = False
-
         modelLabel.Text = wmiform.TextBox1.Text
         MaximumSize = Screen.FromControl(Me).WorkingArea.Size
         File.Delete(".\wmi.bat")
@@ -1370,18 +1419,18 @@ Public Class MainForm
             Label76.Text = "BIOS/UEFI-CSM (ID: 0x00)"
         Else
             If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
-                PC_DETAIL_Label.Text = "Select this option for systems that only support UEFI" & CrLf & "NOTE: you can enable UEFI-CSM on your system. If you don't know how, check one of the links below."
+                PC_DETAIL_Label.Text = "Select this option for systems that only support UEFI" & CrLf & "NOTE: you can enable UEFI-CSM on your system. If you don't know how, check one of the links below." & CrLf & CrLf & "WARNING: enabling CSM on your system may require you to reinstall Windows, if the system does not correctly detect the boot drive's partition table after doing the modification"
             ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
-                PC_DETAIL_Label.Text = "Seleccione esta opción para sistemas que solo soporten UEFI" & CrLf & "NOTA: usted puede habilitar UEFI-CSM en su sistema. Si no sabe cómo, compruebe uno de los enlaces de abajo."
+                PC_DETAIL_Label.Text = "Seleccione esta opción para sistemas que solo soporten UEFI" & CrLf & "NOTA: usted puede habilitar UEFI-CSM en su sistema. Si no sabe cómo, compruebe uno de los enlaces de abajo." & CrLf & CrLf & "ADVERTENCIA: habilitar CSM en su sistema podría hacerle reinstalar Windows, si el sistema no reconociese correctamente la tabla de particiones del disco de arranque después de la modificación"
             ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
-                PC_DETAIL_Label.Text = "Sélectionnez cette option pour les systèmes qui ne prennent en charge que l'UEFI." & CrLf & "NOTE : vous pouvez activer UEFI-CSM sur votre système. Si vous ne savez pas comment faire, consultez l'un des liens ci-dessous."
+                PC_DETAIL_Label.Text = "Sélectionnez cette option pour les systèmes qui ne prennent en charge que l'UEFI." & CrLf & "NOTE : vous pouvez activer UEFI-CSM sur votre système. Si vous ne savez pas comment faire, consultez l'un des liens ci-dessous." & CrLf & CrLf & "AVERTISSEMENT : l'activation de CSM sur votre système peut vous obliger à réinstaller Windows, si le système ne détecte pas correctement la table de partition du lecteur de démarrage après avoir effectué la modification"
             ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                 If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
-                    PC_DETAIL_Label.Text = "Select this option for systems that only support UEFI" & CrLf & "NOTE: you can enable UEFI-CSM on your system. If you don't know how, check one of the links below."
+                    PC_DETAIL_Label.Text = "Select this option for systems that only support UEFI" & CrLf & "NOTE: you can enable UEFI-CSM on your system. If you don't know how, check one of the links below." & CrLf & CrLf & "WARNING: enabling CSM on your system may require you to reinstall Windows, if the system does not correctly detect the boot drive's partition table after doing the modification"
                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
-                    PC_DETAIL_Label.Text = "Seleccione esta opción para sistemas que solo soporten UEFI" & CrLf & "NOTA: usted puede habilitar UEFI-CSM en su sistema. Si no sabe cómo, compruebe uno de los enlaces de abajo."
+                    PC_DETAIL_Label.Text = "Seleccione esta opción para sistemas que solo soporten UEFI" & CrLf & "NOTA: usted puede habilitar UEFI-CSM en su sistema. Si no sabe cómo, compruebe uno de los enlaces de abajo." & CrLf & CrLf & "ADVERTENCIA: habilitar CSM en su sistema podría hacerle reinstalar Windows, si el sistema no reconociese correctamente la tabla de particiones del disco de arranque después de la modificación"
                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
-                    PC_DETAIL_Label.Text = "Sélectionnez cette option pour les systèmes qui ne prennent en charge que l'UEFI." & CrLf & "NOTE : vous pouvez activer UEFI-CSM sur votre système. Si vous ne savez pas comment faire, consultez l'un des liens ci-dessous."
+                    PC_DETAIL_Label.Text = "Sélectionnez cette option pour les systèmes qui ne prennent en charge que l'UEFI." & CrLf & "NOTE : vous pouvez activer UEFI-CSM sur votre système. Si vous ne savez pas comment faire, consultez l'un des liens ci-dessous." & CrLf & CrLf & "AVERTISSEMENT : l'activation de CSM sur votre système peut vous obliger à réinstaller Windows, si le système ne détecte pas correctement la table de partition du lecteur de démarrage après avoir effectué la modification"
                 End If
             End If
             LinkLabel3.Visible = True
@@ -2353,7 +2402,11 @@ Public Class MainForm
         Activate()
         ShowInTaskbar = True
         MiniModeDialog.Hide()
-        WindowState = FormWindowState.Normal
+        If WasMaximized = True Then
+            WindowState = FormWindowState.Maximized
+        Else
+            WindowState = FormWindowState.Normal
+        End If
         If BackColor = Color.FromArgb(243, 243, 243) Then
             closeBox.Image = New Bitmap(My.Resources.closebox)
         Else
@@ -2365,7 +2418,11 @@ Public Class MainForm
         Activate()
         ShowInTaskbar = True
         MiniModeDialog.Hide()
-        WindowState = FormWindowState.Normal
+        If WasMaximized = True Then
+            WindowState = FormWindowState.Maximized
+        Else
+            WindowState = FormWindowState.Normal
+        End If
         If BackColor = Color.FromArgb(243, 243, 243) Then
             closeBox.Image = New Bitmap(My.Resources.closebox)
         Else
@@ -2377,7 +2434,11 @@ Public Class MainForm
         Activate()
         ShowInTaskbar = True
         MiniModeDialog.Hide()
-        WindowState = FormWindowState.Normal
+        If WasMaximized = True Then
+            WindowState = FormWindowState.Maximized
+        Else
+            WindowState = FormWindowState.Normal
+        End If
         If BackColor = Color.FromArgb(243, 243, 243) Then
             closeBox.Image = New Bitmap(My.Resources.closebox)
         Else
@@ -2399,14 +2460,17 @@ Public Class MainForm
         End If
         If BackSubPanel.Visible = True Then
             ViewInstallerHistoryToolStripMenuItem.Enabled = False
+            AOTSMI.Enabled = False
         Else
             ViewInstallerHistoryToolStripMenuItem.Enabled = True
+            AOTSMI.Enabled = True
         End If
     End Sub
 
     Private Sub PictureBox17_Click(sender As Object, e As EventArgs) Handles PictureBox17.Click, Label40.Click, Label39.Click, PictureBox4.Click
         InstHistPanel.InstallerListView.Items.Clear()
         InstHistPanel.InstallerEntryLabel.Text = "Installer history entries: " & InstHistPanel.InstallerListView.Items.Count
+        InstHistPanel.ExportOptionsCMS.Enabled = False
     End Sub
 
     Private Sub ViewInstallerHistoryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ViewInstallerHistoryToolStripMenuItem.Click
@@ -2570,6 +2634,8 @@ Public Class MainForm
                 Else
                     Button6.Enabled = False
                 End If
+            Else
+                Button6.Enabled = True
             End If
             Win11_File = New FileInfo(TextBox1.Text)
             Win11_FileSize = Win11_File.Length / (1024 ^ 3)
@@ -2642,6 +2708,8 @@ Public Class MainForm
                     Else
                         Button6.Enabled = False
                     End If
+                Else
+                    Button6.Enabled = True
                 End If
                 Win11_File = New FileInfo(TextBox1.Text)
                 Win11_FileSize = Win11_File.Length / (1024 ^ 3)
@@ -3184,18 +3252,18 @@ Public Class MainForm
 
     Private Sub AdminLabel_MouseHover(sender As Object, e As EventArgs) Handles AdminLabel.MouseHover
         If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
-            ConglomerateToolTip.SetToolTip(AdminLabel, "This program is running with administrative privileges")
+            ConglomerateToolTip.SetToolTip(sender, "This program is running with administrative privileges")
         ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
-            ConglomerateToolTip.SetToolTip(AdminLabel, "Este programa se está ejecutando con privilegios administrativos")
+            ConglomerateToolTip.SetToolTip(sender, "Este programa se está ejecutando con privilegios administrativos")
         ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
-            ConglomerateToolTip.SetToolTip(AdminLabel, "Ce programme est exécuté avec des privilèges administratifs")
+            ConglomerateToolTip.SetToolTip(sender, "Ce programme est exécuté avec des privilèges administratifs")
         ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
-                ConglomerateToolTip.SetToolTip(AdminLabel, "This program is running with administrative privileges")
+                ConglomerateToolTip.SetToolTip(sender, "This program is running with administrative privileges")
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
-                ConglomerateToolTip.SetToolTip(AdminLabel, "Este programa se está ejecutando con privilegios administrativos")
+                ConglomerateToolTip.SetToolTip(sender, "Este programa se está ejecutando con privilegios administrativos")
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
-                ConglomerateToolTip.SetToolTip(AdminLabel, "Ce programme est exécuté avec des privilèges administratifs")
+                ConglomerateToolTip.SetToolTip(sender, "Ce programme est exécuté avec des privilèges administratifs")
             End If
         End If
     End Sub
@@ -3229,18 +3297,18 @@ Public Class MainForm
 
     Private Sub minBox_MouseHover(sender As Object, e As EventArgs) Handles minBox.MouseHover
         If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
-            ConglomerateToolTip.SetToolTip(minBox, "Minimize")
+            ConglomerateToolTip.SetToolTip(sender, "Minimize")
         ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
-            ConglomerateToolTip.SetToolTip(minBox, "Minimizar")
+            ConglomerateToolTip.SetToolTip(sender, "Minimizar")
         ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
-            ConglomerateToolTip.SetToolTip(minBox, "Minimiser")
+            ConglomerateToolTip.SetToolTip(sender, "Minimiser")
         ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
-                ConglomerateToolTip.SetToolTip(minBox, "Minimize")
+                ConglomerateToolTip.SetToolTip(sender, "Minimize")
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
-                ConglomerateToolTip.SetToolTip(minBox, "Minimizar")
+                ConglomerateToolTip.SetToolTip(sender, "Minimizar")
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
-                ConglomerateToolTip.SetToolTip(minBox, "Minimiser")
+                ConglomerateToolTip.SetToolTip(sender, "Minimiser")
             End If
         End If
     End Sub
@@ -3248,34 +3316,34 @@ Public Class MainForm
     Private Sub maxBox_MouseHover(sender As Object, e As EventArgs) Handles maxBox.MouseHover
         If WindowState = FormWindowState.Normal Then
             If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
-                ConglomerateToolTip.SetToolTip(maxBox, "Maximize")
+                ConglomerateToolTip.SetToolTip(sender, "Maximize")
             ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
-                ConglomerateToolTip.SetToolTip(maxBox, "Maximizar")
+                ConglomerateToolTip.SetToolTip(sender, "Maximizar")
             ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
-                ConglomerateToolTip.SetToolTip(maxBox, "Maximiser")
+                ConglomerateToolTip.SetToolTip(sender, "Maximiser")
             ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                 If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
-                    ConglomerateToolTip.SetToolTip(maxBox, "Maximize")
+                    ConglomerateToolTip.SetToolTip(sender, "Maximize")
                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
-                    ConglomerateToolTip.SetToolTip(maxBox, "Maximizar")
+                    ConglomerateToolTip.SetToolTip(sender, "Maximizar")
                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
-                    ConglomerateToolTip.SetToolTip(maxBox, "Maximiser")
+                    ConglomerateToolTip.SetToolTip(sender, "Maximiser")
                 End If
             End If
         ElseIf WindowState = FormWindowState.Maximized Then
             If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
-                ConglomerateToolTip.SetToolTip(maxBox, "Restore down")
+                ConglomerateToolTip.SetToolTip(sender, "Restore down")
             ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
-                ConglomerateToolTip.SetToolTip(maxBox, "Restaurar tamaño")
+                ConglomerateToolTip.SetToolTip(sender, "Restaurar tamaño")
             ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
-                ConglomerateToolTip.SetToolTip(maxBox, "Restaurer en bas")
+                ConglomerateToolTip.SetToolTip(sender, "Restaurer en bas")
             ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                 If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
-                    ConglomerateToolTip.SetToolTip(maxBox, "Restore down")
+                    ConglomerateToolTip.SetToolTip(sender, "Restore down")
                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
-                    ConglomerateToolTip.SetToolTip(maxBox, "Restaurar tamaño")
+                    ConglomerateToolTip.SetToolTip(sender, "Restaurar tamaño")
                 ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
-                    ConglomerateToolTip.SetToolTip(maxBox, "Restaurer en bas")
+                    ConglomerateToolTip.SetToolTip(sender, "Restaurer en bas")
                 End If
             End If
         End If
@@ -3283,18 +3351,18 @@ Public Class MainForm
 
     Private Sub closeBox_MouseHover(sender As Object, e As EventArgs) Handles closeBox.MouseHover
         If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
-            ConglomerateToolTip.SetToolTip(closeBox, "Close")
+            ConglomerateToolTip.SetToolTip(sender, "Close")
         ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
-            ConglomerateToolTip.SetToolTip(closeBox, "Cerrar")
+            ConglomerateToolTip.SetToolTip(sender, "Cerrar")
         ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
-            ConglomerateToolTip.SetToolTip(closeBox, "Fermer")
+            ConglomerateToolTip.SetToolTip(sender, "Fermer")
         ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
-                ConglomerateToolTip.SetToolTip(closeBox, "Close")
+                ConglomerateToolTip.SetToolTip(sender, "Close")
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
-                ConglomerateToolTip.SetToolTip(closeBox, "Cerrar")
+                ConglomerateToolTip.SetToolTip(sender, "Cerrar")
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
-                ConglomerateToolTip.SetToolTip(closeBox, "Fermer")
+                ConglomerateToolTip.SetToolTip(sender, "Fermer")
             End If
         End If
     End Sub
@@ -3399,25 +3467,79 @@ Public Class MainForm
         If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             Button10.Text = "Cancel"
             InstSTLabel.Text = "The installer might take some time to create"
+            StatusTSI.Text = "Creating the custom installer..."
         ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
             Button10.Text = "Cancelar"
             InstSTLabel.Text = "El instalador podría tardar algo de tiempo para crearse"
+            StatusTSI.Text = "Creando el instalador modificado..."
         ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
             Button10.Text = "Annuler"
             InstSTLabel.Text = "L'installateur peut prendre un certain temps pour créer"
+            StatusTSI.Text = "Création de l'installateur modifié en cours..."
         ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 Button10.Text = "Cancel"
                 InstSTLabel.Text = "The installer might take some time to create"
+                StatusTSI.Text = "Creating the custom installer..."
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 Button10.Text = "Cancelar"
                 InstSTLabel.Text = "El instalador podría tardar algo de tiempo para crearse"
+                StatusTSI.Text = "Creando el instalador modificado..."
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
                 Button10.Text = "Annuler"
                 InstSTLabel.Text = "L'installateur peut prendre un certain temps pour créer"
+                StatusTSI.Text = "Création de l'installateur modifié en cours..."
+            End If
+        End If
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+            Notify.Text = "Windows 11 Manual Installer - Busy"
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+            Notify.Text = "Instalador manual de Windows 11 - Ocupado"
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            Notify.Text = "Installateur manuel de Windows 11 - Occupé"
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                Notify.Text = "Windows 11 Manual Installer - Busy"
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                Notify.Text = "Instalador manual de Windows 11 - Ocupado"
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                Notify.Text = "Installateur manuel de Windows 11 - Occupé"
             End If
         End If
         ProgressPanel.Visible = True
+        If GroupBox10.Visible = True Then
+            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+                Button9.Text = "Hide log"
+            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+                Button9.Text = "Ocultar registro"
+            ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                Button9.Text = "Cacher le journal"
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+                If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                    Button9.Text = "Hide log"
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                    Button9.Text = "Ocultar registro"
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                    Button9.Text = "Cacher le journal"
+                End If
+            End If
+        Else
+            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+                Button9.Text = "Show log"
+            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+                Button9.Text = "Mostrar registro"
+            ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                Button9.Text = "Afficher le journal"
+            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+                If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                    Button9.Text = "Show log"
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                    Button9.Text = "Mostrar registro"
+                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                    Button9.Text = "Afficher le journal"
+                End If
+            End If
+        End If
         ' The following lines of code reset the *Count variables (declared at the beginning of the file)
         ErrorCount = 0
         WarnCount = 0
@@ -4366,6 +4488,21 @@ Public Class MainForm
                 Label115.Text = "Erreurs : " & ErrorCount
             End If
         End If
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+            StatusTSI.Text = "No installers are being created at this time"
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+            StatusTSI.Text = "No se está creando ningún instalador en estos momentos"
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            StatusTSI.Text = "Aucun installateur n'est en cours de création pour le moment"
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                StatusTSI.Text = "No installers are being created at this time"
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                StatusTSI.Text = "No se está creando ningún instalador en estos momentos"
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                StatusTSI.Text = "Aucun installateur n'est en cours de création pour le moment"
+            End If
+        End If
         TableLayoutPanel3.Visible = True
         CheckPic1.Visible = False
         CheckPic2.Visible = False
@@ -4430,6 +4567,26 @@ Public Class MainForm
         Label3.Visible = False
         LinkLabel2.Visible = False
         EnableFunctionality()
+        If InstHistPanel.InstallerListView.Items.Count > 0 Then
+            InstHistPanel.ExportOptionsCMS.Enabled = True
+        End If
+        IHDataToolStripMenuItem.Text = EnInstCreateTime
+        Last_Inst_Time_Label.Text = EnInstCreateTime
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+            Notify.Text = "Windows 11 Manual Installer - Ready"
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+            Notify.Text = "Instalador manual de Windows 11 - Listo"
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            Notify.Text = "Installateur manuel de Windows 11 - Prêt"
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                Notify.Text = "Windows 11 Manual Installer - Ready"
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                Notify.Text = "Instalador manual de Windows 11 - Listo"
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                Notify.Text = "Installateur manuel de Windows 11 - Prêt"
+            End If
+        End If
     End Sub
 
     Private Sub OSCDIMGBW_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles OSCDIMGBW.DoWork
@@ -4442,14 +4599,22 @@ Public Class MainForm
             If File.Exists(".\temp\boot\Efisys.bin") Then
                 File.WriteAllText(".\temp.bat", OffEcho & CrLf & OSCDIMG_UEFI, ASCII)
             Else
-                LogBox.AppendText(CrLf & "[" & Now & "] " & "WARNING: file: " & Quote & "\boot\Efisys.bin" & Quote & " is not present in the temporary installer. Using the fallback BIOS/UEFI-CSM method...")
-                WarnCount += 1
-                If WarningText.Text = "" Then
-                    WarningText.AppendText(Now & " - To make installers compatible with modern systems (UEFI), the program needs " & Quote & "\boot\Efisys.bin" & Quote & ", which it could not find")
+                If File.Exists("\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\amd64\Oscdimg\efisys.bin") Then
+                    File.Copy("\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\amd64\Oscdimg\efisys.bin", ".\temp\boot\Efisys.bin")
+                    File.WriteAllText(".\temp.bat", OffEcho & CrLf & OSCDIMG_UEFI, ASCII)
+                ElseIf File.Exists("\Program Files\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\amd64\Oscdimg\efisys.bin") Then
+                    File.Copy("\Program Files\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\amd64\Oscdimg\efisys.bin", ".\temp\boot\Efisys.bin")
+                    File.WriteAllText(".\temp.bat", OffEcho & CrLf & OSCDIMG_UEFI, ASCII)
                 Else
-                    WarningText.AppendText(CrLf & Now & " - To make installers compatible with modern systems (UEFI), the program needs " & Quote & "\boot\Efisys.bin" & Quote & ", which it could not find")
+                    LogBox.AppendText(CrLf & "[" & Now & "] " & "WARNING: file: " & Quote & "\boot\Efisys.bin" & Quote & " is not present in the temporary installer. Using the fallback BIOS/UEFI-CSM method...")
+                    WarnCount += 1
+                    If WarningText.Text = "" Then
+                        WarningText.AppendText(Now & " - To make installers compatible with modern systems (UEFI), the program needs " & Quote & "\boot\Efisys.bin" & Quote & ", which it could not find")
+                    Else
+                        WarningText.AppendText(CrLf & Now & " - To make installers compatible with modern systems (UEFI), the program needs " & Quote & "\boot\Efisys.bin" & Quote & ", which it could not find")
+                    End If
+                    File.WriteAllText(".\temp.bat", OffEcho & CrLf & OSCDIMG_CSM, ASCII)
                 End If
-                File.WriteAllText(".\temp.bat", OffEcho & CrLf & OSCDIMG_CSM, ASCII)
             End If
             Process.Start(".\temp.bat").WaitForExit()
         End If
@@ -4815,54 +4980,54 @@ Public Class MainForm
 
     Private Sub GroupBox8_MouseHover(sender As Object, e As EventArgs) Handles GroupBox8.MouseHover
         If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
-            ConglomerateToolTip.SetToolTip(GroupBox8, "These are the images used to create the custom installer")
+            ConglomerateToolTip.SetToolTip(sender, "These are the images used to create the custom installer")
         ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
-            ConglomerateToolTip.SetToolTip(GroupBox8, "Éstas son las imágenes utilizadas para crear el instalador modificado")
+            ConglomerateToolTip.SetToolTip(sender, "Éstas son las imágenes utilizadas para crear el instalador modificado")
         ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
-            ConglomerateToolTip.SetToolTip(GroupBox8, "Voici les images utilisées pour créer l'installateur personnalisé")
+            ConglomerateToolTip.SetToolTip(sender, "Voici les images utilisées pour créer l'installateur personnalisé")
         ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
-                ConglomerateToolTip.SetToolTip(GroupBox8, "These are the images used to create the custom installer")
+                ConglomerateToolTip.SetToolTip(sender, "These are the images used to create the custom installer")
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
-                ConglomerateToolTip.SetToolTip(GroupBox8, "Éstas son las imágenes utilizadas para crear el instalador modificado")
+                ConglomerateToolTip.SetToolTip(sender, "Éstas son las imágenes utilizadas para crear el instalador modificado")
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
-                ConglomerateToolTip.SetToolTip(GroupBox8, "Voici les images utilisées pour créer l'installateur personnalisé")
+                ConglomerateToolTip.SetToolTip(sender, "Voici les images utilisées pour créer l'installateur personnalisé")
             End If
         End If
     End Sub
 
     Private Sub GroupBox9_MouseHover(sender As Object, e As EventArgs) Handles GroupBox9.MouseHover
         If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
-            ConglomerateToolTip.SetToolTip(GroupBox9, "These are the settings used to create the custom installer. To change those, click " & Quote & "No" & Quote & ", and go to Settings (by clicking the gear) > Functionality")
+            ConglomerateToolTip.SetToolTip(sender, "These are the settings used to create the custom installer. To change those, click " & Quote & "No" & Quote & ", and go to Settings (by clicking the gear) > Functionality")
         ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
-            ConglomerateToolTip.SetToolTip(GroupBox9, "Éstas son las configuraciones empleadas para crear el instalador modificado. Para cambiarlas, haga clic en " & Quote & "No" & Quote & ", y ve a Configuración (haciendo clic en la tuerca) > Funcionalidad")
+            ConglomerateToolTip.SetToolTip(sender, "Éstas son las configuraciones empleadas para crear el instalador modificado. Para cambiarlas, haga clic en " & Quote & "No" & Quote & ", y ve a Configuración (haciendo clic en la tuerca) > Funcionalidad")
         ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
-            ConglomerateToolTip.SetToolTip(GroupBox9, "Il s'agit des paramètres utilisés pour créer le programme d'installation personnalisé. Pour les modifier, cliquez sur " & Quote & "Non" & Quote & ", puis allez dans Paramètres (en cliquant sur l'engrenage) > Fonctionnalité")
+            ConglomerateToolTip.SetToolTip(sender, "Il s'agit des paramètres utilisés pour créer le programme d'installation personnalisé. Pour les modifier, cliquez sur " & Quote & "Non" & Quote & ", puis allez dans Paramètres (en cliquant sur l'engrenage) > Fonctionnalité")
         ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
-                ConglomerateToolTip.SetToolTip(GroupBox9, "These are the settings used to create the custom installer. To change those, click " & Quote & "No" & Quote & ", and go to Settings (by clicking the gear) > Functionality")
+                ConglomerateToolTip.SetToolTip(sender, "These are the settings used to create the custom installer. To change those, click " & Quote & "No" & Quote & ", and go to Settings (by clicking the gear) > Functionality")
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
-                ConglomerateToolTip.SetToolTip(GroupBox9, "Éstas son las configuraciones empleadas para crear el instalador modificado. Para cambiarlas, haga clic en " & Quote & "No" & Quote & ", y ve a Configuración (haciendo clic en la tuerca) > Funcionalidad")
+                ConglomerateToolTip.SetToolTip(sender, "Éstas son las configuraciones empleadas para crear el instalador modificado. Para cambiarlas, haga clic en " & Quote & "No" & Quote & ", y ve a Configuración (haciendo clic en la tuerca) > Funcionalidad")
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
-                ConglomerateToolTip.SetToolTip(GroupBox9, "Il s'agit des paramètres utilisés pour créer le programme d'installation personnalisé. Pour les modifier, cliquez sur " & Quote & "Non" & Quote & ", puis allez dans Paramètres (en cliquant sur l'engrenage) > Fonctionnalité")
+                ConglomerateToolTip.SetToolTip(sender, "Il s'agit des paramètres utilisés pour créer le programme d'installation personnalisé. Pour les modifier, cliquez sur " & Quote & "Non" & Quote & ", puis allez dans Paramètres (en cliquant sur l'engrenage) > Fonctionnalité")
             End If
         End If
     End Sub
 
     Private Sub GroupBox11_MouseHover(sender As Object, e As EventArgs) Handles GroupBox11.MouseHover
         If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
-            ConglomerateToolTip.SetToolTip(GroupBox11, "This is where the custom installer will be saved. To change this setting, click " & Quote & "No" & Quote & ", and select a different path and name")
+            ConglomerateToolTip.SetToolTip(sender, "This is where the custom installer will be saved. To change this setting, click " & Quote & "No" & Quote & ", and select a different path and name")
         ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
-            ConglomerateToolTip.SetToolTip(GroupBox11, "En esta ubicación se guardará el instalador modificado. Para cambiar esta opción, haga clic en " & Quote & "No" & Quote & ", y especifique una ruta y nombre distintos")
+            ConglomerateToolTip.SetToolTip(sender, "En esta ubicación se guardará el instalador modificado. Para cambiar esta opción, haga clic en " & Quote & "No" & Quote & ", y especifique una ruta y nombre distintos")
         ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
-            ConglomerateToolTip.SetToolTip(GroupBox11, "C'est l'endroit où l'installateur personnalisé sera enregistré. Pour modifier ce paramètre, cliquez sur " & Quote & "Non" & Quote & ", puis sélectionnez un chemin et un nom différents")
+            ConglomerateToolTip.SetToolTip(sender, "C'est l'endroit où l'installateur personnalisé sera enregistré. Pour modifier ce paramètre, cliquez sur " & Quote & "Non" & Quote & ", puis sélectionnez un chemin et un nom différents")
         ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
-                ConglomerateToolTip.SetToolTip(GroupBox11, "This is where the custom installer will be saved. To change this setting, click " & Quote & "No" & Quote & ", and select a different path and name")
+                ConglomerateToolTip.SetToolTip(sender, "This is where the custom installer will be saved. To change this setting, click " & Quote & "No" & Quote & ", and select a different path and name")
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
-                ConglomerateToolTip.SetToolTip(GroupBox11, "En esta ubicación se guardará el instalador modificado. Para cambiar esta opción, haga clic en " & Quote & "No" & Quote & ", y especifique una ruta y nombre distintos")
+                ConglomerateToolTip.SetToolTip(sender, "En esta ubicación se guardará el instalador modificado. Para cambiar esta opción, haga clic en " & Quote & "No" & Quote & ", y especifique una ruta y nombre distintos")
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
-                ConglomerateToolTip.SetToolTip(GroupBox11, "C'est l'endroit où l'installateur personnalisé sera enregistré. Pour modifier ce paramètre, cliquez sur " & Quote & "Non" & Quote & ", puis sélectionnez un chemin et un nom différents")
+                ConglomerateToolTip.SetToolTip(sender, "C'est l'endroit où l'installateur personnalisé sera enregistré. Pour modifier ce paramètre, cliquez sur " & Quote & "Non" & Quote & ", puis sélectionnez un chemin et un nom différents")
             End If
         End If
     End Sub
@@ -5086,8 +5251,8 @@ Public Class MainForm
                 InstCreatePic.Image = New Bitmap(My.Resources.inst_create_dark_filled)
                 WelcomePic.Image = New Bitmap(My.Resources.home_dark)
             End If
-        ElseIf InstCreateInt = 2 Then
-            EnableBackPic()
+        ElseIf InstCreateInt = 2 Or InstCreateInt = 3 Then
+            DisableBackPic()
             WelcomePanel.Visible = False
             SettingPanel.Visible = False
             Settings_FunctionalityPanel.Visible = False
@@ -5255,35 +5420,147 @@ Public Class MainForm
     End Sub
 
     Private Sub GroupBox6_MouseHover(sender As Object, e As EventArgs) Handles GroupBox6.MouseHover
-        ConglomerateToolTip.SetToolTip(GroupBox6, "The images you specify here will be used by the program to create the custom installer")
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+            ConglomerateToolTip.SetToolTip(sender, "The images you specify here will be used by the program to create the custom installer")
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+            ConglomerateToolTip.SetToolTip(sender, "Las imágenes que especifique aquí serán utilizadas por el programa para crear el instalador modificado")
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            ConglomerateToolTip.SetToolTip(sender, "Les images que vous spécifiez ici seront utilisées par le programme pour créer l'installateur personnalisé")
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                ConglomerateToolTip.SetToolTip(sender, "The images you specify here will be used by the program to create the custom installer")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                ConglomerateToolTip.SetToolTip(sender, "Las imágenes que especifique aquí serán utilizadas por el programa para crear el instalador modificado")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                ConglomerateToolTip.SetToolTip(sender, "Les images que vous spécifiez ici seront utilisées par le programme pour créer l'installateur personnalisé")
+            End If
+        End If
     End Sub
 
     Private Sub GroupBox7_MouseHover(sender As Object, e As EventArgs) Handles GroupBox7.MouseHover
-        ConglomerateToolTip.SetToolTip(GroupBox7, "Here you can specify the name and location of the target installer")
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+            ConglomerateToolTip.SetToolTip(sender, "Here you can specify the name and location of the target installer")
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+            ConglomerateToolTip.SetToolTip(sender, "Aquí puede especificar el nombre y la ubicación del instalador de destino")
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            ConglomerateToolTip.SetToolTip(sender, "Ici, vous pouvez spécifier le nom et l'emplacement du programme d'installation cible")
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                ConglomerateToolTip.SetToolTip(sender, "Here you can specify the name and location of the target installer")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                ConglomerateToolTip.SetToolTip(sender, "Aquí puede especificar el nombre y la ubicación del instalador de destino")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                ConglomerateToolTip.SetToolTip(sender, "Ici, vous pouvez spécifier le nom et l'emplacement du programme d'installation cible")
+            End If
+        End If
     End Sub
 
     Private Sub Label22_MouseHover(sender As Object, e As EventArgs) Handles Label22.MouseHover, RadioButton1.MouseHover, RadioButton2.MouseHover
-        ConglomerateToolTip.SetToolTip(Label22, "Here you can set the platform compatibility for the target installer. If you set " & Quote & "BIOS/UEFI-CSM" & Quote & " the installer will be guaranteed for broader hardware compatibility. View the platform compatibility details for more information")
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+            ConglomerateToolTip.SetToolTip(sender, "Here you can set the platform compatibility for the target installer. If you set " & Quote & "BIOS/UEFI-CSM" & Quote & " you will be guaranteed by broader hardware compatibility. View the platform compatibility details for more information")
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+            ConglomerateToolTip.SetToolTip(sender, "Aquí puede establecer la compatibilidad de plataformas para el instalador de destino. Si establece " & Quote & "BIOS/UEFI-CSM" & Quote & " se asegurará de una mayor compatibilidad de hardware. Para más información, vea los detalles")
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            ConglomerateToolTip.SetToolTip(sender, "Vous pouvez définir ici la compatibilité de la plate-forme pour le programme d'installation cible. Si vous définissez " & Quote & "BIOS/UEFI-CSM" & Quote & ", vous bénéficierez d'une compatibilité matérielle plus large. Consultez les détails de la compatibilité de la plate-forme pour plus d'informations")
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                ConglomerateToolTip.SetToolTip(sender, "Here you can set the platform compatibility for the target installer. If you set " & Quote & "BIOS/UEFI-CSM" & Quote & " you will be guaranteed by broader hardware compatibility. View the platform compatibility details for more information")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                ConglomerateToolTip.SetToolTip(sender, "Aquí puede establecer la compatibilidad de plataformas para el instalador de destino. Si establece " & Quote & "BIOS/UEFI-CSM" & Quote & " se asegurará de una mayor compatibilidad de hardware. Para más información, vea los detalles")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                ConglomerateToolTip.SetToolTip(sender, "Vous pouvez définir ici la compatibilité de la plate-forme pour le programme d'installation cible. Si vous définissez " & Quote & "BIOS/UEFI-CSM" & Quote & ", vous bénéficierez d'une compatibilité matérielle plus large. Consultez les détails de la compatibilité de la plate-forme pour plus d'informations")
+            End If
+        End If
     End Sub
 
     Private Sub GroupBox3_MouseHover(sender As Object, e As EventArgs) Handles GroupBox3.MouseHover
-        ConglomerateToolTip.SetToolTip(GroupBox3, "Here you can see the details of your selected platform compatibility option")
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+            ConglomerateToolTip.SetToolTip(sender, "Here you can see the details of the selected platform compatibility option")
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+            ConglomerateToolTip.SetToolTip(sender, "Aquí puede ver los detalles de la opción de compatibilidad de plataformas seleccionada")
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            ConglomerateToolTip.SetToolTip(sender, "Ici, vous pouvez voir les détails de l'option de compatibilité de la plate-forme sélectionnée")
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                ConglomerateToolTip.SetToolTip(sender, "Here you can see the details of the selected platform compatibility option")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                ConglomerateToolTip.SetToolTip(sender, "Aquí puede ver los detalles de la opción de compatibilidad de plataformas seleccionada")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                ConglomerateToolTip.SetToolTip(sender, "Ici, vous pouvez voir les détails de l'option de compatibilité de la plate-forme sélectionnée")
+            End If
+        End If
     End Sub
 
-    Private Sub GroupBox4_MouseHover(sender As Object, e As EventArgs) Handles GroupBox4.MouseHover, Label24.MouseHover, GroupBox12.MouseHover
-        ConglomerateToolTip.SetToolTip(GroupBox4, "In this section you can specify the target installer's label. The maximum amount of characters you can set as the label is 32")    ' , so please be creative when putting a custom label!!!
+    Private Sub GroupBox4_MouseHover(sender As Object, e As EventArgs) Handles GroupBox4.MouseHover, Label24.MouseHover, GroupBox12.MouseHover, LabelText.MouseHover
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+            ConglomerateToolTip.SetToolTip(sender, "In this section you can specify the target installer's label. The maximum amount of characters you can set as the label is 32")
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+            ConglomerateToolTip.SetToolTip(sender, "En esta sección puede especificar la etiqueta del instalador modificado. La cantidad máxima de caracteres que puede establecer como etiqueta es 32")
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            ConglomerateToolTip.SetToolTip(sender, "Dans cette section, vous pouvez spécifier l'étiquette de l'installateur cible. Le nombre maximum de caractères que vous pouvez définir pour l'étiquette est de 32")
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                ConglomerateToolTip.SetToolTip(sender, "In this section you can specify the target installer's label. The maximum amount of characters you can set as the label is 32")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                ConglomerateToolTip.SetToolTip(sender, "En esta sección puede especificar la etiqueta del instalador modificado. La cantidad máxima de caracteres que puede establecer como etiqueta es 32")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                ConglomerateToolTip.SetToolTip(sender, "Dans cette section, vous pouvez spécifier l'étiquette de l'installateur cible. Le nombre maximum de caractères que vous pouvez définir pour l'étiquette est de 32")
+            End If
+        End If
     End Sub
 
     Private Sub Label25_MouseHover(sender As Object, e As EventArgs) Handles Label25.MouseHover
-        ConglomerateToolTip.SetToolTip(Label25, "This is the label used on the custom installer")
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+            ConglomerateToolTip.SetToolTip(sender, "This is the label used on the custom installer")
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+            ConglomerateToolTip.SetToolTip(sender, "Esta es la etiqueta utilizada por el instalador modificado")
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            ConglomerateToolTip.SetToolTip(sender, "Voici l'étiquette utilisée sur l'installateur personnalisé")
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                ConglomerateToolTip.SetToolTip(sender, "This is the label used on the custom installer")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                ConglomerateToolTip.SetToolTip(sender, "Esta es la etiqueta utilizada por el instalador modificado")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                ConglomerateToolTip.SetToolTip(sender, "Voici l'étiquette utilisée sur l'installateur personnalisé")
+            End If
+        End If
     End Sub
 
     Private Sub LabelSetButton_MouseHover(sender As Object, e As EventArgs) Handles LabelSetButton.MouseHover
-        ConglomerateToolTip.SetToolTip(LabelSetButton, "Click here to set this label")
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+            ConglomerateToolTip.SetToolTip(sender, "Click here to set this label")
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+            ConglomerateToolTip.SetToolTip(sender, "Haga clic aquí para establecer esta etiqueta")
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            ConglomerateToolTip.SetToolTip(sender, "Cliquez ici pour définir cette étiquette")
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                ConglomerateToolTip.SetToolTip(sender, "Click here to set this label")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                ConglomerateToolTip.SetToolTip(sender, "Haga clic aquí para establecer esta etiqueta")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                ConglomerateToolTip.SetToolTip(sender, "Cliquez ici pour définir cette étiquette")
+            End If
+        End If
     End Sub
 
     Private Sub SetDefaultButton_MouseHover(sender As Object, e As EventArgs) Handles SetDefaultButton.MouseHover, Button13.MouseHover, Button11.MouseHover
-        ConglomerateToolTip.SetToolTip(SetDefaultButton, "Click here to set the default label, " & Quote & "Windows11" & Quote & ", for the custom installer")
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+            ConglomerateToolTip.SetToolTip(sender, "Click here to set the default label, " & Quote & "Windows11" & Quote & ", for the custom installer")
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+            ConglomerateToolTip.SetToolTip(sender, "Haga clic aquí para establecer la etiqueta predeterminada, " & Quote & "Windows11" & Quote & ", para el instalador modificado")
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            ConglomerateToolTip.SetToolTip(sender, "Cliquez ici pour définir l'étiquette par défaut, " & Quote & "Windows11" & Quote & ", pour l'installateur personnalisé")
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                ConglomerateToolTip.SetToolTip(sender, "Click here to set the default label, " & Quote & "Windows11" & Quote & ", for the custom installer")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                ConglomerateToolTip.SetToolTip(sender, "Haga clic aquí para establecer la etiqueta predeterminada, " & Quote & "Windows11" & Quote & ", para el instalador modificado")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                ConglomerateToolTip.SetToolTip(sender, "Cliquez ici pour définir l'étiquette par défaut, " & Quote & "Windows11" & Quote & ", pour l'installateur personnalisé")
+            End If
+        End If
     End Sub
 
     Private Sub LabelText_TextChanged(sender As Object, e As EventArgs) Handles LabelText.TextChanged
@@ -5294,20 +5571,40 @@ Public Class MainForm
         End If
     End Sub
 
-    Private Sub TableLayoutPanel1_MouseHover(sender As Object, e As EventArgs) Handles TableLayoutPanel1.MouseHover
-        ConglomerateToolTip.SetToolTip(TableLayoutPanel1, "Click on one of these links to see how to enable the Compatibility Support Module (CSM) on your system")
-    End Sub
-
-    Private Sub LinkLabel3_MouseHover(sender As Object, e As EventArgs) Handles LinkLabel3.MouseHover
-        ConglomerateToolTip.SetToolTip(LinkLabel3, "Click on one of these links to see how to enable the Compatibility Support Module (CSM) on your system")
-    End Sub
-
-    Private Sub LinkLabel4_MouseHover(sender As Object, e As EventArgs) Handles LinkLabel4.MouseHover
-        ConglomerateToolTip.SetToolTip(LinkLabel4, "Click on one of these links to see how to enable the Compatibility Support Module (CSM) on your system")
+    Private Sub TableLayoutPanel1_MouseHover(sender As Object, e As EventArgs) Handles TableLayoutPanel1.MouseHover, LinkLabel3.MouseHover, LinkLabel4.MouseHover
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+            ConglomerateToolTip.SetToolTip(sender, "Click on one of these links to see how to enable the Compatibility Support Module (CSM) on your system")
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+            ConglomerateToolTip.SetToolTip(sender, "Haga clic en uno de estos enlaces para ver cómo habilitar el Módulo de Soporte de Compatibilidad (CSM) en su sistema")
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            ConglomerateToolTip.SetToolTip(sender, "Cliquez sur l'un de ces liens pour savoir comment activer le module de support de compatibilité (CSM) sur votre système.")
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                ConglomerateToolTip.SetToolTip(sender, "Click on one of these links to see how to enable the Compatibility Support Module (CSM) on your system")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                ConglomerateToolTip.SetToolTip(sender, "Haga clic en uno de estos enlaces para ver cómo habilitar el Módulo de Soporte de Compatibilidad (CSM) en su sistema")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                ConglomerateToolTip.SetToolTip(sender, "Cliquez sur l'un de ces liens pour savoir comment activer le module de support de compatibilité (CSM) sur votre système.")
+            End If
+        End If
     End Sub
 
     Private Sub GroupBox5_MouseHover(sender As Object, e As EventArgs) Handles GroupBox5.MouseHover
-        ConglomerateToolTip.SetToolTip(GroupBox5, "Here you can set a custom DPI scale for the program, ideal for devices with bigger displays and DPI scales")
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+            ConglomerateToolTip.SetToolTip(sender, "Here you can set a custom DPI scale for the program, ideal for devices with bigger displays and DPI scales")
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+            ConglomerateToolTip.SetToolTip(sender, "Aquí puede establecer una escala DPI personalizada para el programa, ideal para dispositivos con pantallas y escalas DPI más grandes")
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            ConglomerateToolTip.SetToolTip(sender, "Vous pouvez définir ici une échelle DPI personnalisée pour le programme, idéale pour les appareils dotés d'écrans plus grands et d'échelles DPI")
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                ConglomerateToolTip.SetToolTip(sender, "Here you can set a custom DPI scale for the program, ideal for devices with bigger displays and DPI scales")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                ConglomerateToolTip.SetToolTip(sender, "Aquí puede establecer una escala DPI personalizada para el programa, ideal para dispositivos con pantallas y escalas DPI más grandes")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                ConglomerateToolTip.SetToolTip(sender, "Vous pouvez définir ici une échelle DPI personnalisée pour le programme, idéale pour les appareils dotés d'écrans plus grands et d'échelles DPI")
+            End If
+        End If
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
@@ -5332,7 +5629,11 @@ Public Class MainForm
             Else
                 Text = "Instalador manual de Windows 11"
             End If
-            Notify.Text = "Instalador manual de Windows 11 - Listo"
+            If InstCreateInt = 2 Then
+                Notify.Text = "Instalador manual de Windows 11 - Ocupado"
+            Else
+                Notify.Text = "Instalador manual de Windows 11 - Listo"
+            End If
             ' Labels
             Label1.Text = "Bienvenido"
             Label100.Text = "Instrucciones"
@@ -5398,7 +5699,12 @@ Public Class MainForm
             Label65.Text = "Imagen de Windows 11:"
             Label66.Text = "Imagen de Windows 10:"
             Label69.Text = "Método:"
-            ' Labels71 through 74 were deleted due to lack of functionality
+            Label71.Text = ProgramTitleLabel.Text
+            Label72.Text = "versión " & VerStr & " (versión de ensamblado " & AVerStr & ")"
+            Label73.Text = "Créditos:"
+            If VDescStr = "" Then
+                Label74.Text = "Eche la culpa a Microsoft por forzar los requisitos del sistema, no a su equipo por no conocerlos."
+            End If
             Label75.Text = "Compatibilidad de plataformas:"
             Label77.Text = "Etiqueta del instalador:"
             Label78.Text = LabelText.Text
@@ -5449,11 +5755,19 @@ Public Class MainForm
             Label15.Text = Label1.Text
             Label99.Text = Label44.Text
 
-            ' Miscelaneous labels
+            ' Miscellaneous labels
             Label29.Text = Label12.Text
             Label32.Text = Label17.Text
             Label46.Text = Label9.Text
             NameLabel.Text = "Nombre: " & TextBox3.Text
+            PremiseLabel.Text = "El instalador manual de Windows 11 es una herramienta diseñada para automatizar la creación de un instalador modificado para sistemas de 64 bits no soportados." & CrLf & _
+                                "Esta herramienta también pretende ser lo más ecológica posible, intentando prevenir basura electrónica producida por los requisitos de sistema de Windows 11." & CrLf & _
+                                "Esta herramienta no debería ser descrita como un programa de instalación oficial de Windows y no instalará/actualizará Windows en su sistema."
+            If RadioButton1.Checked = True Then
+                PC_DETAIL_Label.Text = "Seleccione esta opción para una compatibilidad de hardware más amplia"
+            Else
+                PC_DETAIL_Label.Text = "Seleccione esta opción para sistemas que solo soporten UEFI" & CrLf & "NOTA: usted puede habilitar UEFI-CSM en su sistema. Si no sabe cómo, compruebe uno de los enlaces de abajo." & CrLf & CrLf & "ADVERTENCIA: habilitar CSM en su sistema podría hacerle reinstalar Windows, si el sistema no reconociese correctamente la tabla de particiones del disco de arranque después de la modificación"
+            End If
             If InstHistPanel.InstallerListView.Items.Count = 0 Then
                 Last_Inst_Time_Label.Text = "Ningún dato temporal disponible"
             End If
@@ -5465,13 +5779,17 @@ Public Class MainForm
             If TextBox1.Text = "" Then
                 Win11PresenceSTLabel.Text = "Estado de presencia: desconocido"
             End If
-            If File.Exists(TextBox2.Text) Then
-                Win10PresenceSTLabel.Text = "Estado de presencia: este archivo existe"
+            If Not ComboBox5.SelectedItem = "REGTWEAK" Then
+                If File.Exists(TextBox2.Text) Then
+                    Win10PresenceSTLabel.Text = "Estado de presencia: este archivo existe"
+                Else
+                    Win10PresenceSTLabel.Text = "Estado de presencia: este archivo no existe"
+                End If
+                If TextBox2.Text = "" Then
+                    Win10PresenceSTLabel.Text = "Estado de presencia: desconocido"
+                End If
             Else
-                Win10PresenceSTLabel.Text = "Estado de presencia: este archivo no existe"
-            End If
-            If TextBox2.Text = "" Then
-                Win10PresenceSTLabel.Text = "Estado de presencia: desconocido"
+                Win10PresenceSTLabel.Text = "Este archivo no es necesario"
             End If
             If TextBox4.Text.EndsWith("\") Then
                 If TextBox4.Text.Contains(" ") Then
@@ -5500,6 +5818,11 @@ Public Class MainForm
             LinkLabel10.Text = "Compruebe la página de Errores"
             LinkLabel11.Text = "Compruebe la rama Hummingbird"
             LinkLabel12.Text = "Hay algunas cosas que valen la pena revisar antes de continuar. Haga clic aquí para saber más."
+            LinkLabel13.Text = "- Iconos de sistema Fluent UI, por Microsoft"
+            LinkLabel14.Text = "- Fluency, por Icons8"
+            LinkLabel16.Text = "Compruebe WhyNotWin11 para ver si su equipo puede ejecutar Windows 11"
+            LinkLabel13.LinkArea = New LinkArea(2, 27)
+            LinkLabel16.LinkArea = New LinkArea(10, 11)
             LinkLabel17.Text = "Más opciones..."
             LinkLabel18.Text = "La mayoría de las opciones de funcionalidad no están disponibles en este momento. ¿Por qué?"
             LinkLabel18.LinkArea = New LinkArea(82, 9)
@@ -5554,7 +5877,11 @@ Public Class MainForm
             Windows11ManualInstallerToolStripMenuItem.Text = "Instalador manual de Windows 11"
             VersionToolStripMenuItem.Text = "versión " & VerStr & " (versión de ensamblado " & AVerStr & ")"
             InstSTLabel.Text = "Estado del instalador"
-            StatusTSI.Text = "No se está creando ningún instalador en este momento"
+            If InstCreateInt = 2 Then
+                StatusTSI.Text = "Creando el instalador modificado..."
+            Else
+                StatusTSI.Text = "No se está creando ningún instalador en estos momentos"
+            End If
             LastInstallerCreatedAtToolStripMenuItem.Text = "Último instalador creado a las:"
             If InstHistPanel.InstallerListView.Items.Count = 0 Then
                 IHDataToolStripMenuItem.Text = "No hay datos del historial del instalador en este momento"
@@ -5663,7 +5990,12 @@ Public Class MainForm
             Else
                 Text = "Windows 11 Manual Installer"
             End If
-            Notify.Text = "Windows 11 Manual Installer - Ready"
+            If InstCreateInt = 2 Then
+                Notify.Text = "Windows 11 Manual Installer - Busy"
+            Else
+                Notify.Text = "Windows 11 Manual Installer - Ready"
+            End If
+
             ' Labels
             Label1.Text = "Welcome"
             Label100.Text = "Instructions"
@@ -5730,7 +6062,12 @@ Public Class MainForm
             Label65.Text = "Windows 11 image:"
             Label66.Text = "Windows 10 image:"
             Label69.Text = "Method:"
-            ' Labels71 through 74 were deleted due to lack of functionality
+            Label71.Text = ProgramTitleLabel.Text
+            Label72.Text = "version " & VerStr & " (assembly version " & AVerStr & ")"
+            Label73.Text = "Credits:"
+            If VDescStr = "" Then
+                Label74.Text = "Blame Microsoft for pushing the system requirements, not your computer for not meeting them."
+            End If
             Label75.Text = "Platform compatibility:"
             Label77.Text = "Installer label:"
             Label78.Text = LabelText.Text
@@ -5781,11 +6118,19 @@ Public Class MainForm
             Label15.Text = Label1.Text
             Label99.Text = Label44.Text
 
-            ' Miscelaneous labels
+            ' Miscellaneous labels
             Label29.Text = Label12.Text
             Label32.Text = Label17.Text
             Label46.Text = Label9.Text
             NameLabel.Text = "Name: " & TextBox3.Text
+            PremiseLabel.Text = "The Windows 11 Manual Installer is a tool designed to automate the creation of a custom installer for unsupported 64-bit systems." & CrLf & _
+                "This tool also attempts to be as green as possible, trying to prevent e-waste produced by Windows 11's system requirements." & CrLf & _
+                "This tool should not be depicted as an official Windows installation program and will not install/upgrade Windows on your system."
+            If RadioButton1.Checked = True Then
+                PC_DETAIL_Label.Text = "Select this option for broader hardware compatibility"
+            Else
+                PC_DETAIL_Label.Text = "Select this option for systems that only support UEFI" & CrLf & "NOTE: you can enable UEFI-CSM on your system. If you don't know how, check one of the links below." & CrLf & CrLf & "WARNING: enabling CSM on your system may require you to reinstall Windows, if the system does not correctly detect the boot drive's partition table after doing the modification"
+            End If
             If InstHistPanel.InstallerListView.Items.Count = 0 Then
                 Last_Inst_Time_Label.Text = "No time data is available"
             End If
@@ -5797,13 +6142,17 @@ Public Class MainForm
             If TextBox1.Text = "" Then
                 Win11PresenceSTLabel.Text = "Presence status: unknown"
             End If
-            If File.Exists(TextBox2.Text) Then
-                Win10PresenceSTLabel.Text = "Presence status: this file exists"
+            If Not ComboBox5.SelectedItem = "REGTWEAK" Then
+                If File.Exists(TextBox2.Text) Then
+                    Win10PresenceSTLabel.Text = "Presence status: this file exists"
+                Else
+                    Win10PresenceSTLabel.Text = "Presence status: this file does not exist"
+                End If
+                If TextBox2.Text = "" Then
+                    Win10PresenceSTLabel.Text = "Presence status: unknown"
+                End If
             Else
-                Win10PresenceSTLabel.Text = "Presence status: this file does not exist"
-            End If
-            If TextBox2.Text = "" Then
-                Win10PresenceSTLabel.Text = "Presence status: unknown"
+                Win10PresenceSTLabel.Text = "This file is not necessary"
             End If
             If TextBox4.Text.EndsWith("\") Then
                 If TextBox4.Text.Contains(" ") Then
@@ -5832,6 +6181,11 @@ Public Class MainForm
             LinkLabel10.Text = "Check the Issues page"
             LinkLabel11.Text = "Check the Hummingbird branch"
             LinkLabel12.Text = "There are some things that are worth revising before continuing. Click here to learn more."
+            LinkLabel13.Text = "- Fluent UI System Icons, by Microsoft"
+            LinkLabel14.Text = "- Fluency, by Icons8"
+            LinkLabel16.Text = "Check out WhyNotWin11 to see if your computer is able to run Windows 11"
+            LinkLabel13.LinkArea = New LinkArea(2, 22)
+            LinkLabel16.LinkArea = New LinkArea(10, 11)
             LinkLabel17.Text = "More options..."
             LinkLabel18.Text = "Most of the functionality settings are disabled right now. Why?"
             LinkLabel18.LinkArea = New LinkArea(59, 4)
@@ -5885,7 +6239,11 @@ Public Class MainForm
             Windows11ManualInstallerToolStripMenuItem.Text = "Windows 11 Manual Installer"
             VersionToolStripMenuItem.Text = "version " & VerStr & " (assembly version " & AVerStr & ")"
             InstSTLabel.Text = "Installer status"
-            StatusTSI.Text = "No installers are being created at this time"
+            If InstCreateInt = 2 Then
+                StatusTSI.Text = "Creating the custom installer..."
+            Else
+                StatusTSI.Text = "No installers are being created at this time"
+            End If
             LastInstallerCreatedAtToolStripMenuItem.Text = "Last installer created at:"
             If InstHistPanel.InstallerListView.Items.Count = 0 Then
                 IHDataToolStripMenuItem.Text = "No installer history data is available at this time"
@@ -5998,7 +6356,12 @@ Public Class MainForm
             Else
                 Text = "Installateur manuel de Windows 11"
             End If
-            Notify.Text = "Installateur manuel de Windows 11 - Prêt"
+            If InstCreateInt = 2 Then
+                Notify.Text = "Installateur manuel de Windows 11 - Occupé"
+            Else
+                Notify.Text = "Installateur manuel de Windows 11 - Prêt"
+            End If
+
             ' Labels
             Label1.Text = "Bienvenue"
             Label100.Text = "Instructions"
@@ -6065,7 +6428,12 @@ Public Class MainForm
             Label65.Text = "Image du Windows 11 :"
             Label66.Text = "Image du Windows 10 :"
             Label69.Text = "Méthode :"
-            ' Labels71 through 74 were deleted due to lack of functionality
+            Label71.Text = ProgramTitleLabel.Text
+            Label72.Text = "version " & VerStr & " (version assemblée " & AVerStr & ")"
+            Label73.Text = "Crédits :"
+            If VDescStr = "" Then
+                Label74.Text = "C'est à Microsoft qu'il incombe d'imposer la configuration requise, et non à votre ordinateur de ne pas la respecter."
+            End If
             Label75.Text = "Compatibilité avec les plates-formes :"
             Label77.Text = "Étiquette de l'installateur :"
             Label78.Text = LabelText.Text
@@ -6115,11 +6483,19 @@ Public Class MainForm
             Label15.Text = Label1.Text
             Label99.Text = Label44.Text
 
-            ' Miscelaneous labels
+            ' Miscellaneous labels
             Label29.Text = Label12.Text
             Label32.Text = Label17.Text
             Label46.Text = Label9.Text
             NameLabel.Text = "Nom : " & TextBox3.Text
+            PremiseLabel.Text = "L'installateur manuel de Windows 11 est un outil conçu pour automatiser la création d'un installateur modifié pour les systèmes 64 bits non pris en charge." & CrLf & _
+                                "Cet outil vise également à être aussi respectueux de l'environnement que possible, en essayant d'éviter les déchets électroniques produits par les exigences du système Windows 11." & CrLf & _
+                                "Cet outil ne doit pas être décrit comme un installateur officiel de Windows et n'installera pas/mettra à jour Windows sur votre système."
+            If RadioButton1.Checked = True Then
+                PC_DETAIL_Label.Text = "Sélectionnez cette option pour une compatibilité matérielle plus large"
+            Else
+                PC_DETAIL_Label.Text = "Sélectionnez cette option pour les systèmes qui ne prennent en charge que l'UEFI." & CrLf & "NOTE : vous pouvez activer UEFI-CSM sur votre système. Si vous ne savez pas comment faire, consultez l'un des liens ci-dessous." & CrLf & CrLf & "AVERTISSEMENT : l'activation de CSM sur votre système peut vous obliger à réinstaller Windows, si le système ne détecte pas correctement la table de partition du lecteur de démarrage après avoir effectué la modification"
+            End If
             If InstHistPanel.InstallerListView.Items.Count = 0 Then
                 Last_Inst_Time_Label.Text = "Aucune date n'est disponible"
             End If
@@ -6131,13 +6507,17 @@ Public Class MainForm
             If TextBox1.Text = "" Then
                 Win11PresenceSTLabel.Text = "Statut de présence : inconnu"
             End If
-            If File.Exists(TextBox2.Text) Then
-                Win10PresenceSTLabel.Text = "Statut de présence : ce fichier existe"
+            If Not ComboBox5.SelectedItem = "REGTWEAK" Then
+                If File.Exists(TextBox2.Text) Then
+                    Win10PresenceSTLabel.Text = "Statut de présence : ce fichier existe"
+                Else
+                    Win10PresenceSTLabel.Text = "Statut de présence : ce fichier n'existe pas"
+                End If
+                If TextBox2.Text = "" Then
+                    Win10PresenceSTLabel.Text = "Statut de présence : inconnu"
+                End If
             Else
-                Win10PresenceSTLabel.Text = "Statut de présence : ce fichier n'existe pas"
-            End If
-            If TextBox2.Text = "" Then
-                Win10PresenceSTLabel.Text = "Statut de présence : inconnu"
+                Win10PresenceSTLabel.Text = "Ce fichier n'est pas nécessaire"
             End If
             If TextBox4.Text.EndsWith("\") Then
                 If TextBox4.Text.Contains(" ") Then
@@ -6166,6 +6546,11 @@ Public Class MainForm
             LinkLabel10.Text = "Vérifiez la page des problèmes"
             LinkLabel11.Text = "Vérifiez la branche Hummingbird"
             LinkLabel12.Text = "Il y a certaines choses qui méritent d'être révisées avant de continuer. Cliquez ici pour en savoir plus."
+            LinkLabel13.Text = "- Icônes du système Fluent UI, par Microsoft"
+            LinkLabel14.Text = "- Fluency, par Icons8"
+            LinkLabel16.Text = "Consultez WhyNotWin11 pour savoir si votre ordinateur est capable d'exécuter Windows 11"
+            LinkLabel13.LinkArea = New LinkArea(2, 27)
+            LinkLabel16.LinkArea = New LinkArea(10, 11)
             LinkLabel17.Text = "Options supplémentaires..."
             LinkLabel18.Text = "La plupart des paramètres de fonctionnalité sont désactivés pour le moment. Pourquoi ?"
             LinkLabel18.LinkArea = New LinkArea(76, 10)
@@ -6219,7 +6604,11 @@ Public Class MainForm
             Windows11ManualInstallerToolStripMenuItem.Text = "Installateur manuel de Windows 11"
             VersionToolStripMenuItem.Text = "version " & VerStr & " (version assemblée " & AVerStr & ")"
             InstSTLabel.Text = "Statut de l'installateur"
-            StatusTSI.Text = "Aucun installateur n'est créé pour l'instant"
+            If InstCreateInt = 2 Then
+                StatusTSI.Text = "Création de l'installateur modifié en cours..."
+            Else
+                StatusTSI.Text = "Aucun installateur n'est en cours de création pour le moment"
+            End If
             LastInstallerCreatedAtToolStripMenuItem.Text = "Dernier installateur créé à :"
             If InstHistPanel.InstallerListView.Items.Count = 0 Then
                 IHDataToolStripMenuItem.Text = "Aucune donnée sur l'historique des installateurs n'est disponible pour l'instant"
@@ -6333,7 +6722,11 @@ Public Class MainForm
                 Else
                     Text = "Instalador manual de Windows 11"
                 End If
-                Notify.Text = "Instalador manual de Windows 11 - Listo"
+                If InstCreateInt = 2 Then
+                    Notify.Text = "Instalador manual de Windows 11 - Ocupado"
+                Else
+                    Notify.Text = "Instalador manual de Windows 11 - Listo"
+                End If
                 ' Labels
                 Label1.Text = "Bienvenido"
                 Label100.Text = "Instrucciones"
@@ -6399,7 +6792,12 @@ Public Class MainForm
                 Label65.Text = "Imagen de Windows 11:"
                 Label66.Text = "Imagen de Windows 10:"
                 Label69.Text = "Método:"
-                ' Labels71 through 74 were deleted due to lack of functionality
+                Label71.Text = ProgramTitleLabel.Text
+                Label72.Text = "versión " & VerStr & " (versión de ensamblado " & AVerStr & ")"
+                Label73.Text = "Créditos:"
+                If VDescStr = "" Then
+                    Label74.Text = "Eche la culpa a Microsoft por forzar los requisitos del sistema, no a su equipo por no conocerlos."
+                End If
                 Label75.Text = "Compatibilidad de plataformas:"
                 Label77.Text = "Etiqueta del instalador:"
                 Label78.Text = LabelText.Text
@@ -6450,11 +6848,19 @@ Public Class MainForm
                 Label15.Text = Label1.Text
                 Label99.Text = Label44.Text
 
-                ' Miscelaneous labels
+                ' Miscellaneous labels
                 Label29.Text = Label12.Text
                 Label32.Text = Label17.Text
                 Label46.Text = Label9.Text
                 NameLabel.Text = "Nombre: " & TextBox3.Text
+                PremiseLabel.Text = "El instalador manual de Windows 11 es una herramienta diseñada para automatizar la creación de un instalador modificado para sistemas de 64 bits no soportados." & CrLf & _
+                                    "Esta herramienta también pretende ser lo más ecológica posible, intentando prevenir basura electrónica producida por los requisitos de sistema de Windows 11." & CrLf & _
+                                    "Esta herramienta no debería ser descrita como un programa de instalación oficial de Windows y no instalará/actualizará Windows en su sistema."
+                If RadioButton1.Checked = True Then
+                    PC_DETAIL_Label.Text = "Seleccione esta opción para una compatibilidad de hardware más amplia"
+                Else
+                    PC_DETAIL_Label.Text = "Seleccione esta opción para sistemas que solo soporten UEFI" & CrLf & "NOTA: usted puede habilitar UEFI-CSM en su sistema. Si no sabe cómo, compruebe uno de los enlaces de abajo." & CrLf & CrLf & "ADVERTENCIA: habilitar CSM en su sistema podría hacerle reinstalar Windows, si el sistema no reconociese correctamente la tabla de particiones del disco de arranque después de la modificación"
+                End If
                 If InstHistPanel.InstallerListView.Items.Count = 0 Then
                     Last_Inst_Time_Label.Text = "Ningún dato temporal disponible"
                 End If
@@ -6466,13 +6872,17 @@ Public Class MainForm
                 If TextBox1.Text = "" Then
                     Win11PresenceSTLabel.Text = "Estado de presencia: desconocido"
                 End If
-                If File.Exists(TextBox2.Text) Then
-                    Win10PresenceSTLabel.Text = "Estado de presencia: este archivo existe"
+                If Not ComboBox5.SelectedItem = "REGTWEAK" Then
+                    If File.Exists(TextBox2.Text) Then
+                        Win10PresenceSTLabel.Text = "Estado de presencia: este archivo existe"
+                    Else
+                        Win10PresenceSTLabel.Text = "Estado de presencia: este archivo no existe"
+                    End If
+                    If TextBox2.Text = "" Then
+                        Win10PresenceSTLabel.Text = "Estado de presencia: desconocido"
+                    End If
                 Else
-                    Win10PresenceSTLabel.Text = "Estado de presencia: este archivo no existe"
-                End If
-                If TextBox2.Text = "" Then
-                    Win10PresenceSTLabel.Text = "Estado de presencia: desconocido"
+                    Win10PresenceSTLabel.Text = "Este archivo no es necesario"
                 End If
                 If TextBox4.Text.EndsWith("\") Then
                     If TextBox4.Text.Contains(" ") Then
@@ -6501,6 +6911,11 @@ Public Class MainForm
                 LinkLabel10.Text = "Compruebe la página de Errores"
                 LinkLabel11.Text = "Compruebe la rama Hummingbird"
                 LinkLabel12.Text = "Hay algunas cosas que valen la pena revisar antes de continuar. Haga clic aquí para saber más."
+                LinkLabel13.Text = "- Iconos de sistema Fluent UI, por Microsoft"
+                LinkLabel14.Text = "- Fluency, por Icons8"
+                LinkLabel16.Text = "Compruebe WhyNotWin11 para ver si su equipo puede ejecutar Windows 11"
+                LinkLabel13.LinkArea = New LinkArea(2, 27)
+                LinkLabel16.LinkArea = New LinkArea(10, 11)
                 LinkLabel17.Text = "Más opciones..."
                 LinkLabel18.Text = "La mayoría de las opciones de funcionalidad no están disponibles en este momento. ¿Por qué?"
                 LinkLabel18.LinkArea = New LinkArea(82, 9)
@@ -6553,7 +6968,11 @@ Public Class MainForm
                 Windows11ManualInstallerToolStripMenuItem.Text = "Instalador manual de Windows 11"
                 VersionToolStripMenuItem.Text = "versión " & VerStr & " (versión de ensamblado " & AVerStr & ")"
                 InstSTLabel.Text = "Estado del instalador"
-                StatusTSI.Text = "No se está creando ningún instalador en este momento"
+                If InstCreateInt = 2 Then
+                    StatusTSI.Text = "Creando el instalador modificado..."
+                Else
+                    StatusTSI.Text = "No se está creando ningún instalador en estos momentos"
+                End If
                 LastInstallerCreatedAtToolStripMenuItem.Text = "Último instalador creado a las:"
                 If InstHistPanel.InstallerListView.Items.Count = 0 Then
                     IHDataToolStripMenuItem.Text = "No hay datos del historial del instalador en este momento"
@@ -6659,7 +7078,12 @@ Public Class MainForm
                 Else
                     Text = "Windows 11 Manual Installer"
                 End If
-                Notify.Text = "Windows 11 Manual Installer - Ready"
+                If InstCreateInt = 2 Then
+                    Notify.Text = "Windows 11 Manual Installer - Busy"
+                Else
+                    Notify.Text = "Windows 11 Manual Installer - Ready"
+                End If
+
                 ' Labels
                 Label1.Text = "Welcome"
                 Label100.Text = "Instructions"
@@ -6725,7 +7149,12 @@ Public Class MainForm
                 Label65.Text = "Windows 11 image:"
                 Label66.Text = "Windows 10 image:"
                 Label69.Text = "Method:"
-                ' Labels71 through 74 were deleted due to lack of functionality
+                Label71.Text = ProgramTitleLabel.Text
+                Label72.Text = "version " & VerStr & " (assembly version " & AVerStr & ")"
+                Label73.Text = "Credits:"
+                If VDescStr = "" Then
+                    Label74.Text = "Blame Microsoft for pushing the system requirements, not your computer for not meeting them."
+                End If
                 Label75.Text = "Platform compatibility:"
                 Label77.Text = "Installer label:"
                 Label78.Text = LabelText.Text
@@ -6776,11 +7205,19 @@ Public Class MainForm
                 Label15.Text = Label1.Text
                 Label99.Text = Label44.Text
 
-                ' Miscelaneous labels
+                ' Miscellaneous labels
                 Label29.Text = Label12.Text
                 Label32.Text = Label17.Text
                 Label46.Text = Label9.Text
                 NameLabel.Text = "Name: " & TextBox3.Text
+                PremiseLabel.Text = "The Windows 11 Manual Installer is a tool designed to automate the creation of a custom installer for unsupported 64-bit systems." & CrLf & _
+                    "This tool also attempts to be as green as possible, trying to prevent e-waste produced by Windows 11's system requirements." & CrLf & _
+                    "This tool should not be depicted as an official Windows installation program and will not install/upgrade Windows on your system."
+                If RadioButton1.Checked = True Then
+                    PC_DETAIL_Label.Text = "Select this option for broader hardware compatibility"
+                Else
+                    PC_DETAIL_Label.Text = "Select this option for systems that only support UEFI" & CrLf & "NOTE: you can enable UEFI-CSM on your system. If you don't know how, check one of the links below." & CrLf & CrLf & "WARNING: enabling CSM on your system may require you to reinstall Windows, if the system does not correctly detect the boot drive's partition table after doing the modification"
+                End If
                 If InstHistPanel.InstallerListView.Items.Count = 0 Then
                     Last_Inst_Time_Label.Text = "No time data is available"
                 End If
@@ -6792,13 +7229,17 @@ Public Class MainForm
                 If TextBox1.Text = "" Then
                     Win11PresenceSTLabel.Text = "Presence status: unknown"
                 End If
-                If File.Exists(TextBox2.Text) Then
-                    Win10PresenceSTLabel.Text = "Presence status: this file exists"
+                If Not ComboBox5.SelectedItem = "REGTWEAK" Then
+                    If File.Exists(TextBox2.Text) Then
+                        Win10PresenceSTLabel.Text = "Presence status: this file exists"
+                    Else
+                        Win10PresenceSTLabel.Text = "Presence status: this file does not exist"
+                    End If
+                    If TextBox2.Text = "" Then
+                        Win10PresenceSTLabel.Text = "Presence status: unknown"
+                    End If
                 Else
-                    Win10PresenceSTLabel.Text = "Presence status: this file does not exist"
-                End If
-                If TextBox2.Text = "" Then
-                    Win10PresenceSTLabel.Text = "Presence status: unknown"
+                    Win10PresenceSTLabel.Text = "This file is not necessary"
                 End If
                 If TextBox4.Text.EndsWith("\") Then
                     If TextBox4.Text.Contains(" ") Then
@@ -6827,6 +7268,11 @@ Public Class MainForm
                 LinkLabel10.Text = "Check the Issues page"
                 LinkLabel11.Text = "Check the Hummingbird branch"
                 LinkLabel12.Text = "There are some things that are worth revising before continuing. Click here to learn more."
+                LinkLabel13.Text = "- Fluent UI System Icons, by Microsoft"
+                LinkLabel14.Text = "- Fluency, by Icons8"
+                LinkLabel16.Text = "Check out WhyNotWin11 to see if your computer is able to run Windows 11"
+                LinkLabel13.LinkArea = New LinkArea(2, 22)
+                LinkLabel16.LinkArea = New LinkArea(10, 11)
                 LinkLabel17.Text = "More options..."
                 LinkLabel18.Text = "Most of the functionality settings are disabled right now. Why?"
                 LinkLabel18.LinkArea = New LinkArea(59, 4)
@@ -6880,7 +7326,11 @@ Public Class MainForm
                 Windows11ManualInstallerToolStripMenuItem.Text = "Windows 11 Manual Installer"
                 VersionToolStripMenuItem.Text = "version " & VerStr & " (assembly version " & AVerStr & ")"
                 InstSTLabel.Text = "Installer status"
-                StatusTSI.Text = "No installers are being created at this time"
+                If InstCreateInt = 2 Then
+                    StatusTSI.Text = "Creating the custom installer..."
+                Else
+                    StatusTSI.Text = "No installers are being created at this time"
+                End If
                 LastInstallerCreatedAtToolStripMenuItem.Text = "Last installer created at:"
                 If InstHistPanel.InstallerListView.Items.Count = 0 Then
                     IHDataToolStripMenuItem.Text = "No installer history data is available at this time"
@@ -6986,7 +7436,12 @@ Public Class MainForm
                 Else
                     Text = "Installateur manuel de Windows 11"
                 End If
-                Notify.Text = "Installateur manuel de Windows 11 - Prêt"
+                If InstCreateInt = 2 Then
+                    Notify.Text = "Installateur manuel de Windows 11 - Occupé"
+                Else
+                    Notify.Text = "Installateur manuel de Windows 11 - Prêt"
+                End If
+
                 ' Labels
                 Label1.Text = "Bienvenue"
                 Label100.Text = "Instructions"
@@ -7053,7 +7508,12 @@ Public Class MainForm
                 Label65.Text = "Image du Windows 11 :"
                 Label66.Text = "Image du Windows 10 :"
                 Label69.Text = "Méthode :"
-                ' Labels71 through 74 were deleted due to lack of functionality
+                Label71.Text = ProgramTitleLabel.Text
+                Label72.Text = "version " & VerStr & " (version assemblée " & AVerStr & ")"
+                Label73.Text = "Crédits :"
+                If VDescStr = "" Then
+                    Label74.Text = "C'est à Microsoft qu'il incombe d'imposer la configuration requise, et non à votre ordinateur de ne pas la respecter."
+                End If
                 Label75.Text = "Compatibilité avec les plates-formes :"
                 Label77.Text = "Étiquette de l'installateur :"
                 Label78.Text = LabelText.Text
@@ -7103,11 +7563,19 @@ Public Class MainForm
                 Label15.Text = Label1.Text
                 Label99.Text = Label44.Text
 
-                ' Miscelaneous labels
+                ' Miscellaneous labels
                 Label29.Text = Label12.Text
                 Label32.Text = Label17.Text
                 Label46.Text = Label9.Text
                 NameLabel.Text = "Nom : " & TextBox3.Text
+                PremiseLabel.Text = "L'installateur manuel de Windows 11 est un outil conçu pour automatiser la création d'un installateur modifié pour les systèmes 64 bits non pris en charge." & CrLf & _
+                                    "Cet outil vise également à être aussi respectueux de l'environnement que possible, en essayant d'éviter les déchets électroniques produits par les exigences du système Windows 11." & CrLf & _
+                                    "Cet outil ne doit pas être décrit comme un installateur officiel de Windows et n'installera pas/mettra à jour Windows sur votre système."
+                If RadioButton1.Checked = True Then
+                    PC_DETAIL_Label.Text = "Sélectionnez cette option pour une compatibilité matérielle plus large"
+                Else
+                    PC_DETAIL_Label.Text = "Sélectionnez cette option pour les systèmes qui ne prennent en charge que l'UEFI." & CrLf & "NOTE : vous pouvez activer UEFI-CSM sur votre système. Si vous ne savez pas comment faire, consultez l'un des liens ci-dessous." & CrLf & CrLf & "AVERTISSEMENT : l'activation de CSM sur votre système peut vous obliger à réinstaller Windows, si le système ne détecte pas correctement la table de partition du lecteur de démarrage après avoir effectué la modification"
+                End If
                 If InstHistPanel.InstallerListView.Items.Count = 0 Then
                     Last_Inst_Time_Label.Text = "Aucune date n'est disponible"
                 End If
@@ -7119,13 +7587,17 @@ Public Class MainForm
                 If TextBox1.Text = "" Then
                     Win11PresenceSTLabel.Text = "Statut de présence : inconnu"
                 End If
-                If File.Exists(TextBox2.Text) Then
-                    Win10PresenceSTLabel.Text = "Statut de présence : ce fichier existe"
+                If Not ComboBox5.SelectedItem = "REGTWEAK" Then
+                    If File.Exists(TextBox2.Text) Then
+                        Win10PresenceSTLabel.Text = "Statut de présence : ce fichier existe"
+                    Else
+                        Win10PresenceSTLabel.Text = "Statut de présence : ce fichier n'existe pas"
+                    End If
+                    If TextBox2.Text = "" Then
+                        Win10PresenceSTLabel.Text = "Statut de présence : inconnu"
+                    End If
                 Else
-                    Win10PresenceSTLabel.Text = "Statut de présence : ce fichier n'existe pas"
-                End If
-                If TextBox2.Text = "" Then
-                    Win10PresenceSTLabel.Text = "Statut de présence : inconnu"
+                    Win10PresenceSTLabel.Text = "Ce fichier n'est pas nécessaire"
                 End If
                 If TextBox4.Text.EndsWith("\") Then
                     If TextBox4.Text.Contains(" ") Then
@@ -7154,6 +7626,11 @@ Public Class MainForm
                 LinkLabel10.Text = "Vérifiez la page des problèmes"
                 LinkLabel11.Text = "Vérifiez la branche Hummingbird"
                 LinkLabel12.Text = "Il y a certaines choses qui méritent d'être révisées avant de continuer. Cliquez ici pour en savoir plus."
+                LinkLabel13.Text = "- Icônes du système Fluent UI, par Microsoft"
+                LinkLabel14.Text = "- Fluency, par Icons8"
+                LinkLabel16.Text = "Consultez WhyNotWin11 pour savoir si votre ordinateur est capable d'exécuter Windows 11"
+                LinkLabel13.LinkArea = New LinkArea(2, 27)
+                LinkLabel16.LinkArea = New LinkArea(10, 11)
                 LinkLabel17.Text = "Options supplémentaires..."
                 LinkLabel18.Text = "La plupart des paramètres de fonctionnalité sont désactivés pour le moment. Pourquoi ?"
                 LinkLabel18.LinkArea = New LinkArea(76, 10)
@@ -7207,7 +7684,11 @@ Public Class MainForm
                 Windows11ManualInstallerToolStripMenuItem.Text = "Installateur manuel de Windows 11"
                 VersionToolStripMenuItem.Text = "version " & VerStr & " (version assemblée " & AVerStr & ")"
                 InstSTLabel.Text = "Statut de l'installateur"
-                StatusTSI.Text = "Aucun installateur n'est créé pour l'instant"
+                If InstCreateInt = 2 Then
+                    StatusTSI.Text = "Création de l'installateur modifié en cours..."
+                Else
+                    StatusTSI.Text = "Aucun installateur n'est en cours de création pour le moment"
+                End If
                 LastInstallerCreatedAtToolStripMenuItem.Text = "Dernier installateur créé à :"
                 If InstHistPanel.InstallerListView.Items.Count = 0 Then
                     IHDataToolStripMenuItem.Text = "Aucune donnée sur l'historique des installateurs n'est disponible pour l'instant"
@@ -7559,7 +8040,7 @@ Public Class MainForm
         End If
     End Sub
 
-    Private Sub InstructionPic_Click(sender As Object, e As EventArgs) Handles InstructionPic.Click
+    Private Sub InstructionPic_Click(sender As Object, e As EventArgs) Handles InstructionPic.Click, Label100.Click, PictureBox10.Click
         PanelIndicatorPic.Anchor = CType((AnchorStyles.Top Or AnchorStyles.Left), AnchorStyles)
         WelcomePanel.Visible = False
         SettingPanel.Visible = False
@@ -7688,8 +8169,8 @@ Public Class MainForm
         Process.Start("\Windows\explorer.exe", TextBox4.Text)
     End Sub
 
-    Private Sub Label103_Click(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles Label103.Click
-        AdditionalToolsCMS.Show(CType(sender, Control), e.Location)
+    Private Sub Label103_Click(sender As Object, e As EventArgs) Handles Label103.Click
+        AdditionalToolsCMS.Show(Label103, New Point(4, Label103.Height))
     End Sub
 
     Private Sub WIMRToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles WIMRToolStripMenuItem.Click
@@ -8895,6 +9376,7 @@ Public Class MainForm
                     InstHistPanel.OK_Button.Text = "OK"
                     InstHistPanel.XMLExportOptn.Text = "Export to XML file..."
                     InstHistPanel.HTMLExportOptn.Text = "Export to HTML file..."
+                    InstHistPanel.CSVExportOptn.Text = "Export to CSV file..."
                     InstHistPanel.ExportOptnBtn.Text = "Export options"
                 ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
                     InstHistPanel.Label1.Text = "Historial de instaladores"
@@ -8904,6 +9386,7 @@ Public Class MainForm
                     InstHistPanel.OK_Button.Text = "Aceptar"
                     InstHistPanel.XMLExportOptn.Text = "Exportar a archivo XML..."
                     InstHistPanel.HTMLExportOptn.Text = "Exportar a archivo HTML..."
+                    InstHistPanel.CSVExportOptn.Text = "Exportar a archivo CSV..."
                     InstHistPanel.ExportOptnBtn.Text = "Opciones de exportación"
                 ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
                     InstHistPanel.Label1.Text = "Historique de l'installateur"
@@ -8913,6 +9396,7 @@ Public Class MainForm
                     InstHistPanel.OK_Button.Text = "OK"
                     InstHistPanel.XMLExportOptn.Text = "Exporter vers un fichier XML..."
                     InstHistPanel.HTMLExportOptn.Text = "Exporter vers un fichier HTML..."
+                    InstHistPanel.CSVExportOptn.Text = "Exporter vers un fichier CSV..."
                     InstHistPanel.ExportOptnBtn.Text = "Options d'exportation"
                 ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
                     If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
@@ -8923,6 +9407,7 @@ Public Class MainForm
                         InstHistPanel.OK_Button.Text = "OK"
                         InstHistPanel.XMLExportOptn.Text = "Export to XML file..."
                         InstHistPanel.HTMLExportOptn.Text = "Export to HTML file..."
+                        InstHistPanel.CSVExportOptn.Text = "Export to CSV file..."
                         InstHistPanel.ExportOptnBtn.Text = "Export options"
                     ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                         InstHistPanel.Label1.Text = "Historial de instaladores"
@@ -8932,6 +9417,7 @@ Public Class MainForm
                         InstHistPanel.OK_Button.Text = "Aceptar"
                         InstHistPanel.XMLExportOptn.Text = "Exportar a archivo XML..."
                         InstHistPanel.HTMLExportOptn.Text = "Exportar a archivo HTML..."
+                        InstHistPanel.CSVExportOptn.Text = "Exportar a archivo CSV..."
                         InstHistPanel.ExportOptnBtn.Text = "Opciones de exportación"
                     ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
                         InstHistPanel.Label1.Text = "Historique de l'installateur"
@@ -8941,6 +9427,7 @@ Public Class MainForm
                         InstHistPanel.OK_Button.Text = "OK"
                         InstHistPanel.XMLExportOptn.Text = "Exporter vers un fichier XML..."
                         InstHistPanel.HTMLExportOptn.Text = "Exporter vers un fichier HTML..."
+                        InstHistPanel.CSVExportOptn.Text = "Exporter vers un fichier CSV..."
                         InstHistPanel.ExportOptnBtn.Text = "Options d'exportation"
                     End If
                 End If
@@ -9438,27 +9925,111 @@ Public Class MainForm
     End Sub
 
     Private Sub WelcomePic_MouseHover(sender As Object, e As EventArgs) Handles WelcomePic.MouseHover
-        ConglomerateToolTip.SetToolTip(WelcomePic, "Welcome page")
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+            ConglomerateToolTip.SetToolTip(sender, "Welcome page")
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+            ConglomerateToolTip.SetToolTip(sender, "Página de bienvenida")
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            ConglomerateToolTip.SetToolTip(sender, "Page d'accueil")
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                ConglomerateToolTip.SetToolTip(sender, "Welcome page")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                ConglomerateToolTip.SetToolTip(sender, "Página de bienvenida")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                ConglomerateToolTip.SetToolTip(sender, "Page d'accueil")
+            End If
+        End If
     End Sub
 
     Private Sub InstCreatePic_MouseHover(sender As Object, e As EventArgs) Handles InstCreatePic.MouseHover
-        ConglomerateToolTip.SetToolTip(InstCreatePic, "Create a custom installer")
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+            ConglomerateToolTip.SetToolTip(sender, "Create a custom installer")
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+            ConglomerateToolTip.SetToolTip(sender, "Crear un instalador modificado")
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            ConglomerateToolTip.SetToolTip(sender, "Créer un installateur personnalisé")
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                ConglomerateToolTip.SetToolTip(sender, "Create a custom installer")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                ConglomerateToolTip.SetToolTip(sender, "Crear un instalador modificado")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                ConglomerateToolTip.SetToolTip(sender, "Créer un installateur personnalisé")
+            End If
+        End If
     End Sub
 
     Private Sub InstructionPic_MouseHover(sender As Object, e As EventArgs) Handles InstructionPic.MouseHover
-        ConglomerateToolTip.SetToolTip(InstructionPic, "Instructions")
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+            ConglomerateToolTip.SetToolTip(sender, "Instructions")
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+            ConglomerateToolTip.SetToolTip(sender, "Instrucciones")
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            ConglomerateToolTip.SetToolTip(sender, "Instructions")
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                ConglomerateToolTip.SetToolTip(sender, "Instructions")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                ConglomerateToolTip.SetToolTip(sender, "Instrucciones")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                ConglomerateToolTip.SetToolTip(sender, "Instructions")
+            End If
+        End If
     End Sub
 
     Private Sub HelpPic_MouseHover(sender As Object, e As EventArgs) Handles HelpPic.MouseHover
-        ConglomerateToolTip.SetToolTip(HelpPic, "Help")
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+            ConglomerateToolTip.SetToolTip(sender, "Help")
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+            ConglomerateToolTip.SetToolTip(sender, "Ayuda")
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            ConglomerateToolTip.SetToolTip(sender, "Aide")
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                ConglomerateToolTip.SetToolTip(sender, "Help")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                ConglomerateToolTip.SetToolTip(sender, "Ayuda")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                ConglomerateToolTip.SetToolTip(sender, "Aide")
+            End If
+        End If
     End Sub
 
     Private Sub SettingsPic_MouseHover(sender As Object, e As EventArgs) Handles SettingsPic.MouseHover
-        ConglomerateToolTip.SetToolTip(SettingsPic, "Settings")
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+            ConglomerateToolTip.SetToolTip(sender, "Settings")
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+            ConglomerateToolTip.SetToolTip(sender, "Configuración")
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            ConglomerateToolTip.SetToolTip(sender, "Paramètres")
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                ConglomerateToolTip.SetToolTip(sender, "Settings")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                ConglomerateToolTip.SetToolTip(sender, "Configuración")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                ConglomerateToolTip.SetToolTip(sender, "Paramètres")
+            End If
+        End If
     End Sub
 
     Private Sub InfoPic_MouseHover(sender As Object, e As EventArgs) Handles InfoPic.MouseHover
-        ConglomerateToolTip.SetToolTip(InfoPic, "About")
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+            ConglomerateToolTip.SetToolTip(sender, "About")
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+            ConglomerateToolTip.SetToolTip(sender, "Acerca de")
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            ConglomerateToolTip.SetToolTip(sender, "À propos de")
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                ConglomerateToolTip.SetToolTip(sender, "About")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                ConglomerateToolTip.SetToolTip(sender, "Acerca de")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                ConglomerateToolTip.SetToolTip(sender, "À propos de")
+            End If
+        End If
     End Sub
 
     Private Sub FrenchToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FrenchToolStripMenuItem.Click
@@ -9474,18 +10045,18 @@ Public Class MainForm
 
     Private Sub x86_Pic_MouseHover(sender As Object, e As EventArgs) Handles x86_Pic.MouseHover, TopNavbar_x86_Pic.Click
         If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
-            ConglomerateToolTip.SetToolTip(x86_Pic, "This system contains a 32-bit processor or operating system. Click here to learn more.")
+            ConglomerateToolTip.SetToolTip(sender, "This system contains a 32-bit processor or operating system. Click here to learn more.")
         ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
-            ConglomerateToolTip.SetToolTip(x86_Pic, "Este sistema contiene un procesador o sistema operativo de 32 bits. Haga clic aquí para saber más.")
+            ConglomerateToolTip.SetToolTip(sender, "Este sistema contiene un procesador o sistema operativo de 32 bits. Haga clic aquí para saber más.")
         ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
-            ConglomerateToolTip.SetToolTip(x86_Pic, "Ce système contient un processeur ou un système d'exploitation 32 bits. Cliquez ici pour en savoir plus.")
+            ConglomerateToolTip.SetToolTip(sender, "Ce système contient un processeur ou un système opérationnel 32 bits. Cliquez ici pour en savoir plus.")
         ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
-                ConglomerateToolTip.SetToolTip(x86_Pic, "This system contains a 32-bit processor or operating system. Click here to learn more.")
+                ConglomerateToolTip.SetToolTip(sender, "This system contains a 32-bit processor or operating system. Click here to learn more.")
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
-                ConglomerateToolTip.SetToolTip(x86_Pic, "Este sistema contiene un procesador o sistema operativo de 32 bits. Haga clic aquí para saber más.")
+                ConglomerateToolTip.SetToolTip(sender, "Este sistema contiene un procesador o sistema operativo de 32 bits. Haga clic aquí para saber más.")
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
-                ConglomerateToolTip.SetToolTip(x86_Pic, "Ce système contient un processeur ou un système d'exploitation 32 bits. Cliquez ici pour en savoir plus.")
+                ConglomerateToolTip.SetToolTip(sender, "Ce système contient un processeur ou un système opérationnel 32 bits. Cliquez ici pour en savoir plus.")
             End If
         End If
     End Sub
@@ -9496,14 +10067,14 @@ Public Class MainForm
         ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
             MsgBox("El programa ha detectado un procesador o un sistema operativo de 32 bits. La herramienta todavía funcionará, pero el instalador no lo hará. Necesitará un ordenador con un procesador de 64 bits para instalar Windows 11." & CrLf & "Si es lo último (tiene un sistema operativo de 32 bits en un procesador de 64 bits), deberá reinstalar Windows.", vbOKOnly + vbInformation, "Arquitectura del instalador incompatible")
         ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
-            MsgBox("Le programme a détecté un processeur 32 bits ou un système d'exploitation 32 bits. L'outil fonctionnera toujours, mais pas le programme d'installation. Vous aurez besoin d'un ordinateur doté d'un processeur 64 bits pour installer Windows 11." & CrLf & "Si c'est le cas (vous avez un système d'exploitation 32 bits sur un processeur 64 bits), vous devrez réinstaller Windows.", vbOKOnly + vbInformation, "Architecture de l'installateur incompatible")
+            MsgBox("Le programme a détecté un processeur 32 bits ou un système opérationnel 32 bits. L'outil fonctionnera toujours, mais pas le programme d'installation. Vous aurez besoin d'un ordinateur doté d'un processeur 64 bits pour installer Windows 11." & CrLf & "Si c'est le cas (vous avez un système opérationnel 32 bits sur un processeur 64 bits), vous devrez réinstaller Windows.", vbOKOnly + vbInformation, "Architecture de l'installateur incompatible")
         ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 MsgBox("The program has detected a 32-bit processor or a 32-bit operating system. The tool will still work, but the installer won't. You'll need a computer with a 64-bit processor to install Windows 11." & CrLf & "If it's the latter (you have a 32-bit OS on a 64-bit processor), you'll need to reinstall Windows.", vbOKOnly + vbInformation, "Incompatible installer architecture")
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 MsgBox("El programa ha detectado un procesador o un sistema operativo de 32 bits. La herramienta todavía funcionará, pero el instalador no lo hará. Necesitará un ordenador con un procesador de 64 bits para instalar Windows 11." & CrLf & "Si es lo último (tiene un sistema operativo de 32 bits en un procesador de 64 bits), deberá reinstalar Windows.", vbOKOnly + vbInformation, "Arquitectura del instalador incompatible")
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
-                MsgBox("Le programme a détecté un processeur 32 bits ou un système d'exploitation 32 bits. L'outil fonctionnera toujours, mais pas le programme d'installation. Vous aurez besoin d'un ordinateur doté d'un processeur 64 bits pour installer Windows 11." & CrLf & "Si c'est le cas (vous avez un système d'exploitation 32 bits sur un processeur 64 bits), vous devrez réinstaller Windows.", vbOKOnly + vbInformation, "Architecture de l'installateur incompatible")
+                MsgBox("Le programme a détecté un processeur 32 bits ou un système opérationnel 32 bits. L'outil fonctionnera toujours, mais pas le programme d'installation. Vous aurez besoin d'un ordinateur doté d'un processeur 64 bits pour installer Windows 11." & CrLf & "Si c'est le cas (vous avez un système opérationnel 32 bits sur un processeur 64 bits), vous devrez réinstaller Windows.", vbOKOnly + vbInformation, "Architecture de l'installateur incompatible")
             End If
         End If
     End Sub
@@ -9549,5 +10120,57 @@ Public Class MainForm
         End If
         LabelText.Enabled = CheckBox2.Checked = False
         LabelSetButton.Enabled = CheckBox2.Checked = False
+    End Sub
+
+    Public Sub ResetSettings()
+        If File.Exists(".\settings.ini") Then
+            File.Delete(".\settings.ini")
+        End If
+        AutomaticToolStripMenuItem.PerformClick()
+        AutomaticLanguageToolStripMenuItem.PerformClick()
+        LabelText.Text = "Windows11"
+        LabelSetButton.PerformClick()
+        SaveSettingsFile()
+    End Sub
+
+    Private Sub PictureBox35_MouseHover(sender As Object, e As EventArgs) Handles PictureBox35.MouseHover
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+            ConglomerateToolTip.SetToolTip(sender, "Click here to download the Windows installers from Microsoft's download page")
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+            ConglomerateToolTip.SetToolTip(sender, "Haga clic aquí para descargar los instaladores de Windows desde la página de descarga de Microsoft")
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            ConglomerateToolTip.SetToolTip(sender, "Cliquez ici pour télécharger les installateurs Windows à partir de la page de téléchargement de Microsoft")
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                ConglomerateToolTip.SetToolTip(sender, "Click here to download the Windows installers from Microsoft's download page")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                ConglomerateToolTip.SetToolTip(sender, "Haga clic aquí para descargar los instaladores de Windows desde la página de descarga de Microsoft")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                ConglomerateToolTip.SetToolTip(sender, "Cliquez ici pour télécharger les installateurs Windows à partir de la page de téléchargement de Microsoft")
+            End If
+        End If
+    End Sub
+
+    Private Sub LinkLabel17_MouseHover(sender As Object, e As EventArgs) Handles LinkLabel17.MouseHover
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+            ConglomerateToolTip.SetToolTip(sender, "Click here to access the functionality settings, where you can specify how the installer should be created")
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+            ConglomerateToolTip.SetToolTip(sender, "Haga clic aquí para acceder a las opciones de funcionalidad, donde puede especificar cómo debe ser creado el instalador")
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            ConglomerateToolTip.SetToolTip(sender, "Cliquez ici pour accéder aux paramètres de fonctionnalité, où vous pouvez spécifier comment l'installateur doit être créé.")
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                ConglomerateToolTip.SetToolTip(sender, "Click here to access the functionality settings, where you can specify how the installer should be created")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                ConglomerateToolTip.SetToolTip(sender, "Haga clic aquí para acceder a las opciones de funcionalidad, donde puede especificar cómo debe ser creado el instalador")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                ConglomerateToolTip.SetToolTip(sender, "Cliquez ici pour accéder aux paramètres de fonctionnalité, où vous pouvez spécifier comment l'installateur doit être créé.")
+            End If
+        End If
+    End Sub
+
+    Private Sub MainForm_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
+        WebBrowser1.AllowWebBrowserDrop = False
+        WebBrowser2.AllowWebBrowserDrop = False
     End Sub
 End Class
