@@ -15,8 +15,6 @@ Public Class DebugPanel
             TabPage1.ForeColor = Color.Black
             TabPage2.BackColor = Color.White
             TabPage2.ForeColor = Color.Black
-            TabPage3.BackColor = Color.White
-            TabPage3.ForeColor = Color.Black
             TextBox1.BackColor = Color.White
             TextBox1.ForeColor = Color.Black
             Panel1.BackColor = Color.FromArgb(243, 243, 243)
@@ -26,11 +24,9 @@ Public Class DebugPanel
             BackColor = Color.FromArgb(43, 43, 43)
             ForeColor = Color.White
             TabPage1.BackColor = Color.FromArgb(43, 43, 43)
-            TabPage1.ForeColor = Color.Black
+            TabPage1.ForeColor = Color.White
             TabPage2.BackColor = Color.FromArgb(43, 43, 43)
-            TabPage2.ForeColor = Color.Black
-            TabPage3.BackColor = Color.FromArgb(43, 43, 43)
-            TabPage3.ForeColor = Color.Black
+            TabPage2.ForeColor = Color.White
             TextBox1.BackColor = Color.FromArgb(43, 43, 43)
             TextBox1.ForeColor = Color.White
             Panel1.BackColor = Color.FromArgb(32, 32, 32)
