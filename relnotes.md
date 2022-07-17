@@ -30,6 +30,59 @@ If updates are found:
 
 Congratulations, you have updated the program. If no updates are found, the program will continue startup.
 
+### 2.0.0100_220717
+---
+
+#### **Bugfixes**
+
+- Fixed a bug that accidentally showed "Updates are available" on the latest version
+- Fixed a bug that caused exceptions when opening some context menus with the Space or Enter keys
+- Fixed a bug that caused the main window to unmaximize when showing it after being hidden to the system tray, if it was previously maximized
+- Fixed a bug related to languages, making the "Hide/Show log" button not being shown correctly
+- Fixed a bug that caused an `ArgumentException` when manually entering the folder in the ISO file scanner
+- Fixed a bug that showed the Hummingbird channel promotion (a.k.a., a link to load the Hummingbird branch on the web), on Hummingbird releases
+- Fixed a bug that enabled the export options when no items were present in the installer history
+- Fixed a bug that made the Windows 10 installer presence status unknown when REGTWEAK was selected
+- **DEBUGGING**: fixed a bug that caused a `System.Runtime.InteropServices.COMException` when debugging the program
+
+	> NOTE: unless specified in the Exceptions window (shown by pressing `Ctrl + Alt + E`), this exception would not break the program debugging session
+
+#### **New features**
+
+- If UEFI is chosen for platform compatibility, and `Efisys.bin` is not present on the target installer files, but the Windows ADK is installed, the program will copy the file from the ADK directory into the installer
+
+	> NOTE: the program will check if `Efisys.bin` is located on the system IF the Windows ADK for Windows 10 or later is installed. If you have the ADK for Windows 8.1 or older, the program will ignore it.
+
+- The installer history can now be exported to a CSV file
+- Added a CSM enablement warning related to an operating system reinstallation
+- ToolTips are now shown in multiple languages
+- The last installer creation time and date are now reflected on the Welcome page and the `NotifyIcon` context menu
+- Added the premise of this program in the About screen and updated it
+- ToolTips are shown when hovering over more controls
+- An option for viewing the release notes has been added to the pre-load update screen
+- Updated reset functionality
+- Updated download procedure to the `MissingComponents` dialog:
+
+	```
+	Updated components to download:
+
+	- 7-Zip: 21.07 -> 22.01
+	```
+
+	> It now downloads and installs more up-to-date components
+
+	**NOTE**: if the 7-Zip required components are installed before this update, the program will skip the update procedure, unless they are from an incompatible architecture (64-bit program on 32-bit hardware)
+
+- **CODE**: the control the ToolTips are shown from is now `sender` (as of `sender As Object`) instead of the control name
+
+	> To view a specific `ToolTip.SetToolTip` procedure, go to `<Control name>_MouseHover` **in the code files**
+
+- **CODE**: `WebBrowser.AllowWebBrowserDrop` is not specified in the `MainForm.Designer.vb` file anymore, but it is set during program startup in the `MainForm_Shown` event
+
+#### **Removed/stripped down features**
+
+There are no removed features from this release
+
 ### 2.0.0100_220710
 ---
 
