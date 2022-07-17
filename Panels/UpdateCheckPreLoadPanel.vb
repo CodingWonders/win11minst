@@ -32,11 +32,13 @@ Public Class UpdateCheckPreLoadPanel
             ForeColor = Color.Black
             GroupBox1.ForeColor = Color.Black
             closeBox.Image = New Bitmap(My.Resources.closebox)
+            RelNotesLink.LinkColor = Color.FromArgb(1, 92, 186)
         ElseIf MainForm.BackColor = Color.FromArgb(32, 32, 32) Then
             BackColor = Color.FromArgb(32, 32, 32)
             ForeColor = Color.White
             GroupBox1.ForeColor = Color.White
             closeBox.Image = New Bitmap(My.Resources.closebox_dark)
+            RelNotesLink.LinkColor = Color.FromArgb(76, 194, 255)
         End If
         If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Or MainForm.ComboBox4.SelectedItem = "Anglais" Then
             Text = "Passive Update Check System - Checking for updates..."
@@ -48,6 +50,7 @@ Public Class UpdateCheckPreLoadPanel
             GroupBox1.Text = "Version information"
             Button1.Text = "Install later"
             Button2.Text = "Install now"
+            RelNotesLink.Text = "View release notes"
         ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Or MainForm.ComboBox4.SelectedItem = "Espagnol" Then
             Text = "Sistema de comprobación pasiva de actualizaciones - Comprobando actualizaciones..."
             Label1.Text = "Comprobando actualizaciones..."
@@ -58,6 +61,7 @@ Public Class UpdateCheckPreLoadPanel
             GroupBox1.Text = "Información de versiones"
             Button1.Text = "Instalar después"
             Button2.Text = "Instalar ahora"
+            RelNotesLink.Text = "Ver notas de la versión"
         ElseIf MainForm.ComboBox4.SelectedItem = "French" Or MainForm.ComboBox4.SelectedItem = "Francés" Or MainForm.ComboBox4.SelectedItem = "Français" Then
             Text = "Système de vérification passive des mises à jour - Vérification des mises à jour..."
             Label1.Text = "Vérification des mises à jour..."
@@ -68,6 +72,7 @@ Public Class UpdateCheckPreLoadPanel
             GroupBox1.Text = "Informations sur la version"
             Button1.Text = "Installer plus tard"
             Button2.Text = "Installer maintenant"
+            RelNotesLink.Text = "Voir les notes de publication"
         ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Or MainForm.ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 Text = "Passive Update Check System - Checking for updates..."
@@ -79,6 +84,7 @@ Public Class UpdateCheckPreLoadPanel
                 GroupBox1.Text = "Version information"
                 Button1.Text = "Install later"
                 Button2.Text = "Install now"
+                RelNotesLink.Text = "View release notes"
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 Text = "Sistema de comprobación pasiva de actualizaciones - Comprobando actualizaciones..."
                 Label1.Text = "Comprobando actualizaciones..."
@@ -89,6 +95,7 @@ Public Class UpdateCheckPreLoadPanel
                 GroupBox1.Text = "Información de versiones"
                 Button1.Text = "Instalar después"
                 Button2.Text = "Instalar ahora"
+                RelNotesLink.Text = "Ver notas de la versión"
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
                 Text = "Système de vérification passive des mises à jour - Vérification des mises à jour..."
                 Label1.Text = "Vérification des mises à jour..."
@@ -99,6 +106,7 @@ Public Class UpdateCheckPreLoadPanel
                 GroupBox1.Text = "Informations sur la version"
                 Button1.Text = "Installer plus tard"
                 Button2.Text = "Installer maintenant"
+                RelNotesLink.Text = "Voir les notes de publication"
             End If
         End If
         CenterToScreen()
@@ -108,7 +116,11 @@ Public Class UpdateCheckPreLoadPanel
             Me.Close()
         Else
             If System.IO.File.Exists(".\latest") Then
-                TextBox1.Text = My.Computer.FileSystem.ReadAllText(".\version")
+                Try
+                    TextBox1.Text = My.Computer.FileSystem.ReadAllText(".\version")
+                Catch ex As Exception
+                    TextBox1.Text = MainForm.VerStr
+                End Try
                 File.Move(".\latest", ".\latest_old")
                 File.SetAttributes(".\latest_old", FileAttributes.Hidden)
                 Using LATEST As New WebClient()
@@ -161,7 +173,11 @@ Public Class UpdateCheckPreLoadPanel
                     ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
                     Try
                         LATEST.DownloadFile("https://raw.githubusercontent.com/CodingWonders/win11minst/hummingbird/latest", ".\latest")
-                        TextBox1.Text = My.Computer.FileSystem.ReadAllText(".\version")
+                        Try
+                            TextBox1.Text = My.Computer.FileSystem.ReadAllText(".\version")
+                        Catch ex As Exception
+                            TextBox1.Text = MainForm.VerStr
+                        End Try
                         TextBox2.Text = My.Computer.FileSystem.ReadAllText(".\latest")
                         If TextBox1.Text = TextBox2.Text Then
                             Me.Close()
@@ -367,5 +383,9 @@ Public Class UpdateCheckPreLoadPanel
 
     Private Sub closeBox_MouseUp(sender As Object, e As MouseEventArgs) Handles closeBox.MouseUp
         closeBox.Image = New Bitmap(My.Resources.closebox_focus)
+    End Sub
+
+    Private Sub RelNotesLink_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles RelNotesLink.LinkClicked
+        Process.Start("https://github.com/CodingWonders/win11minst/blob/hummingbird/relnotes.md")
     End Sub
 End Class
