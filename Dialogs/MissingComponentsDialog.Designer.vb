@@ -83,7 +83,7 @@ Partial Class MissingComponentsDialog
         '
         'PictureBox1
         '
-        Me.PictureBox1.Image = Global.Windows_11_Manual_Installer_2._0.My.Resources.Resources.components
+        Me.PictureBox1.Image = Global.Windows_11_Manual_Installer.My.Resources.Resources.components
         Me.PictureBox1.Location = New System.Drawing.Point(30, 48)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(48, 48)
@@ -113,7 +113,7 @@ Partial Class MissingComponentsDialog
         '
         'CheckPic1
         '
-        Me.CheckPic1.Image = Global.Windows_11_Manual_Installer_2._0.My.Resources.Resources.check
+        Me.CheckPic1.Image = Global.Windows_11_Manual_Installer.My.Resources.Resources.check
         Me.CheckPic1.Location = New System.Drawing.Point(483, 175)
         Me.CheckPic1.Name = "CheckPic1"
         Me.CheckPic1.Size = New System.Drawing.Size(24, 24)
@@ -145,7 +145,7 @@ Partial Class MissingComponentsDialog
         '
         'CheckPic2
         '
-        Me.CheckPic2.Image = Global.Windows_11_Manual_Installer_2._0.My.Resources.Resources.check
+        Me.CheckPic2.Image = Global.Windows_11_Manual_Installer.My.Resources.Resources.check
         Me.CheckPic2.Location = New System.Drawing.Point(483, 208)
         Me.CheckPic2.Name = "CheckPic2"
         Me.CheckPic2.Size = New System.Drawing.Size(24, 24)
@@ -165,7 +165,7 @@ Partial Class MissingComponentsDialog
         '
         'CheckPic3
         '
-        Me.CheckPic3.Image = Global.Windows_11_Manual_Installer_2._0.My.Resources.Resources.check
+        Me.CheckPic3.Image = Global.Windows_11_Manual_Installer.My.Resources.Resources.check
         Me.CheckPic3.Location = New System.Drawing.Point(483, 241)
         Me.CheckPic3.Name = "CheckPic3"
         Me.CheckPic3.Size = New System.Drawing.Size(24, 24)

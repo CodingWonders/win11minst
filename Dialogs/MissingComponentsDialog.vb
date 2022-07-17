@@ -225,7 +225,7 @@ Public Class MissingComponentsDialog
                 CheckedCount = CheckedCount + 1
             End If
         End If
-        If File.Exists("\Windows\system32\dism.exe") Then
+        If File.Exists(Path.GetPathRoot(Environment.SpecialFolder.UserProfile) & "\Windows\system32\dism.exe") Then
             CheckPic2.Visible = True
             CheckedCount = CheckedCount + 1
         Else
@@ -372,7 +372,7 @@ Public Class MissingComponentsDialog
                 CheckedCount = CheckedCount + 1
             End If
         End If
-        If File.Exists("\Windows\system32\dism.exe") Then
+        If File.Exists(Path.GetPathRoot(Environment.SpecialFolder.UserProfile) & "\Windows\system32\dism.exe") Then
             CheckPic2.Visible = True
             CheckedCount = CheckedCount + 1
         Else
@@ -386,21 +386,21 @@ Public Class MissingComponentsDialog
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         If Environment.Is64BitOperatingSystem = True Then
-            WebSite = "https://www.7-zip.org/a/7z2107-x64.exe"
-            TargetFile = "7z2107-x64.exe"
+            WebSite = "https://www.7-zip.org/a/7z2201-x64.exe"
+            TargetFile = "7z2201-x64.exe"
         Else
-            WebSite = "https://www.7-zip.org/a/7z2107.exe"
-            TargetFile = "7z2107.exe"
+            WebSite = "https://www.7-zip.org/a/7z2201.exe"
+            TargetFile = "7z2201.exe"
         End If
         Using SevenZipDownload As New WebClient()
             SevenZipDownload.Headers.Add(HttpRequestHeader.UserAgent, "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36 Edg/83.0.478.45")
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
             SevenZipDownload.DownloadFile(WebSite, TargetPath & "\" & TargetFile)
         End Using
-        If File.Exists(".\prog_bin\7z2107-x64.exe") Then
-            Process.Start(".\prog_bin\7z2107-64.exe")
-        ElseIf File.Exists(".\prog_bin\7z2107.exe") Then
-            Process.Start(".\prog_bin\7z2107.exe")
+        If File.Exists(".\prog_bin\7z2201-x64.exe") Then
+            Process.Start(".\prog_bin\7z2201-64.exe")
+        ElseIf File.Exists(".\prog_bin\7z2201.exe") Then
+            Process.Start(".\prog_bin\7z2201.exe")
         End If
         Do Until File.Exists("\Program Files\7-Zip\7z.exe")
             If Not File.Exists("\Program Files\7-Zip\7z.exe") Then
@@ -421,8 +421,7 @@ Public Class MissingComponentsDialog
             CheckPic3.Visible = True
             CheckedCount = CheckedCount + 1
         End If
-
-
+        File.Delete(".\prog_bin\7z2201.exe")
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
