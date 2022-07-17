@@ -15,6 +15,7 @@ Public Class InstHistPanel
             OK_Button.Text = "OK"
             XMLExportOptn.Text = "Export to XML file..."
             HTMLExportOptn.Text = "Export to HTML file..."
+            CSVExportOptn.Text = "Export to CSV file..."
             ExportOptnBtn.Text = "Export options"
         ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Or MainForm.ComboBox4.SelectedItem = "Espagnol" Then
             Label1.Text = "Historial de instaladores"
@@ -24,6 +25,7 @@ Public Class InstHistPanel
             OK_Button.Text = "Aceptar"
             XMLExportOptn.Text = "Exportar a archivo XML..."
             HTMLExportOptn.Text = "Exportar a archivo HTML..."
+            CSVExportOptn.Text = "Exportar a archivo CSV..."
             ExportOptnBtn.Text = "Opciones de exportación"
         ElseIf MainForm.ComboBox4.SelectedItem = "French" Or MainForm.ComboBox4.SelectedItem = "Francés" Or MainForm.ComboBox4.SelectedItem = "Français" Then
             Label1.Text = "Historique de l'installateur"
@@ -33,6 +35,7 @@ Public Class InstHistPanel
             OK_Button.Text = "OK"
             XMLExportOptn.Text = "Exporter vers un fichier XML..."
             HTMLExportOptn.Text = "Exporter vers un fichier HTML..."
+            CSVExportOptn.Text = "Exporter vers un fichier CSV..."
             ExportOptnBtn.Text = "Options d'exportation"
         ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Or MainForm.ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
@@ -43,6 +46,7 @@ Public Class InstHistPanel
                 OK_Button.Text = "OK"
                 XMLExportOptn.Text = "Export to XML file..."
                 HTMLExportOptn.Text = "Export to HTML file..."
+                CSVExportOptn.Text = "Export to CSV file..."
                 ExportOptnBtn.Text = "Export options"
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 Label1.Text = "Historial de instaladores"
@@ -52,6 +56,7 @@ Public Class InstHistPanel
                 OK_Button.Text = "Aceptar"
                 XMLExportOptn.Text = "Exportar a archivo XML..."
                 HTMLExportOptn.Text = "Exportar a archivo HTML..."
+                CSVExportOptn.Text = "Exportar a archivo CSV..."
                 ExportOptnBtn.Text = "Opciones de exportación"
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
                 Label1.Text = "Historique de l'installateur"
@@ -61,6 +66,7 @@ Public Class InstHistPanel
                 OK_Button.Text = "OK"
                 XMLExportOptn.Text = "Exporter vers un fichier XML..."
                 HTMLExportOptn.Text = "Exporter vers un fichier HTML..."
+                CSVExportOptn.Text = "Exporter vers un fichier CSV..."
                 ExportOptnBtn.Text = "Options d'exportation"
             End If
         End If
@@ -104,6 +110,7 @@ Public Class InstHistPanel
                     InstallerEntryLabel.Text = "Entrées de l'historique de l'installateur : " & InstallerListView.Items.Count & ". Aucune donnée sur l'historique de l'installateur n'est disponible."
                 End If
             End If
+            ExportOptionsCMS.Enabled = False
         End If
     End Sub
 
@@ -112,8 +119,8 @@ Public Class InstHistPanel
         BackSubPanel.Close()
     End Sub
 
-    Private Sub ExportOptnBtn_Click(sender As Object, e As MouseEventArgs) Handles ExportOptnBtn.Click
-        ExportOptionsCMS.Show(CType(sender, Control), e.Location)
+    Private Sub ExportOptnBtn_Click(sender As Object, e As EventArgs) Handles ExportOptnBtn.Click
+        ExportOptionsCMS.Show(ExportOptnBtn, New Point(26, ExportOptnBtn.Height))
     End Sub
 
     Private Sub XMLExportOptn_Click(sender As Object, e As EventArgs) Handles XMLExportOptn.Click
@@ -200,5 +207,16 @@ Public Class InstHistPanel
                                             "   </table>" & CrLf & _
                                             "</body>" & CrLf & _
                                             "</html>", True)
+    End Sub
+
+    Private Sub CSVExportOptn_Click(sender As Object, e As EventArgs) Handles CSVExportOptn.Click
+        GenCsv()
+    End Sub
+
+    Sub GenCsv()
+        My.Computer.FileSystem.WriteAllText(".\inst.csv", "Installer name and path,Creation time and date" & CrLf, False)
+        For Each LVI As ListViewItem In InstallerListView.Items
+            My.Computer.FileSystem.WriteAllText(".\inst.csv", LVI.Text & "," & LVI.SubItems(1).Text, True)
+        Next
     End Sub
 End Class

@@ -135,8 +135,8 @@ Public Class ISOFileDownloadPanel
         Process.Start("https://developers.whatismybrowser.com/useragents/parse/118164231chrome-linux-blink")
     End Sub
 
-    Private Sub Label3_Click(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles Label3.Click
-        ContextMenuStrip1.Show(CType(sender, Control), e.Location)
+    Private Sub Label3_Click(sender As Object, e As EventArgs) Handles Label3.Click
+        ContextMenuStrip1.Show(Label3, New Point(4, Label3.Height))
     End Sub
 
     Private Sub BuildModeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BuildModeToolStripMenuItem.Click
