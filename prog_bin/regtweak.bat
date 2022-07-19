@@ -1,6 +1,6 @@
-:: Windows 11 Manual Installer, version 2.0.0100 (hummingbird)                                    |
+:: Windows 11 Manual Installer, version 2.0.0100 (hummingbird & stable)                           |
 :: -----------------------------------------------------------------------------------------------|
-::  File name: regtweak.bat						File version: 1.2.1                               |
+::  File name: regtweak.bat						File version: 1.3                                 |
 ::                                                                                                |
 ::                                                                                                |
 ::  Description: changes the Windows 11 installer's registry to bypass the system requirements	  |
@@ -14,17 +14,15 @@
 ::                        account sign-in by using 'bypassnro'                                    |
 ::           03-13-2022 - Added support for hiding the 'System requirements not met'              |
 ::                        watermark                                                               |
+::           07-19-2022 - Removed support for hiding the 'System requirements not met'            |
+::                        watermark                                                               |
 :: -----------------------------------------------------------------------------------------------|
 :: This process MUST be run by the Windows 11 Manual Installer AND as an Administrator            |
 :: ------------------------------------------------------------------------------------------------
-::  Make love, not war. Love to Ukraine citizens (and everyone affected by this situation) from Spain
 
 @echo off
 setlocal EnableDelayedExpansion
 if "%1%"=="/bypassnro" (set bypassnro=1)
-if "%1%"=="/sv2" (set sv2=1)
-if "%2%"=="/bypassnro" (set bypassnro=1)
-if "%2%"=="/sv2" (set sv2=1)
 :: Let's do the fun stuff!
 echo [    ] Mounting "boot.wim"...
 dism /English /mount-wim /wimfile=".\boot.wim" /index=1 /mountdir=".\wimmount"
@@ -78,7 +76,6 @@ echo [ OK ] Unloaded 'boot.wim's SYSTEM registry hive from computer's registry
 echo [    ] Unmounting "boot.wim"...
 dism /English /unmount-wim /mountdir=".\wimmount" /commit
 if "%bypassnro%"=="1" (echo [ OK ] Unmounted index 2 of "boot.wim". && goto bypassnro)
-if "%sv2%"=="1" (echo [ OK ] Unmounted index 2 of "boot.wim". && goto sv2)
 echo [ OK ] Unmounted index 2 of "boot.wim". Leaving...
 goto end
 
@@ -102,93 +99,8 @@ reg unload HKLM\W11NROSOFT > NUL
 echo [ OK ] Unloaded 'install.wim's SOFTWARE registry hive from computer's registry
 echo [    ] Unmounting index %wimindex% of "install.wim"...
 dism /English /unmount-wim /mountdir=".\wimmount" /commit
-if "%sv2%"=="1" (
-	echo [ OK ] Unmounted index %wimindex% of "install.wim".
-	goto sv2
-) else (
-	echo [ OK ] Unmounted index %wimindex% of "install.wim". Leaving...
-	goto end
-)
-
-:: Thanks to BetaWiki for this registry tweak!
-:: Side note: you can also use ViVeTool
-:sv2
-echo This option is experimental and it does not work as intended. It is suggested to cancel this option.
-set /p sv2warnchoice=Do you want to continue? (yes/no) 
-if "%sv2warnchoice%"=="no" (
-	goto end
-)
-dism /English /Get-WimInfo /wimfile=".\temp\sources\install.wim"
-set /p wimindex=Which index do you want to mount? Index: 
-if "%wimindex%"=="all" (goto wimcount)
-echo [    ] Mounting index %wimindex% of "install.wim"...
-dism /English /mount-wim /wimfile=".\temp\sources\install.wim" /index=%wimindex% /mountdir=".\wimmount"
-echo [ OK ] Mounted index %wimindex% of "install.wim"
-echo [    ] Loading 'install.wim's SOFTWARE registry hive onto computer's registry...
-reg load HKLM\ActiveSetupSoftware ".\wimmount\Windows\system32\config\SOFTWARE" > NUL
-echo [ OK ] Loaded 'install.wim's SOFTWARE registry hive onto computer's registry
-echo [    ] Adding SV2...
-:: This requires creating a reg file and adding it to a new StubPath in Active Setup (because it must be ran each time a user account is created)
-:: Thanks to my Windows 7 VM for being a guinea pig and experimenting with this.
-echo Windows Registry Editor Version 5.00 > ".\wimmount\disablesv2.reg"
-echo. >> ".\wimmount\disablesv2.reg"
-echo [HKEY_CURRENT_USER\Control Panel\UnsupportedHardwareNotificationCache] >> ".\wimmount\disablesv2.reg"
-echo "SV2"=dword:00000000 >> ".\wimmount\disablesv2.reg"
-attrib ".\wimmount\disablesv2.reg" +h
-reg add "HKLM\ActiveSetupSoftware\Microsoft\Active Setup\Installed Components\DisableSV2" /v Version /t REG_SZ /d 1 > NUL
-reg add "HKLM\ActiveSetupSoftware\Microsoft\Active Setup\Installed Components\DisableSV2" /v StubPath /t REG_SZ /d "regedit /s \disablesv2.reg" > NUL
-echo [ OK ] Added SV2
-echo [    ] Unloading 'install.wim's SOFTWARE registry hive from computer's registry...
-reg unload HKLM\ActiveSetupSoftware > NUL
-echo [ OK ] Unloaded 'install.wim's SOFTWARE registry hive from computer's registry
-echo [    ] Unmounting index %wimindex% of "install.wim"...
-dism /English /unmount-wim /mountdir=".\wimmount" /commit
 echo [ OK ] Unmounted index %wimindex% of "install.wim". Leaving...
 goto end
-
-:wimcount
-set wimindex=0
-set /p wimindexcount=How many indexes does this file have? Index count: 
-if %wimindexcount% equ 1 (
-	echo Mounting %wimindexcount% index of "install.wim". This might take A LONG time...
-)
-if %wimindexcount% gtr 1 (
-	echo Mounting %wimindexcount% indexes of "install.wim". This might take A LONG time...
-)
-goto instwimmount
-
-:instwimmount
-:: If an "install.wim" file contains more than 1 index, this must be ran in a loop until all indexes
-:: were worked on.
-set /a wimindex=%wimindex% + 1
-echo [    ] Mounting index %wimindex% of "install.wim"...
-dism /English /mount-wim /wimfile=".\temp\sources\install.wim" /index=%wimindex% /mountdir=".\wimmount"
-echo [ OK ] Mounted index %wimindex% of "install.wim"
-echo [    ] Loading 'install.wim's SOFTWARE registry hive onto computer's registry...
-reg load HKLM\ActiveSetupSoftware ".\wimmount\Windows\system32\config\SOFTWARE" > NUL
-echo [ OK ] Loaded 'install.wim's SOFTWARE registry hive onto computer's registry
-echo [    ] Adding SV2...
-echo Windows Registry Editor Version 5.00 > ".\wimmount\disablesv2.reg"
-echo. >> ".\wimmount\disablesv2.reg"
-echo [HKEY_CURRENT_USER\Control Panel\UnsupportedHardwareNotificationCache] >> ".\wimmount\disablesv2.reg"
-echo "SV2"=dword:00000000 >> ".\wimmount\disablesv2.reg"
-attrib ".\wimmount\disablesv2.reg" +h
-reg add "HKLM\ActiveSetupSoftware\Microsoft\Active Setup\Installed Components\DisableSV2" /v Version /t REG_SZ /d 1 /f > NUL
-reg add "HKLM\ActiveSetupSoftware\Microsoft\Active Setup\Installed Components\DisableSV2" /v StubPath /t REG_SZ /d "\disablesv2.reg" /f > NUL
-echo [ OK ] Added SV2
-echo [    ] Unloading 'install.wim's SOFTWARE registry hive from computer's registry...
-reg unload HKLM\ActiveSetupSoftware > NUL
-echo [ OK ] Unloaded 'install.wim's SOFTWARE registry hive from computer's registry
-echo [    ] Unmounting index %wimindex% of "install.wim"...
-dism /English /unmount-wim /mountdir=".\wimmount" /commit
-if !wimindex! == !wimindexcount! (
-	echo [ OK ] Unmounted index %wimindex% of "install.wim". Leaving...
-	goto end
-) else (
-	echo [ OK ] Unmounted index %wimindex% of "install.wim".
-	goto instwimmount
-)
-
 
 :end
 ping -n 5 127.0.0.1 > NUL
