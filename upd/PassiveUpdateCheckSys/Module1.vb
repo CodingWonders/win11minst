@@ -35,6 +35,10 @@ Module Module1
             Directory.CreateDirectory(".\Resources")
             Process.Start("powershell", "Copy-Item -Path .\new\Resources\* -Destination .\Resources -Recurse -Force").WaitForExit()
             File.Move(".\win11minst_new.exe", ".\win11minst.exe")
+            If File.Exists(".\new\prog_bin\regtweak.bat") Then
+                File.Delete(".\prog_bin\regtweak.bat")
+                File.Move(".\new\prog_bin\regtweak.bat", ".\prog_bin\regtweak.bat")
+            End If
             Process.Start("powershell", "Remove-Item -Path .\new -Recurse -Force").WaitForExit()
             DeleteTmpSettings()
             RestoreSettings()
