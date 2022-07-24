@@ -26,8 +26,6 @@ Partial Class MainForm
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
         Me.titlePanel = New System.Windows.Forms.Panel()
         Me.TitleBar = New System.Windows.Forms.Panel()
-        Me.TopRightResizePanel = New System.Windows.Forms.Panel()
-        Me.TopLeftResizePanel = New System.Windows.Forms.Panel()
         Me.x86_Pic = New System.Windows.Forms.PictureBox()
         Me.minBox = New System.Windows.Forms.PictureBox()
         Me.maxBox = New System.Windows.Forms.PictureBox()
@@ -58,7 +56,6 @@ Partial Class MainForm
         Me.PictureBox7 = New System.Windows.Forms.PictureBox()
         Me.PictureBox8 = New System.Windows.Forms.PictureBox()
         Me.sidePanel = New System.Windows.Forms.Panel()
-        Me.BottomLeftResizePanel = New System.Windows.Forms.Panel()
         Me.InfoPic = New System.Windows.Forms.PictureBox()
         Me.PanelIndicatorPic = New System.Windows.Forms.PictureBox()
         Me.DebugPic = New System.Windows.Forms.PictureBox()
@@ -68,7 +65,6 @@ Partial Class MainForm
         Me.InstCreatePic = New System.Windows.Forms.PictureBox()
         Me.WelcomePic = New System.Windows.Forms.PictureBox()
         Me.bodyPanel = New System.Windows.Forms.Panel()
-        Me.BottomRightResizePanel = New System.Windows.Forms.Panel()
         Me.Panel_Border_Pic = New System.Windows.Forms.PictureBox()
         Me.WelcomePanel = New System.Windows.Forms.Panel()
         Me.LinkLabel6 = New System.Windows.Forms.LinkLabel()
@@ -136,28 +132,6 @@ Partial Class MainForm
         Me.Label13 = New System.Windows.Forms.Label()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.Label10 = New System.Windows.Forms.Label()
-        Me.SettingReviewPanel = New System.Windows.Forms.Panel()
-        Me.GroupBox11 = New System.Windows.Forms.GroupBox()
-        Me.Label64 = New System.Windows.Forms.Label()
-        Me.Label90 = New System.Windows.Forms.Label()
-        Me.GroupBox9 = New System.Windows.Forms.GroupBox()
-        Me.Label76 = New System.Windows.Forms.Label()
-        Me.Label78 = New System.Windows.Forms.Label()
-        Me.Label70 = New System.Windows.Forms.Label()
-        Me.Label77 = New System.Windows.Forms.Label()
-        Me.Label75 = New System.Windows.Forms.Label()
-        Me.Label69 = New System.Windows.Forms.Label()
-        Me.GroupBox8 = New System.Windows.Forms.GroupBox()
-        Me.Label66 = New System.Windows.Forms.Label()
-        Me.Label68 = New System.Windows.Forms.Label()
-        Me.Label67 = New System.Windows.Forms.Label()
-        Me.Label65 = New System.Windows.Forms.Label()
-        Me.Label79 = New System.Windows.Forms.Label()
-        Me.Button8 = New System.Windows.Forms.Button()
-        Me.Button7 = New System.Windows.Forms.Button()
-        Me.Label62 = New System.Windows.Forms.Label()
-        Me.Label63 = New System.Windows.Forms.Label()
-        Me.Label61 = New System.Windows.Forms.Label()
         Me.ProgressPanel = New System.Windows.Forms.Panel()
         Me.LogViewLink = New System.Windows.Forms.LinkLabel()
         Me.CheckBox4 = New System.Windows.Forms.CheckBox()
@@ -196,6 +170,45 @@ Partial Class MainForm
         Me.Label115 = New System.Windows.Forms.Label()
         Me.WarningText = New System.Windows.Forms.TextBox()
         Me.ErrorText = New System.Windows.Forms.TextBox()
+        Me.InstrPanel = New System.Windows.Forms.Panel()
+        Me.WebBrowser2 = New System.Windows.Forms.WebBrowser()
+        Me.Label104 = New System.Windows.Forms.Label()
+        Me.InfoPanel = New System.Windows.Forms.Panel()
+        Me.BranchPic = New System.Windows.Forms.PictureBox()
+        Me.LinkLabel7 = New System.Windows.Forms.LinkLabel()
+        Me.TabControl1 = New System.Windows.Forms.TabControl()
+        Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.LinkLabel16 = New System.Windows.Forms.LinkLabel()
+        Me.LinkLabel14 = New System.Windows.Forms.LinkLabel()
+        Me.LinkLabel13 = New System.Windows.Forms.LinkLabel()
+        Me.Label74 = New System.Windows.Forms.Label()
+        Me.PremiseLabel = New System.Windows.Forms.Label()
+        Me.Label73 = New System.Windows.Forms.Label()
+        Me.Label72 = New System.Windows.Forms.Label()
+        Me.Label71 = New System.Windows.Forms.Label()
+        Me.LinkLabel15 = New System.Windows.Forms.LinkLabel()
+        Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.Label96 = New System.Windows.Forms.Label()
+        Me.Label95 = New System.Windows.Forms.Label()
+        Me.Label94 = New System.Windows.Forms.Label()
+        Me.Label93 = New System.Windows.Forms.Label()
+        Me.Label97 = New System.Windows.Forms.Label()
+        Me.Label92 = New System.Windows.Forms.Label()
+        Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.scText = New System.Windows.Forms.TextBox()
+        Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
+        Me.LinkLabel8 = New System.Windows.Forms.LinkLabel()
+        Me.LinkLabel11 = New System.Windows.Forms.LinkLabel()
+        Me.LinkLabel9 = New System.Windows.Forms.LinkLabel()
+        Me.LinkLabel10 = New System.Windows.Forms.LinkLabel()
+        Me.TabPage4 = New System.Windows.Forms.TabPage()
+        Me.GPLText = New System.Windows.Forms.TextBox()
+        Me.Label91 = New System.Windows.Forms.Label()
+        Me.ProgressRingPic = New System.Windows.Forms.PictureBox()
+        Me.Button12 = New System.Windows.Forms.Button()
+        Me.Label106 = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.PictureBox11 = New System.Windows.Forms.PictureBox()
         Me.SettingPanel = New System.Windows.Forms.Panel()
         Me.PanelConglomerate2 = New System.Windows.Forms.Panel()
         Me.Panel4 = New System.Windows.Forms.Panel()
@@ -227,6 +240,28 @@ Partial Class MainForm
         Me.PictureBox12 = New System.Windows.Forms.PictureBox()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Label9 = New System.Windows.Forms.Label()
+        Me.SettingReviewPanel = New System.Windows.Forms.Panel()
+        Me.GroupBox11 = New System.Windows.Forms.GroupBox()
+        Me.Label64 = New System.Windows.Forms.Label()
+        Me.Label90 = New System.Windows.Forms.Label()
+        Me.GroupBox9 = New System.Windows.Forms.GroupBox()
+        Me.Label76 = New System.Windows.Forms.Label()
+        Me.Label78 = New System.Windows.Forms.Label()
+        Me.Label70 = New System.Windows.Forms.Label()
+        Me.Label77 = New System.Windows.Forms.Label()
+        Me.Label75 = New System.Windows.Forms.Label()
+        Me.Label69 = New System.Windows.Forms.Label()
+        Me.GroupBox8 = New System.Windows.Forms.GroupBox()
+        Me.Label66 = New System.Windows.Forms.Label()
+        Me.Label68 = New System.Windows.Forms.Label()
+        Me.Label67 = New System.Windows.Forms.Label()
+        Me.Label65 = New System.Windows.Forms.Label()
+        Me.Label79 = New System.Windows.Forms.Label()
+        Me.Button8 = New System.Windows.Forms.Button()
+        Me.Button7 = New System.Windows.Forms.Button()
+        Me.Label62 = New System.Windows.Forms.Label()
+        Me.Label63 = New System.Windows.Forms.Label()
+        Me.Label61 = New System.Windows.Forms.Label()
         Me.InstCreatePanel = New System.Windows.Forms.Panel()
         Me.NameLabel = New System.Windows.Forms.Label()
         Me.Win10PresenceSTLabel = New System.Windows.Forms.Label()
@@ -260,9 +295,6 @@ Partial Class MainForm
         Me.Label8 = New System.Windows.Forms.Label()
         Me.LinkLabel17 = New System.Windows.Forms.LinkLabel()
         Me.LinkLabel12 = New System.Windows.Forms.LinkLabel()
-        Me.InstrPanel = New System.Windows.Forms.Panel()
-        Me.WebBrowser2 = New System.Windows.Forms.WebBrowser()
-        Me.Label104 = New System.Windows.Forms.Label()
         Me.Settings_FunctionalityPanel = New System.Windows.Forms.Panel()
         Me.LinkLabel18 = New System.Windows.Forms.LinkLabel()
         Me.Button11 = New System.Windows.Forms.Button()
@@ -290,40 +322,6 @@ Partial Class MainForm
         Me.Label20 = New System.Windows.Forms.Label()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.Label18 = New System.Windows.Forms.Label()
-        Me.InfoPanel = New System.Windows.Forms.Panel()
-        Me.BranchPic = New System.Windows.Forms.PictureBox()
-        Me.LinkLabel7 = New System.Windows.Forms.LinkLabel()
-        Me.TabControl1 = New System.Windows.Forms.TabControl()
-        Me.TabPage1 = New System.Windows.Forms.TabPage()
-        Me.LinkLabel16 = New System.Windows.Forms.LinkLabel()
-        Me.LinkLabel14 = New System.Windows.Forms.LinkLabel()
-        Me.LinkLabel13 = New System.Windows.Forms.LinkLabel()
-        Me.Label74 = New System.Windows.Forms.Label()
-        Me.PremiseLabel = New System.Windows.Forms.Label()
-        Me.Label73 = New System.Windows.Forms.Label()
-        Me.Label72 = New System.Windows.Forms.Label()
-        Me.Label71 = New System.Windows.Forms.Label()
-        Me.LinkLabel15 = New System.Windows.Forms.LinkLabel()
-        Me.TabPage2 = New System.Windows.Forms.TabPage()
-        Me.Label96 = New System.Windows.Forms.Label()
-        Me.Label95 = New System.Windows.Forms.Label()
-        Me.Label94 = New System.Windows.Forms.Label()
-        Me.Label93 = New System.Windows.Forms.Label()
-        Me.Label97 = New System.Windows.Forms.Label()
-        Me.Label92 = New System.Windows.Forms.Label()
-        Me.TabPage3 = New System.Windows.Forms.TabPage()
-        Me.scText = New System.Windows.Forms.TextBox()
-        Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
-        Me.LinkLabel8 = New System.Windows.Forms.LinkLabel()
-        Me.LinkLabel11 = New System.Windows.Forms.LinkLabel()
-        Me.LinkLabel9 = New System.Windows.Forms.LinkLabel()
-        Me.LinkLabel10 = New System.Windows.Forms.LinkLabel()
-        Me.Label91 = New System.Windows.Forms.Label()
-        Me.ProgressRingPic = New System.Windows.Forms.PictureBox()
-        Me.Button12 = New System.Windows.Forms.Button()
-        Me.Label106 = New System.Windows.Forms.Label()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.PictureBox11 = New System.Windows.Forms.PictureBox()
         Me.Notify = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.NotifyIconCMS = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.Windows11ManualInstallerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -428,10 +426,6 @@ Partial Class MainForm
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox5.SuspendLayout()
         CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SettingReviewPanel.SuspendLayout()
-        Me.GroupBox11.SuspendLayout()
-        Me.GroupBox9.SuspendLayout()
-        Me.GroupBox8.SuspendLayout()
         Me.ProgressPanel.SuspendLayout()
         Me.GroupBox10.SuspendLayout()
         CType(Me.CheckPic5, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -442,6 +436,17 @@ Partial Class MainForm
         CType(Me.CompPic, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel3.SuspendLayout()
         Me.TableLayoutPanel4.SuspendLayout()
+        Me.InstrPanel.SuspendLayout()
+        Me.InfoPanel.SuspendLayout()
+        CType(Me.BranchPic, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabControl1.SuspendLayout()
+        Me.TabPage1.SuspendLayout()
+        Me.TabPage2.SuspendLayout()
+        Me.TabPage3.SuspendLayout()
+        Me.TableLayoutPanel2.SuspendLayout()
+        Me.TabPage4.SuspendLayout()
+        CType(Me.ProgressRingPic, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox11, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SettingPanel.SuspendLayout()
         Me.PanelConglomerate2.SuspendLayout()
         Me.Panel4.SuspendLayout()
@@ -458,6 +463,10 @@ Partial Class MainForm
         CType(Me.PictureBox14, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox12, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SettingReviewPanel.SuspendLayout()
+        Me.GroupBox11.SuspendLayout()
+        Me.GroupBox9.SuspendLayout()
+        Me.GroupBox8.SuspendLayout()
         Me.InstCreatePanel.SuspendLayout()
         CType(Me.PictureBox32, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox7.SuspendLayout()
@@ -465,21 +474,11 @@ Partial Class MainForm
         CType(Me.PictureBox35, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox31, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox30, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.InstrPanel.SuspendLayout()
         Me.Settings_FunctionalityPanel.SuspendLayout()
         Me.GroupBox12.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
-        Me.InfoPanel.SuspendLayout()
-        CType(Me.BranchPic, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TabControl1.SuspendLayout()
-        Me.TabPage1.SuspendLayout()
-        Me.TabPage2.SuspendLayout()
-        Me.TabPage3.SuspendLayout()
-        Me.TableLayoutPanel2.SuspendLayout()
-        CType(Me.ProgressRingPic, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox11, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.NotifyIconCMS.SuspendLayout()
         Me.AdditionalToolsCMS.SuspendLayout()
         Me.SuspendLayout()
@@ -496,8 +495,6 @@ Partial Class MainForm
         '
         'TitleBar
         '
-        Me.TitleBar.Controls.Add(Me.TopRightResizePanel)
-        Me.TitleBar.Controls.Add(Me.TopLeftResizePanel)
         Me.TitleBar.Controls.Add(Me.x86_Pic)
         Me.TitleBar.Controls.Add(Me.minBox)
         Me.TitleBar.Controls.Add(Me.maxBox)
@@ -511,25 +508,6 @@ Partial Class MainForm
         Me.TitleBar.Name = "TitleBar"
         Me.TitleBar.Size = New System.Drawing.Size(1024, 48)
         Me.TitleBar.TabIndex = 4
-        '
-        'TopRightResizePanel
-        '
-        Me.TopRightResizePanel.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TopRightResizePanel.Cursor = System.Windows.Forms.Cursors.SizeNESW
-        Me.TopRightResizePanel.Location = New System.Drawing.Point(1015, 0)
-        Me.TopRightResizePanel.Name = "TopRightResizePanel"
-        Me.TopRightResizePanel.Size = New System.Drawing.Size(8, 8)
-        Me.TopRightResizePanel.TabIndex = 1
-        Me.TopRightResizePanel.Visible = False
-        '
-        'TopLeftResizePanel
-        '
-        Me.TopLeftResizePanel.Cursor = System.Windows.Forms.Cursors.SizeNWSE
-        Me.TopLeftResizePanel.Location = New System.Drawing.Point(0, 0)
-        Me.TopLeftResizePanel.Name = "TopLeftResizePanel"
-        Me.TopLeftResizePanel.Size = New System.Drawing.Size(8, 8)
-        Me.TopLeftResizePanel.TabIndex = 0
-        Me.TopLeftResizePanel.Visible = False
         '
         'x86_Pic
         '
@@ -871,7 +849,6 @@ Partial Class MainForm
         '
         'sidePanel
         '
-        Me.sidePanel.Controls.Add(Me.BottomLeftResizePanel)
         Me.sidePanel.Controls.Add(Me.InfoPic)
         Me.sidePanel.Controls.Add(Me.PanelIndicatorPic)
         Me.sidePanel.Controls.Add(Me.DebugPic)
@@ -885,16 +862,6 @@ Partial Class MainForm
         Me.sidePanel.Name = "sidePanel"
         Me.sidePanel.Size = New System.Drawing.Size(48, 552)
         Me.sidePanel.TabIndex = 2
-        '
-        'BottomLeftResizePanel
-        '
-        Me.BottomLeftResizePanel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.BottomLeftResizePanel.Cursor = System.Windows.Forms.Cursors.SizeNESW
-        Me.BottomLeftResizePanel.Location = New System.Drawing.Point(0, 544)
-        Me.BottomLeftResizePanel.Name = "BottomLeftResizePanel"
-        Me.BottomLeftResizePanel.Size = New System.Drawing.Size(8, 8)
-        Me.BottomLeftResizePanel.TabIndex = 1
-        Me.BottomLeftResizePanel.Visible = False
         '
         'InfoPic
         '
@@ -983,33 +950,22 @@ Partial Class MainForm
         'bodyPanel
         '
         Me.bodyPanel.BackColor = System.Drawing.Color.FromArgb(CType(CType(249, Byte), Integer), CType(CType(249, Byte), Integer), CType(CType(249, Byte), Integer))
-        Me.bodyPanel.Controls.Add(Me.BottomRightResizePanel)
         Me.bodyPanel.Controls.Add(Me.Panel_Border_Pic)
         Me.bodyPanel.Controls.Add(Me.WelcomePanel)
         Me.bodyPanel.Controls.Add(Me.HelpPanel)
         Me.bodyPanel.Controls.Add(Me.Settings_PersonalizationPanel)
-        Me.bodyPanel.Controls.Add(Me.SettingReviewPanel)
         Me.bodyPanel.Controls.Add(Me.ProgressPanel)
-        Me.bodyPanel.Controls.Add(Me.SettingPanel)
-        Me.bodyPanel.Controls.Add(Me.InstCreatePanel)
         Me.bodyPanel.Controls.Add(Me.InstrPanel)
-        Me.bodyPanel.Controls.Add(Me.Settings_FunctionalityPanel)
         Me.bodyPanel.Controls.Add(Me.InfoPanel)
+        Me.bodyPanel.Controls.Add(Me.SettingReviewPanel)
+        Me.bodyPanel.Controls.Add(Me.InstCreatePanel)
+        Me.bodyPanel.Controls.Add(Me.Settings_FunctionalityPanel)
+        Me.bodyPanel.Controls.Add(Me.SettingPanel)
         Me.bodyPanel.Dock = System.Windows.Forms.DockStyle.Fill
         Me.bodyPanel.Location = New System.Drawing.Point(48, 48)
         Me.bodyPanel.Name = "bodyPanel"
         Me.bodyPanel.Size = New System.Drawing.Size(976, 552)
         Me.bodyPanel.TabIndex = 3
-        '
-        'BottomRightResizePanel
-        '
-        Me.BottomRightResizePanel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.BottomRightResizePanel.Cursor = System.Windows.Forms.Cursors.SizeNWSE
-        Me.BottomRightResizePanel.Location = New System.Drawing.Point(968, 544)
-        Me.BottomRightResizePanel.Name = "BottomRightResizePanel"
-        Me.BottomRightResizePanel.Size = New System.Drawing.Size(8, 8)
-        Me.BottomRightResizePanel.TabIndex = 6
-        Me.BottomRightResizePanel.Visible = False
         '
         'Panel_Border_Pic
         '
@@ -1264,12 +1220,12 @@ Partial Class MainForm
         '
         'Label43
         '
-        Me.Label43.AutoSize = True
+        Me.Label43.AutoEllipsis = True
         Me.Label43.BackColor = System.Drawing.SystemColors.Window
         Me.Label43.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label43.Location = New System.Drawing.Point(55, 34)
         Me.Label43.Name = "Label43"
-        Me.Label43.Size = New System.Drawing.Size(444, 17)
+        Me.Label43.Size = New System.Drawing.Size(779, 17)
         Me.Label43.TabIndex = 7
         Me.Label43.Text = "Creates a modified installer to install Windows 11 on unsupported systems"
         '
@@ -1308,12 +1264,12 @@ Partial Class MainForm
         '
         'Label2
         '
-        Me.Label2.AutoSize = True
+        Me.Label2.AutoEllipsis = True
         Me.Label2.BackColor = System.Drawing.SystemColors.Window
         Me.Label2.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(55, 34)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(172, 17)
+        Me.Label2.Size = New System.Drawing.Size(776, 17)
         Me.Label2.TabIndex = 7
         Me.Label2.Text = "Shows program information"
         '
@@ -1363,12 +1319,12 @@ Partial Class MainForm
         '
         'Label45
         '
-        Me.Label45.AutoSize = True
+        Me.Label45.AutoEllipsis = True
         Me.Label45.BackColor = System.Drawing.SystemColors.Window
         Me.Label45.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label45.Location = New System.Drawing.Point(55, 34)
         Me.Label45.Name = "Label45"
-        Me.Label45.Size = New System.Drawing.Size(350, 17)
+        Me.Label45.Size = New System.Drawing.Size(782, 17)
         Me.Label45.TabIndex = 7
         Me.Label45.Text = "Lets you customize the program's appearance or behavior"
         '
@@ -1418,12 +1374,12 @@ Partial Class MainForm
         '
         'Label49
         '
-        Me.Label49.AutoSize = True
+        Me.Label49.AutoEllipsis = True
         Me.Label49.BackColor = System.Drawing.SystemColors.Window
         Me.Label49.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label49.Location = New System.Drawing.Point(55, 34)
         Me.Label49.Name = "Label49"
-        Me.Label49.Size = New System.Drawing.Size(188, 17)
+        Me.Label49.Size = New System.Drawing.Size(776, 17)
         Me.Label49.TabIndex = 7
         Me.Label49.Text = "Learn how to use this program"
         '
@@ -1473,12 +1429,12 @@ Partial Class MainForm
         '
         'Label47
         '
-        Me.Label47.AutoSize = True
+        Me.Label47.AutoEllipsis = True
         Me.Label47.BackColor = System.Drawing.SystemColors.Window
         Me.Label47.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label47.Location = New System.Drawing.Point(55, 34)
         Me.Label47.Name = "Label47"
-        Me.Label47.Size = New System.Drawing.Size(345, 17)
+        Me.Label47.Size = New System.Drawing.Size(782, 17)
         Me.Label47.TabIndex = 7
         Me.Label47.Text = "Lets you create a custom Windows 11 installer by yourself"
         '
@@ -1782,260 +1738,6 @@ Partial Class MainForm
         Me.Label10.Size = New System.Drawing.Size(105, 32)
         Me.Label10.TabIndex = 3
         Me.Label10.Text = "Settings"
-        '
-        'SettingReviewPanel
-        '
-        Me.SettingReviewPanel.Controls.Add(Me.GroupBox11)
-        Me.SettingReviewPanel.Controls.Add(Me.GroupBox9)
-        Me.SettingReviewPanel.Controls.Add(Me.GroupBox8)
-        Me.SettingReviewPanel.Controls.Add(Me.Label79)
-        Me.SettingReviewPanel.Controls.Add(Me.Button8)
-        Me.SettingReviewPanel.Controls.Add(Me.Button7)
-        Me.SettingReviewPanel.Controls.Add(Me.Label62)
-        Me.SettingReviewPanel.Controls.Add(Me.Label63)
-        Me.SettingReviewPanel.Controls.Add(Me.Label61)
-        Me.SettingReviewPanel.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SettingReviewPanel.Location = New System.Drawing.Point(0, 0)
-        Me.SettingReviewPanel.Name = "SettingReviewPanel"
-        Me.SettingReviewPanel.Size = New System.Drawing.Size(976, 552)
-        Me.SettingReviewPanel.TabIndex = 3
-        Me.SettingReviewPanel.Visible = False
-        '
-        'GroupBox11
-        '
-        Me.GroupBox11.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.GroupBox11.Controls.Add(Me.Label64)
-        Me.GroupBox11.Controls.Add(Me.Label90)
-        Me.GroupBox11.Font = New System.Drawing.Font("Segoe UI", 9.75!)
-        Me.GroupBox11.Location = New System.Drawing.Point(51, 374)
-        Me.GroupBox11.Name = "GroupBox11"
-        Me.GroupBox11.Size = New System.Drawing.Size(874, 114)
-        Me.GroupBox11.TabIndex = 6
-        Me.GroupBox11.TabStop = False
-        Me.GroupBox11.Text = "Target image"
-        '
-        'Label64
-        '
-        Me.Label64.AutoSize = True
-        Me.Label64.Location = New System.Drawing.Point(43, 30)
-        Me.Label64.Name = "Label64"
-        Me.Label64.Size = New System.Drawing.Size(122, 17)
-        Me.Label64.TabIndex = 0
-        Me.Label64.Text = "Location and name:"
-        '
-        'Label90
-        '
-        Me.Label90.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label90.AutoEllipsis = True
-        Me.Label90.Location = New System.Drawing.Point(168, 30)
-        Me.Label90.Name = "Label90"
-        Me.Label90.Size = New System.Drawing.Size(690, 67)
-        Me.Label90.TabIndex = 0
-        Me.Label90.Text = "location"
-        '
-        'GroupBox9
-        '
-        Me.GroupBox9.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.GroupBox9.Controls.Add(Me.Label76)
-        Me.GroupBox9.Controls.Add(Me.Label78)
-        Me.GroupBox9.Controls.Add(Me.Label70)
-        Me.GroupBox9.Controls.Add(Me.Label77)
-        Me.GroupBox9.Controls.Add(Me.Label75)
-        Me.GroupBox9.Controls.Add(Me.Label69)
-        Me.GroupBox9.Font = New System.Drawing.Font("Segoe UI", 9.75!)
-        Me.GroupBox9.Location = New System.Drawing.Point(51, 245)
-        Me.GroupBox9.Name = "GroupBox9"
-        Me.GroupBox9.Size = New System.Drawing.Size(874, 115)
-        Me.GroupBox9.TabIndex = 5
-        Me.GroupBox9.TabStop = False
-        Me.GroupBox9.Text = "Installer creation options"
-        '
-        'Label76
-        '
-        Me.Label76.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.Label76.AutoSize = True
-        Me.Label76.Location = New System.Drawing.Point(446, 49)
-        Me.Label76.Name = "Label76"
-        Me.Label76.Size = New System.Drawing.Size(155, 17)
-        Me.Label76.TabIndex = 0
-        Me.Label76.Text = "BIOS/UEFI-CSM (ID: 0x00)"
-        '
-        'Label78
-        '
-        Me.Label78.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.Label78.AutoSize = True
-        Me.Label78.Location = New System.Drawing.Point(444, 73)
-        Me.Label78.Name = "Label78"
-        Me.Label78.Size = New System.Drawing.Size(75, 17)
-        Me.Label78.TabIndex = 0
-        Me.Label78.Text = "Windows11"
-        '
-        'Label70
-        '
-        Me.Label70.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.Label70.AutoSize = True
-        Me.Label70.Location = New System.Drawing.Point(447, 25)
-        Me.Label70.Name = "Label70"
-        Me.Label70.Size = New System.Drawing.Size(43, 17)
-        Me.Label70.TabIndex = 0
-        Me.Label70.Text = "WIMR"
-        '
-        'Label77
-        '
-        Me.Label77.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.Label77.Location = New System.Drawing.Point(69, 73)
-        Me.Label77.Name = "Label77"
-        Me.Label77.Size = New System.Drawing.Size(372, 17)
-        Me.Label77.TabIndex = 0
-        Me.Label77.Text = "Installer label:"
-        Me.Label77.TextAlign = System.Drawing.ContentAlignment.TopRight
-        '
-        'Label75
-        '
-        Me.Label75.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.Label75.Location = New System.Drawing.Point(195, 49)
-        Me.Label75.Name = "Label75"
-        Me.Label75.Size = New System.Drawing.Size(246, 17)
-        Me.Label75.TabIndex = 0
-        Me.Label75.Text = "Platform compatibility:"
-        Me.Label75.TextAlign = System.Drawing.ContentAlignment.TopRight
-        '
-        'Label69
-        '
-        Me.Label69.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.Label69.Location = New System.Drawing.Point(235, 25)
-        Me.Label69.Name = "Label69"
-        Me.Label69.Size = New System.Drawing.Size(206, 17)
-        Me.Label69.TabIndex = 0
-        Me.Label69.Text = "Method:"
-        Me.Label69.TextAlign = System.Drawing.ContentAlignment.TopRight
-        '
-        'GroupBox8
-        '
-        Me.GroupBox8.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.GroupBox8.Controls.Add(Me.Label66)
-        Me.GroupBox8.Controls.Add(Me.Label68)
-        Me.GroupBox8.Controls.Add(Me.Label67)
-        Me.GroupBox8.Controls.Add(Me.Label65)
-        Me.GroupBox8.Font = New System.Drawing.Font("Segoe UI", 9.75!)
-        Me.GroupBox8.Location = New System.Drawing.Point(51, 86)
-        Me.GroupBox8.Name = "GroupBox8"
-        Me.GroupBox8.Size = New System.Drawing.Size(874, 148)
-        Me.GroupBox8.TabIndex = 5
-        Me.GroupBox8.TabStop = False
-        Me.GroupBox8.Text = "Images"
-        '
-        'Label66
-        '
-        Me.Label66.AutoSize = True
-        Me.Label66.Location = New System.Drawing.Point(43, 89)
-        Me.Label66.Name = "Label66"
-        Me.Label66.Size = New System.Drawing.Size(122, 17)
-        Me.Label66.TabIndex = 0
-        Me.Label66.Text = "Windows 10 image:"
-        '
-        'Label68
-        '
-        Me.Label68.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label68.AutoEllipsis = True
-        Me.Label68.Location = New System.Drawing.Point(171, 89)
-        Me.Label68.Name = "Label68"
-        Me.Label68.Size = New System.Drawing.Size(660, 41)
-        Me.Label68.TabIndex = 0
-        Me.Label68.Text = "win10iso"
-        '
-        'Label67
-        '
-        Me.Label67.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label67.AutoEllipsis = True
-        Me.Label67.Location = New System.Drawing.Point(171, 42)
-        Me.Label67.Name = "Label67"
-        Me.Label67.Size = New System.Drawing.Size(660, 41)
-        Me.Label67.TabIndex = 0
-        Me.Label67.Text = "win11iso"
-        '
-        'Label65
-        '
-        Me.Label65.AutoSize = True
-        Me.Label65.Location = New System.Drawing.Point(43, 42)
-        Me.Label65.Name = "Label65"
-        Me.Label65.Size = New System.Drawing.Size(122, 17)
-        Me.Label65.TabIndex = 0
-        Me.Label65.Text = "Windows 11 image:"
-        '
-        'Label79
-        '
-        Me.Label79.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.Label79.AutoSize = True
-        Me.Label79.Font = New System.Drawing.Font("Segoe UI", 9.75!)
-        Me.Label79.Location = New System.Drawing.Point(41, 498)
-        Me.Label79.Name = "Label79"
-        Me.Label79.Size = New System.Drawing.Size(140, 17)
-        Me.Label79.TabIndex = 4
-        Me.Label79.Text = "Are these settings OK?"
-        '
-        'Button8
-        '
-        Me.Button8.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button8.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.Button8.Font = New System.Drawing.Font("Segoe UI", 9.75!)
-        Me.Button8.Location = New System.Drawing.Point(769, 494)
-        Me.Button8.Name = "Button8"
-        Me.Button8.Size = New System.Drawing.Size(75, 25)
-        Me.Button8.TabIndex = 3
-        Me.Button8.Text = "Yes"
-        Me.Button8.UseVisualStyleBackColor = True
-        '
-        'Button7
-        '
-        Me.Button7.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button7.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.Button7.Font = New System.Drawing.Font("Segoe UI", 9.75!)
-        Me.Button7.Location = New System.Drawing.Point(850, 494)
-        Me.Button7.Name = "Button7"
-        Me.Button7.Size = New System.Drawing.Size(75, 25)
-        Me.Button7.TabIndex = 3
-        Me.Button7.Text = "No"
-        Me.Button7.UseVisualStyleBackColor = True
-        '
-        'Label62
-        '
-        Me.Label62.AutoSize = True
-        Me.Label62.Font = New System.Drawing.Font("Segoe UI Variable Display Semib", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label62.Location = New System.Drawing.Point(330, 33)
-        Me.Label62.Name = "Label62"
-        Me.Label62.Size = New System.Drawing.Size(31, 32)
-        Me.Label62.TabIndex = 2
-        Me.Label62.Text = ">"
-        '
-        'Label63
-        '
-        Me.Label63.AutoSize = True
-        Me.Label63.Font = New System.Drawing.Font("Segoe UI Variable Display Semib", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label63.Location = New System.Drawing.Point(365, 33)
-        Me.Label63.Name = "Label63"
-        Me.Label63.Size = New System.Drawing.Size(240, 32)
-        Me.Label63.TabIndex = 2
-        Me.Label63.Text = "Review your settings"
-        '
-        'Label61
-        '
-        Me.Label61.AutoSize = True
-        Me.Label61.Font = New System.Drawing.Font("Segoe UI Variable Display Semib", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label61.ForeColor = System.Drawing.Color.Gray
-        Me.Label61.Location = New System.Drawing.Point(38, 33)
-        Me.Label61.Name = "Label61"
-        Me.Label61.Size = New System.Drawing.Size(286, 32)
-        Me.Label61.TabIndex = 2
-        Me.Label61.Text = "Create a custom installer"
         '
         'ProgressPanel
         '
@@ -2518,6 +2220,498 @@ Partial Class MainForm
         Me.ErrorText.Size = New System.Drawing.Size(252, 106)
         Me.ErrorText.TabIndex = 3
         '
+        'InstrPanel
+        '
+        Me.InstrPanel.Controls.Add(Me.WebBrowser2)
+        Me.InstrPanel.Controls.Add(Me.Label104)
+        Me.InstrPanel.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.InstrPanel.Location = New System.Drawing.Point(0, 0)
+        Me.InstrPanel.Name = "InstrPanel"
+        Me.InstrPanel.Size = New System.Drawing.Size(976, 552)
+        Me.InstrPanel.TabIndex = 0
+        Me.InstrPanel.Visible = False
+        '
+        'WebBrowser2
+        '
+        Me.WebBrowser2.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.WebBrowser2.IsWebBrowserContextMenuEnabled = False
+        Me.WebBrowser2.Location = New System.Drawing.Point(53, 115)
+        Me.WebBrowser2.MinimumSize = New System.Drawing.Size(20, 20)
+        Me.WebBrowser2.Name = "WebBrowser2"
+        Me.WebBrowser2.ScriptErrorsSuppressed = True
+        Me.WebBrowser2.Size = New System.Drawing.Size(870, 399)
+        Me.WebBrowser2.TabIndex = 5
+        Me.WebBrowser2.WebBrowserShortcutsEnabled = False
+        '
+        'Label104
+        '
+        Me.Label104.AutoSize = True
+        Me.Label104.Font = New System.Drawing.Font("Segoe UI Variable Display Semib", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label104.Location = New System.Drawing.Point(38, 33)
+        Me.Label104.Name = "Label104"
+        Me.Label104.Size = New System.Drawing.Size(146, 32)
+        Me.Label104.TabIndex = 1
+        Me.Label104.Text = "Instructions"
+        '
+        'InfoPanel
+        '
+        Me.InfoPanel.Controls.Add(Me.BranchPic)
+        Me.InfoPanel.Controls.Add(Me.LinkLabel7)
+        Me.InfoPanel.Controls.Add(Me.TabControl1)
+        Me.InfoPanel.Controls.Add(Me.Label91)
+        Me.InfoPanel.Controls.Add(Me.ProgressRingPic)
+        Me.InfoPanel.Controls.Add(Me.Button12)
+        Me.InfoPanel.Controls.Add(Me.Label106)
+        Me.InfoPanel.Controls.Add(Me.Label4)
+        Me.InfoPanel.Controls.Add(Me.PictureBox11)
+        Me.InfoPanel.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.InfoPanel.Location = New System.Drawing.Point(0, 0)
+        Me.InfoPanel.Name = "InfoPanel"
+        Me.InfoPanel.Size = New System.Drawing.Size(976, 552)
+        Me.InfoPanel.TabIndex = 0
+        Me.InfoPanel.Visible = False
+        '
+        'BranchPic
+        '
+        Me.BranchPic.Anchor = System.Windows.Forms.AnchorStyles.Top
+        Me.BranchPic.Image = Global.Windows_11_Manual_Installer.My.Resources.Resources.hummingbird
+        Me.BranchPic.Location = New System.Drawing.Point(632, 143)
+        Me.BranchPic.Name = "BranchPic"
+        Me.BranchPic.Size = New System.Drawing.Size(20, 20)
+        Me.BranchPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
+        Me.BranchPic.TabIndex = 18
+        Me.BranchPic.TabStop = False
+        '
+        'LinkLabel7
+        '
+        Me.LinkLabel7.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.LinkLabel7.AutoSize = True
+        Me.LinkLabel7.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LinkLabel7.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
+        Me.LinkLabel7.LinkColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(92, Byte), Integer), CType(CType(186, Byte), Integer))
+        Me.LinkLabel7.Location = New System.Drawing.Point(55, 492)
+        Me.LinkLabel7.Name = "LinkLabel7"
+        Me.LinkLabel7.Size = New System.Drawing.Size(321, 20)
+        Me.LinkLabel7.TabIndex = 17
+        Me.LinkLabel7.TabStop = True
+        Me.LinkLabel7.Text = "Updates are available. Click here to learn more."
+        Me.LinkLabel7.Visible = False
+        '
+        'TabControl1
+        '
+        Me.TabControl1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TabControl1.Controls.Add(Me.TabPage1)
+        Me.TabControl1.Controls.Add(Me.TabPage2)
+        Me.TabControl1.Controls.Add(Me.TabPage3)
+        Me.TabControl1.Controls.Add(Me.TabPage4)
+        Me.TabControl1.Font = New System.Drawing.Font("Segoe UI", 11.25!)
+        Me.TabControl1.Location = New System.Drawing.Point(57, 172)
+        Me.TabControl1.Name = "TabControl1"
+        Me.TabControl1.SelectedIndex = 0
+        Me.TabControl1.Size = New System.Drawing.Size(862, 299)
+        Me.TabControl1.TabIndex = 16
+        '
+        'TabPage1
+        '
+        Me.TabPage1.Controls.Add(Me.LinkLabel16)
+        Me.TabPage1.Controls.Add(Me.LinkLabel14)
+        Me.TabPage1.Controls.Add(Me.LinkLabel13)
+        Me.TabPage1.Controls.Add(Me.Label74)
+        Me.TabPage1.Controls.Add(Me.PremiseLabel)
+        Me.TabPage1.Controls.Add(Me.Label73)
+        Me.TabPage1.Controls.Add(Me.Label72)
+        Me.TabPage1.Controls.Add(Me.Label71)
+        Me.TabPage1.Controls.Add(Me.LinkLabel15)
+        Me.TabPage1.Location = New System.Drawing.Point(4, 29)
+        Me.TabPage1.Name = "TabPage1"
+        Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage1.Size = New System.Drawing.Size(854, 266)
+        Me.TabPage1.TabIndex = 0
+        Me.TabPage1.Text = "Overview"
+        Me.TabPage1.UseVisualStyleBackColor = True
+        '
+        'LinkLabel16
+        '
+        Me.LinkLabel16.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.LinkLabel16.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.LinkLabel16.LinkArea = New System.Windows.Forms.LinkArea(10, 11)
+        Me.LinkLabel16.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
+        Me.LinkLabel16.LinkColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(92, Byte), Integer), CType(CType(186, Byte), Integer))
+        Me.LinkLabel16.Location = New System.Drawing.Point(435, 102)
+        Me.LinkLabel16.Name = "LinkLabel16"
+        Me.LinkLabel16.Size = New System.Drawing.Size(356, 60)
+        Me.LinkLabel16.TabIndex = 1
+        Me.LinkLabel16.TabStop = True
+        Me.LinkLabel16.Text = "Check out WhyNotWin11 to see if your computer is able to run Windows 11"
+        Me.LinkLabel16.UseCompatibleTextRendering = True
+        '
+        'LinkLabel14
+        '
+        Me.LinkLabel14.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.LinkLabel14.LinkArea = New System.Windows.Forms.LinkArea(2, 7)
+        Me.LinkLabel14.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
+        Me.LinkLabel14.LinkColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(92, Byte), Integer), CType(CType(186, Byte), Integer))
+        Me.LinkLabel14.Location = New System.Drawing.Point(64, 142)
+        Me.LinkLabel14.Name = "LinkLabel14"
+        Me.LinkLabel14.Size = New System.Drawing.Size(349, 21)
+        Me.LinkLabel14.TabIndex = 1
+        Me.LinkLabel14.TabStop = True
+        Me.LinkLabel14.Text = "- Fluency, by Icons8"
+        Me.LinkLabel14.UseCompatibleTextRendering = True
+        '
+        'LinkLabel13
+        '
+        Me.LinkLabel13.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.LinkLabel13.LinkArea = New System.Windows.Forms.LinkArea(2, 22)
+        Me.LinkLabel13.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
+        Me.LinkLabel13.LinkColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(92, Byte), Integer), CType(CType(186, Byte), Integer))
+        Me.LinkLabel13.Location = New System.Drawing.Point(64, 122)
+        Me.LinkLabel13.Name = "LinkLabel13"
+        Me.LinkLabel13.Size = New System.Drawing.Size(349, 21)
+        Me.LinkLabel13.TabIndex = 1
+        Me.LinkLabel13.TabStop = True
+        Me.LinkLabel13.Text = "- Fluent UI System Icons, by Microsoft"
+        Me.LinkLabel13.UseCompatibleTextRendering = True
+        '
+        'Label74
+        '
+        Me.Label74.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label74.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label74.Location = New System.Drawing.Point(21, 66)
+        Me.Label74.Name = "Label74"
+        Me.Label74.Size = New System.Drawing.Size(813, 15)
+        Me.Label74.TabIndex = 0
+        Me.Label74.Text = "<vdescrstr>"
+        Me.Label74.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        '
+        'PremiseLabel
+        '
+        Me.PremiseLabel.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PremiseLabel.AutoEllipsis = True
+        Me.PremiseLabel.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.PremiseLabel.Location = New System.Drawing.Point(65, 170)
+        Me.PremiseLabel.Name = "PremiseLabel"
+        Me.PremiseLabel.Size = New System.Drawing.Size(737, 76)
+        Me.PremiseLabel.TabIndex = 0
+        Me.PremiseLabel.Text = resources.GetString("PremiseLabel.Text")
+        '
+        'Label73
+        '
+        Me.Label73.AutoSize = True
+        Me.Label73.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label73.Location = New System.Drawing.Point(65, 102)
+        Me.Label73.Name = "Label73"
+        Me.Label73.Size = New System.Drawing.Size(47, 15)
+        Me.Label73.TabIndex = 0
+        Me.Label73.Text = "Credits:"
+        '
+        'Label72
+        '
+        Me.Label72.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label72.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label72.Location = New System.Drawing.Point(2, 48)
+        Me.Label72.Name = "Label72"
+        Me.Label72.Size = New System.Drawing.Size(851, 15)
+        Me.Label72.TabIndex = 0
+        Me.Label72.Text = "version <verstr> (assembly version <averstr>)"
+        Me.Label72.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        '
+        'Label71
+        '
+        Me.Label71.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label71.Font = New System.Drawing.Font("Segoe UI", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label71.Location = New System.Drawing.Point(2, 15)
+        Me.Label71.Name = "Label71"
+        Me.Label71.Size = New System.Drawing.Size(851, 32)
+        Me.Label71.TabIndex = 0
+        Me.Label71.Text = "Windows 11 Manual Installer"
+        Me.Label71.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        '
+        'LinkLabel15
+        '
+        Me.LinkLabel15.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.LinkLabel15.AutoSize = True
+        Me.LinkLabel15.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.LinkLabel15.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
+        Me.LinkLabel15.LinkColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(92, Byte), Integer), CType(CType(186, Byte), Integer))
+        Me.LinkLabel15.Location = New System.Drawing.Point(372, 66)
+        Me.LinkLabel15.Name = "LinkLabel15"
+        Me.LinkLabel15.Size = New System.Drawing.Size(110, 15)
+        Me.LinkLabel15.TabIndex = 1
+        Me.LinkLabel15.TabStop = True
+        Me.LinkLabel15.Text = "Compiling the leak!"
+        Me.LinkLabel15.Visible = False
+        '
+        'TabPage2
+        '
+        Me.TabPage2.Controls.Add(Me.Label96)
+        Me.TabPage2.Controls.Add(Me.Label95)
+        Me.TabPage2.Controls.Add(Me.Label94)
+        Me.TabPage2.Controls.Add(Me.Label93)
+        Me.TabPage2.Controls.Add(Me.Label97)
+        Me.TabPage2.Controls.Add(Me.Label92)
+        Me.TabPage2.Location = New System.Drawing.Point(4, 29)
+        Me.TabPage2.Name = "TabPage2"
+        Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage2.Size = New System.Drawing.Size(854, 266)
+        Me.TabPage2.TabIndex = 1
+        Me.TabPage2.Text = "Component information"
+        Me.TabPage2.UseVisualStyleBackColor = True
+        '
+        'Label96
+        '
+        Me.Label96.AutoSize = True
+        Me.Label96.Location = New System.Drawing.Point(378, 85)
+        Me.Label96.Name = "Label96"
+        Me.Label96.Size = New System.Drawing.Size(78, 20)
+        Me.Label96.TabIndex = 0
+        Me.Label96.Text = "OSCDIMG:"
+        '
+        'Label95
+        '
+        Me.Label95.AutoSize = True
+        Me.Label95.Location = New System.Drawing.Point(378, 60)
+        Me.Label95.Name = "Label95"
+        Me.Label95.Size = New System.Drawing.Size(48, 20)
+        Me.Label95.TabIndex = 0
+        Me.Label95.Text = "DISM:"
+        '
+        'Label94
+        '
+        Me.Label94.AutoSize = True
+        Me.Label94.Location = New System.Drawing.Point(17, 85)
+        Me.Label94.Name = "Label94"
+        Me.Label94.Size = New System.Drawing.Size(77, 20)
+        Me.Label94.TabIndex = 0
+        Me.Label94.Text = "7-Zip (7z):"
+        '
+        'Label93
+        '
+        Me.Label93.AutoSize = True
+        Me.Label93.Location = New System.Drawing.Point(17, 59)
+        Me.Label93.Name = "Label93"
+        Me.Label93.Size = New System.Drawing.Size(277, 20)
+        Me.Label93.TabIndex = 0
+        Me.Label93.Text = "PUCS (Passive Update Check System): 0.5"
+        '
+        'Label97
+        '
+        Me.Label97.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
+        Me.Label97.Location = New System.Drawing.Point(17, 120)
+        Me.Label97.Name = "Label97"
+        Me.Label97.Size = New System.Drawing.Size(820, 75)
+        Me.Label97.TabIndex = 0
+        Me.Label97.Text = "All components shown herein are covered by their own license terms, and this prog" & _
+    "ram can ONLY redistribute open-source components."
+        '
+        'Label92
+        '
+        Me.Label92.AutoSize = True
+        Me.Label92.Location = New System.Drawing.Point(17, 17)
+        Me.Label92.Name = "Label92"
+        Me.Label92.Size = New System.Drawing.Size(450, 20)
+        Me.Label92.TabIndex = 0
+        Me.Label92.Text = "Here is detailed information for components used by the program:"
+        '
+        'TabPage3
+        '
+        Me.TabPage3.Controls.Add(Me.scText)
+        Me.TabPage3.Controls.Add(Me.TableLayoutPanel2)
+        Me.TabPage3.Location = New System.Drawing.Point(4, 29)
+        Me.TabPage3.Name = "TabPage3"
+        Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage3.Size = New System.Drawing.Size(854, 266)
+        Me.TabPage3.TabIndex = 2
+        Me.TabPage3.Text = "Source code"
+        Me.TabPage3.UseVisualStyleBackColor = True
+        '
+        'scText
+        '
+        Me.scText.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.scText.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.scText.Location = New System.Drawing.Point(17, 17)
+        Me.scText.Multiline = True
+        Me.scText.Name = "scText"
+        Me.scText.ReadOnly = True
+        Me.scText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.scText.ShortcutsEnabled = False
+        Me.scText.Size = New System.Drawing.Size(820, 196)
+        Me.scText.TabIndex = 3
+        Me.scText.Text = resources.GetString("scText.Text")
+        '
+        'TableLayoutPanel2
+        '
+        Me.TableLayoutPanel2.ColumnCount = 4
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.29717!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.58019!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.00472!))
+        Me.TableLayoutPanel2.Controls.Add(Me.LinkLabel8, 0, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.LinkLabel11, 3, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.LinkLabel9, 1, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.LinkLabel10, 2, 0)
+        Me.TableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.TableLayoutPanel2.Location = New System.Drawing.Point(3, 217)
+        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
+        Me.TableLayoutPanel2.RowCount = 1
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(848, 46)
+        Me.TableLayoutPanel2.TabIndex = 2
+        '
+        'LinkLabel8
+        '
+        Me.LinkLabel8.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.LinkLabel8.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
+        Me.LinkLabel8.LinkColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(92, Byte), Integer), CType(CType(186, Byte), Integer))
+        Me.LinkLabel8.Location = New System.Drawing.Point(3, 0)
+        Me.LinkLabel8.Name = "LinkLabel8"
+        Me.LinkLabel8.Size = New System.Drawing.Size(206, 46)
+        Me.LinkLabel8.TabIndex = 1
+        Me.LinkLabel8.TabStop = True
+        Me.LinkLabel8.Text = "Check this program's project"
+        Me.LinkLabel8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'LinkLabel11
+        '
+        Me.LinkLabel11.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.LinkLabel11.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
+        Me.LinkLabel11.LinkColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(92, Byte), Integer), CType(CType(186, Byte), Integer))
+        Me.LinkLabel11.Location = New System.Drawing.Point(621, 0)
+        Me.LinkLabel11.Name = "LinkLabel11"
+        Me.LinkLabel11.Size = New System.Drawing.Size(224, 46)
+        Me.LinkLabel11.TabIndex = 1
+        Me.LinkLabel11.TabStop = True
+        Me.LinkLabel11.Text = "Check the Hummingbird branch"
+        Me.LinkLabel11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'LinkLabel9
+        '
+        Me.LinkLabel9.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.LinkLabel9.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
+        Me.LinkLabel9.LinkColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(92, Byte), Integer), CType(CType(186, Byte), Integer))
+        Me.LinkLabel9.Location = New System.Drawing.Point(215, 0)
+        Me.LinkLabel9.Name = "LinkLabel9"
+        Me.LinkLabel9.Size = New System.Drawing.Size(217, 46)
+        Me.LinkLabel9.TabIndex = 1
+        Me.LinkLabel9.TabStop = True
+        Me.LinkLabel9.Text = "Download the Developer Pack"
+        Me.LinkLabel9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'LinkLabel10
+        '
+        Me.LinkLabel10.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.LinkLabel10.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
+        Me.LinkLabel10.LinkColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(92, Byte), Integer), CType(CType(186, Byte), Integer))
+        Me.LinkLabel10.Location = New System.Drawing.Point(438, 0)
+        Me.LinkLabel10.Name = "LinkLabel10"
+        Me.LinkLabel10.Size = New System.Drawing.Size(177, 46)
+        Me.LinkLabel10.TabIndex = 1
+        Me.LinkLabel10.TabStop = True
+        Me.LinkLabel10.Text = "Check the Issues page"
+        Me.LinkLabel10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'TabPage4
+        '
+        Me.TabPage4.Controls.Add(Me.GPLText)
+        Me.TabPage4.Location = New System.Drawing.Point(4, 29)
+        Me.TabPage4.Name = "TabPage4"
+        Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage4.Size = New System.Drawing.Size(854, 266)
+        Me.TabPage4.TabIndex = 3
+        Me.TabPage4.Text = "License"
+        Me.TabPage4.UseVisualStyleBackColor = True
+        '
+        'GPLText
+        '
+        Me.GPLText.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GPLText.Location = New System.Drawing.Point(3, 3)
+        Me.GPLText.Multiline = True
+        Me.GPLText.Name = "GPLText"
+        Me.GPLText.ReadOnly = True
+        Me.GPLText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.GPLText.Size = New System.Drawing.Size(848, 260)
+        Me.GPLText.TabIndex = 0
+        Me.GPLText.Text = resources.GetString("GPLText.Text")
+        '
+        'Label91
+        '
+        Me.Label91.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Label91.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label91.Location = New System.Drawing.Point(57, 492)
+        Me.Label91.Name = "Label91"
+        Me.Label91.Size = New System.Drawing.Size(614, 48)
+        Me.Label91.TabIndex = 15
+        Me.Label91.Text = "To check for any program updates, click ""Check for updates"""
+        '
+        'ProgressRingPic
+        '
+        Me.ProgressRingPic.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.ProgressRingPic.Image = Global.Windows_11_Manual_Installer.My.Resources.Resources.progressring_indeterminate
+        Me.ProgressRingPic.Location = New System.Drawing.Point(57, 477)
+        Me.ProgressRingPic.Name = "ProgressRingPic"
+        Me.ProgressRingPic.Size = New System.Drawing.Size(42, 50)
+        Me.ProgressRingPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.ProgressRingPic.TabIndex = 14
+        Me.ProgressRingPic.TabStop = False
+        Me.ProgressRingPic.Visible = False
+        '
+        'Button12
+        '
+        Me.Button12.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button12.AutoEllipsis = True
+        Me.Button12.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.Button12.Font = New System.Drawing.Font("Segoe UI", 9.75!)
+        Me.Button12.Location = New System.Drawing.Point(738, 489)
+        Me.Button12.Name = "Button12"
+        Me.Button12.Size = New System.Drawing.Size(181, 25)
+        Me.Button12.TabIndex = 13
+        Me.Button12.Text = "Check for updates"
+        Me.Button12.UseVisualStyleBackColor = True
+        '
+        'Label106
+        '
+        Me.Label106.Anchor = System.Windows.Forms.AnchorStyles.Top
+        Me.Label106.AutoSize = True
+        Me.Label106.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label106.Location = New System.Drawing.Point(653, 143)
+        Me.Label106.Name = "Label106"
+        Me.Label106.Size = New System.Drawing.Size(153, 20)
+        Me.Label106.TabIndex = 1
+        Me.Label106.Text = "Hummingbird release"
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Font = New System.Drawing.Font("Segoe UI Variable Display Semib", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Location = New System.Drawing.Point(38, 33)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(82, 32)
+        Me.Label4.TabIndex = 1
+        Me.Label4.Text = "About"
+        '
+        'PictureBox11
+        '
+        Me.PictureBox11.Anchor = System.Windows.Forms.AnchorStyles.Top
+        Me.PictureBox11.Image = Global.Windows_11_Manual_Installer.My.Resources.Resources.logo_light
+        Me.PictureBox11.Location = New System.Drawing.Point(60, 67)
+        Me.PictureBox11.Name = "PictureBox11"
+        Me.PictureBox11.Size = New System.Drawing.Size(857, 102)
+        Me.PictureBox11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.PictureBox11.TabIndex = 2
+        Me.PictureBox11.TabStop = False
+        '
         'SettingPanel
         '
         Me.SettingPanel.Controls.Add(Me.PanelConglomerate2)
@@ -2562,11 +2756,11 @@ Partial Class MainForm
         '
         'Label41
         '
-        Me.Label41.AutoSize = True
+        Me.Label41.AutoEllipsis = True
         Me.Label41.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label41.Location = New System.Drawing.Point(55, 34)
         Me.Label41.Name = "Label41"
-        Me.Label41.Size = New System.Drawing.Size(288, 17)
+        Me.Label41.Size = New System.Drawing.Size(782, 17)
         Me.Label41.TabIndex = 7
         Me.Label41.Text = "Resets all the preferences to their default values"
         '
@@ -2614,11 +2808,11 @@ Partial Class MainForm
         '
         'Label36
         '
-        Me.Label36.AutoSize = True
+        Me.Label36.AutoEllipsis = True
         Me.Label36.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label36.Location = New System.Drawing.Point(55, 34)
         Me.Label36.Name = "Label36"
-        Me.Label36.Size = New System.Drawing.Size(499, 17)
+        Me.Label36.Size = New System.Drawing.Size(776, 17)
         Me.Label36.TabIndex = 7
         Me.Label36.Text = "Change appearance settings, such as the language, the color mode, or the DPI scal" & _
     "e"
@@ -2660,6 +2854,7 @@ Partial Class MainForm
         Me.Panel3.Controls.Add(Me.Label40)
         Me.Panel3.Controls.Add(Me.PictureBox4)
         Me.Panel3.Controls.Add(Me.PictureBox17)
+        Me.Panel3.Enabled = False
         Me.Panel3.Location = New System.Drawing.Point(0, 162)
         Me.Panel3.Name = "Panel3"
         Me.Panel3.Size = New System.Drawing.Size(874, 69)
@@ -2667,11 +2862,11 @@ Partial Class MainForm
         '
         'Label39
         '
-        Me.Label39.AutoSize = True
+        Me.Label39.AutoEllipsis = True
         Me.Label39.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label39.Location = New System.Drawing.Point(55, 34)
         Me.Label39.Name = "Label39"
-        Me.Label39.Size = New System.Drawing.Size(602, 17)
+        Me.Label39.Size = New System.Drawing.Size(782, 17)
         Me.Label39.TabIndex = 7
         Me.Label39.Text = "Clears the installer history log, which is accessible by clicking ""View installer" & _
     " history"" on the main menu"
@@ -2720,11 +2915,11 @@ Partial Class MainForm
         '
         'Label38
         '
-        Me.Label38.AutoSize = True
+        Me.Label38.AutoEllipsis = True
         Me.Label38.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label38.Location = New System.Drawing.Point(55, 34)
         Me.Label38.Name = "Label38"
-        Me.Label38.Size = New System.Drawing.Size(426, 17)
+        Me.Label38.Size = New System.Drawing.Size(782, 17)
         Me.Label38.TabIndex = 7
         Me.Label38.Text = "Change settings related to how the program makes the custom installer"
         '
@@ -2852,6 +3047,260 @@ Partial Class MainForm
         Me.Label9.Size = New System.Drawing.Size(105, 32)
         Me.Label9.TabIndex = 2
         Me.Label9.Text = "Settings"
+        '
+        'SettingReviewPanel
+        '
+        Me.SettingReviewPanel.Controls.Add(Me.GroupBox11)
+        Me.SettingReviewPanel.Controls.Add(Me.GroupBox9)
+        Me.SettingReviewPanel.Controls.Add(Me.GroupBox8)
+        Me.SettingReviewPanel.Controls.Add(Me.Label79)
+        Me.SettingReviewPanel.Controls.Add(Me.Button8)
+        Me.SettingReviewPanel.Controls.Add(Me.Button7)
+        Me.SettingReviewPanel.Controls.Add(Me.Label62)
+        Me.SettingReviewPanel.Controls.Add(Me.Label63)
+        Me.SettingReviewPanel.Controls.Add(Me.Label61)
+        Me.SettingReviewPanel.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SettingReviewPanel.Location = New System.Drawing.Point(0, 0)
+        Me.SettingReviewPanel.Name = "SettingReviewPanel"
+        Me.SettingReviewPanel.Size = New System.Drawing.Size(976, 552)
+        Me.SettingReviewPanel.TabIndex = 3
+        Me.SettingReviewPanel.Visible = False
+        '
+        'GroupBox11
+        '
+        Me.GroupBox11.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox11.Controls.Add(Me.Label64)
+        Me.GroupBox11.Controls.Add(Me.Label90)
+        Me.GroupBox11.Font = New System.Drawing.Font("Segoe UI", 9.75!)
+        Me.GroupBox11.Location = New System.Drawing.Point(51, 374)
+        Me.GroupBox11.Name = "GroupBox11"
+        Me.GroupBox11.Size = New System.Drawing.Size(874, 114)
+        Me.GroupBox11.TabIndex = 6
+        Me.GroupBox11.TabStop = False
+        Me.GroupBox11.Text = "Target image"
+        '
+        'Label64
+        '
+        Me.Label64.AutoSize = True
+        Me.Label64.Location = New System.Drawing.Point(43, 30)
+        Me.Label64.Name = "Label64"
+        Me.Label64.Size = New System.Drawing.Size(122, 17)
+        Me.Label64.TabIndex = 0
+        Me.Label64.Text = "Location and name:"
+        '
+        'Label90
+        '
+        Me.Label90.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label90.AutoEllipsis = True
+        Me.Label90.Location = New System.Drawing.Point(168, 30)
+        Me.Label90.Name = "Label90"
+        Me.Label90.Size = New System.Drawing.Size(690, 67)
+        Me.Label90.TabIndex = 0
+        Me.Label90.Text = "location"
+        '
+        'GroupBox9
+        '
+        Me.GroupBox9.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox9.Controls.Add(Me.Label76)
+        Me.GroupBox9.Controls.Add(Me.Label78)
+        Me.GroupBox9.Controls.Add(Me.Label70)
+        Me.GroupBox9.Controls.Add(Me.Label77)
+        Me.GroupBox9.Controls.Add(Me.Label75)
+        Me.GroupBox9.Controls.Add(Me.Label69)
+        Me.GroupBox9.Font = New System.Drawing.Font("Segoe UI", 9.75!)
+        Me.GroupBox9.Location = New System.Drawing.Point(51, 245)
+        Me.GroupBox9.Name = "GroupBox9"
+        Me.GroupBox9.Size = New System.Drawing.Size(874, 115)
+        Me.GroupBox9.TabIndex = 5
+        Me.GroupBox9.TabStop = False
+        Me.GroupBox9.Text = "Installer creation options"
+        '
+        'Label76
+        '
+        Me.Label76.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.Label76.AutoSize = True
+        Me.Label76.Location = New System.Drawing.Point(446, 49)
+        Me.Label76.Name = "Label76"
+        Me.Label76.Size = New System.Drawing.Size(155, 17)
+        Me.Label76.TabIndex = 0
+        Me.Label76.Text = "BIOS/UEFI-CSM (ID: 0x00)"
+        '
+        'Label78
+        '
+        Me.Label78.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.Label78.AutoSize = True
+        Me.Label78.Location = New System.Drawing.Point(444, 73)
+        Me.Label78.Name = "Label78"
+        Me.Label78.Size = New System.Drawing.Size(75, 17)
+        Me.Label78.TabIndex = 0
+        Me.Label78.Text = "Windows11"
+        '
+        'Label70
+        '
+        Me.Label70.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.Label70.AutoSize = True
+        Me.Label70.Location = New System.Drawing.Point(447, 25)
+        Me.Label70.Name = "Label70"
+        Me.Label70.Size = New System.Drawing.Size(43, 17)
+        Me.Label70.TabIndex = 0
+        Me.Label70.Text = "WIMR"
+        '
+        'Label77
+        '
+        Me.Label77.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.Label77.Location = New System.Drawing.Point(69, 73)
+        Me.Label77.Name = "Label77"
+        Me.Label77.Size = New System.Drawing.Size(372, 17)
+        Me.Label77.TabIndex = 0
+        Me.Label77.Text = "Installer label:"
+        Me.Label77.TextAlign = System.Drawing.ContentAlignment.TopRight
+        '
+        'Label75
+        '
+        Me.Label75.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.Label75.Location = New System.Drawing.Point(195, 49)
+        Me.Label75.Name = "Label75"
+        Me.Label75.Size = New System.Drawing.Size(246, 17)
+        Me.Label75.TabIndex = 0
+        Me.Label75.Text = "Platform compatibility:"
+        Me.Label75.TextAlign = System.Drawing.ContentAlignment.TopRight
+        '
+        'Label69
+        '
+        Me.Label69.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.Label69.Location = New System.Drawing.Point(235, 25)
+        Me.Label69.Name = "Label69"
+        Me.Label69.Size = New System.Drawing.Size(206, 17)
+        Me.Label69.TabIndex = 0
+        Me.Label69.Text = "Method:"
+        Me.Label69.TextAlign = System.Drawing.ContentAlignment.TopRight
+        '
+        'GroupBox8
+        '
+        Me.GroupBox8.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox8.Controls.Add(Me.Label66)
+        Me.GroupBox8.Controls.Add(Me.Label68)
+        Me.GroupBox8.Controls.Add(Me.Label67)
+        Me.GroupBox8.Controls.Add(Me.Label65)
+        Me.GroupBox8.Font = New System.Drawing.Font("Segoe UI", 9.75!)
+        Me.GroupBox8.Location = New System.Drawing.Point(51, 86)
+        Me.GroupBox8.Name = "GroupBox8"
+        Me.GroupBox8.Size = New System.Drawing.Size(874, 148)
+        Me.GroupBox8.TabIndex = 5
+        Me.GroupBox8.TabStop = False
+        Me.GroupBox8.Text = "Images"
+        '
+        'Label66
+        '
+        Me.Label66.Location = New System.Drawing.Point(46, 89)
+        Me.Label66.Name = "Label66"
+        Me.Label66.Size = New System.Drawing.Size(180, 17)
+        Me.Label66.TabIndex = 0
+        Me.Label66.Text = "Windows 10 image:"
+        Me.Label66.TextAlign = System.Drawing.ContentAlignment.TopRight
+        '
+        'Label68
+        '
+        Me.Label68.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label68.AutoEllipsis = True
+        Me.Label68.Location = New System.Drawing.Point(232, 89)
+        Me.Label68.Name = "Label68"
+        Me.Label68.Size = New System.Drawing.Size(599, 41)
+        Me.Label68.TabIndex = 0
+        Me.Label68.Text = "win10iso"
+        '
+        'Label67
+        '
+        Me.Label67.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label67.AutoEllipsis = True
+        Me.Label67.Location = New System.Drawing.Point(232, 42)
+        Me.Label67.Name = "Label67"
+        Me.Label67.Size = New System.Drawing.Size(599, 41)
+        Me.Label67.TabIndex = 0
+        Me.Label67.Text = "win11iso"
+        '
+        'Label65
+        '
+        Me.Label65.Location = New System.Drawing.Point(46, 42)
+        Me.Label65.Name = "Label65"
+        Me.Label65.Size = New System.Drawing.Size(180, 17)
+        Me.Label65.TabIndex = 0
+        Me.Label65.Text = "Windows 11 image:"
+        Me.Label65.TextAlign = System.Drawing.ContentAlignment.TopRight
+        '
+        'Label79
+        '
+        Me.Label79.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Label79.AutoSize = True
+        Me.Label79.Font = New System.Drawing.Font("Segoe UI", 9.75!)
+        Me.Label79.Location = New System.Drawing.Point(41, 498)
+        Me.Label79.Name = "Label79"
+        Me.Label79.Size = New System.Drawing.Size(140, 17)
+        Me.Label79.TabIndex = 4
+        Me.Label79.Text = "Are these settings OK?"
+        '
+        'Button8
+        '
+        Me.Button8.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button8.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.Button8.Font = New System.Drawing.Font("Segoe UI", 9.75!)
+        Me.Button8.Location = New System.Drawing.Point(769, 494)
+        Me.Button8.Name = "Button8"
+        Me.Button8.Size = New System.Drawing.Size(75, 25)
+        Me.Button8.TabIndex = 3
+        Me.Button8.Text = "Yes"
+        Me.Button8.UseVisualStyleBackColor = True
+        '
+        'Button7
+        '
+        Me.Button7.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button7.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.Button7.Font = New System.Drawing.Font("Segoe UI", 9.75!)
+        Me.Button7.Location = New System.Drawing.Point(850, 494)
+        Me.Button7.Name = "Button7"
+        Me.Button7.Size = New System.Drawing.Size(75, 25)
+        Me.Button7.TabIndex = 3
+        Me.Button7.Text = "No"
+        Me.Button7.UseVisualStyleBackColor = True
+        '
+        'Label62
+        '
+        Me.Label62.AutoSize = True
+        Me.Label62.Font = New System.Drawing.Font("Segoe UI Variable Display Semib", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label62.Location = New System.Drawing.Point(330, 33)
+        Me.Label62.Name = "Label62"
+        Me.Label62.Size = New System.Drawing.Size(31, 32)
+        Me.Label62.TabIndex = 2
+        Me.Label62.Text = ">"
+        '
+        'Label63
+        '
+        Me.Label63.AutoSize = True
+        Me.Label63.Font = New System.Drawing.Font("Segoe UI Variable Display Semib", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label63.Location = New System.Drawing.Point(365, 33)
+        Me.Label63.Name = "Label63"
+        Me.Label63.Size = New System.Drawing.Size(240, 32)
+        Me.Label63.TabIndex = 2
+        Me.Label63.Text = "Review your settings"
+        '
+        'Label61
+        '
+        Me.Label61.AutoSize = True
+        Me.Label61.Font = New System.Drawing.Font("Segoe UI Variable Display Semib", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label61.ForeColor = System.Drawing.Color.Gray
+        Me.Label61.Location = New System.Drawing.Point(38, 33)
+        Me.Label61.Name = "Label61"
+        Me.Label61.Size = New System.Drawing.Size(286, 32)
+        Me.Label61.TabIndex = 2
+        Me.Label61.Text = "Create a custom installer"
         '
         'InstCreatePanel
         '
@@ -3232,41 +3681,6 @@ Partial Class MainForm
     "arn more."
         Me.LinkLabel12.Visible = False
         '
-        'InstrPanel
-        '
-        Me.InstrPanel.Controls.Add(Me.WebBrowser2)
-        Me.InstrPanel.Controls.Add(Me.Label104)
-        Me.InstrPanel.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.InstrPanel.Location = New System.Drawing.Point(0, 0)
-        Me.InstrPanel.Name = "InstrPanel"
-        Me.InstrPanel.Size = New System.Drawing.Size(976, 552)
-        Me.InstrPanel.TabIndex = 0
-        Me.InstrPanel.Visible = False
-        '
-        'WebBrowser2
-        '
-        Me.WebBrowser2.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.WebBrowser2.IsWebBrowserContextMenuEnabled = False
-        Me.WebBrowser2.Location = New System.Drawing.Point(53, 115)
-        Me.WebBrowser2.MinimumSize = New System.Drawing.Size(20, 20)
-        Me.WebBrowser2.Name = "WebBrowser2"
-        Me.WebBrowser2.ScriptErrorsSuppressed = True
-        Me.WebBrowser2.Size = New System.Drawing.Size(870, 399)
-        Me.WebBrowser2.TabIndex = 5
-        Me.WebBrowser2.WebBrowserShortcutsEnabled = False
-        '
-        'Label104
-        '
-        Me.Label104.AutoSize = True
-        Me.Label104.Font = New System.Drawing.Font("Segoe UI Variable Display Semib", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label104.Location = New System.Drawing.Point(38, 33)
-        Me.Label104.Name = "Label104"
-        Me.Label104.Size = New System.Drawing.Size(146, 32)
-        Me.Label104.TabIndex = 1
-        Me.Label104.Text = "Instructions"
-        '
         'Settings_FunctionalityPanel
         '
         Me.Settings_FunctionalityPanel.Controls.Add(Me.LinkLabel18)
@@ -3357,15 +3771,16 @@ Partial Class MainForm
         'CheckBox3
         '
         Me.CheckBox3.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.CheckBox3.AutoSize = True
+        Me.CheckBox3.CheckAlign = System.Drawing.ContentAlignment.TopLeft
         Me.CheckBox3.Checked = True
         Me.CheckBox3.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBox3.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CheckBox3.Location = New System.Drawing.Point(33, 45)
+        Me.CheckBox3.Location = New System.Drawing.Point(33, 29)
         Me.CheckBox3.Name = "CheckBox3"
-        Me.CheckBox3.Size = New System.Drawing.Size(221, 21)
+        Me.CheckBox3.Size = New System.Drawing.Size(305, 42)
         Me.CheckBox3.TabIndex = 11
         Me.CheckBox3.Text = "When closing, hide in system tray"
+        Me.CheckBox3.TextAlign = System.Drawing.ContentAlignment.TopLeft
         Me.CheckBox3.UseVisualStyleBackColor = True
         '
         'CheckBox1
@@ -3375,9 +3790,9 @@ Partial Class MainForm
         Me.CheckBox1.Checked = True
         Me.CheckBox1.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBox1.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CheckBox1.Location = New System.Drawing.Point(33, 68)
+        Me.CheckBox1.Location = New System.Drawing.Point(33, 73)
         Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(219, 58)
+        Me.CheckBox1.Size = New System.Drawing.Size(305, 48)
         Me.CheckBox1.TabIndex = 11
         Me.CheckBox1.Text = "Show system tray notification once"
         Me.CheckBox1.TextAlign = System.Drawing.ContentAlignment.TopLeft
@@ -3457,11 +3872,13 @@ Partial Class MainForm
         '
         'Label24
         '
-        Me.Label24.AutoSize = True
+        Me.Label24.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label24.AutoEllipsis = True
         Me.Label24.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label24.Location = New System.Drawing.Point(30, 37)
         Me.Label24.Name = "Label24"
-        Me.Label24.Size = New System.Drawing.Size(286, 17)
+        Me.Label24.Size = New System.Drawing.Size(303, 17)
         Me.Label24.TabIndex = 8
         Me.Label24.Text = "Here you can set a custom label for your image"
         '
@@ -3564,7 +3981,8 @@ Partial Class MainForm
         '
         'ComboBox5
         '
-        Me.ComboBox5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.ComboBox5.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ComboBox5.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ComboBox5.FormattingEnabled = True
@@ -3616,439 +4034,6 @@ Partial Class MainForm
         Me.Label18.Size = New System.Drawing.Size(105, 32)
         Me.Label18.TabIndex = 6
         Me.Label18.Text = "Settings"
-        '
-        'InfoPanel
-        '
-        Me.InfoPanel.Controls.Add(Me.BranchPic)
-        Me.InfoPanel.Controls.Add(Me.LinkLabel7)
-        Me.InfoPanel.Controls.Add(Me.TabControl1)
-        Me.InfoPanel.Controls.Add(Me.Label91)
-        Me.InfoPanel.Controls.Add(Me.ProgressRingPic)
-        Me.InfoPanel.Controls.Add(Me.Button12)
-        Me.InfoPanel.Controls.Add(Me.Label106)
-        Me.InfoPanel.Controls.Add(Me.Label4)
-        Me.InfoPanel.Controls.Add(Me.PictureBox11)
-        Me.InfoPanel.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.InfoPanel.Location = New System.Drawing.Point(0, 0)
-        Me.InfoPanel.Name = "InfoPanel"
-        Me.InfoPanel.Size = New System.Drawing.Size(976, 552)
-        Me.InfoPanel.TabIndex = 0
-        Me.InfoPanel.Visible = False
-        '
-        'BranchPic
-        '
-        Me.BranchPic.Anchor = System.Windows.Forms.AnchorStyles.Top
-        Me.BranchPic.Image = Global.Windows_11_Manual_Installer.My.Resources.Resources.hummingbird
-        Me.BranchPic.Location = New System.Drawing.Point(632, 143)
-        Me.BranchPic.Name = "BranchPic"
-        Me.BranchPic.Size = New System.Drawing.Size(20, 20)
-        Me.BranchPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
-        Me.BranchPic.TabIndex = 18
-        Me.BranchPic.TabStop = False
-        '
-        'LinkLabel7
-        '
-        Me.LinkLabel7.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.LinkLabel7.AutoSize = True
-        Me.LinkLabel7.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LinkLabel7.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
-        Me.LinkLabel7.LinkColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(92, Byte), Integer), CType(CType(186, Byte), Integer))
-        Me.LinkLabel7.Location = New System.Drawing.Point(55, 492)
-        Me.LinkLabel7.Name = "LinkLabel7"
-        Me.LinkLabel7.Size = New System.Drawing.Size(321, 20)
-        Me.LinkLabel7.TabIndex = 17
-        Me.LinkLabel7.TabStop = True
-        Me.LinkLabel7.Text = "Updates are available. Click here to learn more."
-        Me.LinkLabel7.Visible = False
-        '
-        'TabControl1
-        '
-        Me.TabControl1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TabControl1.Controls.Add(Me.TabPage1)
-        Me.TabControl1.Controls.Add(Me.TabPage2)
-        Me.TabControl1.Controls.Add(Me.TabPage3)
-        Me.TabControl1.Font = New System.Drawing.Font("Segoe UI", 11.25!)
-        Me.TabControl1.Location = New System.Drawing.Point(57, 172)
-        Me.TabControl1.Name = "TabControl1"
-        Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(862, 299)
-        Me.TabControl1.TabIndex = 16
-        '
-        'TabPage1
-        '
-        Me.TabPage1.Controls.Add(Me.LinkLabel16)
-        Me.TabPage1.Controls.Add(Me.LinkLabel14)
-        Me.TabPage1.Controls.Add(Me.LinkLabel13)
-        Me.TabPage1.Controls.Add(Me.Label74)
-        Me.TabPage1.Controls.Add(Me.PremiseLabel)
-        Me.TabPage1.Controls.Add(Me.Label73)
-        Me.TabPage1.Controls.Add(Me.Label72)
-        Me.TabPage1.Controls.Add(Me.Label71)
-        Me.TabPage1.Controls.Add(Me.LinkLabel15)
-        Me.TabPage1.Location = New System.Drawing.Point(4, 29)
-        Me.TabPage1.Name = "TabPage1"
-        Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(854, 266)
-        Me.TabPage1.TabIndex = 0
-        Me.TabPage1.Text = "Overview"
-        Me.TabPage1.UseVisualStyleBackColor = True
-        '
-        'LinkLabel16
-        '
-        Me.LinkLabel16.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.LinkLabel16.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.LinkLabel16.LinkArea = New System.Windows.Forms.LinkArea(10, 11)
-        Me.LinkLabel16.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
-        Me.LinkLabel16.LinkColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(92, Byte), Integer), CType(CType(186, Byte), Integer))
-        Me.LinkLabel16.Location = New System.Drawing.Point(435, 102)
-        Me.LinkLabel16.Name = "LinkLabel16"
-        Me.LinkLabel16.Size = New System.Drawing.Size(356, 60)
-        Me.LinkLabel16.TabIndex = 1
-        Me.LinkLabel16.TabStop = True
-        Me.LinkLabel16.Text = "Check out WhyNotWin11 to see if your computer is able to run Windows 11"
-        Me.LinkLabel16.UseCompatibleTextRendering = True
-        '
-        'LinkLabel14
-        '
-        Me.LinkLabel14.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.LinkLabel14.LinkArea = New System.Windows.Forms.LinkArea(2, 7)
-        Me.LinkLabel14.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
-        Me.LinkLabel14.LinkColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(92, Byte), Integer), CType(CType(186, Byte), Integer))
-        Me.LinkLabel14.Location = New System.Drawing.Point(64, 142)
-        Me.LinkLabel14.Name = "LinkLabel14"
-        Me.LinkLabel14.Size = New System.Drawing.Size(349, 21)
-        Me.LinkLabel14.TabIndex = 1
-        Me.LinkLabel14.TabStop = True
-        Me.LinkLabel14.Text = "- Fluency, by Icons8"
-        Me.LinkLabel14.UseCompatibleTextRendering = True
-        '
-        'LinkLabel13
-        '
-        Me.LinkLabel13.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.LinkLabel13.LinkArea = New System.Windows.Forms.LinkArea(2, 22)
-        Me.LinkLabel13.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
-        Me.LinkLabel13.LinkColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(92, Byte), Integer), CType(CType(186, Byte), Integer))
-        Me.LinkLabel13.Location = New System.Drawing.Point(64, 122)
-        Me.LinkLabel13.Name = "LinkLabel13"
-        Me.LinkLabel13.Size = New System.Drawing.Size(349, 21)
-        Me.LinkLabel13.TabIndex = 1
-        Me.LinkLabel13.TabStop = True
-        Me.LinkLabel13.Text = "- Fluent UI System Icons, by Microsoft"
-        Me.LinkLabel13.UseCompatibleTextRendering = True
-        '
-        'Label74
-        '
-        Me.Label74.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label74.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label74.Location = New System.Drawing.Point(21, 66)
-        Me.Label74.Name = "Label74"
-        Me.Label74.Size = New System.Drawing.Size(813, 15)
-        Me.Label74.TabIndex = 0
-        Me.Label74.Text = "<vdescrstr>"
-        Me.Label74.TextAlign = System.Drawing.ContentAlignment.TopCenter
-        '
-        'PremiseLabel
-        '
-        Me.PremiseLabel.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.PremiseLabel.AutoEllipsis = True
-        Me.PremiseLabel.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.PremiseLabel.Location = New System.Drawing.Point(65, 170)
-        Me.PremiseLabel.Name = "PremiseLabel"
-        Me.PremiseLabel.Size = New System.Drawing.Size(737, 76)
-        Me.PremiseLabel.TabIndex = 0
-        Me.PremiseLabel.Text = resources.GetString("PremiseLabel.Text")
-        '
-        'Label73
-        '
-        Me.Label73.AutoSize = True
-        Me.Label73.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label73.Location = New System.Drawing.Point(65, 102)
-        Me.Label73.Name = "Label73"
-        Me.Label73.Size = New System.Drawing.Size(47, 15)
-        Me.Label73.TabIndex = 0
-        Me.Label73.Text = "Credits:"
-        '
-        'Label72
-        '
-        Me.Label72.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label72.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label72.Location = New System.Drawing.Point(2, 48)
-        Me.Label72.Name = "Label72"
-        Me.Label72.Size = New System.Drawing.Size(851, 15)
-        Me.Label72.TabIndex = 0
-        Me.Label72.Text = "version <verstr> (assembly version <averstr>)"
-        Me.Label72.TextAlign = System.Drawing.ContentAlignment.TopCenter
-        '
-        'Label71
-        '
-        Me.Label71.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label71.Font = New System.Drawing.Font("Segoe UI", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label71.Location = New System.Drawing.Point(2, 15)
-        Me.Label71.Name = "Label71"
-        Me.Label71.Size = New System.Drawing.Size(851, 32)
-        Me.Label71.TabIndex = 0
-        Me.Label71.Text = "Windows 11 Manual Installer"
-        Me.Label71.TextAlign = System.Drawing.ContentAlignment.TopCenter
-        '
-        'LinkLabel15
-        '
-        Me.LinkLabel15.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.LinkLabel15.AutoSize = True
-        Me.LinkLabel15.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.LinkLabel15.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
-        Me.LinkLabel15.LinkColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(92, Byte), Integer), CType(CType(186, Byte), Integer))
-        Me.LinkLabel15.Location = New System.Drawing.Point(372, 66)
-        Me.LinkLabel15.Name = "LinkLabel15"
-        Me.LinkLabel15.Size = New System.Drawing.Size(110, 15)
-        Me.LinkLabel15.TabIndex = 1
-        Me.LinkLabel15.TabStop = True
-        Me.LinkLabel15.Text = "Compiling the leak!"
-        Me.LinkLabel15.Visible = False
-        '
-        'TabPage2
-        '
-        Me.TabPage2.Controls.Add(Me.Label96)
-        Me.TabPage2.Controls.Add(Me.Label95)
-        Me.TabPage2.Controls.Add(Me.Label94)
-        Me.TabPage2.Controls.Add(Me.Label93)
-        Me.TabPage2.Controls.Add(Me.Label97)
-        Me.TabPage2.Controls.Add(Me.Label92)
-        Me.TabPage2.Location = New System.Drawing.Point(4, 29)
-        Me.TabPage2.Name = "TabPage2"
-        Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(854, 266)
-        Me.TabPage2.TabIndex = 1
-        Me.TabPage2.Text = "Component information"
-        Me.TabPage2.UseVisualStyleBackColor = True
-        '
-        'Label96
-        '
-        Me.Label96.AutoSize = True
-        Me.Label96.Location = New System.Drawing.Point(378, 85)
-        Me.Label96.Name = "Label96"
-        Me.Label96.Size = New System.Drawing.Size(78, 20)
-        Me.Label96.TabIndex = 0
-        Me.Label96.Text = "OSCDIMG:"
-        '
-        'Label95
-        '
-        Me.Label95.AutoSize = True
-        Me.Label95.Location = New System.Drawing.Point(378, 60)
-        Me.Label95.Name = "Label95"
-        Me.Label95.Size = New System.Drawing.Size(48, 20)
-        Me.Label95.TabIndex = 0
-        Me.Label95.Text = "DISM:"
-        '
-        'Label94
-        '
-        Me.Label94.AutoSize = True
-        Me.Label94.Location = New System.Drawing.Point(17, 85)
-        Me.Label94.Name = "Label94"
-        Me.Label94.Size = New System.Drawing.Size(77, 20)
-        Me.Label94.TabIndex = 0
-        Me.Label94.Text = "7-Zip (7z):"
-        '
-        'Label93
-        '
-        Me.Label93.AutoSize = True
-        Me.Label93.Location = New System.Drawing.Point(17, 59)
-        Me.Label93.Name = "Label93"
-        Me.Label93.Size = New System.Drawing.Size(277, 20)
-        Me.Label93.TabIndex = 0
-        Me.Label93.Text = "PUCS (Passive Update Check System): 0.5"
-        '
-        'Label97
-        '
-        Me.Label97.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Bold)
-        Me.Label97.Location = New System.Drawing.Point(17, 120)
-        Me.Label97.Name = "Label97"
-        Me.Label97.Size = New System.Drawing.Size(820, 75)
-        Me.Label97.TabIndex = 0
-        Me.Label97.Text = "All components shown herein are covered by their own license terms, and this prog" & _
-    "ram can ONLY redistribute open-source components."
-        '
-        'Label92
-        '
-        Me.Label92.AutoSize = True
-        Me.Label92.Location = New System.Drawing.Point(17, 17)
-        Me.Label92.Name = "Label92"
-        Me.Label92.Size = New System.Drawing.Size(450, 20)
-        Me.Label92.TabIndex = 0
-        Me.Label92.Text = "Here is detailed information for components used by the program:"
-        '
-        'TabPage3
-        '
-        Me.TabPage3.Controls.Add(Me.scText)
-        Me.TabPage3.Controls.Add(Me.TableLayoutPanel2)
-        Me.TabPage3.Location = New System.Drawing.Point(4, 29)
-        Me.TabPage3.Name = "TabPage3"
-        Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage3.Size = New System.Drawing.Size(854, 266)
-        Me.TabPage3.TabIndex = 2
-        Me.TabPage3.Text = "Source code"
-        Me.TabPage3.UseVisualStyleBackColor = True
-        '
-        'scText
-        '
-        Me.scText.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.scText.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.scText.Location = New System.Drawing.Point(17, 17)
-        Me.scText.Multiline = True
-        Me.scText.Name = "scText"
-        Me.scText.ReadOnly = True
-        Me.scText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.scText.ShortcutsEnabled = False
-        Me.scText.Size = New System.Drawing.Size(820, 196)
-        Me.scText.TabIndex = 3
-        Me.scText.Text = resources.GetString("scText.Text")
-        '
-        'TableLayoutPanel2
-        '
-        Me.TableLayoutPanel2.ColumnCount = 4
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.29717!))
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.58019!))
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.00472!))
-        Me.TableLayoutPanel2.Controls.Add(Me.LinkLabel8, 0, 0)
-        Me.TableLayoutPanel2.Controls.Add(Me.LinkLabel11, 3, 0)
-        Me.TableLayoutPanel2.Controls.Add(Me.LinkLabel9, 1, 0)
-        Me.TableLayoutPanel2.Controls.Add(Me.LinkLabel10, 2, 0)
-        Me.TableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.TableLayoutPanel2.Location = New System.Drawing.Point(3, 217)
-        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
-        Me.TableLayoutPanel2.RowCount = 1
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel2.Size = New System.Drawing.Size(848, 46)
-        Me.TableLayoutPanel2.TabIndex = 2
-        '
-        'LinkLabel8
-        '
-        Me.LinkLabel8.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.LinkLabel8.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
-        Me.LinkLabel8.LinkColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(92, Byte), Integer), CType(CType(186, Byte), Integer))
-        Me.LinkLabel8.Location = New System.Drawing.Point(3, 0)
-        Me.LinkLabel8.Name = "LinkLabel8"
-        Me.LinkLabel8.Size = New System.Drawing.Size(206, 46)
-        Me.LinkLabel8.TabIndex = 1
-        Me.LinkLabel8.TabStop = True
-        Me.LinkLabel8.Text = "Check this program's project"
-        Me.LinkLabel8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'LinkLabel11
-        '
-        Me.LinkLabel11.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.LinkLabel11.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
-        Me.LinkLabel11.LinkColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(92, Byte), Integer), CType(CType(186, Byte), Integer))
-        Me.LinkLabel11.Location = New System.Drawing.Point(621, 0)
-        Me.LinkLabel11.Name = "LinkLabel11"
-        Me.LinkLabel11.Size = New System.Drawing.Size(224, 46)
-        Me.LinkLabel11.TabIndex = 1
-        Me.LinkLabel11.TabStop = True
-        Me.LinkLabel11.Text = "Check the Hummingbird branch"
-        Me.LinkLabel11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'LinkLabel9
-        '
-        Me.LinkLabel9.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.LinkLabel9.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
-        Me.LinkLabel9.LinkColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(92, Byte), Integer), CType(CType(186, Byte), Integer))
-        Me.LinkLabel9.Location = New System.Drawing.Point(215, 0)
-        Me.LinkLabel9.Name = "LinkLabel9"
-        Me.LinkLabel9.Size = New System.Drawing.Size(217, 46)
-        Me.LinkLabel9.TabIndex = 1
-        Me.LinkLabel9.TabStop = True
-        Me.LinkLabel9.Text = "Download the Developer Pack"
-        Me.LinkLabel9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'LinkLabel10
-        '
-        Me.LinkLabel10.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.LinkLabel10.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
-        Me.LinkLabel10.LinkColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(92, Byte), Integer), CType(CType(186, Byte), Integer))
-        Me.LinkLabel10.Location = New System.Drawing.Point(438, 0)
-        Me.LinkLabel10.Name = "LinkLabel10"
-        Me.LinkLabel10.Size = New System.Drawing.Size(177, 46)
-        Me.LinkLabel10.TabIndex = 1
-        Me.LinkLabel10.TabStop = True
-        Me.LinkLabel10.Text = "Check the Issues page"
-        Me.LinkLabel10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'Label91
-        '
-        Me.Label91.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.Label91.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label91.Location = New System.Drawing.Point(57, 492)
-        Me.Label91.Name = "Label91"
-        Me.Label91.Size = New System.Drawing.Size(614, 48)
-        Me.Label91.TabIndex = 15
-        Me.Label91.Text = "To check for any program updates, click ""Check for updates"""
-        '
-        'ProgressRingPic
-        '
-        Me.ProgressRingPic.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.ProgressRingPic.Image = Global.Windows_11_Manual_Installer.My.Resources.Resources.progressring_indeterminate
-        Me.ProgressRingPic.Location = New System.Drawing.Point(57, 477)
-        Me.ProgressRingPic.Name = "ProgressRingPic"
-        Me.ProgressRingPic.Size = New System.Drawing.Size(42, 50)
-        Me.ProgressRingPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.ProgressRingPic.TabIndex = 14
-        Me.ProgressRingPic.TabStop = False
-        Me.ProgressRingPic.Visible = False
-        '
-        'Button12
-        '
-        Me.Button12.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button12.AutoEllipsis = True
-        Me.Button12.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.Button12.Font = New System.Drawing.Font("Segoe UI", 9.75!)
-        Me.Button12.Location = New System.Drawing.Point(738, 489)
-        Me.Button12.Name = "Button12"
-        Me.Button12.Size = New System.Drawing.Size(181, 25)
-        Me.Button12.TabIndex = 13
-        Me.Button12.Text = "Check for updates"
-        Me.Button12.UseVisualStyleBackColor = True
-        '
-        'Label106
-        '
-        Me.Label106.Anchor = System.Windows.Forms.AnchorStyles.Top
-        Me.Label106.AutoSize = True
-        Me.Label106.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label106.Location = New System.Drawing.Point(653, 143)
-        Me.Label106.Name = "Label106"
-        Me.Label106.Size = New System.Drawing.Size(153, 20)
-        Me.Label106.TabIndex = 1
-        Me.Label106.Text = "Hummingbird release"
-        '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Segoe UI Variable Display Semib", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(38, 33)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(82, 32)
-        Me.Label4.TabIndex = 1
-        Me.Label4.Text = "About"
-        '
-        'PictureBox11
-        '
-        Me.PictureBox11.Anchor = System.Windows.Forms.AnchorStyles.Top
-        Me.PictureBox11.Image = Global.Windows_11_Manual_Installer.My.Resources.Resources.logo_light
-        Me.PictureBox11.Location = New System.Drawing.Point(60, 67)
-        Me.PictureBox11.Name = "PictureBox11"
-        Me.PictureBox11.Size = New System.Drawing.Size(857, 102)
-        Me.PictureBox11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.PictureBox11.TabIndex = 2
-        Me.PictureBox11.TabStop = False
         '
         'Notify
         '
@@ -4415,14 +4400,6 @@ Partial Class MainForm
         Me.GroupBox5.ResumeLayout(False)
         Me.GroupBox5.PerformLayout()
         CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SettingReviewPanel.ResumeLayout(False)
-        Me.SettingReviewPanel.PerformLayout()
-        Me.GroupBox11.ResumeLayout(False)
-        Me.GroupBox11.PerformLayout()
-        Me.GroupBox9.ResumeLayout(False)
-        Me.GroupBox9.PerformLayout()
-        Me.GroupBox8.ResumeLayout(False)
-        Me.GroupBox8.PerformLayout()
         Me.ProgressPanel.ResumeLayout(False)
         Me.ProgressPanel.PerformLayout()
         Me.GroupBox10.ResumeLayout(False)
@@ -4437,6 +4414,23 @@ Partial Class MainForm
         Me.TableLayoutPanel3.PerformLayout()
         Me.TableLayoutPanel4.ResumeLayout(False)
         Me.TableLayoutPanel4.PerformLayout()
+        Me.InstrPanel.ResumeLayout(False)
+        Me.InstrPanel.PerformLayout()
+        Me.InfoPanel.ResumeLayout(False)
+        Me.InfoPanel.PerformLayout()
+        CType(Me.BranchPic, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabControl1.ResumeLayout(False)
+        Me.TabPage1.ResumeLayout(False)
+        Me.TabPage1.PerformLayout()
+        Me.TabPage2.ResumeLayout(False)
+        Me.TabPage2.PerformLayout()
+        Me.TabPage3.ResumeLayout(False)
+        Me.TabPage3.PerformLayout()
+        Me.TableLayoutPanel2.ResumeLayout(False)
+        Me.TabPage4.ResumeLayout(False)
+        Me.TabPage4.PerformLayout()
+        CType(Me.ProgressRingPic, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox11, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SettingPanel.ResumeLayout(False)
         Me.SettingPanel.PerformLayout()
         Me.PanelConglomerate2.ResumeLayout(False)
@@ -4458,6 +4452,13 @@ Partial Class MainForm
         CType(Me.PictureBox14, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox12, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SettingReviewPanel.ResumeLayout(False)
+        Me.SettingReviewPanel.PerformLayout()
+        Me.GroupBox11.ResumeLayout(False)
+        Me.GroupBox11.PerformLayout()
+        Me.GroupBox9.ResumeLayout(False)
+        Me.GroupBox9.PerformLayout()
+        Me.GroupBox8.ResumeLayout(False)
         Me.InstCreatePanel.ResumeLayout(False)
         Me.InstCreatePanel.PerformLayout()
         CType(Me.PictureBox32, System.ComponentModel.ISupportInitialize).EndInit()
@@ -4468,30 +4469,14 @@ Partial Class MainForm
         CType(Me.PictureBox35, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox31, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox30, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.InstrPanel.ResumeLayout(False)
-        Me.InstrPanel.PerformLayout()
         Me.Settings_FunctionalityPanel.ResumeLayout(False)
         Me.Settings_FunctionalityPanel.PerformLayout()
         Me.GroupBox12.ResumeLayout(False)
-        Me.GroupBox12.PerformLayout()
         Me.GroupBox4.ResumeLayout(False)
         Me.GroupBox4.PerformLayout()
         Me.GroupBox3.ResumeLayout(False)
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.TableLayoutPanel1.PerformLayout()
-        Me.InfoPanel.ResumeLayout(False)
-        Me.InfoPanel.PerformLayout()
-        CType(Me.BranchPic, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TabControl1.ResumeLayout(False)
-        Me.TabPage1.ResumeLayout(False)
-        Me.TabPage1.PerformLayout()
-        Me.TabPage2.ResumeLayout(False)
-        Me.TabPage2.PerformLayout()
-        Me.TabPage3.ResumeLayout(False)
-        Me.TabPage3.PerformLayout()
-        Me.TableLayoutPanel2.ResumeLayout(False)
-        CType(Me.ProgressRingPic, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox11, System.ComponentModel.ISupportInitialize).EndInit()
         Me.NotifyIconCMS.ResumeLayout(False)
         Me.AdditionalToolsCMS.ResumeLayout(False)
         Me.ResumeLayout(False)
@@ -4806,10 +4791,6 @@ Partial Class MainForm
     Friend WithEvents Label115 As System.Windows.Forms.Label
     Friend WithEvents WarningText As System.Windows.Forms.TextBox
     Friend WithEvents ErrorText As System.Windows.Forms.TextBox
-    Friend WithEvents TopLeftResizePanel As System.Windows.Forms.Panel
-    Friend WithEvents TopRightResizePanel As System.Windows.Forms.Panel
-    Friend WithEvents BottomLeftResizePanel As System.Windows.Forms.Panel
-    Friend WithEvents BottomRightResizePanel As System.Windows.Forms.Panel
     Friend WithEvents LinkLabel12 As System.Windows.Forms.LinkLabel
     Friend WithEvents Label72 As System.Windows.Forms.Label
     Friend WithEvents Label71 As System.Windows.Forms.Label
@@ -4838,5 +4819,7 @@ Partial Class MainForm
     Friend WithEvents TopNavbar_x86_Pic As System.Windows.Forms.PictureBox
     Friend WithEvents WebBrowser2 As System.Windows.Forms.WebBrowser
     Friend WithEvents PremiseLabel As System.Windows.Forms.Label
+    Friend WithEvents TabPage4 As System.Windows.Forms.TabPage
+    Friend WithEvents GPLText As System.Windows.Forms.TextBox
 
 End Class
