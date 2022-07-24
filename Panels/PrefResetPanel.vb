@@ -109,5 +109,6 @@ Public Class PrefResetPanel
                 Label3.Text = "Les paramètres ont été réinitialisés avec succès."
             End If
         End If
+        ProgressBar1.Value = 100
     End Sub
 End Class
