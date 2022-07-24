@@ -32,12 +32,20 @@ Public Class UpdateCheckPreLoadPanel
             ForeColor = Color.Black
             GroupBox1.ForeColor = Color.Black
             closeBox.Image = New Bitmap(My.Resources.closebox)
+            TextBox1.BackColor = BackColor
+            TextBox1.ForeColor = ForeColor
+            TextBox2.BackColor = BackColor
+            TextBox2.ForeColor = ForeColor
             RelNotesLink.LinkColor = Color.FromArgb(1, 92, 186)
         ElseIf MainForm.BackColor = Color.FromArgb(32, 32, 32) Then
             BackColor = Color.FromArgb(32, 32, 32)
             ForeColor = Color.White
             GroupBox1.ForeColor = Color.White
             closeBox.Image = New Bitmap(My.Resources.closebox_dark)
+            TextBox1.BackColor = BackColor
+            TextBox1.ForeColor = ForeColor
+            TextBox2.BackColor = BackColor
+            TextBox2.ForeColor = ForeColor
             RelNotesLink.LinkColor = Color.FromArgb(76, 194, 255)
         End If
         If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Or MainForm.ComboBox4.SelectedItem = "Anglais" Then
