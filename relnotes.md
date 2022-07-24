@@ -30,6 +30,32 @@ If updates are found:
 
 Congratulations, you have updated the program. If no updates are found, the program will continue startup.
 
+### 2.0.0100_220724
+---
+This version is also released on the `stable` branch. Go check it out!
+
+#### **Bugfixes**
+
+- On 7-Zip 22.01 and newer, fixed a bug that changed the custom installer label to nothing when `Use Windows 11 installer label` was checked
+- Fixed a bug that would not delete temporarily copied installers if REGTWEAK was selected as the installer creation method
+- Fixed final color consistency issues
+
+#### **New features**
+
+- Help documentation and instructions are now translated
+- The License is now included, and a License tab is added to the About screen
+- The `Use Windows 11 installer label` setting is now kept after program closure, and is set on program launch
+- The legacy dialogs (32-bit processor detection and installer issues) were renewed to make their designs and functionalities more consistent with the program
+- The files exported in the Installer History panel are now translated
+- The web browser now goes to a correctly translated download page
+- The `Clear installer history` option is now disabled when no items are present in the installer history
+- The method help has been updated
+
+#### **Removed/stripped down features**
+
+- **CODE**: the `IsPureEnglish` variable was removed. It was meant to be used to inform the user of English-only help documentation and instruction pages
+- The `SV2` (Hide the "System requirements not met" watermark) option is removed, because a good, working implementation was not found; and modern builds of Windows 11 do not seem to show the watermark by default anymore
+
 ### 2.0.0100_220717
 ---
 
