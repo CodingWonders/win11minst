@@ -102,9 +102,9 @@ Public Class ISOFileDownloadPanel
         End If
         Try
             If ModeSelectComboBox.SelectedItem = "Windows 11" Then
-                WebComponent.Navigate("https://www.microsoft.com/software-download/windows11")
+                WebComponent.Navigate("https://www.microsoft.com/" & MainForm.RegionalCode & "/software-download/windows11")
             ElseIf ModeSelectComboBox.SelectedItem = "Windows 10" Then
-                WebComponent.Navigate("https://www.microsoft.com/software-download/windows10")
+                WebComponent.Navigate("https://www.microsoft.com/" & MainForm.RegionalCode & "/software-download/windows10")
             End If
             WebComponentLoadPanel.Visible = False
             WebComponentPanel.Visible = True
@@ -118,9 +118,9 @@ Public Class ISOFileDownloadPanel
     Private Sub ModeSelectComboBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ModeSelectComboBox.SelectedIndexChanged
         Try
             If ModeSelectComboBox.SelectedItem = "Windows 11" Then
-                WebComponent.Navigate("https://www.microsoft.com/software-download/windows11")
+                WebComponent.Navigate("https://www.microsoft.com/" & MainForm.RegionalCode & "/software-download/windows11")
             ElseIf ModeSelectComboBox.SelectedItem = "Windows 10" Then
-                WebComponent.Navigate("https://www.microsoft.com/software-download/windows10")
+                WebComponent.Navigate("https://www.microsoft.com/" & MainForm.RegionalCode & "/software-download/windows10")
             End If
             WebComponentLoadPanel.Visible = False
             WebComponentPanel.Visible = True
