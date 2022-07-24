@@ -151,62 +151,235 @@ Public Class InstHistPanel
         If File.Exists(".\inst.html") Then
             File.Delete(".\inst.html")
         End If
-        My.Computer.FileSystem.WriteAllText(".\inst.html", _
-                                            "<html>" & CrLf & _
-                                            "<head>" & CrLf & _
-                                            "   <title>Windows 11 Manual Installer: installer history</title>" & CrLf & _
-                                            "   <style>" & CrLf & _
-                                            "       body {" & CrLf & _
-                                            "           background-color: rgb(249,249,249);" & CrLf & _
-                                            "       }" & CrLf & _
-                                            "   </style>" & CrLf & _
-                                            "   <style>" & CrLf & _
-                                            "       table {" & CrLf & _
-                                            "           font-family: arial, helvetica, sans-serif;" & CrLf & _
-                                            "           border-collapse: collapse;" & CrLf & _
-                                            "           width: 100%" & CrLf & _
-                                            "       }" & CrLf & _
-                                            CrLf & _
-                                            "       th {" & CrLf & _
-                                            "           border: 1px solid #ff000000;" & CrLf & _
-                                            "           text-align: center;" & CrLf & _
-                                            "           padding: 8px;" & CrLf & _
-                                            "       }" & CrLf & _
-                                            CrLf & _
-                                            "       td {" & CrLf & _
-                                            "           border: 1px solid #ff000000;" & CrLf & _
-                                            "           text-align: left;" & CrLf & _
-                                            "           padding: 8px;" & CrLf & _
-                                            "       }" & CrLf & _
-                                            "   </style>" & CrLf & _
-                                            "</head>" & CrLf & _
-                                            "<body>" & CrLf & _
-                                            "   <img src=" & Quote & "./Resources/HTMLHelp/Resources/helpbanner.gif" & Quote & " class=" & Quote & "center" & Quote & " />" & CrLf & _
-                                            "   <style>" & CrLf & _
-                                            "       .center {" & CrLf & _
-                                            "           display: block;" & CrLf & _
-                                            "           margin-left: auto;" & CrLf & _
-                                            "           margin-right: auto;" & CrLf & _
-                                            "       }" & CrLf & _
-                                            "   </style>" & CrLf & _
-                                            "   <h3 style=" & Quote & "font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: center" & Quote & ">Installer history</h3>" & CrLf & _
-                                            "   <p style=" & Quote & "font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: center" & Quote & ">Here you can see the installer full path and creation time</p>" & CrLf & _
-                                            "   <table style=" & Quote & "font-family: Arial, Helvetica, sans-serif;" & Quote & ">" & CrLf & _
-                                            "       <tr>" & CrLf & _
-                                            "           <th class=" & Quote & "auto-style1" & Quote & " style=" & Quote & "border-spacing: 1px; text-align: center; font-family: Arial, Helvetica, sans-serif; font-weight: bold;" & Quote & ">Installer name and path</th>" & CrLf & _
-                                            "           <th class=" & Quote & "auto-style2" & Quote & " style=" & Quote & "border-spacing: 1px; text-align: center; font-family: Arial, Helvetica, sans-serif; font-weight: bold;" & Quote & ">Creation time and date</th>" & CrLf & _
-                                            "       </tr>", True)
-        For Each LVI As ListViewItem In InstallerListView.Items
+        If MainForm.RegionalCode = "en-us" Then
             My.Computer.FileSystem.WriteAllText(".\inst.html", _
-                                    "       <tr>" & CrLf & _
-                                    "           <th class=" & Quote & "auto-style1" & Quote & " style=" & Quote & "border-spacing: 1px; text-align: left; font-family: Arial, Helvetica, sans-serif;" & Quote & ">" & LVI.Text & "</th>" & CrLf & _
-                                    "           <th class=" & Quote & "auto-style2" & Quote & " style=" & Quote & "border-spacing: 1px; text-align: left; font-family: Arial, Helvetica, sans-serif;" & Quote & ">" & LVI.SubItems(1).Text & "</th>" & CrLf & _
-                                    "       </tr>" & CrLf, True)
-        Next
-        My.Computer.FileSystem.WriteAllText(".\inst.html", _
-                                            "   </table>" & CrLf & _
-                                            "</body>" & CrLf & _
-                                            "</html>", True)
+                                                            "<html>" & CrLf & _
+                                                            "<head>" & CrLf & _
+                                                            "   <title>Windows 11 Manual Installer: installer history</title>" & CrLf & _
+                                                            "   <style>" & CrLf & _
+                                                            "       body {" & CrLf & _
+                                                            "           background-color: rgb(249,249,249);" & CrLf & _
+                                                            "       }" & CrLf & _
+                                                            "   </style>" & CrLf & _
+                                                            "   <style>" & CrLf & _
+                                                            "       table {" & CrLf & _
+                                                            "           font-family: arial, helvetica, sans-serif;" & CrLf & _
+                                                            "           border-collapse: collapse;" & CrLf & _
+                                                            "           width: 100%" & CrLf & _
+                                                            "       }" & CrLf & _
+                                                            CrLf & _
+                                                            "       th {" & CrLf & _
+                                                            "           border: 1px solid #ff000000;" & CrLf & _
+                                                            "           text-align: center;" & CrLf & _
+                                                            "           padding: 8px;" & CrLf & _
+                                                            "       }" & CrLf & _
+                                                            CrLf & _
+                                                            "       td {" & CrLf & _
+                                                            "           border: 1px solid #ff000000;" & CrLf & _
+                                                            "           text-align: left;" & CrLf & _
+                                                            "           padding: 8px;" & CrLf & _
+                                                            "       }" & CrLf & _
+                                                            "   </style>" & CrLf & _
+                                                            "</head>" & CrLf & _
+                                                            "<body>" & CrLf & _
+                                                            "   <img src=" & Quote & "./Resources/HTMLHelp/Resources/helpbanner.gif" & Quote & " class=" & Quote & "center" & Quote & " />" & CrLf & _
+                                                            "   <style>" & CrLf & _
+                                                            "       .center {" & CrLf & _
+                                                            "           display: block;" & CrLf & _
+                                                            "           margin-left: auto;" & CrLf & _
+                                                            "           margin-right: auto;" & CrLf & _
+                                                            "       }" & CrLf & _
+                                                            "   </style>" & CrLf & _
+                                                            "   <h3 style=" & Quote & "font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: center" & Quote & ">Installer history</h3>" & CrLf & _
+                                                            "   <p style=" & Quote & "font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: center" & Quote & ">Here you can see the installer full path and creation time</p>" & CrLf & _
+                                                            "   <table style=" & Quote & "font-family: Arial, Helvetica, sans-serif;" & Quote & ">" & CrLf & _
+                                                            "       <tr>" & CrLf & _
+                                                            "           <th class=" & Quote & "auto-style1" & Quote & " style=" & Quote & "border-spacing: 1px; text-align: center; font-family: Arial, Helvetica, sans-serif; font-weight: bold;" & Quote & ">Installer name and path</th>" & CrLf & _
+                                                            "           <th class=" & Quote & "auto-style2" & Quote & " style=" & Quote & "border-spacing: 1px; text-align: center; font-family: Arial, Helvetica, sans-serif; font-weight: bold;" & Quote & ">Creation time and date</th>" & CrLf & _
+                                                            "       </tr>", True)
+            For Each LVI As ListViewItem In InstallerListView.Items
+                My.Computer.FileSystem.WriteAllText(".\inst.html", _
+                                        "       <tr>" & CrLf & _
+                                        "           <th class=" & Quote & "auto-style1" & Quote & " style=" & Quote & "border-spacing: 1px; text-align: left; font-family: Arial, Helvetica, sans-serif;" & Quote & ">" & LVI.Text & "</th>" & CrLf & _
+                                        "           <th class=" & Quote & "auto-style2" & Quote & " style=" & Quote & "border-spacing: 1px; text-align: left; font-family: Arial, Helvetica, sans-serif;" & Quote & ">" & LVI.SubItems(1).Text & "</th>" & CrLf & _
+                                        "       </tr>" & CrLf, True)
+            Next
+            My.Computer.FileSystem.WriteAllText(".\inst.html", _
+                                                "   </table>" & CrLf & _
+                                                "</body>" & CrLf & _
+                                                "</html>", True)
+        ElseIf MainForm.RegionalCode = "es-es" Then
+            My.Computer.FileSystem.WriteAllText(".\inst.html", _
+                                                            "<html>" & CrLf & _
+                                                            "<head>" & CrLf & _
+                                                            "   <title>Instalador manual de Windows 11: historial de instaladores</title>" & CrLf & _
+                                                            "   <style>" & CrLf & _
+                                                            "       body {" & CrLf & _
+                                                            "           background-color: rgb(249,249,249);" & CrLf & _
+                                                            "       }" & CrLf & _
+                                                            "   </style>" & CrLf & _
+                                                            "   <style>" & CrLf & _
+                                                            "       table {" & CrLf & _
+                                                            "           font-family: arial, helvetica, sans-serif;" & CrLf & _
+                                                            "           border-collapse: collapse;" & CrLf & _
+                                                            "           width: 100%" & CrLf & _
+                                                            "       }" & CrLf & _
+                                                            CrLf & _
+                                                            "       th {" & CrLf & _
+                                                            "           border: 1px solid #ff000000;" & CrLf & _
+                                                            "           text-align: center;" & CrLf & _
+                                                            "           padding: 8px;" & CrLf & _
+                                                            "       }" & CrLf & _
+                                                            CrLf & _
+                                                            "       td {" & CrLf & _
+                                                            "           border: 1px solid #ff000000;" & CrLf & _
+                                                            "           text-align: left;" & CrLf & _
+                                                            "           padding: 8px;" & CrLf & _
+                                                            "       }" & CrLf & _
+                                                            "   </style>" & CrLf & _
+                                                            "</head>" & CrLf & _
+                                                            "<body>" & CrLf & _
+                                                            "   <img src=" & Quote & "./Resources/HTMLHelp/Resources/helpbanner.gif" & Quote & " class=" & Quote & "center" & Quote & " />" & CrLf & _
+                                                            "   <style>" & CrLf & _
+                                                            "       .center {" & CrLf & _
+                                                            "           display: block;" & CrLf & _
+                                                            "           margin-left: auto;" & CrLf & _
+                                                            "           margin-right: auto;" & CrLf & _
+                                                            "       }" & CrLf & _
+                                                            "   </style>" & CrLf & _
+                                                            "   <h3 style=" & Quote & "font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: center" & Quote & ">Historial de instaladores</h3>" & CrLf & _
+                                                            "   <p style=" & Quote & "font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: center" & Quote & ">Aquí puede ver la ruta completa y el tiempo de creación de los instaladores</p>" & CrLf & _
+                                                            "   <table style=" & Quote & "font-family: Arial, Helvetica, sans-serif;" & Quote & ">" & CrLf & _
+                                                            "       <tr>" & CrLf & _
+                                                            "           <th class=" & Quote & "auto-style1" & Quote & " style=" & Quote & "border-spacing: 1px; text-align: center; font-family: Arial, Helvetica, sans-serif; font-weight: bold;" & Quote & ">Nombre y ruta del instalador</th>" & CrLf & _
+                                                            "           <th class=" & Quote & "auto-style2" & Quote & " style=" & Quote & "border-spacing: 1px; text-align: center; font-family: Arial, Helvetica, sans-serif; font-weight: bold;" & Quote & ">Fecha y hora de creación</th>" & CrLf & _
+                                                            "       </tr>", True)
+            For Each LVI As ListViewItem In InstallerListView.Items
+                My.Computer.FileSystem.WriteAllText(".\inst.html", _
+                                        "       <tr>" & CrLf & _
+                                        "           <th class=" & Quote & "auto-style1" & Quote & " style=" & Quote & "border-spacing: 1px; text-align: left; font-family: Arial, Helvetica, sans-serif;" & Quote & ">" & LVI.Text & "</th>" & CrLf & _
+                                        "           <th class=" & Quote & "auto-style2" & Quote & " style=" & Quote & "border-spacing: 1px; text-align: left; font-family: Arial, Helvetica, sans-serif;" & Quote & ">" & LVI.SubItems(1).Text & "</th>" & CrLf & _
+                                        "       </tr>" & CrLf, True)
+            Next
+            My.Computer.FileSystem.WriteAllText(".\inst.html", _
+                                                "   </table>" & CrLf & _
+                                                "</body>" & CrLf & _
+                                                "</html>", True)
+        ElseIf MainForm.RegionalCode = "fr-fr" Then
+            My.Computer.FileSystem.WriteAllText(".\inst.html", _
+                                                            "<html>" & CrLf & _
+                                                            "<head>" & CrLf & _
+                                                            "   <title>Installateur manuel de Windows 11: historique de l'installateur</title>" & CrLf & _
+                                                            "   <style>" & CrLf & _
+                                                            "       body {" & CrLf & _
+                                                            "           background-color: rgb(249,249,249);" & CrLf & _
+                                                            "       }" & CrLf & _
+                                                            "   </style>" & CrLf & _
+                                                            "   <style>" & CrLf & _
+                                                            "       table {" & CrLf & _
+                                                            "           font-family: arial, helvetica, sans-serif;" & CrLf & _
+                                                            "           border-collapse: collapse;" & CrLf & _
+                                                            "           width: 100%" & CrLf & _
+                                                            "       }" & CrLf & _
+                                                            CrLf & _
+                                                            "       th {" & CrLf & _
+                                                            "           border: 1px solid #ff000000;" & CrLf & _
+                                                            "           text-align: center;" & CrLf & _
+                                                            "           padding: 8px;" & CrLf & _
+                                                            "       }" & CrLf & _
+                                                            CrLf & _
+                                                            "       td {" & CrLf & _
+                                                            "           border: 1px solid #ff000000;" & CrLf & _
+                                                            "           text-align: left;" & CrLf & _
+                                                            "           padding: 8px;" & CrLf & _
+                                                            "       }" & CrLf & _
+                                                            "   </style>" & CrLf & _
+                                                            "</head>" & CrLf & _
+                                                            "<body>" & CrLf & _
+                                                            "   <img src=" & Quote & "./Resources/HTMLHelp/Resources/helpbanner.gif" & Quote & " class=" & Quote & "center" & Quote & " />" & CrLf & _
+                                                            "   <style>" & CrLf & _
+                                                            "       .center {" & CrLf & _
+                                                            "           display: block;" & CrLf & _
+                                                            "           margin-left: auto;" & CrLf & _
+                                                            "           margin-right: auto;" & CrLf & _
+                                                            "       }" & CrLf & _
+                                                            "   </style>" & CrLf & _
+                                                            "   <h3 style=" & Quote & "font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: center" & Quote & ">Historique de l'installateur</h3>" & CrLf & _
+                                                            "   <p style=" & Quote & "font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: center" & Quote & ">Vous pouvez voir ici le chemin complet et l'heure de création des installateurs.</p>" & CrLf & _
+                                                            "   <table style=" & Quote & "font-family: Arial, Helvetica, sans-serif;" & Quote & ">" & CrLf & _
+                                                            "       <tr>" & CrLf & _
+                                                            "           <th class=" & Quote & "auto-style1" & Quote & " style=" & Quote & "border-spacing: 1px; text-align: center; font-family: Arial, Helvetica, sans-serif; font-weight: bold;" & Quote & ">Nom et chemin de l'installateur</th>" & CrLf & _
+                                                            "           <th class=" & Quote & "auto-style2" & Quote & " style=" & Quote & "border-spacing: 1px; text-align: center; font-family: Arial, Helvetica, sans-serif; font-weight: bold;" & Quote & ">Date et heure de création</th>" & CrLf & _
+                                                            "       </tr>", True)
+            For Each LVI As ListViewItem In InstallerListView.Items
+                My.Computer.FileSystem.WriteAllText(".\inst.html", _
+                                        "       <tr>" & CrLf & _
+                                        "           <th class=" & Quote & "auto-style1" & Quote & " style=" & Quote & "border-spacing: 1px; text-align: left; font-family: Arial, Helvetica, sans-serif;" & Quote & ">" & LVI.Text & "</th>" & CrLf & _
+                                        "           <th class=" & Quote & "auto-style2" & Quote & " style=" & Quote & "border-spacing: 1px; text-align: left; font-family: Arial, Helvetica, sans-serif;" & Quote & ">" & LVI.SubItems(1).Text & "</th>" & CrLf & _
+                                        "       </tr>" & CrLf, True)
+            Next
+            My.Computer.FileSystem.WriteAllText(".\inst.html", _
+                                                "   </table>" & CrLf & _
+                                                "</body>" & CrLf & _
+                                                "</html>", True)
+        Else
+            My.Computer.FileSystem.WriteAllText(".\inst.html", _
+                                                "<html>" & CrLf & _
+                                                "<head>" & CrLf & _
+                                                "   <title>Windows 11 Manual Installer: installer history</title>" & CrLf & _
+                                                "   <style>" & CrLf & _
+                                                "       body {" & CrLf & _
+                                                "           background-color: rgb(249,249,249);" & CrLf & _
+                                                "       }" & CrLf & _
+                                                "   </style>" & CrLf & _
+                                                "   <style>" & CrLf & _
+                                                "       table {" & CrLf & _
+                                                "           font-family: arial, helvetica, sans-serif;" & CrLf & _
+                                                "           border-collapse: collapse;" & CrLf & _
+                                                "           width: 100%" & CrLf & _
+                                                "       }" & CrLf & _
+                                                CrLf & _
+                                                "       th {" & CrLf & _
+                                                "           border: 1px solid #ff000000;" & CrLf & _
+                                                "           text-align: center;" & CrLf & _
+                                                "           padding: 8px;" & CrLf & _
+                                                "       }" & CrLf & _
+                                                CrLf & _
+                                                "       td {" & CrLf & _
+                                                "           border: 1px solid #ff000000;" & CrLf & _
+                                                "           text-align: left;" & CrLf & _
+                                                "           padding: 8px;" & CrLf & _
+                                                "       }" & CrLf & _
+                                                "   </style>" & CrLf & _
+                                                "</head>" & CrLf & _
+                                                "<body>" & CrLf & _
+                                                "   <img src=" & Quote & "./Resources/HTMLHelp/Resources/helpbanner.gif" & Quote & " class=" & Quote & "center" & Quote & " />" & CrLf & _
+                                                "   <style>" & CrLf & _
+                                                "       .center {" & CrLf & _
+                                                "           display: block;" & CrLf & _
+                                                "           margin-left: auto;" & CrLf & _
+                                                "           margin-right: auto;" & CrLf & _
+                                                "       }" & CrLf & _
+                                                "   </style>" & CrLf & _
+                                                "   <h3 style=" & Quote & "font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: center" & Quote & ">Installer history</h3>" & CrLf & _
+                                                "   <p style=" & Quote & "font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: center" & Quote & ">Here you can see the installer full path and creation time</p>" & CrLf & _
+                                                "   <table style=" & Quote & "font-family: Arial, Helvetica, sans-serif;" & Quote & ">" & CrLf & _
+                                                "       <tr>" & CrLf & _
+                                                "           <th class=" & Quote & "auto-style1" & Quote & " style=" & Quote & "border-spacing: 1px; text-align: center; font-family: Arial, Helvetica, sans-serif; font-weight: bold;" & Quote & ">Installer name and path</th>" & CrLf & _
+                                                "           <th class=" & Quote & "auto-style2" & Quote & " style=" & Quote & "border-spacing: 1px; text-align: center; font-family: Arial, Helvetica, sans-serif; font-weight: bold;" & Quote & ">Creation time and date</th>" & CrLf & _
+                                                "       </tr>", True)
+            For Each LVI As ListViewItem In InstallerListView.Items
+                My.Computer.FileSystem.WriteAllText(".\inst.html", _
+                                        "       <tr>" & CrLf & _
+                                        "           <th class=" & Quote & "auto-style1" & Quote & " style=" & Quote & "border-spacing: 1px; text-align: left; font-family: Arial, Helvetica, sans-serif;" & Quote & ">" & LVI.Text & "</th>" & CrLf & _
+                                        "           <th class=" & Quote & "auto-style2" & Quote & " style=" & Quote & "border-spacing: 1px; text-align: left; font-family: Arial, Helvetica, sans-serif;" & Quote & ">" & LVI.SubItems(1).Text & "</th>" & CrLf & _
+                                        "       </tr>" & CrLf, True)
+            Next
+            My.Computer.FileSystem.WriteAllText(".\inst.html", _
+                                                "   </table>" & CrLf & _
+                                                "</body>" & CrLf & _
+                                                "</html>", True)
+        End If
     End Sub
 
     Private Sub CSVExportOptn_Click(sender As Object, e As EventArgs) Handles CSVExportOptn.Click
@@ -214,7 +387,15 @@ Public Class InstHistPanel
     End Sub
 
     Sub GenCsv()
-        My.Computer.FileSystem.WriteAllText(".\inst.csv", "Installer name and path,Creation time and date" & CrLf, False)
+        If MainForm.RegionalCode = "en-us" Then
+            My.Computer.FileSystem.WriteAllText(".\inst.csv", "Installer name and path,Creation time and date" & CrLf, False)
+        ElseIf MainForm.RegionalCode = "es-es" Then
+            My.Computer.FileSystem.WriteAllText(".\inst.csv", "Nombre y ruta del instalador,Fecha y hora de creación" & CrLf, False)
+        ElseIf MainForm.RegionalCode = "fr-fr" Then
+            My.Computer.FileSystem.WriteAllText(".\inst.csv", "Nom et chemin de l'installateur,Date et heure de création" & CrLf, False)
+        Else
+            My.Computer.FileSystem.WriteAllText(".\inst.csv", "Installer name and path,Creation time and date" & CrLf, False)
+        End If
         For Each LVI As ListViewItem In InstallerListView.Items
             My.Computer.FileSystem.WriteAllText(".\inst.csv", LVI.Text & "," & LVI.SubItems(1).Text, True)
         Next
