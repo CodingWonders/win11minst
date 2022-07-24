@@ -200,6 +200,12 @@
     <Compile Include="Panels\ExceptionPrevention\FileNotFoundPanel.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Panels\InstallerIssuesPanel.Designer.vb">
+      <DependentUpon>InstallerIssuesPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\InstallerIssuesPanel.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Panels\InstCreateAbortPanel.Designer.vb">
       <DependentUpon>InstCreateAbortPanel.vb</DependentUpon>
     </Compile>
@@ -278,6 +284,12 @@
     <Compile Include="Panels\UpdateChoicePanel.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Panels\x86_ProcessorPanel.Designer.vb">
+      <DependentUpon>x86_ProcessorPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\x86_ProcessorPanel.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="SettingLoadForm.Designer.vb">
       <DependentUpon>SettingLoadForm.vb</DependentUpon>
     </Compile>
@@ -351,6 +363,9 @@
       <DependentUpon>FileNotFoundPanel.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Panels\InstallerIssuesPanel.resx">
+      <DependentUpon>InstallerIssuesPanel.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Panels\InstCreateAbortPanel.resx">
       <DependentUpon>InstCreateAbortPanel.vb</DependentUpon>
       <SubType>Designer</SubType>
@@ -395,6 +410,9 @@
     <EmbeddedResource Include="Panels\UpdateChoicePanel.resx">
       <DependentUpon>UpdateChoicePanel.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Panels\x86_ProcessorPanel.resx">
+      <DependentUpon>x86_ProcessorPanel.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SettingLoadForm.resx">
       <DependentUpon>SettingLoadForm.vb</DependentUpon>
     </EmbeddedResource>
@@ -407,9 +425,16 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\instissues.png" />
+    <None Include="Resources\x86_processor.png" />
+    <None Include="Resources\invalidtext_dark.png" />
+    <None Include="Resources\invalidtext_light.png" />
     <None Include="InstName.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="LICENSE">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="My Project\app.manifest" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
@@ -449,10 +474,34 @@
     <Content Include="Resources\HTMLHelp\HelpPage_DM.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\HTMLHelp\HelpPage_ESN.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\HelpPage_ESN_DM.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\HelpPage_FRA.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\HelpPage_FRA_DM.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\HTMLHelp\InstrPage.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\HTMLHelp\InstrPage_DM.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\InstrPage_ESN.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\InstrPage_ESN_DM.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\InstrPage_FRA.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\InstrPage_FRA_DM.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\HTMLHelp\Resources\dm\docs\win11minst-advoptn-dm.png">
@@ -656,7 +705,6 @@
     <None Include="Resources\win11.wav" />
     <None Include="Resources\logo.png" />
     <None Include="Resources\miniMode_TBRes.png" />
-    <None Include="Resources\checkBoxTBSwitch.png" />
     <None Include="Resources\pref_reset_dark.png" />
     <None Include="Resources\pref_reset.png" />
     <None Include="Resources\log_del_dark.png" />
@@ -756,7 +804,9 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="bin\Debug\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
