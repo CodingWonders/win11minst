@@ -163,16 +163,6 @@ Namespace My.Resources
         '''<summary>
         '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         '''</summary>
-        Friend ReadOnly Property checkBoxTBSwitch() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("checkBoxTBSwitch", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
-        '''</summary>
         Friend ReadOnly Property closebox() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("closebox", resourceCulture)
@@ -683,6 +673,16 @@ Namespace My.Resources
         '''<summary>
         '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         '''</summary>
+        Friend ReadOnly Property instissues() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("instissues", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        '''</summary>
         Friend ReadOnly Property instructions() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("instructions", resourceCulture)
@@ -716,6 +716,26 @@ Namespace My.Resources
         Friend ReadOnly Property instructions_filled() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("instructions_filled", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property invalidtext_dark() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("invalidtext_dark", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property invalidtext_light() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("invalidtext_light", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -1865,6 +1885,16 @@ Namespace My.Resources
         Friend ReadOnly Property x86_light() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("x86_light", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property x86_processor() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("x86_processor", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

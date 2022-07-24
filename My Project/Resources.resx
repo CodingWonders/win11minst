@@ -322,9 +322,6 @@
   <data name="pref_reset_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pref_reset_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="checkBoxTBSwitch" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\checkBoxTBSwitch.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="miniMode_TBRes" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\miniMode_TBRes.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -663,5 +660,17 @@
   </data>
   <data name="csvfile_cms" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\csvfile_cms.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="invalidtext_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\invalidtext_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="invalidtext_light" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\invalidtext_light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="x86_processor" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\x86_processor.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="instissues" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\instissues.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
