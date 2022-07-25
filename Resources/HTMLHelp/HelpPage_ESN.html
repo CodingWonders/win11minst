@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Instalador manual de Windows 11</title>
+    <style>
+        body {
+            background-color: rgb(249,249,249);
+        }
+    </style>
+</head>
+<body>
+    <img src="Resources/helpbanner.gif" class="center"/>
+    <style>
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .auto-style1 {
+            width: 438px;
+        }
+        .auto-style2 {
+            text-decoration: underline;
+        }
+        .auto-style3 {
+            width: 410px;
+        }
+        .link_light {
+            color: rgb(1,92,186);
+        }
+    </style>
+    <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: center">Documentación de ayuda</h3>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left:40px">
+        Edición de documentación de ayuda: 2022/07/24 (v2.0.0100)</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left:40px">
+        Versión 2.0.0100</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left:40px; font-style:italic">
+        Este software utiliza 7-Zip. Copyright &copy; Igor Pavlov. Este software utiliza OSCDIMG. Copyright &copy; 1993, 2012 Microsoft Corporation. Este software utiliza DISM. Copyright &copy; Microsoft Corporation. Cada componente está protegido por sus términos de licencia.</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left:40px">
+        Esta documentación le ayudará a comenzar con el Instalador manual de Windows 11</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left:40px">
+        &nbsp;</p>
+    <h2 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left:40px">
+        La interfaz principal</h2>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left:40px">
+        La interfaz principal recibió un lavado de cara en la versión 2.0. Cuando el programa se inicia, será bienvenido por el menú principal, que ahora muestra el nombre y el modelo del equipo, el tiempo de creación del último instalador, el historial de instaladores, y la posibilidad de continuar la creación del instalador.</p>
+    <img src="Resources/docs/win11minst-mainscr.png" style="height: 480px; width: 1015px;" class="center"/>
+    <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left:40px">
+        El panel lateral</h3>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left:40px">
+        Para navegar por las opciones (referidas como &quot;Paneles), las imágenes del panel lateral deben ser utilizadas. En la imagen mostrada arriba, puede ver una descripción de cada imagen. También puede poner el cursor sobre ellas para ver una descripción, tal y como se muestra abajo:</p>
+    <img src="Resources/docs/win11minst-sidepanelhover.png" style="height: 420px; width: 161px" class="center" />
+    <h2 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left:40px">
+        Crear un instalador modificado</h2>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left:40px">
+        La creación del instalador es la premisa del programa (y la primera opción que verá en el menú principal). También ha tenido un lavado de cara desde la versión 1.0. En esta pantalla, debe especificar una imagen ISO de Windows 11 y otra de Windows 10. Después, debe especificar el nombre y la ruta del instalador de destino.</p>
+    <img src="Resources/docs/win11minst-instcreate.png" style="height: 480px; width: 813px" class="center" />
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left:40px">
+        La versión 2.0 le permite escanear un directorio por archivos ISO, y también le permite descargar imágenes de instalación de Windows de la página web de Microsoft 
+        (y también compilarlas mediante archivos descargados de UUP Dump (uupdump.net), si los privilegios administrativos están presentes)</p>
+    <table style="width:auto" class="center">
+        <tr>
+            <td class="auto-style1">
+                <img src="Resources/docs/win11minst-isofilescan.png" style="height: 240px; width: 407px" class="center" /></td>
+            <td>
+                <img src="Resources/docs/win11minst-isofiledown.png" style="height: 240px; width: 417px" class="center"/></td>
+            <td>
+                <img src="Resources/docs/win11minst-isofilebuild.png" style="height: 240px; width: 417px" class="center" />
+            </td>
+        </tr>
+    </table>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        Haciendo clic en &quot;Más opciones...&quot; irá a las opciones de funcionalidad, las cuales son mencionadas más adelante en la documentación. Después de especificar los instaladores de origen y las opciones del instalador de destino, haga clic en &quot;Crear&quot;. El programa le hará confirmar sus opciones.</p>
+    <img src="Resources/docs/win11minst-settingreview.png" style="height: 480px; width: 813px" class="center" />
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        Si confirma, la creación del instalador comenzará. En la versión 2.0, la pantalla del proceso de creación del instalador ya no está en una ventana separada, y ahora está en la ventana principal; pero el proceso es el mismo.</p>
+    <img src="Resources/docs/win11minst-instcreateproc.png" style="height: 480px; width: 813px" class="center" />
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        Uno de los cambios en la versión 2.0 es la posibilidad de mostrar u ocultar el registro de creación del instalador, y el programa ya no se congela cuando se esté creando el instalador. También mostrará información más detallada al acabar.</p>
+    <img src="Resources/docs/win11minst-instfinish.png" style="height: 480px; width: 813px" class="center" />
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        Ahora hay un acceso directo para abrir el archivo de registro, y puede salir del programa haciendo clic en &quot;Aceptar&quot;</p>
+    <h2 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        Configuración</h2>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        El programa cumple con la filosofía: &quot;Simple por defecto, pero potente cuando se necesita&quot;, permitiéndole configurarlo de la manera que quiere. A diferencia de la versión 1.0, las configuraciones en esta versión están en secciones diferentes.</p>
+    <img src="Resources/docs/win11minst-settings.png" style="height: 480px; width: 813px" class="center" />
+    <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        Personalización</h3>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        Las opciones de personalización consisten en:</p>
+    <ul style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">
+        <li>Idioma, con soporte añadido para francés</li>
+        <li>Modo de color, con la inclusión de &quot;Automático&quot; (solo Windows 10 y 11)</li>
+        <li>Posición de la barra de navegación (panel lateral)</li>
+        <li>Escala DPI</li>
+    </ul>
+    <table style="width:auto" class="center">
+        <tr>
+            <td class="auto-style3">
+                <img src="Resources/docs/win11minst-lightmode.png" style="height: 240px; width: 411px" class="center" /></td>
+            <td>
+                <img src="Resources/docs/win11minst-darkmode.png" style="height: 240px; width: 411px" class="center" /></td>
+            <td>
+                <img src="Resources/docs/win11minst-topnavbar.png" style="height: 240px; width: 349px" class="center" />
+            </td>
+        </tr>
+    </table>
+    <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        Funcionalidad</h3>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        Las opciones de funcionalidad consisten en:</p>
+    <ul style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">
+        <li>Método de creación del instalador</li>
+        <li>Etiqueta del instalador</li>
+        <li>Compatibilidad de plataformas</li>
+        <li>Comportamiento en la bandeja del sistema</li>
+    </ul>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        También puede acceder a estas opciones haciendo clic en &quot;Más opciones...&quot; en la pantalla de creación del instalador</p>
+    <img src="Resources/docs/win11minst-functionality.png" style="height: 480px; width: 813px" class="center"/>
+    <h2 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        Instrucciones</h2>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        Esta pantalla muestra instrucciones para crear un instalador modificado de Windows 11 por sí mismo, intentando ser lo más útil posible.</p>
+    <h2 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        Ayuda</h2>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        Esta pantalla muestra la documentación de ayuda (lo que está leyendo ahora)</p>
+    <img src="Resources/docs/win11minst-help.png" style="height: 480px; width: 813px" class="center" />
+    <h2 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        Acerca de</h2>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        Muestra la información del programa, como las versiones de producto y ensamblado, los créditos, las versiones de los componentes, y dónde puede ser encontrado el código fuente</p>
+    <img src="Resources/docs/win11minst-info.png" style="height: 480px; width: 813px" class="center" />
+    <h2 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        Paneles externos</h2>
+    <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        Opciones avanzadas (solo REGTWEAK)</h3>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        El panel de opciones avanzadas le permite establecer opciones adicionales para el método de creación REGTWEAK. Puede ser útil si desea omitir el inicio de sesión forzado con una cuenta Microsoft en Windows 11 Pro, pero esto es opcional, y SOLO es visible si el programa cuenta con privilegios de administrador.</p>
+    <img src="Resources/docs/win11minst-advoptn.png" class="center" />
+    <h2 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        Historial de instaladores</h2>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        El historial de instaladores le permite ver sus instaladores creados recientemente, al igual que exportarlos a un archivo XML, HTML o CSV.</p>
+    <img src="Resources/docs/win11minst-insthist.png" class="center" />
+    <h2 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        Descargas de imágenes</h2>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+        La versión 2.0 le permite descargar archivos de Windows 11 y Windows 10 desde la página web de Microsoft. Si están presentes los privilegios de administrador, el programa también le deja compilar las imágenes con archivos descargados desde UUP Dump (<a href="https://uupdump.net" target="_blank" class="link_light">uupdump.net</a>)</p>
+    <img src="Resources/docs/win11minst-isofiledown.png" class="center" />
+    </body>
+</html>

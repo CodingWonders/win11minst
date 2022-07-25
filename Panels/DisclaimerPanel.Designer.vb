@@ -44,7 +44,7 @@ Partial Class DisclaimerPanel
         '
         'OK_Button
         '
-        Me.OK_Button.BackColor = System.Drawing.Color.DodgerBlue
+        Me.OK_Button.BackColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(92, Byte), Integer), CType(CType(186, Byte), Integer))
         Me.OK_Button.FlatAppearance.BorderColor = System.Drawing.Color.DeepSkyBlue
         Me.OK_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.OK_Button.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -85,6 +85,7 @@ Partial Class DisclaimerPanel
         Me.TextBox1.Multiline = True
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.ReadOnly = True
+        Me.TextBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.TextBox1.Size = New System.Drawing.Size(654, 264)
         Me.TextBox1.TabIndex = 2
         Me.TextBox1.Text = resources.GetString("TextBox1.Text")
@@ -100,6 +101,7 @@ Partial Class DisclaimerPanel
         Me.Controls.Add(Me.Panel1)
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "DisclaimerPanel"

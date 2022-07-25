@@ -14,6 +14,34 @@ Public Class InstProjectReuseDialog
             BackColor = Color.FromArgb(32, 32, 32)
             ForeColor = Color.White
         End If
+        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then
+            Label1.Text = "Reuse source installer files?"
+            Label2.Text = "The Windows 11 Manual Installer has detected that some installer files were going to be used to create a custom installer. The program has remembered these files if you want to use them now."
+            Label3.Text = "Do you want to continue where you left off, or do you want to start from scratch?"
+            Button1.Text = "Reuse installer files"
+            Button2.Text = "Continue without reusing"
+        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Then
+            Label1.Text = "¿Reutilizar archivos de instaladores de origen?"
+            Label2.Text = "El Instalador manual de Windows 11 ha detectado que algunos archivos de instaladores iban a ser utilizados para crear un instalador modificado. El programa los ha recordado si los quiere usar ahora."
+            Label3.Text = "¿Desea continuar desde donde lo dejó, o prefiere empezar de cero?"
+            Button1.Text = "Reutilizar archivos de instaladores"
+            Button2.Text = "Continuar sin reutilizar"
+        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                Label1.Text = "Reuse source installer files?"
+                Label2.Text = "The Windows 11 Manual Installer has detected that some installer files were going to be used to create a custom installer. The program has remembered these files if you want to use them now."
+                Label3.Text = "Do you want to continue where you left off, or do you want to start from scratch?"
+                Button1.Text = "Reuse installer files"
+                Button2.Text = "Continue without reusing"
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                Label1.Text = "¿Reutilizar archivos de instaladores de origen?"
+                Label2.Text = "El Instalador manual de Windows 11 ha detectado que algunos archivos de instaladores iban a ser utilizados para crear un instalador modificado. El programa los ha recordado si los quiere usar ahora."
+                Label3.Text = "¿Desea continuar desde donde lo dejó, o prefiere empezar de cero?"
+                Button1.Text = "Reutilizar archivos de instaladores"
+                Button2.Text = "Continuar sin reutilizar"
+            End If
+        End If
+        Text = Label1.Text
     End Sub
 
 

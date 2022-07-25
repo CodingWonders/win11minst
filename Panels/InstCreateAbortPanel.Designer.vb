@@ -22,6 +22,7 @@ Partial Class InstCreateAbortPanel
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(InstCreateAbortPanel))
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Yes_Button = New System.Windows.Forms.Button()
         Me.No_Button = New System.Windows.Forms.Button()
@@ -56,7 +57,7 @@ Partial Class InstCreateAbortPanel
         'No_Button
         '
         Me.No_Button.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.No_Button.BackColor = System.Drawing.Color.DodgerBlue
+        Me.No_Button.BackColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(92, Byte), Integer), CType(CType(186, Byte), Integer))
         Me.No_Button.FlatAppearance.BorderColor = System.Drawing.Color.DeepSkyBlue
         Me.No_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.No_Button.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -80,11 +81,10 @@ Partial Class InstCreateAbortPanel
         '
         'Label2
         '
-        Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(65, 81)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(788, 20)
+        Me.Label2.Size = New System.Drawing.Size(788, 89)
         Me.Label2.TabIndex = 6
         Me.Label2.Text = "Are you sure you want to cancel the installer creation process? This will delete " & _
     "any file modifications done at this time."
@@ -100,6 +100,7 @@ Partial Class InstCreateAbortPanel
         Me.Controls.Add(Me.Panel1)
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "InstCreateAbortPanel"

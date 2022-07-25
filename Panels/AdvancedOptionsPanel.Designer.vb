@@ -22,15 +22,13 @@ Partial Class AdvancedOptionsPanel
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(AdvancedOptionsPanel))
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.OK_Button = New System.Windows.Forms.Button()
         Me.Cancel_Button = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.CheckBox2 = New System.Windows.Forms.CheckBox()
-        Me.Label4 = New System.Windows.Forms.Label()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -48,7 +46,7 @@ Partial Class AdvancedOptionsPanel
         'OK_Button
         '
         Me.OK_Button.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.OK_Button.BackColor = System.Drawing.Color.DodgerBlue
+        Me.OK_Button.BackColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(92, Byte), Integer), CType(CType(186, Byte), Integer))
         Me.OK_Button.FlatAppearance.BorderColor = System.Drawing.Color.DeepSkyBlue
         Me.OK_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.OK_Button.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -86,7 +84,7 @@ Partial Class AdvancedOptionsPanel
         '
         Me.CheckBox1.AutoSize = True
         Me.CheckBox1.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CheckBox1.Location = New System.Drawing.Point(81, 96)
+        Me.CheckBox1.Location = New System.Drawing.Point(37, 96)
         Me.CheckBox1.Name = "CheckBox1"
         Me.CheckBox1.Size = New System.Drawing.Size(559, 24)
         Me.CheckBox1.TabIndex = 5
@@ -95,44 +93,13 @@ Partial Class AdvancedOptionsPanel
         '
         'Label2
         '
-        Me.Label2.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(98, 123)
+        Me.Label2.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Location = New System.Drawing.Point(54, 123)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(542, 76)
+        Me.Label2.Size = New System.Drawing.Size(629, 76)
         Me.Label2.TabIndex = 6
         Me.Label2.Text = "Bypasses Microsoft Account sign-in and forced Internet connection setup on Window" & _
     "s 11 Pro (Nickel builds 22557 onwards)"
-        '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(98, 163)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(398, 20)
-        Me.Label3.TabIndex = 6
-        Me.Label3.Text = "Note: the program must be run with administrative privileges"
-        '
-        'CheckBox2
-        '
-        Me.CheckBox2.AutoSize = True
-        Me.CheckBox2.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CheckBox2.Location = New System.Drawing.Point(81, 202)
-        Me.CheckBox2.Name = "CheckBox2"
-        Me.CheckBox2.Size = New System.Drawing.Size(408, 24)
-        Me.CheckBox2.TabIndex = 5
-        Me.CheckBox2.Text = "Hide ""System requirements not met"" watermark (22557+)"
-        Me.CheckBox2.UseVisualStyleBackColor = True
-        '
-        'Label4
-        '
-        Me.Label4.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(97, 229)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(542, 76)
-        Me.Label4.TabIndex = 6
-        Me.Label4.Text = "Hides the ""System requirements not met"" watermark on Nickel builds 22557 onwards " & _
-    "and Windows Server ""Copper"" builds 25057 onwards"
         '
         'AdvancedOptionsPanel
         '
@@ -140,15 +107,13 @@ Partial Class AdvancedOptionsPanel
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(720, 480)
-        Me.Controls.Add(Me.Label3)
-        Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.Label2)
-        Me.Controls.Add(Me.CheckBox2)
         Me.Controls.Add(Me.CheckBox1)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.Panel1)
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "AdvancedOptionsPanel"
@@ -166,8 +131,5 @@ Partial Class AdvancedOptionsPanel
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents CheckBox1 As System.Windows.Forms.CheckBox
     Friend WithEvents Label2 As System.Windows.Forms.Label
-    Friend WithEvents Label3 As System.Windows.Forms.Label
-    Friend WithEvents CheckBox2 As System.Windows.Forms.CheckBox
-    Friend WithEvents Label4 As System.Windows.Forms.Label
 
 End Class

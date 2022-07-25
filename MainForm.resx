@@ -193,15 +193,6 @@
         ADLSKiLp+735AAAAAElFTkSuQmCC
 </value>
   </data>
-  <metadata name="LineShape1.Bounds" type="System.Drawing.Rectangle, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>12, 482, 24, 0</value>
-  </metadata>
-  <metadata name="LineShape1.Location" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>12, 482</value>
-  </metadata>
-  <metadata name="LineShape1.Size" type="System.Drawing.Size, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>24, 0</value>
-  </metadata>
   <data name="Panel_Border_Pic.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAABgmlDQ1BJQ0MgcHJvZmlsZQAAKM+VkUso
@@ -215,6 +206,35 @@
         U22PSQoAIQwE/f9HVVTigmJOPbQHB8VDQ6Aqm2mt4U7OGSkleO9xCKUUOOcQY0StFb33XxARWGtXrao7
         S2An4ZzzgFvg2LtzCzyIO1+QMSGEddALMoavjDGeUFXxAcyr9vFekLgMAAAAAElFTkSuQmCC
 </value>
+  </data>
+  <data name="PremiseLabel.Text" xml:space="preserve">
+    <value>The Windows 11 Manual Installer is a tool designed to automate the creation of a custom installer for unsupported 64-bit systems.
+This tool also attempts  to be as green as possible, trying to prevent e-waste produced by Windows 11's system requirements.
+This tool should not be depicted as an official Windows installation program and will not install/upgrade Windows on your system.</value>
+  </data>
+  <data name="scText.Text" xml:space="preserve">
+    <value>The source code of this program can be found on GitHub.
+
+- This project can be opened on Visual Studio 2012 and newer, without the need of conversion
+- The .NET Framework 4.8 Developer Pack must be installed to open this project
+
+Do you want to suggest a new feature to be included in a future version? Have you experienced a bug you want to report? Don't hesitate on reporting feedback or (even better) contributing (you'll need a GitHub account). Your feedback is critical.
+
+Do you want to enjoy the latest features? Check the Hummingbird branch! Weekly updates, new features and a sneak peek of the program's future</value>
+  </data>
+  <data name="GPLText.Text" xml:space="preserve">
+    <value>This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.</value>
   </data>
   <data name="PictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -270,17 +290,11 @@
         AwAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="Label21.Text" xml:space="preserve">
-    <value>WIMR: WIM-Replace - replaces "install.wim" of the Windows 10 installer with Windows 11' s
-DLLR: DLL-Replace - replaces "appraiser.dll" and "appraiserres.dll" from the Windows 11 installer with Windows 10' s
-REGTWEAK - makes registry tweaks to the Windows 11 installer. There is no need for a Windows 10 installer
-Do note that REGTWEAK is available under administrative privileges</value>
-  </data>
   <metadata name="Notify.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
+    <value>269, 17</value>
   </metadata>
   <metadata name="NotifyIconCMS.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>102, 17</value>
+    <value>354, 17</value>
   </metadata>
   <data name="Notify.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -293,22 +307,37 @@ Do note that REGTWEAK is available under administrative privileges</value>
 </value>
   </data>
   <metadata name="Win11FileSpecDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>236, 17</value>
+    <value>488, 17</value>
   </metadata>
   <metadata name="Win10FileSpecDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>402, 17</value>
+    <value>654, 17</value>
   </metadata>
   <metadata name="ImageFolderBrowser.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>568, 17</value>
+    <value>820, 17</value>
   </metadata>
   <metadata name="ConglomerateToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>179, 56</value>
+    <value>1145, 17</value>
   </metadata>
   <metadata name="AdditionalToolsCMS.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>983, 17</value>
+  </metadata>
+  <metadata name="FileCopyBW.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="ExtractionBW.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 56</value>
   </metadata>
+  <metadata name="InstCreationBW.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>141, 56</value>
+  </metadata>
+  <metadata name="OSCDIMGBW.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>277, 56</value>
+  </metadata>
+  <metadata name="FileDeletionBW.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>134, 17</value>
+  </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>111</value>
+    <value>103</value>
   </metadata>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

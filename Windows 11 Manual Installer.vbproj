@@ -6,12 +6,14 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{401F6B7C-D704-433F-9C02-AA4D89E983CE}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>Windows_11_Manual_Installer_2._0.My.MyApplication</StartupObject>
-    <RootNamespace>Windows_11_Manual_Installer_2._0</RootNamespace>
+    <StartupObject>Windows_11_Manual_Installer.My.MyApplication</StartupObject>
+    <RootNamespace>Windows_11_Manual_Installer</RootNamespace>
     <AssemblyName>win11minst</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
     <PublishUrl>publicar\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -24,7 +26,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -37,6 +38,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile>win11minst.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -66,11 +68,18 @@
   <PropertyGroup>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+    <Reference Include="System">
       <Private>True</Private>
     </Reference>
-    <Reference Include="System">
+    <Reference Include="System.Data">
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Drawing">
@@ -91,7 +100,6 @@
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
-    <Import Include="Microsoft.VisualBasic.PowerPacks" />
     <Import Include="System" />
     <Import Include="System.Collections" />
     <Import Include="System.Collections.Generic" />
@@ -103,6 +111,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationEvents.vb" />
     <Compile Include="Dialogs\InstProjectReuseDialog.Designer.vb">
       <DependentUpon>InstProjectReuseDialog.vb</DependentUpon>
     </Compile>
@@ -113,6 +122,12 @@
       <DependentUpon>MiniModeDialog.vb</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\MiniModeDialog.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImageFileListDialog.Designer.vb">
+      <DependentUpon>ImageFileListDialog.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ImageFileListDialog.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.vb">
@@ -185,6 +200,12 @@
     <Compile Include="Panels\ExceptionPrevention\FileNotFoundPanel.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Panels\InstallerIssuesPanel.Designer.vb">
+      <DependentUpon>InstallerIssuesPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\InstallerIssuesPanel.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Panels\InstCreateAbortPanel.Designer.vb">
       <DependentUpon>InstCreateAbortPanel.vb</DependentUpon>
     </Compile>
@@ -195,6 +216,12 @@
       <DependentUpon>InstHistPanel.vb</DependentUpon>
     </Compile>
     <Compile Include="Panels\InstHistPanel.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Panels\ISOFileDownloadPanel.Designer.vb">
+      <DependentUpon>ISOFileDownloadPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\ISOFileDownloadPanel.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Panels\ISOFileScanPanel.Designer.vb">
@@ -221,6 +248,24 @@
     <Compile Include="Dialogs\MissingComponentsDialog.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Panels\LowSpacePanel.Designer.vb">
+      <DependentUpon>LowSpacePanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\LowSpacePanel.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Panels\MethodHelpPanel.Designer.vb">
+      <DependentUpon>MethodHelpPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\MethodHelpPanel.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Panels\NonExistentTargetDirPanel.Designer.vb">
+      <DependentUpon>NonExistentTargetDirPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\NonExistentTargetDirPanel.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Panels\PrefResetPanel.Designer.vb">
       <DependentUpon>PrefResetPanel.vb</DependentUpon>
     </Compile>
@@ -239,6 +284,12 @@
     <Compile Include="Panels\UpdateChoicePanel.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Panels\x86_ProcessorPanel.Designer.vb">
+      <DependentUpon>x86_ProcessorPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\x86_ProcessorPanel.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="SettingLoadForm.Designer.vb">
       <DependentUpon>SettingLoadForm.vb</DependentUpon>
     </Compile>
@@ -250,6 +301,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>progset.settings</DependentUpon>
     </Compile>
+    <Compile Include="UserAgentChanger.vb" />
     <Compile Include="VersionDetection\VersionDetector.Designer.vb">
       <DependentUpon>VersionDetector.vb</DependentUpon>
     </Compile>
@@ -270,6 +322,9 @@
     <EmbeddedResource Include="Dialogs\MiniModeDialog.resx">
       <DependentUpon>MiniModeDialog.vb</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImageFileListDialog.resx">
+      <DependentUpon>ImageFileListDialog.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.vb</DependentUpon>
@@ -308,6 +363,9 @@
       <DependentUpon>FileNotFoundPanel.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Panels\InstallerIssuesPanel.resx">
+      <DependentUpon>InstallerIssuesPanel.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Panels\InstCreateAbortPanel.resx">
       <DependentUpon>InstCreateAbortPanel.vb</DependentUpon>
       <SubType>Designer</SubType>
@@ -315,6 +373,9 @@
     <EmbeddedResource Include="Panels\InstHistPanel.resx">
       <DependentUpon>InstHistPanel.vb</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\ISOFileDownloadPanel.resx">
+      <DependentUpon>ISOFileDownloadPanel.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Panels\ISOFileScanPanel.resx">
       <DependentUpon>ISOFileScanPanel.vb</DependentUpon>
@@ -331,6 +392,15 @@
     <EmbeddedResource Include="Dialogs\MissingComponentsDialog.resx">
       <DependentUpon>MissingComponentsDialog.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Panels\LowSpacePanel.resx">
+      <DependentUpon>LowSpacePanel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\MethodHelpPanel.resx">
+      <DependentUpon>MethodHelpPanel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\NonExistentTargetDirPanel.resx">
+      <DependentUpon>NonExistentTargetDirPanel.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Panels\PrefResetPanel.resx">
       <DependentUpon>PrefResetPanel.vb</DependentUpon>
     </EmbeddedResource>
@@ -339,6 +409,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Panels\UpdateChoicePanel.resx">
       <DependentUpon>UpdateChoicePanel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\x86_ProcessorPanel.resx">
+      <DependentUpon>x86_ProcessorPanel.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SettingLoadForm.resx">
       <DependentUpon>SettingLoadForm.vb</DependentUpon>
@@ -352,9 +425,16 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\instissues.png" />
+    <None Include="Resources\x86_processor.png" />
+    <None Include="Resources\invalidtext_dark.png" />
+    <None Include="Resources\invalidtext_light.png" />
     <None Include="InstName.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="LICENSE">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="My Project\app.manifest" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
@@ -367,6 +447,9 @@
     </None>
     <None Include="App.config" />
     <None Include="prog_bin\regtweak.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\HTMLHelp\Resources\helpbanner.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="settings.ini">
@@ -386,6 +469,189 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon3.ico" />
+    <None Include="Resources\htmlfile_cms.png" />
+    <None Include="Resources\csvfile_cms.png" />
+    <Content Include="Resources\HTMLHelp\HelpPage_DM.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\HelpPage_ESN.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\HelpPage_ESN_DM.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\HelpPage_FRA.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\HelpPage_FRA_DM.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\InstrPage.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\InstrPage_DM.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\InstrPage_ESN.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\InstrPage_ESN_DM.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\InstrPage_FRA.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\InstrPage_FRA_DM.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\dm\docs\win11minst-advoptn-dm.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\dm\docs\win11minst-functionality-dm.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\dm\docs\win11minst-help-dm.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\dm\docs\win11minst-info-dm.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\dm\docs\win11minst-instcreate-dm.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\dm\docs\win11minst-instcreateproc-dm.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\dm\docs\win11minst-instfinish-dm.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\dm\docs\win11minst-insthist-dm.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\dm\docs\win11minst-isofiledown-dm.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\dm\docs\win11minst-mainscr-dm.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\dm\docs\win11minst-settingreview-dm.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\dm\docs\win11minst-settings-dm.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\dm\docs\win11minst-topnavbar-dm.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\dm\helpbanner-dm.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\docs\win11minst-advoptn.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\docs\win11minst-darkmode.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\docs\win11minst-functionality.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\docs\win11minst-help.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\instr\win11minst_7zipdown.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\instr\win11minst_7z_dllr.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\instr\win11minst_7z_regtweak.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\instr\win11minst_7z_wimr.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\instr\win11minst_oscdimg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\instr\win11minst_w10instdown.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\instr\win11minst_w11instdown.png" />
+    <Content Include="Resources\HTMLHelp\Resources\instr\win11minst_win11install.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\instr\win11minst_workdir.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\xmlfile_cms.png" />
+    <None Include="Resources\HTMLHelp\Resources\docs\win11minst-info.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="Resources\HTMLHelp\Resources\docs\win11minst-instcreate.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\docs\win11minst-instcreateproc.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\docs\win11minst-instfinish.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\docs\win11minst-insthist.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\docs\win11minst-isofilebuild.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\docs\win11minst-isofiledown.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\docs\win11minst-isofilescan.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\docs\win11minst-lightmode.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\docs\win11minst-settingreview.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\docs\win11minst-settings.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\docs\win11minst-sidepanelhover.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HTMLHelp\Resources\docs\win11minst-topnavbar.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\HTMLHelp\Resources\docs\win11minst-mainscr.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\topnavbar_x86_light.png" />
+    <None Include="Resources\topnavbar_x86_dark.png" />
+    <None Include="Resources\x86_light.png" />
+    <None Include="Resources\x86_dark.png" />
+    <None Include="Resources\prev_step_dark.png" />
+    <None Include="Resources\next_step_light.png" />
+    <None Include="Resources\next_step_dark.png" />
+    <None Include="Resources\last_step_light.png" />
+    <None Include="Resources\last_step_dark.png" />
+    <None Include="Resources\prev_step_light.png" />
+    <None Include="Resources\logo_dark.png" />
+    <None Include="Resources\logo_light.png" />
+    <None Include="Resources\logo_wide.png" />
+    <None Include="Resources\wimr_mh.png" />
+    <None Include="Resources\regtweak_mh.png" />
+    <None Include="Resources\linux_ua.png" />
+    <None Include="Resources\lightmode.png" />
+    <None Include="Resources\regtweak.png" />
+    <None Include="Resources\wimr.png" />
+    <None Include="Resources\quit.png" />
+    <None Include="Resources\inst_hist.png" />
+    <None Include="Resources\language.png" />
+    <None Include="Resources\tb_White.png" />
+    <None Include="Resources\tb_Black.png" />
+    <None Include="Resources\hummingbird_dark.png" />
+    <None Include="Resources\hummingbird.png" />
     <None Include="Resources\update_screen_light.jpg" />
     <None Include="Resources\update_screen_dark.jpg" />
     <None Include="Resources\question_mark.png" />
@@ -399,22 +665,26 @@
     <None Include="Resources\panel_indicator_dark_top_navbar.png" />
     <None Include="Resources\back_arrow_dark_disabled.png" />
     <None Include="Resources\back_arrow_disabled.png" />
+    <None Include="Resources\Bloom_Dark.png" />
+    <None Include="Resources\Bloom_Light.png" />
+    <None Include="Resources\context.png" />
+    <None Include="Resources\file_download_dark.png" />
+    <None Include="Resources\file_download_light.png" />
+    <None Include="Resources\colormodes.png" />
+    <None Include="Resources\dllr.png" />
+    <None Include="Resources\automatic.png" />
+    <None Include="Resources\darkmode.png" />
+    <None Include="Resources\build_mode.png" />
+    <None Include="Resources\dllr_mh.png" />
+    <None Include="Resources\export_dark.png" />
+    <None Include="Resources\export_light.png" />
+    <None Include="Resources\first_step_dark.png" />
+    <None Include="Resources\first_step_light.png" />
+    <None Include="Resources\cross_dark.png" />
+    <None Include="Resources\cross_light.png" />
     <Content Include="Resources\HTMLHelp\HelpPage.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Resources\HTMLHelp\Resources\helpbanner_dark.gif" />
-    <None Include="Resources\HTMLHelp\Resources\HelpDoc_Win11_REGTWEAK_VirtualBox.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\HTMLHelp\Resources\HelpDoc_Win11_REGTWEAK.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\HTMLHelp\Resources\HelpDoc_Win11_21996_REGTWEAK.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\HTMLHelp\Resources\helpbanner.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Resources\progressring_indeterminate.gif" />
     <None Include="Resources\NotifyIconRes_Light.ico" />
     <None Include="Resources\NotifyIconRes_Dark.ico" />
@@ -432,13 +702,9 @@
     <None Include="Resources\isofile_optn.png" />
     <None Include="Resources\win11inst_pic.png" />
     <None Include="Resources\win10inst_pic.png" />
-    <None Include="Resources\SysTray_Capture.png" />
     <None Include="Resources\win11.wav" />
     <None Include="Resources\logo.png" />
     <None Include="Resources\miniMode_TBRes.png" />
-    <None Include="Resources\taskbarMenuOpen.png" />
-    <None Include="Resources\taskbarIconRightClick.png" />
-    <None Include="Resources\checkBoxTBSwitch.png" />
     <None Include="Resources\pref_reset_dark.png" />
     <None Include="Resources\pref_reset.png" />
     <None Include="Resources\log_del_dark.png" />
@@ -454,8 +720,6 @@
     <None Include="Resources\back_arrow_dark.png" />
     <None Include="Resources\back_arrow.png" />
     <None Include="Resources\update.png" />
-    <None Include="Resources\Win11_dark.png" />
-    <None Include="Resources\Win11.png" />
     <None Include="Resources\restdownbox_down.png" />
     <None Include="Resources\restdownbox_dark_down.png" />
     <None Include="Resources\minBox_down.png" />
@@ -539,6 +803,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Debug\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

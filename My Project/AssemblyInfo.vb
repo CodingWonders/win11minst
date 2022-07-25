@@ -9,10 +9,10 @@ Imports System.Runtime.InteropServices
 ' Revisar los valores de los atributos del ensamblado
 
 <Assembly: AssemblyTitle("Windows 11 Manual Installer")> 
-<Assembly: AssemblyDescription("Allows you to create a Windows 11 installer for unsupported systems")> 
+<Assembly: AssemblyDescription("Lets you create a Windows 11 installer for unsupported systems")> 
 <Assembly: AssemblyCompany("")> 
 <Assembly: AssemblyProduct("Windows 11 Manual Installer")> 
-<Assembly: AssemblyCopyright("Copyright © 2022")> 
+<Assembly: AssemblyCopyright("© 2022. CodingWonders (github.com/CodingWonders)")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' mediante el asterisco ('*'), como se muestra a continuación:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("2.0.0100.0")> 
-<Assembly: AssemblyFileVersion("2.0.0100.0")> 
+<Assembly: AssemblyVersion("2.0.0100.2274")> 
+<Assembly: AssemblyFileVersion("2.0.0100.2274")> 

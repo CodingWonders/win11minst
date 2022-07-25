@@ -28,7 +28,7 @@ Partial Class UpdateCheckPreLoadPanel
         Me.Label1 = New System.Windows.Forms.Label()
         Me.UpdateCancelButton = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
+        Me.RelNotesLink = New System.Windows.Forms.LinkLabel()
         Me.TextBox2 = New System.Windows.Forms.TextBox()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -48,7 +48,7 @@ Partial Class UpdateCheckPreLoadPanel
         '
         'ProgressRingPic
         '
-        Me.ProgressRingPic.Image = Global.Windows_11_Manual_Installer_2._0.My.Resources.Resources.progressring_indeterminate
+        Me.ProgressRingPic.Image = Global.Windows_11_Manual_Installer.My.Resources.Resources.progressring_indeterminate
         Me.ProgressRingPic.Location = New System.Drawing.Point(12, 7)
         Me.ProgressRingPic.Name = "ProgressRingPic"
         Me.ProgressRingPic.Size = New System.Drawing.Size(42, 50)
@@ -69,6 +69,7 @@ Partial Class UpdateCheckPreLoadPanel
         'UpdateCancelButton
         '
         Me.UpdateCancelButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.UpdateCancelButton.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.UpdateCancelButton.Font = New System.Drawing.Font("Segoe UI", 9.75!)
         Me.UpdateCancelButton.Location = New System.Drawing.Point(396, 20)
         Me.UpdateCancelButton.Name = "UpdateCancelButton"
@@ -79,7 +80,7 @@ Partial Class UpdateCheckPreLoadPanel
         '
         'GroupBox1
         '
-        Me.GroupBox1.Controls.Add(Me.LinkLabel1)
+        Me.GroupBox1.Controls.Add(Me.RelNotesLink)
         Me.GroupBox1.Controls.Add(Me.TextBox2)
         Me.GroupBox1.Controls.Add(Me.TextBox1)
         Me.GroupBox1.Controls.Add(Me.Label3)
@@ -94,15 +95,18 @@ Partial Class UpdateCheckPreLoadPanel
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Version information"
         '
-        'LinkLabel1
+        'RelNotesLink
         '
-        Me.LinkLabel1.AutoSize = True
-        Me.LinkLabel1.Location = New System.Drawing.Point(312, 181)
-        Me.LinkLabel1.Name = "LinkLabel1"
-        Me.LinkLabel1.Size = New System.Drawing.Size(173, 20)
-        Me.LinkLabel1.TabIndex = 17
-        Me.LinkLabel1.TabStop = True
-        Me.LinkLabel1.Text = "Switch version channels..."
+        Me.RelNotesLink.AutoEllipsis = True
+        Me.RelNotesLink.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline
+        Me.RelNotesLink.LinkColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(92, Byte), Integer), CType(CType(186, Byte), Integer))
+        Me.RelNotesLink.Location = New System.Drawing.Point(268, 181)
+        Me.RelNotesLink.Name = "RelNotesLink"
+        Me.RelNotesLink.Size = New System.Drawing.Size(217, 23)
+        Me.RelNotesLink.TabIndex = 18
+        Me.RelNotesLink.TabStop = True
+        Me.RelNotesLink.Text = "View release notes"
+        Me.RelNotesLink.TextAlign = System.Drawing.ContentAlignment.TopRight
         '
         'TextBox2
         '
@@ -146,6 +150,7 @@ Partial Class UpdateCheckPreLoadPanel
         'Button2
         '
         Me.Button2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.Button2.Font = New System.Drawing.Font("Segoe UI", 9.75!)
         Me.Button2.Location = New System.Drawing.Point(243, 4)
         Me.Button2.Name = "Button2"
@@ -157,6 +162,7 @@ Partial Class UpdateCheckPreLoadPanel
         'Button1
         '
         Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.Button1.Font = New System.Drawing.Font("Segoe UI", 9.75!)
         Me.Button1.Location = New System.Drawing.Point(374, 4)
         Me.Button1.Name = "Button1"
@@ -181,9 +187,9 @@ Partial Class UpdateCheckPreLoadPanel
         Me.Label4.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.Location = New System.Drawing.Point(21, 181)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(162, 20)
+        Me.Label4.Size = New System.Drawing.Size(209, 20)
         Me.Label4.TabIndex = 16
-        Me.Label4.Text = "Version channel: debug"
+        Me.Label4.Text = "Version channel: hummingbird"
         '
         'Label2
         '
@@ -239,7 +245,6 @@ Partial Class UpdateCheckPreLoadPanel
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents UpdateCancelButton As System.Windows.Forms.Button
     Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
-    Friend WithEvents LinkLabel1 As System.Windows.Forms.LinkLabel
     Friend WithEvents TextBox2 As System.Windows.Forms.TextBox
     Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
     Friend WithEvents Label3 As System.Windows.Forms.Label
@@ -251,5 +256,6 @@ Partial Class UpdateCheckPreLoadPanel
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents closeBox As System.Windows.Forms.PictureBox
     Friend WithEvents closeToolTip As System.Windows.Forms.ToolTip
+    Friend WithEvents RelNotesLink As System.Windows.Forms.LinkLabel
 
 End Class

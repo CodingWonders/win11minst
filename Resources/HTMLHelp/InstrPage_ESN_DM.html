@@ -1,0 +1,194 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Do-it-yourself instructions</title>
+    <style>
+        body {
+            background-color: rgb(39,39,39);
+            color: rgb(255,255,255);
+        }
+    </style>
+</head>
+    <body>
+    <img src="Resources/dm/helpbanner-dm.gif" class="center" />
+    <style>
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .link_dark {
+            color: rgb(76, 194, 255);
+        }
+        .auto-style1 {
+            color: #993300;
+        }
+        .auto-style2 {
+            text-decoration: underline;
+        }
+        .bigger-code {
+            font-size: 16px
+        }
+        </style>
+        <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: center">Instrucciones de creación del instalador modificado</h3>
+        <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">Estas instrucciones le guiarán en la creación de un instalador modificado.</p>
+        <h2 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">Índice:</h2>
+        <ol style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px; font-weight: bold">
+            <li>Prerequisitos</li>
+            <ol style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+                <li style="font-weight: normal">Lo que necesita</li>
+                <li style="font-weight: normal">Descargando los prerequisitos</li>
+                <li style="font-weight: normal">Preparación del directorio de trabajo</li>
+            </ol>
+            <li>Extracción de imágenes</li>
+            <ol style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+                <li style="font-weight: normal">Método de extracción 1</li>
+                <li style="font-weight: normal">Método de extracción 2</li>
+                <li style="font-weight: normal">Método de extracción 3</li>
+            </ol>
+            <li>Modificación de imágenes</li>
+            <ol style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">
+                <li style="font-weight: normal">Método de modificación 1</li>
+                <li style="font-weight: normal">Método de modificación 2</li>
+                <li style="font-weight: normal">Método de modificación 3</li>
+            </ol>
+            <li>Creación de la imagen</li>
+            <li>Pruebas del instalador modificado</li>
+        </ol>
+        &nbsp
+    <h2 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">Prerequisitos</h2>
+        <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">Lo que necesita</h3>
+        <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">Para crear el instalador modificado, debe tener los siguientes prerequisitos</p>
+        <ul style="font-family: Arial, Helvetica,sans-serif; text-transform: none; text-align: left; margin-left: 80px">
+            <li>Un instalador de Windows 11</li>
+            <li>Un instalador de Windows 10</li>
+            <li>7-Zip</li>
+            <li>OSCDIMG</li>
+        </ul>
+        <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">Descargando los prerequisitos</h3>
+        <h4 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">Los instaladores de Windows</h4>
+        <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 120px">Para descargar los instaladores de Windows 11 y Windows 10, busque &quot;descargar windows 11&quot; y &quot;descargar windows 10&quot;, o haga clic en los enlaces de abajo para descargar ambos instaladores:</p>
+        <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: center"><a class="link_dark" href="https://www.microsoft.com/es-es/software-download/windows11?9d47a9e1-e53b-49a1-92ca-a647d62dc410=True" target="_blank">Haga clic aquí para descargar Windows 11</a></p>
+        <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: center"><a class="link_dark" href="https://www.microsoft.com/es-es/software-download/windows10" target="_blank">Haga clic aquí para descargar Windows 10</a></p>
+        <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 120px"><strong>NOTA:</strong> si se ve desde el Instalador manual de Windows 11, los enlaces se abrirán en una ventana de Internet Explorer</p>
+        <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 120px"><strong>NOTA:</strong> debe descargar la versión de <span class="auto-style2"><strong>64 bits</strong></span> de ambos instaladores, dado a que Windows 11 <strong>SOLO</strong> soporta hardware de 64 bits</p>
+        <h5 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 160px">Descarga del instalador de Windows 11</h5>
+    <img src="Resources/instr/win11minst_w11instdown.png" class="center" style="height: 480px; width: 760px"/><p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 160px">Cuando llegue a la página de descarga de Windows 11, <span class="auto-style1"><strong>NO</strong></span> haga clic en el primer botón. Esto descargará el Asistente de instalación de Windows 11, que <strong>actualizará su sistema actual a Windows 11</strong>. En vez de eso, lo que debe hacer, es hacer clic en el segundo o el tercer botón. Si ya tiene un instalador de Windows 10 descargado previamente, elija la tercera opción, seleccione &quot;ISO multi-edición&quot;, luego su idioma, y luego haga clic en &quot;Descarga de 64 bits&quot;. Esto descargará una copia de la última versión de Windows 11 en su carpeta de descargas.</p>
+        <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 160px">Si no tiene una imagen de Windows 10, deberá hacer clic en el segundo botón. Esto descargará la herramienta de creación de medios.</p>
+        <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 160px"><strong>NOTA:</strong> si descarga la HCM de Windows 11, deberá hacer lo mismo para Windows 10</p>
+        <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 160px"><strong>NOTA:</strong> si utiliza un sistema Windows, y desea descargar Windows 10, está limitado a la HCM</p>
+    <img src="Resources/instr/win11minst_w10instdown.png" class="center" style="height: 162px; width: 823px"/>
+        <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 160px">Cuando tenga la Herramienta de Creación de Medios preparada, ábrela. Tardará algo de tiempo para cargar por completo, porque necesita descargar archivos del instalador requeridos. <span class="auto-style1"><strong>NO</strong></span> continue con la primera opción, ya que hará lo mismo que el Asistente de instalación: actualizar su sistema. Continue con las opciones recomendadas, elija &quot;Archivo ISO&quot;, especifique una ubicación y deje que se descarguen los archivos. Cuando se complete, tendrá un instalador de Windows (11 o 10) almacenado en la ubicación especificada.</p>
+    <h4 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 120px">7-Zip</h4>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 160px">Para descargar 7-Zip, busque &quot;7-zip&quot; o vaya a <a class="link_dark" href="https://7-zip.org" target="_blank">7-zip.org</a></p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 160px">&nbsp;</p>
+    <img src="Resources/instr/win11minst_7zipdown.png" class="center" />
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 160px">Descargue la arquitectura apropiada. Para una mejor compatibilidad, elija 32-bit x86. Dese cuenta de que la versión de 32 bits no usará todos los recursos dados por un sistema de 64 bits para otros programas. Abra el instalador, y continúe con la instalación.</p>
+    <h4 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 120px">OSCDIMG</h4>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 160px">OSCDIMG es parte del kit de implementación y evaluación de Windows (ADK). Es una colección de herramientas diseñadas para administradores. El ADK viene con OSCDIMG. También lo puede descargar por separado.</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: center;"><a class="link_dark" href="https://www.sevenforums.com/attachments/tutorials/32382d1256189124-make-bootable-iso-student-d-l-oscdimg.zip" target="_blank">Descarga separada</a></p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: center;"><a class="link_dark" href="https://go.microsoft.com/fwlink/?linkid=2196127" target="_blank">OSCDIMG + Windows ADK (Windows 11, 22H2)</a></p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 160px">Si continúa con la segunda opción, elija los valores predeterminados y espere a que se instale. La primera opción vendrá como un archivo ZIP. Extraigalo, y tendrá una copia de OSCDIMG.</p>
+    <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">Preparación del directorio de trabajo</h3>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">Cuando todos los prerequisitos estén listos, tendrá que preparar el espacio de trabajo, como lo haría en un taller. Primero, cree un directorio (carpeta) donde almacenará las imágenes y herramientas (lo último es opcional). Puedes nombrarlo de cualquier manera. Cree otro directorio dentro del que acaba de crear. Este almacenará los archivos de instalación temporales. Si tiene una copia independiente de OSCDIMG, cópiela al directorio de trabajo.</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">El resultado final debe quedar así:</p>
+&nbsp
+    <img src="Resources/instr/win11minst_workdir.png" class="center" />
+    <h2 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">Extracción de imágenes</h2>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">Ahora va a extraer los archivos de los instaladores. Es recomendado esperar un tiempo, que depende de las velocidades de lectura y escritura del disco</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px"><strong>NOTA:</strong> los métodos se realizarán en la línea de comandos, pero pueden ser realizados en una interfaz gráfica</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px"><strong>OPCIONAL:</strong> añadir 7-Zip a <code class="bigger-code">%path%</code></p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">Si desea utilizar la línea de comandos, una manera más fácil de acceder a 7-Zip es añadirlo a <code class="bigger-code">%path%</code>. Para hacerlo, escriba: <code class="bigger-code">path %path%;"\Program Files\7-Zip"</code></p>
+    <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">Método de extracción 1</h3>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">Para extraer los archivos del instalador utilizando este método, prepare una ventana de Símbolo del sistema (<code class="bigger-code">cmd</code>), y escriba:</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: center;"><code class="bigger-code">7z e [ruta del instalador de origen] "sources\install.wim" -o.</code></p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">* Reemplace <code class="bigger-code">[ruta del instalador de origen]</code> por la ubicación del instalador de Windows 11. Si no extrae nada, intenta reemplazar <code class="bigger-code">install.wim</code> por <code class="bigger-code">install.esd</code>.</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">Después de este comando, escriba:</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: center;"><code class="bigger-code">7z x [ruta del instalador de origen] -o.\temp</code></p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">* Reemplace <code class="bigger-code">[ruta del instalador de origen]</code> por la ubicación del instalador de Windows 10.</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">La salida de los comandos debería ser así:</p>
+&nbsp;
+    <img src="Resources/instr/win11minst_7z_wimr.png" class="center" />
+    <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px;">Método de extracción 2</h3>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">Para extraer los archivos del instalador utilizando este método, prepare una ventana de Símbolo del sistema (<code class="bigger-code">cmd</code>), y escriba:</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: center;"><code class="bigger-code">7z x [ruta del instalador de origen] -o.\temp</code></p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">* Reemplace <code class="bigger-code">[ruta del instalador de origen]</code> por la ubicación del instalador de Windows 11.</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">Después de este comando, escriba:</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: center;"><code class="bigger-code">7z e [ruta del instalador de origen] &quot;sources\appraiser.dll&quot; -o. &amp;&amp; 7z e [ruta del instalador de origen] &quot;sources\appraiserres.dll&quot; -o.</code></p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">* Reemplace <code class="bigger-code">[ruta del instalador de origen]</code> por la ubicación del instalador de Windows 10.</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">La salida de los comandos debería ser así:</p>
+&nbsp;
+    <img src="Resources/instr/win11minst_7z_dllr.png" class="center" style="width: 495px; height: 480px" />
+    <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px;">Método de extracción 3</h3>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">Para extraer los archivos del instalador utilizando este método, prepare una ventana <strong>elevada</strong> de Símbolo del sistema (<code class="bigger-code">cmd</code>, teniendo que ejecutarla <strong>como administrador</strong>), y escriba:</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: center;"><code class="bigger-code">7z x [ruta del instalador de origen] -o.\temp</code></p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">* Reemplace <code class="bigger-code">[ruta del instalador de origen]</code> por la ubicación del instalador de Windows 11.</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">La salida del comando debería ser así:</p>
+&nbsp;
+    <img src="Resources/instr/win11minst_7z_regtweak.png" class="center" /><h2 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px;">Modificación de imágenes</h2>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px;">Ahora viene lo bueno: modificar los archivos del instalador</p>
+    <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px;">Método de modificación 1</h3>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px;">Para modificar el instalador utilizando este método, deberá hacer las siguientes tareas:</p>
+    <ol style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 120px;">
+        <li>Elimine <code class="bigger-code">install.wim</code> (o <code class="bigger-code">install.esd</code> si está presente) del directorio temporal escribiendo: <code class="bigger-code">del .\temp\sources\install(.wim/.esd)</code></li>
+        <li>Mueva <code class="bigger-code">install.wim</code> o <code class="bigger-code">install.esd</code> a <code class="bigger-code">temp\sources</code> escribiendo: <code class="bigger-code">move /y install(.wim/.esd) .\temp\sources</code></li>
+    </ol>
+    <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px;">Método de modificación 2</h3>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px;">Para modificar el instalador utilizando este método, deberá hacer las siguientes tareas:</p>
+    <ol style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 120px;">
+        <li>Elimine <code class="bigger-code">appraiser.dll</code> y <code class="bigger-code">appraiserres.dll</code> de <code class="bigger-code">temp\sources</code> escribiendo: <code class="bigger-code">del .\temp\sources\appraiser.dll && del .\temp\sources\appraiserres.dll</code></li>
+        <li>Mueva los archivos DLL anteriormente mencionados a <code class="bigger-code">temp\sources</code> escribiendo: <code class="bigger-code">move /y *.dll .\temp\sources</code></li>
+    </ol>
+    <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px;">Método de modificación 3</h3>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px;"><strong>NOTA:</strong> necesitará una ventana del Símbolo del sistema como administrador</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px;">Para modificar el instalador utilizando este método, deberá hacer las siguientes tareas:</p>
+    <ol style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 120px;">
+        <li>Cree un directorio llamado <code class="bigger-code">wimmount</code></li>
+        <li>Ejecute el siguiente comando: <code class="bigger-code">dism /mount-wim /wimfile=.\temp\sources\boot.wim /index=2 /mountdir=.\wimmount</code></li>
+        <li>Después de que la imagen se monte, tendrá que cargar su árbol de registro <code class="bigger-code">SYSTEM</code>. Para ello, escriba <code class="bigger-code">reg load HKLM\W11SYS .\wimmount\system32\config\SYSTEM</code></li>
+        <li>Tendrá que crear la siguiente llave en el árbol cargado, llamada <code class="bigger-code">LabConfig</code>. Para ello, escriba <code class="bigger-code">reg add HKLM\W11SYS\Setup\LabConfig</code></li>
+        <li>Añada los siguientes valores DWORD de 32 bits a <code class="bigger-code">LabConfig</code>: &nbsp<ul style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 20px;">
+            <li><code class="bigger-code">BypassCPUCheck</code>, tipo: <code class="bigger-code">REG_DWORD</code>, valor: <code class="bigger-code">1</code>: <code class="bigger-code">reg add HKLM\W11SYS\Setup\LabConfig /v BypassCPUCheck /t REG_DWORD /d 1</code></li>
+            <li><code class="bigger-code">BypassRAMCheck</code>, tipo: <code class="bigger-code">REG_DWORD</code>, valor: <code class="bigger-code">1</code>: <code class="bigger-code">reg add HKLM\W11SYS\Setup\LabConfig /v BypassRAMCheck /t REG_DWORD /d 1</code></li>
+            <li><code class="bigger-code">BypassSecureBootCheck</code>, tipo: <code class="bigger-code">REG_DWORD</code>, valor: <code class="bigger-code">1</code>: <code class="bigger-code">reg add HKLM\W11SYS\Setup\LabConfig /v BypassSecureBootCheck /t REG_DWORD /d 1</code></li>
+            <li><code class="bigger-code">BypassTPMCheck</code>, tipo: <code class="bigger-code">REG_DWORD</code>, valor: <code class="bigger-code">1</code>: <code class="bigger-code">reg add HKLM\W11SYS\Setup\LabConfig /v BypassTPMCheck /t REG_DWORD /d 1</code></li>
+            <li><code class="bigger-code">BypassStorageCheck</code>, tipo: <code class="bigger-code">REG_DWORD</code>, valor: <code class="bigger-code">1</code>: <code class="bigger-code">reg add HKLM\W11SYS\Setup\LabConfig /v BypassStorageCheck /t REG_DWORD /d 1</code></li>
+        </ul>
+        </li>
+        <li>Descargue el árbol de registro <code class="bigger-code">SYSTEM</code>: <code class="bigger-code">reg unload HKLM\W11SYS</code></li>
+        <li>Desmonte la imagen guardando los cambios: <code class="bigger-code">dism /unmount-wim /mountdir=.\wimmount <strong>/commit</strong></code><p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 20px;"><strong>NOTE:</strong> you must close all processes that show the mount point, or else you will not be able to unmount the image</p>
+        </li>
+        <li>Elimine el directorio <code class="bigger-code">wimmount</code>: <code class="bigger-code">rd .\wimmount /s /q</code></li>
+    </ol>
+    <h2 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">Creación de imágenes</h2>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">Después de modificar los archivos del instalador, debe crearlo. Para ello, ejecute este comando: </p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: center; margin-left: 40px"><code class="bigger-code">oscdimg -l[etiqueta de imagen] -m -u2 -b.\temp\boot\etfsboot.com .\temp [Ruta del instalador de destino]</code></p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">* Reemplace <code class="bigger-code">[etiqueta de imagen]</code> por la etiqueta que desea. <strong>NO</strong> deben haber espacios entre <code class="bigger-code">-l</code> y la etiqueta deseada, y no debe pasar los 32 caracteres</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">* Si está haciendo un instalador para un dispositivo con UEFI habilitado, debe reemplazar <code class="bigger-code">-b.\temp\boot\etfsboot.com</code> por <code class="bigger-code">-b.\temp\boot\Efisys.bin -pEF</code>, si está presente</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">* Reemplace <code class="bigger-code">[Ruta del instalador de destino]</code> por la ruta del instalador de destino</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">* Si tiene instalado el ADK, reemplace <code class="bigger-code">oscdimg</code> por <code class="bigger-code">"\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\x86\Oscdimg\oscdimg.exe"</code> o añada <code class="bigger-code">"\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\x86\Oscdimg"</code> a <code class="bigger-code">%PATH%</code>: <code class="bigger-code">path %path%;"\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\x86\Oscdimg"</code></p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">La sintaxis debería ser así:</p>
+&nbsp;
+    <img src="Resources/instr/win11minst_oscdimg.png" class="center" />
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">Después de que la imagen se haya creado, siéntese libre de eliminar todos los archivos temporales y reclame espacio de disco.</p>
+    <h2 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">Pruebas de la imagen</h2>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">Como probar un micrófono, necesita probar su instalador modificado. No diga: &quot;Probando... 1, 2, 3...&quot; para probar el instalador. Para ello:</p>
+    <ul style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">
+        <li>Utilice una solución de máquinas virtuales. Si su máquina es lo suficientemente potente para manejar máquinas virtuales, pero no quiere instalar Windows 11, puede usar soluciones de máquinas virtuales, como Oracle VM VirtualBox o VMware Player/Workstation
+            <strong>NOTA:</strong> debe tener habilitadas las tecnologías de virtualización (Intel &reg; VT-X / AMD &reg; AMD-V) en su configuración de BIOS/UEFI.
+            <ul style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left;">
+                <li>Haga clic <a class="link_dark" href="https://virtualbox.org" target="_blank">aquí</a> para comprobar VirtualBox</li>
+                <li>Haga clic <a class="link_dark" href="https://www.vmware.com/products/workstation-player.html" target="_blank">aquí</a> para comprobar VMware Workstation Player (gratis)</li>
+                <li>Haga clic <a class="link_dark" href="https://www.vmware.com/products/workstation-pro.html" target="_blank">aquí</a> para comprobar VMware Workstation Pro (de pago, prueba gratuita de 30 días)</li>
+            </ul>
+        </li>
+        <li>Utilice un sistema secundario. Recuerde que tiene que ser un sistema de 64 bits</li>
+        <li>Utilice su sistema. Compruebe si puede pasar la pantalla &quot;Este ordenador no puede ejecutar Windows 11&quot; cuando arranque al instalador</li>
+    </ul>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">Necesitará descargar <a class="link_dark" href="https://balena.io/etcher" target="_blank">balenaEtcher</a> o <a class="link_dark" href="https://rufus.ie" target="_blank">Rufus</a> para poner el instalador en una unidad USB que pueda llevar siempre consigo. Si todo va bien, puede instalar Windows 11.</p>
+&nbsp;
+    <img src="Resources/instr/win11minst_win11install.png" class="center" style="width: 639px; height: 480px" />
+    </body>
+</html>

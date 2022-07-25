@@ -280,12 +280,6 @@
   <data name="restdownbox_down" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\restdownbox_down.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Win11_LogoWhite" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Win11.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Win11_LogoDark" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Win11_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="back_arrow" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\back_arrow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -328,20 +322,8 @@
   <data name="pref_reset_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pref_reset_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="checkBoxTBSwitch" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\checkBoxTBSwitch.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="miniMode_TBRes" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\miniMode_TBRes.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="taskbarIconRightClick" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\taskbarIconRightClick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="taskbarMenuOpen" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\taskbarMenuOpen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="SysTray_Capture" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SysTray_Capture.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="win10inst_pic" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\win10inst_pic.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -394,18 +376,6 @@
   <data name="helpbanner" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\HTMLHelp\Resources\helpbanner.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="HelpDoc_Win11_21996_REGTWEAK" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\HTMLHelp\Resources\HelpDoc_Win11_21996_REGTWEAK.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="HelpDoc_Win11_REGTWEAK" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\HTMLHelp\Resources\HelpDoc_Win11_REGTWEAK.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="HelpDoc_Win11_REGTWEAK_VirtualBox" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\HTMLHelp\Resources\HelpDoc_Win11_REGTWEAK_VirtualBox.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="helpbanner_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\HTMLHelp\Resources\helpbanner_dark.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="back_arrow_disabled" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\back_arrow_disabled.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -441,5 +411,266 @@
   </data>
   <data name="update_screen_light" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\update_screen_light.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="hummingbird" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\hummingbird.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="hummingbird_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\hummingbird_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Bloom_Dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Bloom_Dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Bloom_Light" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Bloom_Light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="context" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\context.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tb_Black" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tb_Black.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tb_White" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tb_White.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="file_download_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\file_download_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="file_download_light" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\file_download_light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="colormodes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\colormodes.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="language" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\language.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="inst_hist" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\inst_hist.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="quit" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\quit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dllr" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dllr.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="regtweak" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\regtweak.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wimr" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wimr.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="automatic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\automatic.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="darkmode" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\darkmode.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="lightmode" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lightmode.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="build_mode" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\build_mode.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="linux_ua" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\linux_ua.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dllr_mh" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dllr_mh.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="regtweak_mh" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\regtweak_mh.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wimr_mh" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wimr_mh.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="logo_wide" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\logo_wide.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="logo_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\logo_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="logo_light" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\logo_light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="export_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\export_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="export_light" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\export_light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="first_step_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\first_step_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="last_step_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\last_step_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="next_step_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\next_step_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="prev_step_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\prev_step_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="x86_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\x86_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="x86_light" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\x86_light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="topnavbar_x86_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\topnavbar_x86_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="topnavbar_x86_light" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\topnavbar_x86_light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="cross_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\cross_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="cross_light" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\cross_light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_darkmode" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\docs\win11minst-darkmode.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_functionality" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\docs\win11minst-functionality.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_help" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\docs\win11minst-help.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_info" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\HTMLHelp\Resources\docs\win11minst-info.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_instcreate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\docs\win11minst-instcreate.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_instcreateproc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\docs\win11minst-instcreateproc.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_instfinish" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\docs\win11minst-instfinish.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_isofilebuild" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\docs\win11minst-isofilebuild.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_isofiledown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\docs\win11minst-isofiledown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_isofilescan" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\docs\win11minst-isofilescan.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_lightmode" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\docs\win11minst-lightmode.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_mainscr" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\HTMLHelp\Resources\docs\win11minst-mainscr.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_settingreview" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\docs\win11minst-settingreview.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_settings" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\docs\win11minst-settings.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_sidepanelhover" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\docs\win11minst-sidepanelhover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_topnavbar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\docs\win11minst-topnavbar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="helpbanner_dm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\dm\helpbanner-dm.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_functionality_dm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\dm\docs\win11minst-functionality-dm.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_help_dm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\dm\docs\win11minst-help-dm.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_info_dm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\dm\docs\win11minst-info-dm.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_instcreateproc_dm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\dm\docs\win11minst-instcreateproc-dm.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_instcreate_dm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\dm\docs\win11minst-instcreate-dm.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_instfinish_dm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\dm\docs\win11minst-instfinish-dm.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_mainscr_dm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\dm\docs\win11minst-mainscr-dm.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_settingreview_dm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\dm\docs\win11minst-settingreview-dm.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_settings_dm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\dm\docs\win11minst-settings-dm.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_topnavbar_dm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\dm\docs\win11minst-topnavbar-dm.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_advoptn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\docs\win11minst-advoptn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_advoptn_dm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\dm\docs\win11minst-advoptn-dm.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_insthist" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\docs\win11minst-insthist.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_insthist_dm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\dm\docs\win11minst-insthist-dm.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_isofiledown_dm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\dm\docs\win11minst-isofiledown-dm.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_7zipdown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\instr\win11minst_7zipdown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_7z_dllr" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\instr\win11minst_7z_dllr.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_7z_regtweak" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\instr\win11minst_7z_regtweak.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_7z_wimr" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\instr\win11minst_7z_wimr.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_oscdimg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\instr\win11minst_oscdimg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_w10instdown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\instr\win11minst_w10instdown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_w11instdown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\instr\win11minst_w11instdown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_win11install" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\instr\win11minst_win11install.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="win11minst_workdir" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\htmlhelp\resources\instr\win11minst_workdir.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="htmlfile_cms" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\htmlfile_cms.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="xmlfile_cms" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\xmlfile_cms.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="csvfile_cms" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\csvfile_cms.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="invalidtext_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\invalidtext_dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="invalidtext_light" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\invalidtext_light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="x86_processor" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\x86_processor.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="instissues" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\instissues.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

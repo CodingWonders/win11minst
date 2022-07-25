@@ -1,0 +1,192 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Installer creation instructions</title>
+    <style>
+        body {
+            background-color: rgb(249,249,249);
+        }
+    </style>
+</head>
+    <body>
+    <img src="Resources/helpbanner.gif" class="center" />
+    <style>
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .link_light {
+            color: rgb(1,92,186);
+        }
+        .auto-style1 {
+            color: #993300;
+        }
+        .auto-style2 {
+            text-decoration: underline;
+        }
+        .bigger-code {
+            font-size: 16px
+        }
+        </style>
+    <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align:center">Custom installer creation instructions</h3>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align:left;margin-left:40px">These instructions will guide you in the creation of a custom installer.</p>
+    <h2 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align:left; margin-left:40px">Contents:</h2>
+    <ol style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align:left; margin-left:80px; font-weight: bold">
+        <li>Prerequisites</li>
+            <ol style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align:left; margin-left: 40px">
+                <li style="font-weight: normal">What you need</li>
+                <li style="font-weight: normal">Downloading the prerequisites</li>
+                <li style="font-weight: normal">Working directory preparation</li>
+            </ol>
+        <li>Image extraction</li>
+            <ol style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align:left; margin-left: 40px">
+                <li style="font-weight: normal">Extraction method 1</li>
+                <li style="font-weight: normal">Extraction method 2</li>
+                <li style="font-weight: normal">Extraction method 3</li>
+            </ol>
+        <li>Image modification</li>
+            <ol style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align:left; margin-left: 40px">
+                <li style="font-weight: normal">Modification method 1</li>
+                <li style="font-weight: normal">Modification method 2</li>
+                <li style="font-weight: normal">Modification method 3</li>
+            </ol>
+        <li>Image creation</li>
+        <li>Custom installer testing</li>
+    </ol>
+    <h2 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align:left; margin-left:40px">Prerequisites</h2>
+    <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align:left; margin-left:40px">What you need</h3>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align:left; margin-left:40px">In order to create the custom installer, you will need the following prerequisites:</p>
+    <ul style="font-family: Arial, Helvetica,sans-serif; text-transform: none; text-align:left; margin-left: 80px">
+        <li>A Windows 11 installer</li>
+        <li>A Windows 10 installer</li>
+        <li>7-Zip</li>
+        <li>OSCDIMG</li>
+    </ul>
+    <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">Downloading the prerequisites</h3>
+    <h4 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">The Windows installers</h4>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 120px">In order to download the Windows 11 and 10 installers, search for &quot;download windows 11&quot; and &quot;download windows 10&quot;, or click the links below to download both installers:</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: center"><a href="https://www.microsoft.com/en-us/software-download/windows11?9d47a9e1-e53b-49a1-92ca-a647d62dc410=True" class="link_light" target="_blank">Click here to download Windows 11</a></p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: center"><a href="https://www.microsoft.com/en-us/software-download/windows10" class="link_light" target="_blank">Click here to download Windows 10</a></p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 120px"><strong>NOTE:</strong> if viewed on the Windows 11 Manual Installer, the links will open in an Internet Explorer window</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 120px"><strong>NOTE:</strong> you must download the <span class="auto-style2"><strong>64-bit</strong></span> version of both installers, as Windows 11 <strong>ONLY</strong> supports 64-bit hardware</p>
+    <h5 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 160px">Windows 11 installer download</h5>
+    <img src="Resources/instr/win11minst_w11instdown.png" class="center" style="height: 480px; width: 760px"/><p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 160px">When you arrive at the download page for Windows 11, <span class="auto-style1"><strong>DO NOT</strong></span> click the first button. This will download the Windows 11 Installation Assistant, which will <strong>upgrade your current system to Windows 11</strong>. Instead, what you need to do is click either the second or third buttons. If you already have a Windows 10 installer downloaded in the past, choose the third option, select &quot;Multi-edition ISO&quot;, then your language, then click &quot;64-bit download&quot;. This will download a copy of the latest version of Windows 11 in your Downloads folder.</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 160px">If you haven&#39;t got a Windows 10 image, you will need to click the second button. This will download the Media Creation Tool.</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 160px"><strong>NOTE:</strong> if you download the Windows 11 MCT (Media Creation Tool), you will need to do so for Windows 10 as well</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 160px"><strong>NOTE:</strong> if you use a Windows system, and want to download Windows 10, you are limited to the MCT</p>
+    <img src="Resources/instr/win11minst_w10instdown.png" class="center" style="height: 162px; width: 823px"/>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 160px">When you have the Media Creation Tool ready, launch it. It will take some time to fully load, because it needs to download required installer files. Once it finishes, accept the license agreement. Wait a little, then select the second option. <span class="auto-style1"><strong>DO NOT</strong></span> continue with the first option, as it will do the same thing as downloading the Installation Assistant would do: upgrade your system. Continue with recommended settings, choose &quot;ISO file&quot;, specify a location and wait for the files to download. Upon completion, you will have a Windows (11/10) installer stored in the specified location.</p>
+    <h4 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 120px">7-Zip</h4>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 160px">To download 7-Zip, search &quot;7-zip&quot; on the internet or go to <a href="https://7-zip.org" class="link_light" target="_blank">7-zip.org</a></p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 160px">&nbsp;</p>
+    <img src="Resources/instr/win11minst_7zipdown.png" class="center" />
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 160px">Download the appropriate architecture. For better compatibility, choose 32-bit x86. Do note that the 32-bit version will not use all resources given by a 64-bit system to other programs. Open the installer, and proceed with installation.</p>
+    <h4 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 120px">OSCDIMG</h4>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 160px">OSCDIMG is part of the Windows Assessment and Deployment Kit (ADK). It is a set of tools designed for administrators. The ADK comes with OSCDIMG. You can also download OSCDIMG separately.</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: center;"><a href="https://www.sevenforums.com/attachments/tutorials/32382d1256189124-make-bootable-iso-student-d-l-oscdimg.zip" class="link_light" target="_blank">Separate download</a></p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: center;"><a href="https://go.microsoft.com/fwlink/?linkid=2196127" class="link_light" target="_blank">OSCDIMG + Windows ADK (Windows 11, 22H2)</a></p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 160px">If you decide to continue with the second option, choose the defaults and wait for installation. The first option will come as a ZIP file. Extract it, and you will have a copy of OSCDIMG.</p>
+    <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">Working directory preparation</h3>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">After all prerequisites are done, you will need to prepare the workspace, just as you would on a workshop. First, create a directory (folder) where you are going to store the images and tools (the latter is optional). You can give it any name you want. Inside that directory, create another one. This one will store the temporary installer files. If you have a standalone copy of OSCDIMG, copy it to the working directory.</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">The end result should look like this:</p>
+&nbsp
+    <img src="Resources/instr/win11minst_workdir.png" class="center" />
+    <h2 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">Image extraction</h2>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">Now you get to extract the files from the installers. It is recommended to wait some time, which may depend on disk R/W speeds</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px"><strong>NOTE:</strong> the methods will be performed on the command line, but they can be done through the GUI</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px"><strong>OPTIONAL:</strong> adding 7-Zip to <code class="bigger-code">%path%</code></p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">If you want to use the command line, an easier way to access 7-Zip is to add it to <code class="bigger-code">%path%</code>. To do this, type: <code class="bigger-code">path %path%;"\Program Files\7-Zip"</code></p>
+    <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">Extraction method 1</h3>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">To extract the installer files using this method, prepare a Command Prompt (<code class="bigger-code">cmd</code>) window, and type:</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: center; "><code class="bigger-code">7z e [source installer path] "sources\install.wim" -o.</code></p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">* Replace <code class="bigger-code">[source installer path]</code> with the Windows 11 source installer path. If it does not extract anything, try replacing <code class="bigger-code">install.wim</code> with <code class="bigger-code">install.esd</code>.</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">After this command, type:</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: center; "><code class="bigger-code">7z x [source installer path] -o.\temp</code></p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">* Replace <code class="bigger-code">[source installer path]</code> with the Windows 10 source installer path.</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">The command output should look like this:</p>
+&nbsp;
+    <img src="Resources/instr/win11minst_7z_wimr.png" class="center" />
+    <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px;">Extraction method 2</h3>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">To extract the installer files using this method, prepare a Command Prompt (<code class="bigger-code">cmd</code>) window, and type:</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: center; "><code class="bigger-code">7z x [source installer path] -o.\temp</code></p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">* Replace <code class="bigger-code">[source installer path]</code> with the Windows 11 source installer path.</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">After this command, type:</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: center; "><code class="bigger-code">7z e [source installer path] &quot;sources\appraiser.dll&quot; -o. &amp;&amp; 7z e [source installer path] &quot;sources\appraiserres.dll&quot; -o.</code></p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">* Replace <code class="bigger-code">[source installer path]</code> with the Windows 10 source installer path.</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">The command output should look like this:</p>
+&nbsp;
+    <img src="Resources/instr/win11minst_7z_dllr.png" class="center" style="width: 495px; height: 480px" />
+    <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px;">Extraction method 3</h3>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">To extract the installer files using this method, prepare an <strong>elevated</strong> Command Prompt (<code class="bigger-code">cmd</code>) window (meaning you have to run it <strong>as an administrator</strong>), and type:</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: center; "><code class="bigger-code">7z x [source installer path] -o.\temp</code></p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">* Replace <code class="bigger-code">[source installer path]</code> with the Windows 11 source installer path.</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">The command output should look like this:</p>
+&nbsp;
+    <img src="Resources/instr/win11minst_7z_regtweak.png" class="center" /><h2 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px;">Image modification</h2>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px;">Here comes the fun part: modifying the installer files</p>
+    <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px;">Modification method 1</h3>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px;">To modify the installer using this method, you will need to do the following tasks:</p>
+    <ol style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 120px;">
+        <li>Delete <code class="bigger-code">install.wim</code> (or <code class="bigger-code">install.esd</code> if present) from the temporary directory by typing: <code class="bigger-code">del .\temp\sources\install(.wim/.esd)</code></li>
+        <li>Move <code class="bigger-code">install.wim</code> or <code class="bigger-code">install.esd</code> to <code class="bigger-code">temp\sources</code> by typing: <code class="bigger-code">move /y install(.wim/.esd) .\temp\sources</code></li>
+    </ol>
+    <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px;">Modification method 2</h3>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px;">To modify the installer using this method, you will need to do the following tasks:</p>
+    <ol style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 120px;">
+        <li>Delete <code class="bigger-code">appraiser.dll</code> and <code class="bigger-code">appraiserres.dll</code> from <code class="bigger-code">temp\sources</code> by typing: <code class="bigger-code">del .\temp\sources\appraiser.dll && del .\temp\sources\appraiserres.dll</code></li>
+        <li>Move the aforementioned DLL files to <code class="bigger-code">temp\sources</code> by typing: <code class="bigger-code">move /y *.dll .\temp\sources</code></li>
+    </ol>
+    <h3 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px;">Modification method 3</h3>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px;"><strong>NOTE:</strong> you will need a Command Prompt window as an administrator</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px;">To modify the installer using this method, you will need to do the following tasks:</p>
+    <ol style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 120px;">
+        <li>Create a directory called <code class="bigger-code">wimmount</code></li>
+        <li>Run the following command: <code class="bigger-code">dism /mount-wim /wimfile=.\temp\sources\boot.wim /index=2 /mountdir=.\wimmount</code></li>
+        <li>After the image mounts, you will need to load its <code class="bigger-code">SYSTEM</code> registry hive. To do this, type <code class="bigger-code">reg load HKLM\W11SYS .\wimmount\system32\config\SYSTEM</code></li>
+        <li>You will need to create the following key on the loaded hive, called <code class="bigger-code">LabConfig</code>. To do this, type <code class="bigger-code">reg add HKLM\W11SYS\Setup\LabConfig</code></li>
+        <li>Add the following 32-bit DWORD values to <code class="bigger-code">LabConfig</code>: &nbsp<ul style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 20px;">
+        <li><code class="bigger-code">BypassCPUCheck</code>, type: <code class="bigger-code">REG_DWORD</code>, value: <code class="bigger-code">1</code>: <code class="bigger-code">reg add HKLM\W11SYS\Setup\LabConfig /v BypassCPUCheck /t REG_DWORD /d 1</code></li>
+        <li><code class="bigger-code">BypassRAMCheck</code>, type: <code class="bigger-code">REG_DWORD</code>, value: <code class="bigger-code">1</code>: <code class="bigger-code">reg add HKLM\W11SYS\Setup\LabConfig /v BypassRAMCheck /t REG_DWORD /d 1</code></li>
+        <li><code class="bigger-code">BypassSecureBootCheck</code>, type: <code class="bigger-code">REG_DWORD</code>, value: <code class="bigger-code">1</code>: <code class="bigger-code">reg add HKLM\W11SYS\Setup\LabConfig /v BypassSecureBootCheck /t REG_DWORD /d 1</code></li>
+        <li><code class="bigger-code">BypassTPMCheck</code>, type: <code class="bigger-code">REG_DWORD</code>, value: <code class="bigger-code">1</code>: <code class="bigger-code">reg add HKLM\W11SYS\Setup\LabConfig /v BypassTPMCheck /t REG_DWORD /d 1</code></li>
+        <li><code class="bigger-code">BypassStorageCheck</code>, type: <code class="bigger-code">REG_DWORD</code>, value: <code class="bigger-code">1</code>: <code class="bigger-code">reg add HKLM\W11SYS\Setup\LabConfig /v BypassStorageCheck /t REG_DWORD /d 1</code></li>
+    </ul>
+        </li>
+        <li>Unload the <code class="bigger-code">SYSTEM</code> registry hive: <code class="bigger-code">reg unload HKLM\W11SYS</code></li>
+        <li>Unmount the image while committing the changes: <code class="bigger-code">dism /unmount-wim /mountdir=.\wimmount <strong>/commit</strong></code><p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 20px;"><strong>NOTE:</strong> you must close all processes that show the mount point, or else you will not be able to unmount the image</p>
+        </li>
+        <li>Delete the <code class="bigger-code">wimmount</code> directory: <code class="bigger-code">rd .\wimmount /s /q</code></li>
+    </ol>
+    <h2 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">Image creation</h2>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">After modifying the installer files, you need to create it. To do this, run this command: </p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: center; margin-left: 40px"><code class="bigger-code">oscdimg -l[image label] -m -u2 -b.\temp\boot\etfsboot.com .\temp [Target installer path]</code></p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">* Replace <code class="bigger-code">[image label]</code> with the label you want. <strong>NO</strong> spaces need to be between <code class="bigger-code">-l</code> and the desired label, and the label must not surpass 32 characters</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">* If you are making an installer for a device with Legacy Boot disabled, you need to replace <code class="bigger-code">-b.\temp\boot\etfsboot.com</code> with <code class="bigger-code">-b.\temp\boot\Efisys.bin -pEF</code>, if present</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">* Replace <code class="bigger-code">[Target installer path]</code> with the target installer path</p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">* If you have installed the ADK, replace <code class="bigger-code">oscdimg</code> with <code class="bigger-code">"\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\x86\Oscdimg\oscdimg.exe"</code> or add <code class="bigger-code">"\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\x86\Oscdimg"</code> to <code class="bigger-code">%PATH%</code>: <code class="bigger-code">path %path%;"\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\x86\Oscdimg"</code></p>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">The syntax should look like this:</p>
+    &nbsp;
+    <img src="Resources/instr/win11minst_oscdimg.png" class="center" />
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">After the image has been created, feel free to delete all temporary files and reclaim disk space.</p>
+    <h2 style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">Image testing</h2>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">Like the process of testing a microphone, you will need to test your custom installer after it has been created. You don&#39;t need to say &quot;Testing, 1, 2, 3&quot; to test the image. To test it:</p>
+    <ul style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 80px">
+        <li>Use a virtual machine solution. If your machine is powerful enough to handle VMs, but you don&#39;t want to install Windows 11, you can use VM solutions, like Oracle VM VirtualBox or VMware Player/Workstation.
+            <strong>NOTE:</strong> you must have virtualization technologies (Intel &reg; VT-X / AMD &reg; AMD-V) enabled in your BIOS/UEFI settings.
+            <ul style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; ">
+                <li>Click <a href="https://virtualbox.org" class="link_light" target="_blank">here</a> to check out VirtualBox</li>
+                <li>Click <a href="https://www.vmware.com/products/workstation-player.html" class="link_light" target="_blank">here</a> to check out VMware Workstation Player (free)</li>
+                <li>Click <a href="https://www.vmware.com/products/workstation-pro.html" class="link_light" target="_blank">here</a> to check out VMware Workstation Pro (paid, 30-day free trial)</li>
+            </ul>
+        </li>
+        <li>Use a spare system. Remember that it must be a 64-bit system</li>
+        <li>Use your system. Check if you can get past the &quot;This PC can&#39;t run Windows 11&quot; screen when you boot to the installer.</li>
+    </ul>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-transform: none; text-align: left; margin-left: 40px">You will need to download <a href="https://balena.io/etcher" class="link_light" target="_blank">balenaEtcher</a> or <a href="https://rufus.ie" class="link_light" target="_blank">Rufus</a> to put the installer on a USB drive you can carry with you anywhere. If all goes well, you can now install Windows 11.</p>
+    &nbsp;
+    <img src="Resources/instr/win11minst_win11install.png" class="center" style="width: 639px; height: 480px" />
+    </body>
+</html>

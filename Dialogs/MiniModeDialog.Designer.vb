@@ -27,18 +27,22 @@ Partial Class MiniModeDialog
         Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
-        Me.BackPic = New System.Windows.Forms.PictureBox()
+        Me.tbPic = New System.Windows.Forms.PictureBox()
+        Me.backPic = New System.Windows.Forms.PictureBox()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.BackPic, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.tbPic, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.backPic, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'OK_Button
         '
         Me.OK_Button.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.OK_Button.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.OK_Button.Location = New System.Drawing.Point(716, 460)
+        Me.OK_Button.Location = New System.Drawing.Point(741, 460)
         Me.OK_Button.Name = "OK_Button"
-        Me.OK_Button.Size = New System.Drawing.Size(78, 27)
+        Me.OK_Button.Size = New System.Drawing.Size(53, 27)
         Me.OK_Button.TabIndex = 0
         Me.OK_Button.Text = "OK"
         '
@@ -55,17 +59,16 @@ Partial Class MiniModeDialog
         '
         'Label1
         '
-        Me.Label1.AutoSize = True
         Me.Label1.ForeColor = System.Drawing.Color.White
         Me.Label1.Location = New System.Drawing.Point(104, 28)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(572, 135)
+        Me.Label1.Size = New System.Drawing.Size(631, 187)
         Me.Label1.TabIndex = 3
         Me.Label1.Text = resources.GetString("Label1.Text")
         '
         'PictureBox2
         '
-        Me.PictureBox2.Image = Global.Windows_11_Manual_Installer_2._0.My.Resources.Resources.miniMode_TBRes
+        Me.PictureBox2.Image = Global.Windows_11_Manual_Installer.My.Resources.Resources.miniMode_TBRes
         Me.PictureBox2.Location = New System.Drawing.Point(39, 28)
         Me.PictureBox2.Name = "PictureBox2"
         Me.PictureBox2.Size = New System.Drawing.Size(48, 48)
@@ -73,15 +76,35 @@ Partial Class MiniModeDialog
         Me.PictureBox2.TabIndex = 4
         Me.PictureBox2.TabStop = False
         '
-        'BackPic
+        'tbPic
         '
-        Me.BackPic.Image = Global.Windows_11_Manual_Installer_2._0.My.Resources.Resources.SysTray_Capture
-        Me.BackPic.Location = New System.Drawing.Point(0, 0)
-        Me.BackPic.Name = "BackPic"
-        Me.BackPic.Size = New System.Drawing.Size(806, 546)
-        Me.BackPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
-        Me.BackPic.TabIndex = 5
-        Me.BackPic.TabStop = False
+        Me.tbPic.Image = Global.Windows_11_Manual_Installer.My.Resources.Resources.tb_White
+        Me.tbPic.Location = New System.Drawing.Point(0, 498)
+        Me.tbPic.Name = "tbPic"
+        Me.tbPic.Size = New System.Drawing.Size(806, 48)
+        Me.tbPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
+        Me.tbPic.TabIndex = 5
+        Me.tbPic.TabStop = False
+        '
+        'backPic
+        '
+        Me.backPic.Image = CType(resources.GetObject("backPic.Image"), System.Drawing.Image)
+        Me.backPic.Location = New System.Drawing.Point(-557, 0)
+        Me.backPic.Name = "backPic"
+        Me.backPic.Size = New System.Drawing.Size(1920, 546)
+        Me.backPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.backPic.TabIndex = 6
+        Me.backPic.TabStop = False
+        '
+        'PictureBox1
+        '
+        Me.PictureBox1.Image = Global.Windows_11_Manual_Installer.My.Resources.Resources.context
+        Me.PictureBox1.Location = New System.Drawing.Point(413, 218)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(322, 298)
+        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
+        Me.PictureBox1.TabIndex = 7
+        Me.PictureBox1.TabStop = False
         '
         'MiniModeDialog
         '
@@ -89,11 +112,13 @@ Partial Class MiniModeDialog
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(806, 546)
+        Me.Controls.Add(Me.PictureBox1)
         Me.Controls.Add(Me.PictureBox2)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.CheckBox1)
         Me.Controls.Add(Me.OK_Button)
-        Me.Controls.Add(Me.BackPic)
+        Me.Controls.Add(Me.tbPic)
+        Me.Controls.Add(Me.backPic)
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -104,7 +129,9 @@ Partial Class MiniModeDialog
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "System Tray"
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.BackPic, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.tbPic, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.backPic, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -113,6 +140,8 @@ Partial Class MiniModeDialog
     Friend WithEvents CheckBox1 As System.Windows.Forms.CheckBox
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents PictureBox2 As System.Windows.Forms.PictureBox
-    Friend WithEvents BackPic As System.Windows.Forms.PictureBox
+    Friend WithEvents tbPic As System.Windows.Forms.PictureBox
+    Friend WithEvents backPic As System.Windows.Forms.PictureBox
+    Friend WithEvents PictureBox1 As System.Windows.Forms.PictureBox
 
 End Class

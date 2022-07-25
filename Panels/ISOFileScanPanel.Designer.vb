@@ -23,6 +23,7 @@ Partial Class ISOFileScanPanel
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ISOFileScanPanel))
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.CounterLabel = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -39,7 +40,6 @@ Partial Class ISOFileScanPanel
         Me.Label5 = New System.Windows.Forms.Label()
         Me.RadioButton1 = New System.Windows.Forms.RadioButton()
         Me.RadioButton2 = New System.Windows.Forms.RadioButton()
-        Me.Button2 = New System.Windows.Forms.Button()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.RefreshToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.Panel1.SuspendLayout()
@@ -82,7 +82,7 @@ Partial Class ISOFileScanPanel
         'OK_Button
         '
         Me.OK_Button.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.OK_Button.BackColor = System.Drawing.Color.DodgerBlue
+        Me.OK_Button.BackColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(92, Byte), Integer), CType(CType(186, Byte), Integer))
         Me.OK_Button.Enabled = False
         Me.OK_Button.FlatAppearance.BorderColor = System.Drawing.Color.DeepSkyBlue
         Me.OK_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat
@@ -150,6 +150,8 @@ Partial Class ISOFileScanPanel
         '
         Me.TextBox1.Location = New System.Drawing.Point(150, 73)
         Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.ReadOnly = True
+        Me.TextBox1.ShortcutsEnabled = False
         Me.TextBox1.Size = New System.Drawing.Size(468, 23)
         Me.TextBox1.TabIndex = 7
         '
@@ -178,12 +180,12 @@ Partial Class ISOFileScanPanel
         '
         'Label5
         '
-        Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(450, 362)
+        Me.Label5.Location = New System.Drawing.Point(327, 362)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(48, 15)
+        Me.Label5.Size = New System.Drawing.Size(171, 15)
         Me.Label5.TabIndex = 9
         Me.Label5.Text = "This is a"
+        Me.Label5.TextAlign = System.Drawing.ContentAlignment.TopRight
         '
         'RadioButton1
         '
@@ -207,19 +209,9 @@ Partial Class ISOFileScanPanel
         Me.RadioButton2.Text = "Windows 10"
         Me.RadioButton2.UseVisualStyleBackColor = True
         '
-        'Button2
-        '
-        Me.Button2.Location = New System.Drawing.Point(558, 73)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(160, 23)
-        Me.Button2.TabIndex = 8
-        Me.Button2.Text = "Find on network"
-        Me.Button2.UseVisualStyleBackColor = True
-        Me.Button2.Visible = False
-        '
         'PictureBox1
         '
-        Me.PictureBox1.Image = Global.Windows_11_Manual_Installer_2._0.My.Resources.Resources.pref_reset
+        Me.PictureBox1.Image = Global.Windows_11_Manual_Installer.My.Resources.Resources.pref_reset
         Me.PictureBox1.Location = New System.Drawing.Point(724, 74)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(20, 20)
@@ -245,9 +237,9 @@ Partial Class ISOFileScanPanel
         Me.Controls.Add(Me.CheckBox1)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.Panel1)
-        Me.Controls.Add(Me.Button2)
         Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "ISOFileScanPanel"
@@ -277,7 +269,6 @@ Partial Class ISOFileScanPanel
     Friend WithEvents RadioButton1 As System.Windows.Forms.RadioButton
     Friend WithEvents RadioButton2 As System.Windows.Forms.RadioButton
     Friend WithEvents Cancel_Button As System.Windows.Forms.Button
-    Friend WithEvents Button2 As System.Windows.Forms.Button
     Friend WithEvents PictureBox1 As System.Windows.Forms.PictureBox
     Friend WithEvents RefreshToolTip As System.Windows.Forms.ToolTip
 

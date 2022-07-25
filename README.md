@@ -1,33 +1,56 @@
-# Windows 11 Manual Installer
- ### Create Windows 11 installers for unsupported systems!
+# Windows 11 Manual Installer (Hummingbird release)
+This is the beta version for the future of the Windows 11 Manual Installer.
 
+## Versioning system
+Version 2.0.0100_220410 has introduced a new versioning system, which follows this scheme:
+		
+        Prod version:   2.0.0100.2241
+        File version:   2.0.0100.2241
+        
+*Information obtained from SigCheck. This is what you would see when viewing the properties of win11minst.exe*
 
-#
+Let's break it down
 
-This tool allows you to create Windows 11 installers for computers that don't meet the system requirements
-## Feature overview
-- Nice, easy-to-use GUI
-- Permanent installer modifications
-- Customizability
-- Light-weight and compatible
+| Major  | Minor  | Revision  | Release from month  |
+| ------------ | ------------ | ------------ | ------------ |
+|  2 | 0  | 0100  | 2241  |
 
-## GUI
-The user interface is easy to use, and it also features light and dark modes
+- *Major* is the major release of the program. For example, this corresponds to version 2.0.
+- *Minor* is the minor release of the program. For example, an update to the program might have its minor number set to 1.
+- *Revision* is the program revision. This gets incremented by an update (e.g., a bugfix)
+- *Release from month* is the unique part of the versioning system. In this case, *2241* is the 1st release from April 2022. This is done to prevent the 16-bit integer overflow (0-65535). For example:
 
-## Permanent installer modifications
-The installers you create with this tool have permanent modifications, and this program works with every Windows 11 build.
-Just specify 2 ISO files, specify target installer options and let the program do the magic.
+| Release from month  | Details  |
+| ------------ | ------------ |
+| 2241  | 1st release of April 2022  |
+| 22123  | 3rd release of December 2022  |
+| 2312  | 2nd release of January 2023  |
+| 2343  | 3rd release of April 2023  |
+> NOTE: the release from month usually gets updated every Sunday, however, this is not possible on most cases
 
-## Customizability
-This tool can be adapted to work the way you want. 2 possible installer creation methods: each with their strenghts and weaknesses.
+## Building the software
+To make a build of this software, you need to do the following:
+Prerequisites:
+- [.NET Framework 4.8 Developer Pack][netfxdp]
 
-## Size and compatibility
-This tool is compatible with every OS with .NET Framework 4.6 installed and it's so light-weight it fits a floppy
+1. Open the *.sln* file on Visual Studio 2012 or newer
 
-## Installation
-You need a few prerequisites:
-- 7-Zip (copy 7z.exe and 7z.dll to program\bin directory)
-- OSCDIMG (install the Windows Assessment and Deployment Kit, and copy Oscdimg.exe to program\bin directory)
+> If you don't have Visual Studio installed, please go to *visualstudio.microsoft.com* to download Visual Studio Community 2019 or 2022.
+>> Make sure your computer meets the system requirements for Visual Studio.
 
-## Branches
-Want to explore the future of this program? Change to the "hummingbird" branch and explore the new features. However, there are still some bugs; but they will be fixed
+> If you open the solution without installing the .NET Framework 4.6.2 Developer Pack, you will have an error loading the solution.
+
+2. Change the build target from *Debug* to ***Release***
+
+3. Click Build > Build solution
+
+> If you have one of the latest versions of Visual Studio, *Build solution* will be renamed to *Build Windows 11 Manual Installer 2.0.vbproj*, otherwise, click Build solution (or press Ctrl + Shift + B)
+
+4. After building the solution, right-click the project name, *Windows 11 Manual Installer 2.0* and click *Open folder in File Explorer*
+5. Go to *Bin > Release*
+
+> If you haven't performed Step 2, go to *Bin > Debug*
+
+You now have a working copy of the Windows 11 Manual Installer.
+
+[netfxdp]: https://dotnet.microsoft.com/en-us/download/dotnet-framework/thank-you/net48-developer-pack-offline-installer ".NET Framework 4.8 Developer Pack"

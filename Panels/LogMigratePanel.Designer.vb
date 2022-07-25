@@ -55,7 +55,7 @@ Partial Class LogMigratePanel
         'Yes_Button
         '
         Me.Yes_Button.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Yes_Button.BackColor = System.Drawing.Color.DodgerBlue
+        Me.Yes_Button.BackColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(92, Byte), Integer), CType(CType(186, Byte), Integer))
         Me.Yes_Button.FlatAppearance.BorderColor = System.Drawing.Color.DeepSkyBlue
         Me.Yes_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Yes_Button.Font = New System.Drawing.Font("Segoe UI", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
