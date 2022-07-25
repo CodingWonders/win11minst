@@ -10396,21 +10396,11 @@ Public Class MainForm
     End Sub
 
     Private Sub x86_Pic_MouseHover(sender As Object, e As EventArgs) Handles x86_Pic.MouseHover, TopNavbar_x86_Pic.Click
-        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
-            ConglomerateToolTip.SetToolTip(sender, "This system contains a 32-bit processor or operating system. Click here to learn more.")
-        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
-            ConglomerateToolTip.SetToolTip(sender, "Este sistema contiene un procesador o sistema operativo de 32 bits. Haga clic aquí para saber más.")
-        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
-            ConglomerateToolTip.SetToolTip(sender, "Ce système contient un processeur ou un système opérationnel 32 bits. Cliquez ici pour en savoir plus.")
-        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
-            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
-                ConglomerateToolTip.SetToolTip(sender, "This system contains a 32-bit processor or operating system. Click here to learn more.")
-            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
-                ConglomerateToolTip.SetToolTip(sender, "Este sistema contiene un procesador o sistema operativo de 32 bits. Haga clic aquí para saber más.")
-            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
-                ConglomerateToolTip.SetToolTip(sender, "Ce système contient un processeur ou un système opérationnel 32 bits. Cliquez ici pour en savoir plus.")
-            End If
-        End If
+        BringToFront()
+        BackSubPanel.Show()
+        x86_ProcessorPanel.ShowDialog()
+        x86_ProcessorPanel.Visible = True
+        x86_ProcessorPanel.Visible = False
     End Sub
 
     Private Sub x86_Pic_Click(sender As Object, e As EventArgs) Handles x86_Pic.Click, TopNavbar_x86_Pic.Click
