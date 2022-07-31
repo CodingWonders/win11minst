@@ -70,7 +70,7 @@ Public Class MissingComponentsDialog
         Button2.FlatStyle = FlatStyle.System
         Button3.FlatStyle = FlatStyle.System
         Button4.FlatStyle = FlatStyle.System
-        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then
+        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Or MainForm.ComboBox4.SelectedItem = "Anglais" Then
             Label1.Text = "Missing components"
             Label2.Text = "This program needs some components to work properly. Without those, the program will not work. You can download and install the missing components from here." & CrLf & CrLf & _
                 "Please refer to the status symbol on the right column. Components that are already installed will show a tick"
@@ -84,7 +84,7 @@ Public Class MissingComponentsDialog
             Button2.Text = "Download and Install"
             Button3.Text = "Download and Install"
             Button4.Text = "Refresh"
-        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Then
+        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Or MainForm.ComboBox4.SelectedItem = "Espagnol" Then
             Label1.Text = "Componentes faltantes"
             Label2.Text = "Este programa necesita algunos componentes para funcionar correctamente. Sin ellos, el programa no funcionará. Puede descargar e instalar los componentes faltantes desde aquí." & CrLf & CrLf & _
                 "Por favor, refiérase al símbolo de estado en la columna derecha. Los componentes ya instalados mostrarán un tick"
@@ -98,7 +98,21 @@ Public Class MissingComponentsDialog
             Button2.Text = "Descargar e instalar"
             Button3.Text = "Descargar e instalar"
             Button4.Text = "Actualizar"
-        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Then
+        ElseIf MainForm.ComboBox4.SelectedItem = "French" Or MainForm.ComboBox4.SelectedItem = "Francés" Or MainForm.ComboBox4.SelectedItem = "Français" Then
+            Label1.Text = "Composants manquants"
+            Label2.Text = "Ce programme a besoin de certains composants pour fonctionner correctement. Sans ces composants, le programme ne fonctionnera pas. Vous pouvez télécharger et installer les composants manquants à partir d'ici." & CrLf & CrLf & _
+                "Veuillez consulter le symbole d'état dans la colonne de droite. Les composants qui sont déjà installés sont cochés."
+            Label3.Text = "Nom du composant"
+            Label4.Text = "Statut"
+            Label8.Text = "Description du component"
+            Label9.Text = "Placez le curseur de votre souris sur une entrée pour afficher sa description."
+            Label10.Text = "Vous pouvez poursuivre l'exécution du programme maintenant."
+            Label11.Text = "Veuillez extraire le fichier téléchargé dans le dossier" & Quote & "prog_bin" & Quote
+            Button1.Text = "Lancer"
+            Button2.Text = "Télécharger et installer"
+            Button3.Text = "Télécharger et installer"
+            Button4.Text = "Rafraîchir"
+        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Or MainForm.ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 Label1.Text = "Missing components"
                 Label2.Text = "This program needs some components to work properly. Without those, the program will not work. You can download and install the missing components from here." & CrLf & CrLf & _
@@ -127,8 +141,23 @@ Public Class MissingComponentsDialog
                 Button2.Text = "Descargar e instalar"
                 Button3.Text = "Descargar e instalar"
                 Button4.Text = "Actualizar"
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                Label1.Text = "Composants manquants"
+                Label2.Text = "Ce programme a besoin de certains composants pour fonctionner correctement. Sans ces composants, le programme ne fonctionnera pas. Vous pouvez télécharger et installer les composants manquants à partir d'ici." & CrLf & CrLf & _
+                    "Veuillez consulter le symbole d'état dans la colonne de droite. Les composants qui sont déjà installés sont cochés."
+                Label3.Text = "Nom du composant"
+                Label4.Text = "Statut"
+                Label8.Text = "Description du component"
+                Label9.Text = "Placez le curseur de votre souris sur une entrée pour afficher sa description."
+                Label10.Text = "Vous pouvez poursuivre l'exécution du programme maintenant."
+                Label11.Text = "Veuillez extraire le fichier téléchargé dans le dossier" & Quote & "prog_bin" & Quote
+                Button1.Text = "Lancer"
+                Button2.Text = "Télécharger et installer"
+                Button3.Text = "Télécharger et installer"
+                Button4.Text = "Rafraîchir"
             End If
         End If
+        Text = Label1.Text
         If MainForm.BackColor = Color.FromArgb(243, 243, 243) Then
             BackColor = Color.FromArgb(243, 243, 243)
             ForeColor = Color.Black
@@ -429,85 +458,109 @@ Public Class MissingComponentsDialog
     End Sub
 
     Private Sub Label5_MouseEnter(sender As Object, e As EventArgs) Handles Label5.MouseEnter
-        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then
+        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Or MainForm.ComboBox4.SelectedItem = "Anglais" Then
             Label9.Text = "This is the component responsible for extracting the image contents from the source installers."
-        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Then
+        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Or MainForm.ComboBox4.SelectedItem = "Espagnol" Then
             Label9.Text = "Este es el componente encargado de extraer los contenidos de las imágenes de los instaladores de origen."
-        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Then
+        ElseIf MainForm.ComboBox4.SelectedItem = "French" Or MainForm.ComboBox4.SelectedItem = "Francés" Or MainForm.ComboBox4.SelectedItem = "Français" Then
+            Label9.Text = "Il s'agit du composant responsable de l'extraction du contenu de l'image à partir des installateurs sources."
+        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Or MainForm.ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 Label9.Text = "This is the component responsible for extracting the image contents from the source installers."
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 Label9.Text = "Este es el componente encargado de extraer los contenidos de las imágenes de los instaladores de origen."
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                Label9.Text = "Il s'agit du composant responsable de l'extraction du contenu de l'image à partir des installateurs sources."
             End If
         End If
     End Sub
 
     Private Sub Label5_MouseLeave(sender As Object, e As EventArgs) Handles Label5.MouseLeave
-        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then
+        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Or MainForm.ComboBox4.SelectedItem = "Anglais" Then
             Label9.Text = "Point your mouse cursor over an entry to show its description."
-        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Then
+        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Or MainForm.ComboBox4.SelectedItem = "Espagnol" Then
             Label9.Text = "Sitúe su cursor del ratón sobre una entrada para mostrar su descripción."
-        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Then
+        ElseIf MainForm.ComboBox4.SelectedItem = "French" Or MainForm.ComboBox4.SelectedItem = "Francés" Or MainForm.ComboBox4.SelectedItem = "Français" Then
+            Label9.Text = "Placez le curseur de votre souris sur une entrée pour afficher sa description."
+        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Or MainForm.ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 Label9.Text = "Point your mouse cursor over an entry to show its description."
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 Label9.Text = "Sitúe su cursor del ratón sobre una entrada para mostrar su descripción."
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                Label9.Text = "Placez le curseur de votre souris sur une entrée pour afficher sa description."
             End If
         End If
     End Sub
 
     Private Sub Label6_MouseEnter(sender As Object, e As EventArgs) Handles Label6.MouseEnter
-        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then
+        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Or MainForm.ComboBox4.SelectedItem = "Anglais" Then
             Label9.Text = "This is the component used by REGTWEAK. This is present on every Windows installation since Windows 7, so your system should have it installed."
-        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Then
+        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Or MainForm.ComboBox4.SelectedItem = "Espagnol" Then
             Label9.Text = "Este es el componente usado por REGTWEAK. Esto está presente en todas las instalaciones de Windows desde Windows 7, así que su sistema debería tenerlo instalado."
-        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Then
+        ElseIf MainForm.ComboBox4.SelectedItem = "French" Or MainForm.ComboBox4.SelectedItem = "Francés" Or MainForm.ComboBox4.SelectedItem = "Français" Then
+            Label9.Text = "Il s'agit du composant utilisé par REGTWEAK. Il est présent sur toutes les installations de Windows depuis Windows 7, votre système devrait donc l'avoir installé."
+        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Or MainForm.ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 Label9.Text = "This is the component used by REGTWEAK. This is present on every Windows installation since Windows 7, so your system should have it installed."
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 Label9.Text = "Este es el componente usado por REGTWEAK. Esto está presente en todas las instalaciones de Windows desde Windows 7, así que su sistema debería tenerlo instalado."
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                Label9.Text = "Il s'agit du composant utilisé par REGTWEAK. Il est présent sur toutes les installations de Windows depuis Windows 7, votre système devrait donc l'avoir installé."
             End If
         End If
     End Sub
 
     Private Sub Label6_MouseLeave(sender As Object, e As EventArgs) Handles Label6.MouseLeave
-        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then
+        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Or MainForm.ComboBox4.SelectedItem = "Anglais" Then
             Label9.Text = "Point your mouse cursor over an entry to show its description."
-        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Then
+        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Or MainForm.ComboBox4.SelectedItem = "Espagnol" Then
             Label9.Text = "Sitúe su cursor del ratón sobre una entrada para mostrar su descripción."
-        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Then
+        ElseIf MainForm.ComboBox4.SelectedItem = "French" Or MainForm.ComboBox4.SelectedItem = "Francés" Or MainForm.ComboBox4.SelectedItem = "Français" Then
+            Label9.Text = "Placez le curseur de votre souris sur une entrée pour afficher sa description."
+        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Or MainForm.ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 Label9.Text = "Point your mouse cursor over an entry to show its description."
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 Label9.Text = "Sitúe su cursor del ratón sobre una entrada para mostrar su descripción."
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                Label9.Text = "Placez le curseur de votre souris sur une entrée pour afficher sa description."
             End If
         End If
     End Sub
 
     Private Sub Label7_MouseEnter(sender As Object, e As EventArgs) Handles Label7.MouseEnter
-        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then
+        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Or MainForm.ComboBox4.SelectedItem = "Anglais" Then
             Label9.Text = "This is the component responsible for creating the custom installer on the target location."
-        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Then
+        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Or MainForm.ComboBox4.SelectedItem = "Espagnol" Then
             Label9.Text = "Este es el componente encargado de crear el instalador modificado en la ruta del instalador de destino."
-        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Then
+        ElseIf MainForm.ComboBox4.SelectedItem = "French" Or MainForm.ComboBox4.SelectedItem = "Francés" Or MainForm.ComboBox4.SelectedItem = "Français" Then
+            Label9.Text = "Il s'agit du composant responsable de la création de l'installateur personnalisé sur l'emplacement cible."
+        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Or MainForm.ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 Label9.Text = "This is the component responsible for creating the custom installer on the target location."
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 Label9.Text = "Este es el componente encargado de crear el instalador modificado en la ruta del instalador de destino."
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                Label9.Text = "Il s'agit du composant responsable de la création de l'installateur personnalisé sur l'emplacement cible."
             End If
         End If
     End Sub
 
     Private Sub Label7_MouseLeave(sender As Object, e As EventArgs) Handles Label7.MouseLeave
-        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Then
+        If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Or MainForm.ComboBox4.SelectedItem = "Anglais" Then
             Label9.Text = "Point your mouse cursor over an entry to show its description."
-        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Then
+        ElseIf MainForm.ComboBox4.SelectedItem = "Spanish" Or MainForm.ComboBox4.SelectedItem = "Español" Or MainForm.ComboBox4.SelectedItem = "Espagnol" Then
             Label9.Text = "Sitúe su cursor del ratón sobre una entrada para mostrar su descripción."
-        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Then
+        ElseIf MainForm.ComboBox4.SelectedItem = "French" Or MainForm.ComboBox4.SelectedItem = "Francés" Or MainForm.ComboBox4.SelectedItem = "Français" Then
+            Label9.Text = "Placez le curseur de votre souris sur une entrée pour afficher sa description."
+        ElseIf MainForm.ComboBox4.SelectedItem = "Automatic" Or MainForm.ComboBox4.SelectedItem = "Automático" Or MainForm.ComboBox4.SelectedItem = "Automatique" Then
             If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
                 Label9.Text = "Point your mouse cursor over an entry to show its description."
             ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
                 Label9.Text = "Sitúe su cursor del ratón sobre una entrada para mostrar su descripción."
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                Label9.Text = "Placez le curseur de votre souris sur une entrée pour afficher sa description."
             End If
         End If
     End Sub
