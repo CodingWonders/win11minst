@@ -8,15 +8,6 @@ Public Class UpdateCheckPreLoadPanel
     Private isMouseDown As Boolean = False
     Private mouseOffset As Point
     Dim VerTag As String
-    Private Sub OK_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        DialogResult = System.Windows.Forms.DialogResult.OK
-        Me.Close()
-    End Sub
-
-    Private Sub Cancel_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        Me.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.Close()
-    End Sub
 
     Private Sub UpdateCancelButton_Click(sender As Object, e As EventArgs) Handles UpdateCancelButton.Click
         Me.DialogResult = System.Windows.Forms.DialogResult.Cancel
@@ -53,7 +44,7 @@ Public Class UpdateCheckPreLoadPanel
             Label1.Text = "Checking for updates..."
             Label2.Text = "Your version:"
             Label3.Text = "Up-to-date version:"
-            Label4.Text = "Version channel: hummingbird"
+            Label4.Text = "Version channel: stable"
             Label5.Text = "Actions:"
             GroupBox1.Text = "Version information"
             Button1.Text = "Install later"
@@ -64,7 +55,7 @@ Public Class UpdateCheckPreLoadPanel
             Label1.Text = "Comprobando actualizaciones..."
             Label2.Text = "Su versión:"
             Label3.Text = "Versión actualizada:"
-            Label4.Text = "Canal de versiones: hummingbird"
+            Label4.Text = "Canal de versiones: stable"
             Label5.Text = "Acciones:"
             GroupBox1.Text = "Información de versiones"
             Button1.Text = "Instalar después"
@@ -75,7 +66,7 @@ Public Class UpdateCheckPreLoadPanel
             Label1.Text = "Vérification des mises à jour..."
             Label2.Text = "Votre version :"
             Label3.Text = "Version actualisée :"
-            Label4.Text = "Canal de version : hummingbird"
+            Label4.Text = "Canal de version : stable"
             Label5.Text = "Actions :"
             GroupBox1.Text = "Informations sur la version"
             Button1.Text = "Installer plus tard"
@@ -87,7 +78,7 @@ Public Class UpdateCheckPreLoadPanel
                 Label1.Text = "Checking for updates..."
                 Label2.Text = "Your version:"
                 Label3.Text = "Up-to-date version:"
-                Label4.Text = "Version channel: hummingbird"
+                Label4.Text = "Version channel: stable"
                 Label5.Text = "Actions:"
                 GroupBox1.Text = "Version information"
                 Button1.Text = "Install later"
@@ -98,7 +89,7 @@ Public Class UpdateCheckPreLoadPanel
                 Label1.Text = "Comprobando actualizaciones..."
                 Label2.Text = "Su versión:"
                 Label3.Text = "Versión actualizada:"
-                Label4.Text = "Canal de versiones: hummingbird"
+                Label4.Text = "Canal de versiones: stable"
                 Label5.Text = "Acciones:"
                 GroupBox1.Text = "Información de versiones"
                 Button1.Text = "Instalar después"
@@ -109,7 +100,7 @@ Public Class UpdateCheckPreLoadPanel
                 Label1.Text = "Vérification des mises à jour..."
                 Label2.Text = "Votre version :"
                 Label3.Text = "Version actualisée :"
-                Label4.Text = "Canal de version : hummingbird"
+                Label4.Text = "Canal de version : stable"
                 Label5.Text = "Actions :"
                 GroupBox1.Text = "Informations sur la version"
                 Button1.Text = "Installer plus tard"
@@ -224,7 +215,7 @@ Public Class UpdateCheckPreLoadPanel
                 End Using
             End If
         End If
-        VerTag = TextBox2.Text.Replace("2.0.0100_", "2.0_").ToString()
+        VerTag = TextBox2.Text.Replace("2.0.0100_", "stable_").ToString()
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
@@ -279,7 +270,7 @@ Public Class UpdateCheckPreLoadPanel
         Using PUCSUpdate As New WebClient()
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
             Try
-                PUCSUpdate.DownloadFile("https://github.com/CodingWonders/win11minst/blob/hummingbird/upd/PassiveUpdateCheckSys/Win11Minst/upd.exe?raw=true", ".\upd.exe")
+                PUCSUpdate.DownloadFile("https://github.com/CodingWonders/win11minst/blob/stable/upd/PassiveUpdateCheckSys/Win11Minst/upd.exe?raw=true", ".\upd.exe")
             Catch ex As Exception
                 If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Or MainForm.ComboBox4.SelectedItem = "Anglais" Then
                     MsgBox("We could not download the new version for you. You will have to do this manually. You can still use the current version.", vbOKOnly + vbCritical, "Update download failure")
@@ -317,6 +308,11 @@ Public Class UpdateCheckPreLoadPanel
             End If
         End If
         If DialogResult.OK Then
+            MainForm.LoadSettingsFile()
+            If SettingLoadForm.TextBox1.Text.Contains("ReuseSI=1") Then
+                MainForm.InstCreateInt = 1
+            End If
+            MainForm.SaveSettingsFile()
             Process.Start(".\upd.exe")
             End
         End If

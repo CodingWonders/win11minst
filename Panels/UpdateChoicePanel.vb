@@ -92,6 +92,9 @@ Public Class UpdateChoicePanel
             End If
         End If
         If DialogResult.OK Then
+            If MainForm.Label3.Visible = True And MainForm.LinkLabel2.Visible = True And MainForm.PictureBox5.Visible = True Then
+                MainForm.InstCreateInt = 1
+            End If
             Process.Start(".\upd.exe")
             MainForm.SaveSettingsFile()
             MainForm.Notify.Visible = False
@@ -106,7 +109,7 @@ Public Class UpdateChoicePanel
     End Sub
 
     Private Sub UpdateChoicePanel_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        VerTag = TextBox2.Text.Replace("2.0.010_", "2.0_").ToString()
+        VerTag = TextBox2.Text.Replace("2.0.0100_", "stable_").ToString()
         Label1.Parent = PictureBox1
         Label1.BackColor = Color.Transparent
         Label2.Parent = PictureBox1
