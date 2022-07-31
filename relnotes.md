@@ -1,10 +1,7 @@
 ## Windows 11 Manual Installer Release Notes
 
-Here you can see the feature list for each released version since `2.0.0100_220515`. If you want to take a look at the release notes for an older release, please look at **that specific release** (you can do this more easily by clicking the links at the bottom of the file)
-
 ### Updating the program
 ---
-Since version `2.0.0100_220529`, the program has had a built-in updater, which installs up-to-date versions (with new features and bugfixes), and installs the necessary references to make the program work.
 
 To install updates when the program is open:
 
@@ -30,409 +27,58 @@ If updates are found:
 
 Congratulations, you have updated the program. If no updates are found, the program will continue startup.
 
-### 2.0.0100_220724
+### 2.0.0100_220731
 ---
-This version is also released on the `stable` branch. Go check it out!
+
+This is the `stable` release of the Windows 11 Manual Installer.
+
+#### Features
+
+If you haven't checked the releases from the `hummingbird` branch, here is a feature recap:
+
+- Redesigned user interface, which makes it look and feel like a modern Windows application
+
+	- The automatic color scheme has been added, which checks Windows color modes and applies them to the program
+	- The program layout has been redesigned, like a modern WinUI application
+	- The program lets you set two navigation bar positions: left, or top
+
+
+- A new installer creation method has been added, `REGTWEAK`, which makes changes to the Windows registry on the Windows 11 installer
+
+	- This method can be customized to also bypass forced Microsoft Account sign-in and forced Internet connection
+		
+		> This option can be applied on Windows 11 installation mediums, builds 22557 and later
+
+- The installer label can be picked from the Windows 11 installer
+- An installer scanner has been added, letting you scan a directory for them, even recursively
+- An installer history has been added, letting you see your recently created installers, as well as export them to many file formats (XML, HTML and CSV)
+- The program now saves and loads custom preferences, meaning that you don't need to set them each time the program loads
+- An installer downloader has been added, letting you download (or build, with admin. privileges, thanks to UUP Dump) Windows installation mediums from Microsoft's download pages
+- The program now detects the space of the target installer path, and warns you about low disk spaces
+- The program base has now been updated to .NET 4.8, for better security practices
+- The instruction and help pages have been updated, making them more useful
+- A new language has been added, French
+- The program can now run from the system tray
+- The program no longer freezes when creating an installer
+- The external commands do not show the command input anymore
+- The program now detects missing components and warns you about them
+- The program now remembers the installers that were going to be used previously, and gives you a chance of continuing with them
+
+If you come from `hummingbird` releases, here are the bugfixes and features:
 
 #### **Bugfixes**
 
-- On 7-Zip 22.01 and newer, fixed a bug that changed the custom installer label to nothing when `Use Windows 11 installer label` was checked
-- Fixed a bug that would not delete temporarily copied installers if REGTWEAK was selected as the installer creation method
-- Fixed final color consistency issues
+- Fixed a bug related to the installer issues
+- Fixed a bug that would show external panels on the top-left corner if the program was previously hidden to the system tray
+- Fixed incomplete translations
 
 #### **New features**
 
-- Help documentation and instructions are now translated
-- The License is now included, and a License tab is added to the About screen
-- The `Use Windows 11 installer label` setting is now kept after program closure, and is set on program launch
-- The legacy dialogs (32-bit processor detection and installer issues) were renewed to make their designs and functionalities more consistent with the program
-- The files exported in the Installer History panel are now translated
-- The web browser now goes to a correctly translated download page
-- The `Clear installer history` option is now disabled when no items are present in the installer history
-- The method help has been updated
+- The disclaimer can now be dismissed and automatically agreed to
+- Fade animations can now be used when loading external panels
+- The REGTWEAK script now sets the title
+- Added the ability to cancel installer creation when closing the program
 
-#### **Removed/stripped down features**
+#### **Removed features**
 
-- **CODE**: the `IsPureEnglish` variable was removed. It was meant to be used to inform the user of English-only help documentation and instruction pages
-- The `SV2` (Hide the "System requirements not met" watermark) option is removed, because a good, working implementation was not found; and modern builds of Windows 11 do not seem to show the watermark by default anymore
-
-### 2.0.0100_220717
----
-
-#### **Bugfixes**
-
-- Fixed a bug that accidentally showed "Updates are available" on the latest version
-- Fixed a bug that caused exceptions when opening some context menus with the Space or Enter keys
-- Fixed a bug that caused the main window to unmaximize when showing it after being hidden to the system tray, if it was previously maximized
-- Fixed a bug related to languages, making the "Hide/Show log" button not being shown correctly
-- Fixed a bug that caused an `ArgumentException` when manually entering the folder in the ISO file scanner
-- Fixed a bug that showed the Hummingbird channel promotion (a.k.a., a link to load the Hummingbird branch on the web), on Hummingbird releases
-- Fixed a bug that enabled the export options when no items were present in the installer history
-- Fixed a bug that made the Windows 10 installer presence status unknown when REGTWEAK was selected
-- **DEBUGGING**: fixed a bug that caused a `System.Runtime.InteropServices.COMException` when debugging the program
-
-	> NOTE: unless specified in the Exceptions window (shown by pressing `Ctrl + Alt + E`), this exception would not break the program debugging session
-
-#### **New features**
-
-- If UEFI is chosen for platform compatibility, and `Efisys.bin` is not present on the target installer files, but the Windows ADK is installed, the program will copy the file from the ADK directory into the installer
-
-	> NOTE: the program will check if `Efisys.bin` is located on the system IF the Windows ADK for Windows 10 or later is installed. If you have the ADK for Windows 8.1 or older, the program will ignore it.
-
-- The installer history can now be exported to a CSV file
-- Added a CSM enablement warning related to an operating system reinstallation
-- ToolTips are now shown in multiple languages
-- The last installer creation time and date are now reflected on the Welcome page and the `NotifyIcon` context menu
-- Added the premise of this program in the About screen and updated it
-- ToolTips are shown when hovering over more controls
-- An option for viewing the release notes has been added to the pre-load update screen
-- Updated reset functionality
-- Updated download procedure to the `MissingComponents` dialog:
-
-	```
-	Updated components to download:
-
-	- 7-Zip: 21.07 -> 22.01
-	```
-
-	> It now downloads and installs more up-to-date components
-
-	**NOTE**: if the 7-Zip required components are installed before this update, the program will skip the update procedure, unless they are from an incompatible architecture (64-bit program on 32-bit hardware)
-
-- **CODE**: the control the ToolTips are shown from is now `sender` (as of `sender As Object`) instead of the control name
-
-	> To view a specific `ToolTip.SetToolTip` procedure, go to `<Control name>_MouseHover` **in the code files**
-
-- **CODE**: `WebBrowser.AllowWebBrowserDrop` is not specified in the `MainForm.Designer.vb` file anymore, but it is set during program startup in the `MainForm_Shown` event
-
-#### **Removed/stripped down features**
-
-There are no removed features from this release
-
-### 2.0.0100_220710
----
-
-#### **Bugfixes**
-
-- Fixed a bug that would not change external panel titles with the On-the-fly Panel Property Modification (a.k.a., changing the language when external panels were shown)
-- Fixed a bug that caused a `FileNotFound` exception when clicking on `View log file` if the log file had been previously deleted
-
-#### **New features**
-
-- If the target directory does not have enough space to store temporary files, a low space error will appear
-- If the target directory does not exist, the program will warn the user, instead of proceeding with the user directory
-- The Help documentation changes color modes when changing program's
-- The instruction panel is now accessible
-
-#### **Removed/stripped down features**
-
-- The PE version, as well as the PE creation panel (in its infancy), were removed due to lack of usefulness
-
-### 2.0.0100_220703
----
-
-#### **Bugfixes**
-
-- Fixed a bug that caused the updater to stay open after the update process
-- Fixed a bug that would terminate (kill) the Windows 11 Manual Installer process after updating to a new version
-- Fixed a bug that would not find any files after checking the 'Search on subdirectories' option in the scan dialog
-- Fixed a bug that would incorrectly show `Path will contain quotes` when changing either the target installer name or location
-
-#### **New features**
-
-- The update system has been refined and fixes the two bugs mentioned above
-
-```
-Passive Update Check System (PUCS) version 0.5.0.0, for the Windows 11 Manual Installer
-
-  Beginning program update. Please wait...
-
-    Old version: 2.0.0100.2264
-    New version: 2.0.0100.2271
-
-  Updating the program...
-
-  The update process has completed. Launching the Windows 11 Manual Installer, version 2.0.0100.2271...
-```
-
-- Began work on the Windows 11 Manual Installer PE, although no PE download functionality has been added to the main program yet
-
-- External panels now support French
-
-#### **Removed/stripped down features**
-
-There are no removed features from this release
-
-
-
-### 2.0.0100_220626
----
-This is the first version that surpasses 5 MB in size, so the idea of putting it on a floppy disk is thrown out of a window (no pun intended)
-
-#### **Bugfixes**
-
-- Fixed a bug that caused the program to freeze while creating the custom installer
-
-    > This issue affected 1.0 versions, and all 2.0 versions prior to this one. However, it may take a longer time for the program to reach the 'Finish' page, and may also stop responding for a little bit. In that case, just wait 10-15 seconds.
-
-- Fixed a bug that showed the "Incompatible installer architecture" dialog while hovering the 'processor' icon
-
-
-#### **New features**
-
-- As a result of the first bugfix, the functionality settings will be disabled when an installer creation process is in place, until after completion
-
-![win11minst_pdmZEaPmre](https://user-images.githubusercontent.com/101426328/175825358-06603216-5321-4314-8afb-7f08c720e9cc.png)
-
-![win11minst_7zrKP0OLGF](https://user-images.githubusercontent.com/101426328/175825383-ba84a3e5-0409-4a80-8d39-1a7f435c7e92.png)
-
-- Improved French translations
-- The installer creation log now shows the date and time of each action
-
-```
-[26/06/2022 16:03:03] Gathering instructions necessary to create the installer... Done
-[26/06/2022 16:03:07] Extracting the necessary contents from the ISO images using the WIMR method...
-[26/06/2022 16:05:42] Finished extracting files.
-[26/06/2022 16:05:42] Creating the custom installer using the WIMR method...
-[26/06/2022 16:05:42] Deleting "install.wim" from the Windows 10 installation media... Done
-[26/06/2022 16:05:42] Moving "install.wim" from the Windows 11 installation media to the Windows 10 installer... Done
-[26/06/2022 16:05:42] Creating the installer using OSCDIMG... Done
-```
-
-- The installer label from the Windows 11 installer specified can now be reused by your custom installer
-
-![win11minst_42LQo9acpB](https://user-images.githubusercontent.com/101426328/175825483-bbbf0a8d-1656-4944-b76e-7a4ffd1cfe25.png)
-
-- When creating the ISO file using OSCDIMG, or when deleting files, the ability to cancel will be disabled
-
-![win11minst_6mAo24YxU0](https://user-images.githubusercontent.com/101426328/175825495-e34d6fcf-3fba-444d-a72e-9accd08ae134.png)
-
-- The 'processor' icon, introduced in version `2.0.0100_220619`, is now visible when the navigation bar is placed on the top
-
-![win11minst_processor_topnav](https://user-images.githubusercontent.com/101426328/175825824-870cdf78-d680-4218-89f3-8d4ac0f35f5c.png)
-
-![win11minst_procdesc_topnav](https://user-images.githubusercontent.com/101426328/175825827-d8511ef6-cd1a-42ba-8368-0c945ae832ab.png)
-
-- Updated Help documentation, to make it more useful
-
-#### **Removed/stripped down features**
-
-There are no removed features from this release
-
-### 2.0.0100_220619
----
-This version may not have many new features. As the date for the stable version of 2.0 is getting nearer, the following releases will focus more on bugfixes. Still, there are some new features you might find interesting
-
-#### **Bugfixes**
-
-- Fixed a bug that put external panels after clicking their context menu option (like the installer history or the functionality advanced options) to the top-left corner if the main window was minimized
-- Fixed a bug that caused a program exception if the user clicked "Cancel" on the file specification dialogs
-
-#### **New features**
-
-- Component version information is now displayed in the About screen
-
-![win11minst_UOnQNw3Lw8](https://user-images.githubusercontent.com/101426328/174486774-8842f0b6-5a94-4250-bf77-f99d70886973.png)
-
-- Functionality settings can now be accessed from the installer creation screen
-
-![XOZ2RL8IUJ](https://user-images.githubusercontent.com/101426328/174486782-23b69305-e19a-4712-b5a8-7a4c49049891.gif)
-
-- When hovering over the side panel images, a description is shown
-
-![iBbKXr8tT5](https://user-images.githubusercontent.com/101426328/174487296-9e73c73d-bb41-49d8-9525-8cc934ffd8bb.gif)
-
-- Added French translations
-
-    > Since releases are weekly, not a lot much was done for full French translations, so it will only apply on the main window (for now)
-
-- Began work on a revamped Instructions panel (although it can't be loaded yet)
-- Began improving program speed and fluidity
-- If the program is run on a 32-bit (x86) system, a 'processor' icon will appear next to the window buttons
-
-![win11minst-32bit-hover](https://user-images.githubusercontent.com/101426328/174486904-6efe36b2-dbfa-4d6d-98dd-4ead773d6160.png)
-
-> A description of the 'processor' icon. Taken from a 32-bit Windows 7 VM
-
-![win11minst_q5GcGEyNLp](https://user-images.githubusercontent.com/101426328/174487015-cafd0f34-b798-4439-bb0c-7b1d815bb9f0.png)
-
-> The message that shows after clicking the 'processor' icon
-
-#### **Removed/stripped down features**
-
-There are no removed features from this release
-
-
-### 2.0.0100_220612
----
-
-#### **Bugfixes**
-
-- Fixed a bug where the program would throw an exception if a solid color was set as the desktop background
-
-    > If you apply a solid background on your system, the program will default to its background color
-
-
-#### **New features**
-
-- You can now drag ISO files and drop them in the program
-
-    > If you run the program as an Administrator, the drag & drop feature will not work (and it is not an isolated case, every program that supports drag & drop will not perform the operation). There is a workaround, which requires you to change a Group Policy setting related to User Account Control (UAC); although it's not recommended, as this change may pose a security risk to your system. Still, if you are interested, here is the workaround link: [https://weblogs.asp.net/jeffwids/windows-7-user-account-control-does-not-allow-drag-and-drop][dndadmin]
-
-[dndadmin]: https://weblogs.asp.net/jeffwids/windows-7-user-account-control-does-not-allow-drag-and-drop
-
-- Installer history items can now be exported to HTML files
-
-    > This option, and the "`Export to XML file...`" option, are now shown by clicking the "`Export options`" button
-
-- Audible events are now produced by dialogs during installer creation
-- On-the-fly color mode and language changes for external panels
-
-    > It may take some time to perform these on-the-fly changes on some panels, like the update screen
-
-- New references (from later versions) can now be downloaded and applied by the updater, replacing existing ones
-- Settings are now saved when installing updates
-- Updated user agent
-- Advanced options can now be accessed by selecting "`Installer creation method > Advanced options`"
-
-#### **Removed/stripped down features**
-
-There are no removed features in this release
-
-
-### 2.0.0100_220605
----
-
-#### **Bugfixes**
-
-- Fixed a bug where the navigation bar icons would not change images or change pages from certain ones
-- Fixed a bug that allowed moving the window by dragging from the `Personalization` screen header
-- Fixed a bug where `View log file` would not be moved after resizing the window
-- Fixed a bug where clicking the `View installer history` context menu option would restore the window to a normal state when it was maximized
-
-
-#### **New features**
-
-- You can now view release notes from the update window
-- You can now export installer history items to an XML file. Because of this, the `System.Data` dependency is needed
-
-    > Support for other file types is planned in the future, such as exporting to a HTML file, or to an Excel spreadsheet
-
-- When updates are detected, the message is less vague
-- Refactored some code (it still works, though)
-
-#### **Removed/stripped down features**
-
-There are no removed features in this release
-
-### 2.0.0100_220529
----
-
-#### **Bugfixes**
-
-- Fixed a bug where restoring the window to its normal state would put it to the top left corner, `(0,0)`
-- Fixed a bug where the progress label would not change after switching languages to `Automatic`
-- Fixed a bug where the panel titles would not be localized
-- Fixed a bug where the installer creation method option in the context menu is still disabled after creating an installer
-- Fixed a bug where the navigation bar icons don't change correctly when changing color modes
-
-
-#### **New features**
-
-- The image download panel now detects administrative privileges
-    - If they are present, the build mode option is visible
-    - If they aren't present, the build mode option is hidden
-- The build process is now automated and will not require you to type `0` after script completion
-- The update system is functional
-
-    > From this release aftwerwards, you can trigger an update by clicking `Check for updates` on the About screen or on program startup. Also, in new copies (those that didn't check for updates before), the program will suggest the user to do so
-
-- Updated the About screen
-- The log can now be viewed by clicking `View log file` after installer creation
-- When specifying additional REGTWEAK options, the script flags will be shown in the installer creation log (`MainForm.LogBox`)
-
-#### **Removed/stripped down features**
-
-- Removed dependency: `Microsoft.VisualBasic.PowerPacks.Vs`. You don't need it anymore to launch the program, starting from this release
-
-### 2.0.0100_220515
----
-#### **Bugfixes**
-
-- Fixed item positioning and scale when switching languages
-
-#### **New features**
-
-- Added missing icons for panels
-
-|  Icon  |  Description  |
-| ------------ | ------------ |
-|  ![advanced_options](https://user-images.githubusercontent.com/101426328/168483895-08b1562a-ccf9-4b4d-9918-30b387c019ae.png)  |  Advanced options (REGTWEAK only)  |
-|  ![cancel](https://user-images.githubusercontent.com/101426328/168483923-4624dbde-d4a7-4acf-a497-22b3102f7fc6.png)  |  Cancel installer creation  |
-|  ![copy](https://user-images.githubusercontent.com/101426328/168483930-55d6dcf2-1ac1-4170-ac33-d5b3c3609bc5.png)  |  Installer copy to local disk  |
-|  ![debug_mode](https://user-images.githubusercontent.com/101426328/168483945-a0fdf05f-75a3-4394-a555-eeaa8ca39d7c.png)  |  Debug mode (for testing)  |
-|  ![disclaimer](https://user-images.githubusercontent.com/101426328/168483958-2b43facb-4ed2-4504-a60f-2ebe0d0c8b93.png)  |  Disclaimer notice  |
-|  ![download](https://user-images.githubusercontent.com/101426328/168483961-51c02961-93e9-4878-a65d-85d23a3c1dc1.png)  |  Download/Build Windows images  |
-|  ![help](https://user-images.githubusercontent.com/101426328/168483970-e56ff600-5fdc-4238-8961-09e0448d3287.png)   |  Method help  |
-|  ![history](https://user-images.githubusercontent.com/101426328/168484014-9cd8e4f5-5b7a-4e2a-b51e-041de20080fa.png)  |  Installer history  |
-|  ![reset](https://user-images.githubusercontent.com/101426328/168484021-18045cab-71aa-436b-aedf-8ce99f456316.png)  |  Reset preferences  |
-|  ![search](https://user-images.githubusercontent.com/101426328/168484025-222901bd-6f31-43e5-8398-b9340b5d15e0.png)  |  Scan for ISO images  |
-|  ![update](https://user-images.githubusercontent.com/101426328/168484037-a857226a-7dfa-41c9-8ba7-365a3dc3ae45.png)  |  Program updates  |
-
-Example:
-
-![220515_1](https://user-images.githubusercontent.com/101426328/168484197-563a618a-89ac-4605-bfa4-ff7e979f99ea.png)
-
-> Installer history and new icon shown in `Alt-Tab` menu
-
-- When the installer creation process finishes, the program will display the warnings and errors, and will append them to the log file
-
-![win11minst_z5R1tXMdYl](https://user-images.githubusercontent.com/101426328/168484351-197f8136-5257-442d-a5fc-505740af5fb3.png)
-
-Example log file:
-
-```
-Finished creating the installer. Details:
-Began installer creation at: 14/05/2022 20:04:35
-Ended installer creation at: 14/05/2022 20:10:29
-Message(s): 946. Warning(s): 2. Error(s): 0.
-Warnings:
-14/05/2022 20:05:33 - The program attempted to run the REGTWEAK script with advanced options, but one of the source images contains ESD files. These cannot be mounted by DISM
-14/05/2022 20:10:28 - An exception ocurred while deleting the temporary directory. The program has attempted an alternative folder deletion method
-
-Errors:
-
-```
-
-- Added links for [WhyNotWin11][wnw11]
-
-![win11minst_nrL1bOXQEw](https://user-images.githubusercontent.com/101426328/168484743-798f3748-c7eb-4695-a3c1-bad1d9f04d19.png)
-
-
-- When finishing build mode, the program will tell the user that the process has finished
-
-![win11minst_G9j4hs1ZOZ](https://user-images.githubusercontent.com/101426328/168486977-78e4c1be-04e3-4492-b7ed-022d354e53a5.png)
-
-
-#### **Removed/stripped down features**
-- Removed copyright information
-- The program no longer detects Windows Server operating systems to suggest creating custom Server installers (Microsoft still doesn't check hardware on Windows Server, but they might in the future)
-
-> The code to detect Windows Server isn't gone, but it is commented out
-
-[wnw11]: http://github.com/rcmaehl/WhyNotWin11 "WhyNotWin11"
-
-### Other releases
-If you want to look at older versions's release notes, click on one of the links below:
-
-- [2.0.0100_220501][beta_220501]
-- [2.0.0100_220424][beta_220424]
-- [2.0.0100_220417][beta_220417]
-- [2.0.0100_220410][beta_220410]
-- [2.0.0100_220313][beta_220313]
-
-[beta_220501]: https://github.com/CodingWonders/win11minst/releases/tag/beta_220501 "2.0.0100_220501"
-[beta_220424]: https://github.com/CodingWonders/win11minst/releases/tag/beta_220424 "2.0.0100_220424"
-[beta_220417]: https://github.com/CodingWonders/win11minst/releases/tag/beta_220417 "2.0.0100_220417"
-[beta_220410]: https://github.com/CodingWonders/win11minst/releases/tag/beta_220410 "2.0.0100_220410"
-[beta_220313]: https://github.com/CodingWonders/win11minst/releases/tag/beta_220313 "2.0.0100_220313"
+- The ability to cancel the installer creation without closing the program has been removed due to a lack of reliable functionality

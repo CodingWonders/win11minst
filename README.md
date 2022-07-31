@@ -1,37 +1,22 @@
-# Windows 11 Manual Installer (Hummingbird release)
-This is the beta version for the future of the Windows 11 Manual Installer.
+# Windows 11 Manual Installer
+The tool that helps you install Windows 11 on unsupported systems
 
-## Versioning system
-Version 2.0.0100_220410 has introduced a new versioning system, which follows this scheme:
-		
-        Prod version:   2.0.0100.2241
-        File version:   2.0.0100.2241
-        
-*Information obtained from SigCheck. This is what you would see when viewing the properties of win11minst.exe*
+## Features
 
-Let's break it down
+Version 2.0 has new features and tricks up its sleeve.
 
-| Major  | Minor  | Revision  | Release from month  |
-| ------------ | ------------ | ------------ | ------------ |
-|  2 | 0  | 0100  | 2241  |
+- Redesigned user interface, which makes the program look like a modern Windows application
+- New method: REGTWEAK
 
-- *Major* is the major release of the program. For example, this corresponds to version 2.0.
-- *Minor* is the minor release of the program. For example, an update to the program might have its minor number set to 1.
-- *Revision* is the program revision. This gets incremented by an update (e.g., a bugfix)
-- *Release from month* is the unique part of the versioning system. In this case, *2241* is the 1st release from April 2022. This is done to prevent the 16-bit integer overflow (0-65535). For example:
-
-| Release from month  | Details  |
-| ------------ | ------------ |
-| 2241  | 1st release of April 2022  |
-| 22123  | 3rd release of December 2022  |
-| 2312  | 2nd release of January 2023  |
-| 2343  | 3rd release of April 2023  |
-> NOTE: the release from month usually gets updated every Sunday, however, this is not possible on most cases
+And more features you can look at in the release notes: [View release notes][relnotes]
+[relnotes]: https://github.com/CodingWonders/win11minst/blob/stable/relnotes.md
 
 ## Building the software
 To make a build of this software, you need to do the following:
 Prerequisites:
 - [.NET Framework 4.8 Developer Pack][netfxdp]
+
+Required step: clone the repository - `git clone https://github.com/CodingWonders/win11minst`
 
 1. Open the *.sln* file on Visual Studio 2012 or newer
 
@@ -44,7 +29,7 @@ Prerequisites:
 
 3. Click Build > Build solution
 
-> If you have one of the latest versions of Visual Studio, *Build solution* will be renamed to *Build Windows 11 Manual Installer 2.0.vbproj*, otherwise, click Build solution (or press Ctrl + Shift + B)
+> If you have one of the latest versions of Visual Studio, *Build solution* will be renamed to *Build Windows 11 Manual Installer.vbproj*, otherwise, click Build solution (or press Ctrl + Shift + B)
 
 4. After building the solution, right-click the project name, *Windows 11 Manual Installer 2.0* and click *Open folder in File Explorer*
 5. Go to *Bin > Release*
