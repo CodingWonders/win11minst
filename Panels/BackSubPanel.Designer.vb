@@ -22,7 +22,16 @@ Partial Class BackSubPanel
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
+        Me.FadeInTimer = New System.Windows.Forms.Timer(Me.components)
+        Me.FadeOutTimer = New System.Windows.Forms.Timer(Me.components)
         Me.SuspendLayout()
+        '
+        'FadeInTimer
+        '
+        '
+        'FadeOutTimer
+        '
         '
         'BackSubPanel
         '
@@ -32,11 +41,13 @@ Partial Class BackSubPanel
         Me.ClientSize = New System.Drawing.Size(284, 261)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "BackSubPanel"
-        Me.Opacity = 0.5R
+        Me.Opacity = 0.0R
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.Text = "BackSubPanel"
         Me.ResumeLayout(False)
 
     End Sub
+    Friend WithEvents FadeInTimer As System.Windows.Forms.Timer
+    Friend WithEvents FadeOutTimer As System.Windows.Forms.Timer
 End Class
