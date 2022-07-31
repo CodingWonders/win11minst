@@ -12,13 +12,13 @@ Imports System.Threading
 Public Class MainForm
     Private isMouseDown As Boolean = False
     Private mouseOffset As Point
-    Public VerStr As String = "2.0.0100"    ' Reported version. Change this when 'latest' has been committed and published to the repository, to avoid update confusion
+    Public VerStr As String = "2.0.0100_220731"    ' Reported version. Change this when 'latest' has been committed and published to the repository, to avoid update confusion
     Public AVerStr As String = My.Application.Info.Version.ToString()     ' Assembly version
     Dim VDescStr As String = ""
     Dim OffEcho As String = "@echo off"
     Dim wmiget As String
     Dim StDebugTime As Date = Now
-    Dim InstCreateInt As Integer
+    Public InstCreateInt As Integer
     Dim SettingsInt As Integer
     ' The following line of code dims the end debug time variable, but does NOT set it
     Dim EnDebugTime As Date
@@ -92,13 +92,14 @@ Public Class MainForm
     Public TotalISO_Str As String
     Dim HTMLname As String
     Dim HTMLInstrName As String
-    Dim WasMaximized As Boolean
+    Public WasMaximized As Boolean
     Dim BlockContinuation As Boolean
     Dim WasTextBox1Bad As Boolean
     Dim WasTextBox2Bad As Boolean
     Dim WasTextBox3Bad As Boolean
     Dim WasTextBox4Bad As Boolean
     Public RegionalCode As String
+    Public isHidden As Boolean
 
     ' Left mouse button pressed
     Private Sub titlePanel_MouseDown(sender As Object, e As MouseEventArgs) Handles titlePanel.MouseDown, TitleBar.MouseDown
@@ -249,8 +250,13 @@ Public Class MainForm
             End If
             WindowState = FormWindowState.Minimized
             ShowInTaskbar = False
+            isHidden = True
         Else
             If InstCreateInt = 2 Then
+                If OSCDIMGBW.IsBusy Or FileDeletionBW.IsBusy Then
+                    Beep()
+                    Exit Sub
+                End If
                 BringToFront()
                 BackSubPanel.Show()
                 InstCreateAbortPanel.ShowDialog()
@@ -258,61 +264,9 @@ Public Class MainForm
                 InstCreateAbortPanel.Visible = False
                 BringToFront()
                 If InstCreateAbortPanel.DialogResult = Windows.Forms.DialogResult.OK Then
-                    ' Abort EVERYTHING
-                    KillExtCmd = "taskkill /f /im cmd.exe /t"
-                    File.WriteAllText(".\kill.bat", OffEcho & CrLf & KillExtCmd, ASCII)
-                    Process.Start(".\kill.bat").WaitForExit()
-                    If File.Exists(".\Win11.iso") Then
-                        If File.Exists(".\Win10.iso") Then
-                            File.Delete(".\Win11.iso")
-                            File.Delete(".\Win10.iso")
-                        Else
-                            File.Delete(".\Win11.iso")
-                        End If
-                    End If
-                    If File.Exists(".\install.wim") Then
-                        File.Delete(".\install.wim")
-                    End If
-                    If File.Exists(".\boot.wim") Then
-                        If Directory.Exists(".\wimmount") Then
-                            RegUnload = "reg unload HKLM\W11SYS"
-                            DismUnmount = "dism /English /unmount-wim /mountdir=.\wimmount /discard"
-                            File.WriteAllText(".\temp.bat", OffEcho & CrLf & RegUnload & CrLf & DismUnmount, ASCII)
-                            Process.Start(".\temp.bat").WaitForExit()
-                            Directory.Delete(".\wimmount")
-                        End If
-                        File.Delete(".\boot.wim")
-                    End If
-                    If Directory.Exists(".\temp") Then
-                        For Each deletedFile In My.Computer.FileSystem.GetFiles(".\temp", FileIO.SearchOption.SearchAllSubDirectories)
-                            Try
-                                LogBox.AppendText(CrLf & "Deleted file: " & deletedFile)
-                                File.Delete(deletedFile)
-                            Catch PTLEx As PathTooLongException
-                                LogBox.AppendText(CrLf & "Cannot display the file being deleted right now, because its path length surpasses the allowed one")
-                            End Try
-                        Next
-                        LogBox.AppendText(CrLf & "Temp folder cleaned. Deleting it...")
-                        Try
-                            Directory.Delete(".\temp")
-                        Catch IOEx As IOException
-                            LogBox.AppendText(CrLf & "Exception: 'IOException' caught at runtime, performing emergency method...")
-                            File.WriteAllText(".\temp.bat", OffEcho & CrLf & EmergencyFolderDelete, ASCII)
-                            Process.Start(".\temp.bat").WaitForExit()
-                        End Try
-                    End If
-                    If Debugger.IsAttached = True Then
-                        EnDebugTime = Now
-                        MsgBox("Debug started at: " & StDebugTime & CrLf & "Debug ended at: " & EnDebugTime & CrLf & "Machine information:" & CrLf & "Name: " & My.Computer.Name & CrLf & "Total memory: " & My.Computer.Info.TotalPhysicalMemory & "KB" & CrLf & "Operating system: " & My.Computer.Info.OSFullName, vbOKOnly + vbInformation, "Debug mode")
-                        If DialogResult.OK Then
-                            Notify.Visible = False
-                            End
-                        End If
-                    End If
-                    Notify.Visible = False
-                    End
+                    ForceQuit()
                 ElseIf InstCreateAbortPanel.DialogResult = Windows.Forms.DialogResult.Cancel Then
-
+                    Exit Sub
                 End If
             Else
                 If Debugger.IsAttached = True Then
@@ -369,20 +323,36 @@ Public Class MainForm
             WndPos = New Point(Left, Top)
             MaximumSize = Screen.FromControl(Me).WorkingArea.Size
             WindowState = FormWindowState.Maximized
-            If BackColor = Color.FromArgb(243, 243, 243) Then
-                maxBox.Image = New Bitmap(My.Resources.restdownbox)
+            If My.Computer.Info.OSFullName.Contains("Windows 10") Then
+                If BackColor = Color.FromArgb(243, 243, 243) Then
+                    maxBox.Image = New Bitmap(My.Resources.restdownbox_win10)
+                Else
+                    maxBox.Image = New Bitmap(My.Resources.restdownbox_dark_win10)
+                End If
             Else
-                maxBox.Image = New Bitmap(My.Resources.restdownbox_dark)
+                If BackColor = Color.FromArgb(243, 243, 243) Then
+                    maxBox.Image = New Bitmap(My.Resources.restdownbox)
+                Else
+                    maxBox.Image = New Bitmap(My.Resources.restdownbox_dark)
+                End If
             End If
         ElseIf WindowState = FormWindowState.Maximized Then
             If Left = 0 Or Top = 0 Then
                 Location = New Point(WndPos)
             End If
             WindowState = FormWindowState.Normal
-            If BackColor = Color.FromArgb(243, 243, 243) Then
-                maxBox.Image = New Bitmap(My.Resources.maxbox)
+            If My.Computer.Info.OSFullName.Contains("Windows 10") Then
+                If BackColor = Color.FromArgb(243, 243, 243) Then
+                    maxBox.Image = New Bitmap(My.Resources.maxbox_win10)
+                Else
+                    maxBox.Image = New Bitmap(My.Resources.maxbox_dark_win10)
+                End If
             Else
-                maxBox.Image = New Bitmap(My.Resources.maxbox_dark)
+                If BackColor = Color.FromArgb(243, 243, 243) Then
+                    maxBox.Image = New Bitmap(My.Resources.maxbox)
+                Else
+                    maxBox.Image = New Bitmap(My.Resources.maxbox_dark)
+                End If
             End If
         End If
         If SettingPanel.Visible = True Or Settings_PersonalizationPanel.Visible = True Or Settings_FunctionalityPanel.Visible = True Then
@@ -395,32 +365,64 @@ Public Class MainForm
 
     Private Sub maxBox_MouseEnter(sender As Object, e As EventArgs) Handles maxBox.MouseEnter
         If WindowState = FormWindowState.Maximized Then
-            If BackColor = Color.FromArgb(243, 243, 243) Then
-                maxBox.Image = New Bitmap(My.Resources.restdownbox_focus)
+            If My.Computer.Info.OSFullName.Contains("Windows 10") Then
+                If BackColor = Color.FromArgb(243, 243, 243) Then
+                    maxBox.Image = New Bitmap(My.Resources.restdownbox_focus_win10)
+                Else
+                    maxBox.Image = New Bitmap(My.Resources.restdownbox_dark_focus_win10)
+                End If
             Else
-                maxBox.Image = New Bitmap(My.Resources.restdownbox_dark_focus)
+                If BackColor = Color.FromArgb(243, 243, 243) Then
+                    maxBox.Image = New Bitmap(My.Resources.restdownbox_focus)
+                Else
+                    maxBox.Image = New Bitmap(My.Resources.restdownbox_dark_focus)
+                End If
             End If
         ElseIf WindowState = FormWindowState.Normal Then
-            If BackColor = Color.FromArgb(243, 243, 243) Then
-                maxBox.Image = New Bitmap(My.Resources.maxbox_focus)
+            If My.Computer.Info.OSFullName.Contains("Windows 10") Then
+                If BackColor = Color.FromArgb(243, 243, 243) Then
+                    maxBox.Image = New Bitmap(My.Resources.maxbox_focus_win10)
+                Else
+                    maxBox.Image = New Bitmap(My.Resources.maxbox_dark_focus_win10)
+                End If
             Else
-                maxBox.Image = New Bitmap(My.Resources.maxbox_dark_focus)
+                If BackColor = Color.FromArgb(243, 243, 243) Then
+                    maxBox.Image = New Bitmap(My.Resources.maxbox_focus)
+                Else
+                    maxBox.Image = New Bitmap(My.Resources.maxbox_dark_focus)
+                End If
             End If
         End If
     End Sub
 
     Private Sub maxBox_MouseLeave(sender As Object, e As EventArgs) Handles maxBox.MouseLeave
         If WindowState = FormWindowState.Maximized Then
-            If BackColor = Color.FromArgb(243, 243, 243) Then
-                maxBox.Image = New Bitmap(My.Resources.restdownbox)
+            If My.Computer.Info.OSFullName.Contains("Windows 10") Then
+                If BackColor = Color.FromArgb(243, 243, 243) Then
+                    maxBox.Image = New Bitmap(My.Resources.restdownbox_win10)
+                Else
+                    maxBox.Image = New Bitmap(My.Resources.restdownbox_dark_win10)
+                End If
             Else
-                maxBox.Image = New Bitmap(My.Resources.restdownbox_dark)
+                If BackColor = Color.FromArgb(243, 243, 243) Then
+                    maxBox.Image = New Bitmap(My.Resources.restdownbox)
+                Else
+                    maxBox.Image = New Bitmap(My.Resources.restdownbox_dark)
+                End If
             End If
         ElseIf WindowState = FormWindowState.Normal Then
-            If BackColor = Color.FromArgb(243, 243, 243) Then
-                maxBox.Image = New Bitmap(My.Resources.maxbox)
+            If My.Computer.Info.OSFullName.Contains("Windows 10") Then
+                If BackColor = Color.FromArgb(243, 243, 243) Then
+                    maxBox.Image = New Bitmap(My.Resources.maxbox_win10)
+                Else
+                    maxBox.Image = New Bitmap(My.Resources.maxbox_dark_win10)
+                End If
             Else
-                maxBox.Image = New Bitmap(My.Resources.maxbox_dark)
+                If BackColor = Color.FromArgb(243, 243, 243) Then
+                    maxBox.Image = New Bitmap(My.Resources.maxbox)
+                Else
+                    maxBox.Image = New Bitmap(My.Resources.maxbox_dark)
+                End If
             End If
         End If
     End Sub
@@ -450,7 +452,7 @@ Public Class MainForm
         End If
     End Sub
 
-    Sub LoadSettingsFile()
+    Public Sub LoadSettingsFile()
         If File.Exists(".\settings.ini") Then
             SettingLoadForm.TextBox1.Text = My.Computer.FileSystem.ReadAllText(".\settings.ini", UTF8)
             If SettingLoadForm.TextBox1.Text.Contains("ColorMode=2") Then       ' This does color mode checkup
@@ -497,6 +499,11 @@ Public Class MainForm
                 RadioButton3.Checked = True
             ElseIf SettingLoadForm.TextBox1.Text.Contains("NavBarPos=1") Then
                 RadioButton3.Checked = False
+            End If
+            If SettingLoadForm.TextBox1.Text.Contains("FadeOnExtPanels=0") Then
+                CheckBox5.Checked = False
+            ElseIf SettingLoadForm.TextBox1.Text.Contains("FadeOnExtPanels=1") Then
+                CheckBox5.Checked = True
             End If
             ' Functionality
             If SettingLoadForm.TextBox1.Text.Contains("AdminMode=1") Then
@@ -553,13 +560,12 @@ Public Class MainForm
             If SettingLoadForm.TextBox1.Text.Contains("ReuseSI=1") Then
                 InstProjectReuseDialog.ShowDialog()
             End If
-
         Else
             SaveSettingsFile()
         End If
     End Sub
 
-    Sub SaveSettingsFile()
+    Public Sub SaveSettingsFile()
         If File.Exists(".\settings.ini") Then
             File.Delete(".\settings.ini")
         End If
@@ -585,6 +591,11 @@ Public Class MainForm
             SettingLoadForm.TextBox2.AppendText(CrLf & "NavBarPos=0")
         Else
             SettingLoadForm.TextBox2.AppendText(CrLf & "NavBarPos=1")
+        End If
+        If CheckBox5.Checked = True Then
+            SettingLoadForm.TextBox2.AppendText(CrLf & "FadeOnExtPanels=1")
+        Else
+            SettingLoadForm.TextBox2.AppendText(CrLf & "FadeOnExtPanels=0")
         End If
         SettingLoadForm.TextBox2.AppendText(CrLf & CrLf & "[Functionality]" & CrLf)
         If My.User.IsInRole(ApplicationServices.BuiltInRole.Administrator) Then
@@ -628,7 +639,7 @@ Public Class MainForm
             SettingLoadForm.TextBox2.AppendText(CrLf & "UseWin11InstLabel=0")
         End If
         SettingLoadForm.TextBox2.AppendText(CrLf & CrLf & "[ICOptn]" & CrLf)
-        If SettingReviewPanel.Visible = True Then
+        If SettingReviewPanel.Visible = True Or InstCreateInt = 1 Then
             My.Computer.FileSystem.WriteAllText(".\InstName.ini", TextBox3.Text, False)
             My.Computer.FileSystem.WriteAllText(".\Win11Inst.ini", TextBox1.Text, False)
             My.Computer.FileSystem.WriteAllText(".\Win10Inst.ini", TextBox2.Text, False)
@@ -645,7 +656,7 @@ Public Class MainForm
         SevenZipStr = SevenZipVer.FileVersion
         OSCDIMGVer = FileVersionInfo.GetVersionInfo(".\prog_bin\oscdimg.exe")
         OSCDIMGStr = OSCDIMGVer.FileVersion
-        DismVer = FileVersionInfo.GetVersionInfo("\Windows\System32\dism.exe")
+        DismVer = FileVersionInfo.GetVersionInfo(Path.GetPathRoot(Environment.SpecialFolder.UserProfile) & "\Windows\System32\dism.exe")
         DismStr = DismVer.FileVersion
     End Sub
 
@@ -1181,33 +1192,64 @@ Public Class MainForm
 
     Private Sub maxBox_MouseDown(sender As Object, e As MouseEventArgs) Handles maxBox.MouseDown
         If WindowState = FormWindowState.Normal Then
-            If BackColor = Color.FromArgb(243, 243, 243) Then
-                maxBox.Image = New Bitmap(My.Resources.maxbox_down)
+            If My.Computer.Info.OSFullName.Contains("Windows 10") Then
+                If BackColor = Color.FromArgb(243, 243, 243) Then
+                    maxBox.Image = New Bitmap(My.Resources.maxbox_down_win10)
+                Else
+                    maxBox.Image = New Bitmap(My.Resources.maxbox_dark_down_win10)
+                End If
             Else
-                maxBox.Image = New Bitmap(My.Resources.maxbox_dark_down)
+                If BackColor = Color.FromArgb(243, 243, 243) Then
+                    maxBox.Image = New Bitmap(My.Resources.maxbox_down)
+                Else
+                    maxBox.Image = New Bitmap(My.Resources.maxbox_dark_down)
+                End If
             End If
         ElseIf WindowState = FormWindowState.Maximized Then
-            If BackColor = Color.FromArgb(243, 243, 243) Then
-                maxBox.Image = New Bitmap(My.Resources.restdownbox_down)
+            If My.Computer.Info.OSFullName.Contains("Windows 10") Then
+                If BackColor = Color.FromArgb(243, 243, 243) Then
+                    maxBox.Image = New Bitmap(My.Resources.restdownbox_down_win10)
+                Else
+                    maxBox.Image = New Bitmap(My.Resources.restdownbox_dark_down_win10)
+                End If
             Else
-                maxBox.Image = New Bitmap(My.Resources.restdownbox_dark_down)
+                If BackColor = Color.FromArgb(243, 243, 243) Then
+                    maxBox.Image = New Bitmap(My.Resources.restdownbox_down)
+                Else
+                    maxBox.Image = New Bitmap(My.Resources.restdownbox_dark_down)
+                End If
             End If
         End If
     End Sub
 
     Private Sub maxBox_MouseUp(sender As Object, e As MouseEventArgs) Handles maxBox.MouseUp
         If WindowState = FormWindowState.Normal Then
-            If BackColor = Color.FromArgb(243, 243, 243) Then
-                maxBox.Image = New Bitmap(My.Resources.maxbox_focus)
+            If My.Computer.Info.OSFullName.Contains("Windows 10") Then
+                If BackColor = Color.FromArgb(243, 243, 243) Then
+                    maxBox.Image = New Bitmap(My.Resources.maxbox_focus_win10)
+                Else
+                    maxBox.Image = New Bitmap(My.Resources.maxbox_dark_focus_win10)
+                End If
             Else
-                maxBox.Image = New Bitmap(My.Resources.maxbox_dark_focus)
+                If BackColor = Color.FromArgb(243, 243, 243) Then
+                    maxBox.Image = New Bitmap(My.Resources.maxbox_focus)
+                Else
+                    maxBox.Image = New Bitmap(My.Resources.maxbox_dark_focus)
+                End If
             End If
         ElseIf WindowState = FormWindowState.Maximized Then
-            maxBox.Image = New Bitmap(My.Resources.restdownbox_focus)
-            If BackColor = Color.FromArgb(243, 243, 243) Then
-                maxBox.Image = New Bitmap(My.Resources.restdownbox_focus)
+            If My.Computer.Info.OSFullName.Contains("Windows 10") Then
+                If BackColor = Color.FromArgb(243, 243, 243) Then
+                    maxBox.Image = New Bitmap(My.Resources.restdownbox_focus_win10)
+                Else
+                    maxBox.Image = New Bitmap(My.Resources.restdownbox_dark_focus_win10)
+                End If
             Else
-                maxBox.Image = New Bitmap(My.Resources.restdownbox_dark_focus)
+                If BackColor = Color.FromArgb(243, 243, 243) Then
+                    maxBox.Image = New Bitmap(My.Resources.restdownbox_focus)
+                Else
+                    maxBox.Image = New Bitmap(My.Resources.restdownbox_dark_focus)
+                End If
             End If
         End If
     End Sub
@@ -1574,12 +1616,20 @@ Public Class MainForm
             Panel_Border_Pic.Image = New Bitmap(My.Resources.panel_corner_black)
             x86_Pic.Image = New Bitmap(My.Resources.x86_dark)
             minBox.Image = New Bitmap(My.Resources.minBox_dark)
-            ' This has changed to determine window state
-            If WindowState = FormWindowState.Maximized Then
-                maxBox.Image = New Bitmap(My.Resources.restdownbox_dark)
+            If My.Computer.Info.OSFullName.Contains("Windows 10") Then          ' Detect operating system and change maximize buttons accordingly
+                If WindowState = FormWindowState.Maximized Then
+                    maxBox.Image = New Bitmap(My.Resources.restdownbox_dark_win10)
+                Else
+                    maxBox.Image = New Bitmap(My.Resources.maxbox_dark_win10)
+                End If
             Else
-                maxBox.Image = New Bitmap(My.Resources.maxbox_dark)
+                If WindowState = FormWindowState.Maximized Then
+                    maxBox.Image = New Bitmap(My.Resources.restdownbox_dark)
+                Else
+                    maxBox.Image = New Bitmap(My.Resources.maxbox_dark)
+                End If
             End If
+            ' This has changed to determine window state
             closeBox.Image = New Bitmap(My.Resources.closebox_dark)
             back_Pic.Image = New Bitmap(My.Resources.back_arrow_dark)
             PictureBox11.Image = New Bitmap(My.Resources.logo_dark)
@@ -1772,10 +1822,18 @@ Public Class MainForm
             Panel_Border_Pic.Image = New Bitmap(My.Resources.panel_corner_white)
             x86_Pic.Image = New Bitmap(My.Resources.x86_light)
             minBox.Image = New Bitmap(My.Resources.minBox)
-            If WindowState = FormWindowState.Maximized Then
-                maxBox.Image = New Bitmap(My.Resources.restdownbox)
+            If My.Computer.Info.OSFullName.Contains("Windows 10") Then          ' Detect operating system and change maximize buttons accordingly
+                If WindowState = FormWindowState.Maximized Then
+                    maxBox.Image = New Bitmap(My.Resources.restdownbox_win10)
+                Else
+                    maxBox.Image = New Bitmap(My.Resources.maxbox_win10)
+                End If
             Else
-                maxBox.Image = New Bitmap(My.Resources.maxbox)
+                If WindowState = FormWindowState.Maximized Then
+                    maxBox.Image = New Bitmap(My.Resources.restdownbox)
+                Else
+                    maxBox.Image = New Bitmap(My.Resources.maxbox)
+                End If
             End If
             closeBox.Image = New Bitmap(My.Resources.closebox)
             back_Pic.Image = New Bitmap(My.Resources.back_arrow)
@@ -1981,10 +2039,18 @@ Public Class MainForm
                         Panel_Border_Pic.Image = New Bitmap(My.Resources.panel_corner_black)
                         x86_Pic.Image = New Bitmap(My.Resources.x86_dark)
                         minBox.Image = New Bitmap(My.Resources.minBox_dark)
-                        If WindowState = FormWindowState.Maximized Then
-                            maxBox.Image = New Bitmap(My.Resources.restdownbox_dark)
+                        If My.Computer.Info.OSFullName.Contains("Windows 10") Then          ' Detect operating system and change maximize buttons accordingly
+                            If WindowState = FormWindowState.Maximized Then
+                                maxBox.Image = New Bitmap(My.Resources.restdownbox_dark_win10)
+                            Else
+                                maxBox.Image = New Bitmap(My.Resources.maxbox_dark_win10)
+                            End If
                         Else
-                            maxBox.Image = New Bitmap(My.Resources.maxbox_dark)
+                            If WindowState = FormWindowState.Maximized Then
+                                maxBox.Image = New Bitmap(My.Resources.restdownbox_dark)
+                            Else
+                                maxBox.Image = New Bitmap(My.Resources.maxbox_dark)
+                            End If
                         End If
                         closeBox.Image = New Bitmap(My.Resources.closebox_dark)
                         back_Pic.Image = New Bitmap(My.Resources.back_arrow_dark)
@@ -2157,10 +2223,18 @@ Public Class MainForm
                         ForeColor = Color.Black
                         Panel_Border_Pic.Image = New Bitmap(My.Resources.panel_corner_white)
                         x86_Pic.Image = New Bitmap(My.Resources.x86_light)
-                        If WindowState = FormWindowState.Maximized Then
-                            maxBox.Image = New Bitmap(My.Resources.restdownbox)
+                        If My.Computer.Info.OSFullName.Contains("Windows 10") Then          ' Detect operating system and change maximize buttons accordingly
+                            If WindowState = FormWindowState.Maximized Then
+                                maxBox.Image = New Bitmap(My.Resources.restdownbox_win10)
+                            Else
+                                maxBox.Image = New Bitmap(My.Resources.maxbox_win10)
+                            End If
                         Else
-                            maxBox.Image = New Bitmap(My.Resources.maxbox)
+                            If WindowState = FormWindowState.Maximized Then
+                                maxBox.Image = New Bitmap(My.Resources.restdownbox)
+                            Else
+                                maxBox.Image = New Bitmap(My.Resources.maxbox)
+                            End If
                         End If
                         minBox.Image = New Bitmap(My.Resources.minBox)
                         closeBox.Image = New Bitmap(My.Resources.closebox)
@@ -2550,6 +2624,7 @@ Public Class MainForm
 
     Private Sub Notify_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles Notify.MouseDoubleClick
         Activate()
+        isHidden = False
         ShowInTaskbar = True
         MiniModeDialog.Hide()
         If WasMaximized = True Then
@@ -2566,6 +2641,7 @@ Public Class MainForm
 
     Private Sub Notify_BalloonTipClicked(sender As Object, e As EventArgs) Handles Notify.BalloonTipClicked
         Activate()
+        isHidden = False
         ShowInTaskbar = True
         MiniModeDialog.Hide()
         If WasMaximized = True Then
@@ -2582,6 +2658,7 @@ Public Class MainForm
 
     Private Sub OpenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenToolStripMenuItem.Click
         Activate()
+        isHidden = False
         ShowInTaskbar = True
         MiniModeDialog.Hide()
         If WasMaximized = True Then
@@ -2627,6 +2704,7 @@ Public Class MainForm
     Private Sub ViewInstallerHistoryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ViewInstallerHistoryToolStripMenuItem.Click
         If Visible = False Or WindowState = FormWindowState.Minimized Then
             Activate()
+            isHidden = False
             ShowInTaskbar = True
             WindowState = FormWindowState.Normal
             MiniModeDialog.Hide()
@@ -3125,24 +3203,24 @@ Public Class MainForm
         If TextBox1.Text = "" Then
             Do Until Not TextBox1.Text = ""
                 Win11FileSpecDialog.ShowDialog()
-                If DialogResult.OK Then
-                    TextBox1.Text = Win11FileSpecDialog.FileName
-                    If Not File.Exists(TextBox1.Text) Then
-                        TextBox1.Text = ""
-                    End If
-                End If
+                'If DialogResult.OK Then
+                '    TextBox1.Text = Win11FileSpecDialog.FileName
+                '    If Not File.Exists(TextBox1.Text) Then
+                '        TextBox1.Text = ""
+                '    End If
+                'End If
             Loop
         End If
         If Not ComboBox5.SelectedItem = "REGTWEAK" Then
             If TextBox2.Text = "" Then
                 Do Until Not TextBox2.Text = ""
                     Win10FileSpecDialog.ShowDialog()
-                    If DialogResult.OK Then
-                        TextBox2.Text = Win10FileSpecDialog.FileName
-                        If Not File.Exists(TextBox2.Text) Then
-                            TextBox2.Text = ""
-                        End If
-                    End If
+                    'If DialogResult.OK Then
+                    '    TextBox2.Text = Win10FileSpecDialog.FileName
+                    '    If Not File.Exists(TextBox2.Text) Then
+                    '        TextBox2.Text = ""
+                    '    End If
+                    'End If
                 Loop
             End If
         End If
@@ -3167,7 +3245,9 @@ Public Class MainForm
         ' the path does not exist, it will use the user folder to store the target image.
         ' This is not recommended if the end user doesn't have enough space on his/her local disk, so
         ' he/she must consider putting the target image on a different path
-
+        If TextBox4.TextLength = 1 And Not TextBox4.Text.EndsWith(":") Then
+            TextBox4.AppendText(":")
+        End If
         ' This was modified, as in this version (2.0.0100_220710) the detection is more complex
         If TextBox4.Text = "" Then
             Button5.PerformClick()
@@ -3211,6 +3291,23 @@ Public Class MainForm
                 Label90.Text = TextBox4.Text.TrimEnd("\") & "\" & TextBox3.Text & ".iso"
             Else
                 Label90.Text = TextBox4.Text & "\" & TextBox3.Text & ".iso"
+            End If
+            If ComboBox5.SelectedItem = "REGTWEAK" Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+                    Label68.Text = "This file is not necessary"
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+                    Label68.Text = "Este archivo no es necesario"
+                ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                    Label68.Text = "Ce fichier n'est pas nécessaire"
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+                    If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                        Label68.Text = "This file is not necessary"
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                        Label68.Text = "Este archivo no es necesario"
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                        Label68.Text = "Ce fichier n'est pas nécessaire"
+                    End If
+                End If
             End If
         End If
     End Sub
@@ -3643,6 +3740,8 @@ Public Class MainForm
                 Label83.Text = "C'est toute l'information dont nous avons besoin pour le moment. La création de l'installateur prendra quelques minutes, alors soyez patient."
             End If
         End If
+        Button10.Visible = False
+        ExitToolStripMenuItem.Enabled = False
         PictureBox5.Visible = False
         Label3.Visible = False
         LinkLabel2.Visible = False
@@ -4278,76 +4377,100 @@ Public Class MainForm
                 InstSTLabel.Text = "Création de l'installateur personnalisé..."
             End If
         End If
+        If ExtractionBW.CancellationPending Then
+            Exit Sub
+        End If
         InstCreationBW.RunWorkerAsync()
     End Sub
 
     Private Sub InstCreationBW_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles InstCreationBW.DoWork
         LogBox.AppendText(CrLf & "[" & Now & "] " & "Creating the custom installer using the " & ComboBox5.SelectedItem & " method...")
         If ComboBox5.SelectedItem = "WIMR" Then
-            If File.Exists(".\temp\sources\install.wim") Then
-                LogBox.AppendText(CrLf & "[" & Now & "] " & "Deleting " & Quote & "install.wim" & Quote & " from the Windows 10 installation media...")
-                File.Delete(".\temp\sources\install.wim")
-            ElseIf File.Exists(".\temp\sources\install.esd") Then
-                LogBox.AppendText(CrLf & "[" & Now & "] " & "Deleting " & Quote & "install.esd" & Quote & " from the Windows 10 installation media...")
-                File.Delete(".\temp\sources\install.esd")
-            End If
-            LogBox.AppendText(" Done")
-            If Win11ESD = 1 Then
-                LogBox.AppendText(CrLf & "[" & Now & "] " & "Moving " & Quote & "install.esd" & Quote & " from the Windows 11 installation media to the Windows 10 installer...")
-                File.Move(".\install.esd", ".\temp\sources\install.esd")
-            ElseIf Win11ESD = 0 Then
-                LogBox.AppendText(CrLf & "[" & Now & "] " & "Moving " & Quote & "install.wim" & Quote & " from the Windows 11 installation media to the Windows 10 installer...")
-                File.Move(".\install.wim", ".\temp\sources\install.wim")
-            End If
-            LogBox.AppendText(" Done")
-            InstallerProgressBar.Value = 50
+            Try
+                If File.Exists(".\temp\sources\install.wim") Then
+                    LogBox.AppendText(CrLf & "[" & Now & "] " & "Deleting " & Quote & "install.wim" & Quote & " from the Windows 10 installation media...")
+                    File.Delete(".\temp\sources\install.wim")
+                ElseIf File.Exists(".\temp\sources\install.esd") Then
+                    LogBox.AppendText(CrLf & "[" & Now & "] " & "Deleting " & Quote & "install.esd" & Quote & " from the Windows 10 installation media...")
+                    File.Delete(".\temp\sources\install.esd")
+                End If
+                LogBox.AppendText(" Done")
+                If Win11ESD = 1 Then
+                    LogBox.AppendText(CrLf & "[" & Now & "] " & "Moving " & Quote & "install.esd" & Quote & " from the Windows 11 installation media to the Windows 10 installer...")
+                    File.Move(".\install.esd", ".\temp\sources\install.esd")
+                ElseIf Win11ESD = 0 Then
+                    LogBox.AppendText(CrLf & "[" & Now & "] " & "Moving " & Quote & "install.wim" & Quote & " from the Windows 11 installation media to the Windows 10 installer...")
+                    File.Move(".\install.wim", ".\temp\sources\install.wim")
+                End If
+                LogBox.AppendText(" Done")
+                InstallerProgressBar.Value = 50
+            Catch ex As Exception
+                If InstCreationBW.CancellationPending Then
+                    Exit Sub
+                End If
+            End Try
         ElseIf ComboBox5.SelectedItem = "DLLR" Then
-            LogBox.AppendText(CrLf & "[" & Now & "] " & "Deleting " & Quote & "appraiser.dll" & Quote & " and " & Quote & "appraiserres.dll" & Quote & " from the Windows 11 installation media...")
-            File.Delete(".\temp\sources\appraiser.dll")
-            LogBox.AppendText(" 1/2...")
-            File.Delete(".\temp\sources\appraiserres.dll")
-            LogBox.AppendText(" 2/2 Done")
-            LogBox.AppendText(CrLf & "[" & Now & "] " & "Moving " & Quote & "appraiser.dll" & Quote & " and " & Quote & "appraiserres.dll" & Quote & " from the Windows 10 installation media to the Windows 11 installer...")
-            File.Move(".\appraiser.dll", ".\temp\sources\appraiser.dll")
-            LogBox.AppendText(" 1/2...")
-            File.Move(".\appraiserres.dll", ".\temp\sources\appraiserres.dll")
-            LogBox.AppendText(" 2/2 Done")
-            InstallerProgressBar.Value = 50
+            Try
+                LogBox.AppendText(CrLf & "[" & Now & "] " & "Deleting " & Quote & "appraiser.dll" & Quote & " and " & Quote & "appraiserres.dll" & Quote & " from the Windows 11 installation media...")
+                File.Delete(".\temp\sources\appraiser.dll")
+                LogBox.AppendText(" 1/2...")
+                File.Delete(".\temp\sources\appraiserres.dll")
+                LogBox.AppendText(" 2/2 Done")
+                LogBox.AppendText(CrLf & "[" & Now & "] " & "Moving " & Quote & "appraiser.dll" & Quote & " and " & Quote & "appraiserres.dll" & Quote & " from the Windows 10 installation media to the Windows 11 installer...")
+                File.Move(".\appraiser.dll", ".\temp\sources\appraiser.dll")
+                LogBox.AppendText(" 1/2...")
+                File.Move(".\appraiserres.dll", ".\temp\sources\appraiserres.dll")
+                LogBox.AppendText(" 2/2 Done")
+                InstallerProgressBar.Value = 50
+            Catch ex As Exception
+                If InstCreationBW.CancellationPending Then
+                    Exit Sub
+                End If
+            End Try
         ElseIf ComboBox5.SelectedItem = "REGTWEAK" Then
-            LogBox.AppendText(CrLf & "[" & Now & "] " & "Moving " & Quote & "boot.wim" & Quote & " from the Windows 11 installation media...")
-            File.Move(".\temp\sources\boot.wim", ".\boot.wim")
-            LogBox.AppendText(" Done" & CrLf & "[" & Now & "] " & "Creating the WIM file mount point folder...")
-            Directory.CreateDirectory(".\wimmount")
-            LogBox.AppendText(" Done" & CrLf & "[" & Now & "] " & "Launching the REGTWEAK script...")
-            If UseBypassNRO = True Then   ' Prepare boot.wim (and install.wim, if necessary) for surgery
-                If Win11ESD = 1 Then
-                    LogBox.AppendText(CrLf & "[" & Now & "] " & "WARNING: the program has detected ESD files on the Windows 11 image. Proceeding with normal options...")
-                    WarnCount += 1
-                    WarningText.AppendText(Now & " - The program attempted to run the REGTWEAK script with advanced options, but one of the source images contains ESD files. These cannot be mounted by DISM")
-                    AdvancedOptionsPanel.CheckBox1.Checked = False
-                    Process.Start(".\prog_bin\regtweak.bat").WaitForExit()
-                ElseIf Win11ESD = 0 Then
-                    LogBox.AppendText(" Additional flags: /bypassnro")
-                    Process.Start(".\prog_bin\regtweak.bat", "/bypassnro").WaitForExit()
+            Try
+                LogBox.AppendText(CrLf & "[" & Now & "] " & "Moving " & Quote & "boot.wim" & Quote & " from the Windows 11 installation media...")
+                File.Move(".\temp\sources\boot.wim", ".\boot.wim")
+                LogBox.AppendText(" Done" & CrLf & "[" & Now & "] " & "Creating the WIM file mount point folder...")
+                Directory.CreateDirectory(".\wimmount")
+                LogBox.AppendText(" Done" & CrLf & "[" & Now & "] " & "Launching the REGTWEAK script...")
+                If UseBypassNRO = True Then   ' Prepare boot.wim (and install.wim, if necessary) for surgery
+                    If Win11ESD = 1 Then
+                        LogBox.AppendText(CrLf & "[" & Now & "] " & "WARNING: the program has detected ESD files on the Windows 11 image. Proceeding with normal options...")
+                        WarnCount += 1
+                        WarningText.AppendText(Now & " - The program attempted to run the REGTWEAK script with advanced options, but one of the source images contains ESD files. These cannot be mounted by DISM")
+                        AdvancedOptionsPanel.CheckBox1.Checked = False
+                        Process.Start(".\prog_bin\regtweak.bat").WaitForExit()
+                    ElseIf Win11ESD = 0 Then
+                        LogBox.AppendText(" Additional flags: /bypassnro")
+                        Process.Start(".\prog_bin\regtweak.bat", "/bypassnro").WaitForExit()
+                    End If
+                Else
+                    If Win11ESD = 1 Then
+                        LogBox.AppendText(CrLf & "[" & Now & "] " & "WARNING: the program has detected ESD files on the Windows 11 image. Proceeding with normal options...")
+                        WarnCount += 1
+                        WarningText.AppendText(Now & " - The program attempted to run the REGTWEAK script with advanced options, but one of the source images contains ESD files. These cannot be mounted by DISM")
+                        Process.Start(".\prog_bin\regtweak.bat").WaitForExit()
+                    ElseIf Win11ESD = 0 Then
+                        Process.Start(".\prog_bin\regtweak.bat").WaitForExit()
+                    End If
                 End If
-            Else
-                If Win11ESD = 1 Then
-                    LogBox.AppendText(CrLf & "[" & Now & "] " & "WARNING: the program has detected ESD files on the Windows 11 image. Proceeding with normal options...")
-                    WarnCount += 1
-                    WarningText.AppendText(Now & " - The program attempted to run the REGTWEAK script with advanced options, but one of the source images contains ESD files. These cannot be mounted by DISM")
-                    Process.Start(".\prog_bin\regtweak.bat").WaitForExit()
-                ElseIf Win11ESD = 0 Then
-                    Process.Start(".\prog_bin\regtweak.bat").WaitForExit()
+                LogBox.AppendText(CrLf & "[" & Now & "] " & "Finished running the REGTWEAK script." & CrLf & "[" & Now & "] " & "Moving " & Quote & "boot.wim" & Quote & " to the Windows 11 installer...")
+                File.Move(".\boot.wim", ".\temp\sources\boot.wim")      ' Move boot.wim after operations done
+                LogBox.AppendText(" Done")
+                InstallerProgressBar.Value = 50
+            Catch ex As Exception
+                If InstCreationBW.CancellationPending Then
+                    Exit Sub
                 End If
-            End If
-        LogBox.AppendText(CrLf & "[" & Now & "] " & "Finished running the REGTWEAK script." & CrLf & "[" & Now & "] " & "Moving " & Quote & "boot.wim" & Quote & " to the Windows 11 installer...")
-        File.Move(".\boot.wim", ".\temp\sources\boot.wim")      ' Move boot.wim after operations done
-        LogBox.AppendText(" Done")
-        InstallerProgressBar.Value = 50
+            End Try
         End If
     End Sub
 
     Private Sub InstCreationBW_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles InstCreationBW.RunWorkerCompleted
+        If InstCreationBW.CancellationPending Then
+            Exit Sub
+        End If
         OSCDIMGBW.RunWorkerAsync()
     End Sub
 
@@ -4773,6 +4896,8 @@ Public Class MainForm
                 Notify.Text = "Installateur manuel de Windows 11 - Prêt"
             End If
         End If
+        Button10.Visible = True
+        ExitToolStripMenuItem.Enabled = True
         Panel3.Enabled = True
     End Sub
 
@@ -5761,7 +5886,7 @@ Public Class MainForm
         End If
     End Sub
 
-    Private Sub SetDefaultButton_MouseHover(sender As Object, e As EventArgs) Handles SetDefaultButton.MouseHover, Button13.MouseHover, Button11.MouseHover
+    Private Sub SetDefaultButton_MouseHover(sender As Object, e As EventArgs) Handles SetDefaultButton.MouseHover
         If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             ConglomerateToolTip.SetToolTip(sender, "Click here to set the default label, " & Quote & "Windows11" & Quote & ", for the custom installer")
         ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
@@ -5915,6 +6040,9 @@ Public Class MainForm
             Label64.Text = "Ubicación y nombre:"
             Label65.Text = "Imagen de Windows 11:"
             Label66.Text = "Imagen de Windows 10:"
+            If ComboBox5.SelectedItem = "REGTWEAK" Then
+                Label68.Text = "Este archivo no es necesario"
+            End If
             Label69.Text = "Método:"
             Label71.Text = ProgramTitleLabel.Text
             Label72.Text = "versión " & VerStr & " (versión de ensamblado " & AVerStr & ")"
@@ -6089,6 +6217,7 @@ Public Class MainForm
             CheckBox2.Text = "Utilizar la etiqueta del instalador de Windows 11"
             CheckBox3.Text = "Al cerrarse, ocultar en la bandeja del sistema"
             CheckBox4.Text = "Cerrar programa después de hacer clic en Aceptar"
+            CheckBox5.Text = "Utilizar animaciones de fundido al cargar paneles externos"
 
             ' MenuStrip items
             Windows11ManualInstallerToolStripMenuItem.Text = "Instalador manual de Windows 11"
@@ -6274,6 +6403,9 @@ Public Class MainForm
             Label64.Text = "Location and name:"
             Label65.Text = "Windows 11 image:"
             Label66.Text = "Windows 10 image:"
+            If ComboBox5.SelectedItem = "REGTWEAK" Then
+                Label68.Text = "This file is not necessary"
+            End If
             Label69.Text = "Method:"
             Label71.Text = ProgramTitleLabel.Text
             Label72.Text = "version " & VerStr & " (assembly version " & AVerStr & ")"
@@ -6446,7 +6578,8 @@ Public Class MainForm
             CheckBox1.Text = "Show system tray notification once"
             CheckBox2.Text = "Use the Windows 11 installer label"
             CheckBox3.Text = "When closing, hide in system tray"
-            CheckBox4.Text = "Exit the program after I click OK"
+            CheckBox4.Text = "Exit the program after clicking OK"
+            CheckBox5.Text = "Use fade animations when loading external panels"
 
             ' MenuStrip items
             Windows11ManualInstallerToolStripMenuItem.Text = "Windows 11 Manual Installer"
@@ -6637,6 +6770,9 @@ Public Class MainForm
             Label64.Text = "Lieu et nom :"
             Label65.Text = "Image du Windows 11 :"
             Label66.Text = "Image du Windows 10 :"
+            If ComboBox5.SelectedItem = "REGTWEAK" Then
+                Label68.Text = "Ce fichier n'est pas nécessaire"
+            End If
             Label69.Text = "Méthode :"
             Label71.Text = ProgramTitleLabel.Text
             Label72.Text = "version " & VerStr & " (version assemblée " & AVerStr & ")"
@@ -6809,6 +6945,7 @@ Public Class MainForm
             CheckBox2.Text = "Utiliser l'étiquette d'installation de Windows 11"
             CheckBox3.Text = "À la fermeture, masquer dans la barre d'état système"
             CheckBox4.Text = "Quitter le programme après avoir cliqué sur OK"
+            CheckBox5.Text = "Utiliser des animations en fondu lors du chargement de panneaux externes"
 
             ' MenuStrip items
             Windows11ManualInstallerToolStripMenuItem.Text = "Installateur manuel de Windows 11"
@@ -6998,6 +7135,9 @@ Public Class MainForm
                 Label64.Text = "Ubicación y nombre:"
                 Label65.Text = "Imagen de Windows 11:"
                 Label66.Text = "Imagen de Windows 10:"
+                If ComboBox5.SelectedItem = "REGTWEAK" Then
+                    Label68.Text = "Este archivo no es necesario"
+                End If
                 Label69.Text = "Método:"
                 Label71.Text = ProgramTitleLabel.Text
                 Label72.Text = "versión " & VerStr & " (versión de ensamblado " & AVerStr & ")"
@@ -7170,6 +7310,7 @@ Public Class MainForm
                 CheckBox2.Text = "Utilizar la etiqueta del instalador de Windows 11"
                 CheckBox3.Text = "Al cerrarse, ocultar en la bandeja del sistema"
                 CheckBox4.Text = "Cerrar programa después de hacer clic en Aceptar"
+                CheckBox5.Text = "Utilizar animaciones de fundido al cargar paneles externos"
 
                 ' MenuStrip items
                 Windows11ManualInstallerToolStripMenuItem.Text = "Instalador manual de Windows 11"
@@ -7352,6 +7493,9 @@ Public Class MainForm
                 Label64.Text = "Location and name:"
                 Label65.Text = "Windows 11 image:"
                 Label66.Text = "Windows 10 image:"
+                If ComboBox5.SelectedItem = "REGTWEAK" Then
+                    Label68.Text = "This file is not necessary"
+                End If
                 Label69.Text = "Method:"
                 Label71.Text = ProgramTitleLabel.Text
                 Label72.Text = "version " & VerStr & " (assembly version " & AVerStr & ")"
@@ -7524,7 +7668,8 @@ Public Class MainForm
                 CheckBox1.Text = "Show system tray notification once"
                 CheckBox2.Text = "Use the Windows 11 installer label"
                 CheckBox3.Text = "When closing, hide in system tray"
-                CheckBox4.Text = "Exit the program after I click OK"
+                CheckBox4.Text = "Exit the program after clicking OK"
+                CheckBox5.Text = "Use fade animations when loading external panels"
 
                 ' MenuStrip items
                 Windows11ManualInstallerToolStripMenuItem.Text = "Windows 11 Manual Installer"
@@ -7708,6 +7853,9 @@ Public Class MainForm
                 Label64.Text = "Lieu et nom :"
                 Label65.Text = "Image du Windows 11 :"
                 Label66.Text = "Image du Windows 10 :"
+                If ComboBox5.SelectedItem = "REGTWEAK" Then
+                    Label68.Text = "Ce fichier n'est pas nécessaire"
+                End If
                 Label69.Text = "Méthode :"
                 Label71.Text = ProgramTitleLabel.Text
                 Label72.Text = "version " & VerStr & " (version assemblée " & AVerStr & ")"
@@ -7880,6 +8028,7 @@ Public Class MainForm
                 CheckBox2.Text = "Utiliser l'étiquette d'installation de Windows 11"
                 CheckBox3.Text = "À la fermeture, masquer dans la barre d'état système"
                 CheckBox4.Text = "Quitter le programme après avoir cliqué sur OK"
+                CheckBox5.Text = "Utiliser des animations en fondu lors du chargement de panneaux externes"
 
                 ' MenuStrip items
                 Windows11ManualInstallerToolStripMenuItem.Text = "Installateur manuel de Windows 11"
@@ -8299,6 +8448,7 @@ Public Class MainForm
     Private Sub Button13_Click(sender As Object, e As EventArgs) Handles Button13.Click, AOTSMI.Click
         If Visible = False Or WindowState = FormWindowState.Minimized Then
             Activate()
+            isHidden = False
             ShowInTaskbar = True
             WindowState = FormWindowState.Normal
             MiniModeDialog.Hide()
@@ -10523,6 +10673,70 @@ Public Class MainForm
     End Sub
 
     Private Sub MainForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+        If InstCreateInt = 2 Then
+            If OSCDIMGBW.IsBusy Or FileDeletionBW.IsBusy Then
+                e.Cancel = True
+                Beep()
+                Exit Sub
+            End If
+            BringToFront()
+            BackSubPanel.Show()
+            InstCreateAbortPanel.ShowDialog()
+            InstCreateAbortPanel.Visible = True
+            InstCreateAbortPanel.Visible = False
+            BringToFront()
+            If InstCreateAbortPanel.DialogResult = Windows.Forms.DialogResult.OK Then
+                ForceQuit()
+            ElseIf InstCreateAbortPanel.DialogResult = Windows.Forms.DialogResult.Cancel Then
+                e.Cancel = True
+            End If
+            SaveSettingsFile()
+        End If
+    End Sub
+
+    Sub ForceQuit()
+        LogBox.AppendText(CrLf & "[" & Now & "] " & "User requested exiting the program during the installer creation. Cancelling...")
+        Process.Start(Path.GetPathRoot(Environment.SpecialFolder.System) & "\Windows\system32\taskkill", "/f /im cmd.exe /t").WaitForExit()
+        If ExtractionBW.IsBusy Then
+            ExtractionBW.CancelAsync()
+        End If
+        If InstCreationBW.IsBusy Then
+            InstCreationBW.CancelAsync()
+        End If
+        ' Command-Option-Escape: Force Quit
+        If ComboBox5.SelectedItem = "WIMR" Then
+            Process.Start(".\prog_bin\kill.bat", "/wimr")
+        ElseIf ComboBox5.SelectedItem = "DLLR" Then
+            Process.Start(".\prog_bin\kill.bat", "/dllr")
+        ElseIf ComboBox5.SelectedItem = "REGTWEAK" Then
+            Process.Start(".\prog_bin\kill.bat", "/regtweak")
+        End If
+        Notify.Visible = False
         SaveSettingsFile()
+        Environment.Exit(1)
+    End Sub
+
+    Private Sub Label61_MouseDown(sender As Object, e As MouseEventArgs) Handles Label61.MouseDown
+        Label61.ForeColor = Color.LightGray
+    End Sub
+
+    Private Sub Label61_MouseUp(sender As Object, e As MouseEventArgs) Handles Label61.MouseUp
+        Label61.ForeColor = ForeColor
+    End Sub
+
+    Private Sub Label18_MouseDown(sender As Object, e As MouseEventArgs) Handles Label18.MouseDown
+        Label18.ForeColor = Color.LightGray
+    End Sub
+
+    Private Sub Label18_MouseUp(sender As Object, e As MouseEventArgs) Handles Label18.MouseUp
+        Label18.ForeColor = ForeColor
+    End Sub
+
+    Private Sub Label10_MouseDown(sender As Object, e As MouseEventArgs) Handles Label10.MouseDown
+        Label10.ForeColor = Color.LightGray
+    End Sub
+
+    Private Sub Label10_MouseUp(sender As Object, e As MouseEventArgs) Handles Label10.MouseUp
+        Label10.ForeColor = ForeColor
     End Sub
 End Class
