@@ -28,12 +28,14 @@ Partial Class DisclaimerPanel
         Me.Exit_Button = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'Panel1
         '
         Me.Panel1.BackColor = System.Drawing.Color.FromArgb(CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer))
+        Me.Panel1.Controls.Add(Me.CheckBox1)
         Me.Panel1.Controls.Add(Me.OK_Button)
         Me.Panel1.Controls.Add(Me.Exit_Button)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
@@ -90,6 +92,16 @@ Partial Class DisclaimerPanel
         Me.TextBox1.TabIndex = 2
         Me.TextBox1.Text = resources.GetString("TextBox1.Text")
         '
+        'CheckBox1
+        '
+        Me.CheckBox1.AutoSize = True
+        Me.CheckBox1.Location = New System.Drawing.Point(31, 33)
+        Me.CheckBox1.Name = "CheckBox1"
+        Me.CheckBox1.Size = New System.Drawing.Size(147, 19)
+        Me.CheckBox1.TabIndex = 2
+        Me.CheckBox1.Text = "Do not show this again"
+        Me.CheckBox1.UseVisualStyleBackColor = True
+        '
         'DisclaimerPanel
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -110,6 +122,7 @@ Partial Class DisclaimerPanel
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "DisclaimerPanel"
         Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -119,5 +132,6 @@ Partial Class DisclaimerPanel
     Friend WithEvents Exit_Button As System.Windows.Forms.Button
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
+    Friend WithEvents CheckBox1 As System.Windows.Forms.CheckBox
 
 End Class
