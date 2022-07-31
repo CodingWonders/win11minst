@@ -425,6 +425,21 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\restdownbox_win10.png" />
+    <None Include="Resources\restdownbox_focus_win10.png" />
+    <None Include="Resources\restdownbox_down_win10.png" />
+    <None Include="Resources\restdownbox_dark_win10.png" />
+    <None Include="Resources\restdownbox_dark_focus_win10.png" />
+    <None Include="Resources\restdownbox_dark_down_win10.png" />
+    <None Include="Resources\maxbox_win10.png" />
+    <None Include="Resources\maxbox_focus_win10.png" />
+    <None Include="Resources\maxbox_down_win10.png" />
+    <None Include="Resources\maxbox_dark_win10.png" />
+    <None Include="Resources\maxbox_dark_focus_win10.png" />
+    <None Include="Resources\maxbox_dark_down_win10.png" />
+    <None Include="prog_bin\kill.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\instissues.png" />
     <None Include="Resources\x86_processor.png" />
     <None Include="Resources\invalidtext_dark.png" />
@@ -630,12 +645,6 @@
     <None Include="Resources\topnavbar_x86_dark.png" />
     <None Include="Resources\x86_light.png" />
     <None Include="Resources\x86_dark.png" />
-    <None Include="Resources\prev_step_dark.png" />
-    <None Include="Resources\next_step_light.png" />
-    <None Include="Resources\next_step_dark.png" />
-    <None Include="Resources\last_step_light.png" />
-    <None Include="Resources\last_step_dark.png" />
-    <None Include="Resources\prev_step_light.png" />
     <None Include="Resources\logo_dark.png" />
     <None Include="Resources\logo_light.png" />
     <None Include="Resources\logo_wide.png" />
@@ -678,8 +687,6 @@
     <None Include="Resources\dllr_mh.png" />
     <None Include="Resources\export_dark.png" />
     <None Include="Resources\export_light.png" />
-    <None Include="Resources\first_step_dark.png" />
-    <None Include="Resources\first_step_light.png" />
     <None Include="Resources\cross_dark.png" />
     <None Include="Resources\cross_light.png" />
     <Content Include="Resources\HTMLHelp\HelpPage.html">
