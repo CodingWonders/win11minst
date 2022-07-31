@@ -1,4 +1,4 @@
-## Windows 11 Manual Installer Release Notes
+﻿## Windows 11 Manual Installer Release Notes
 
 ### Updating the program
 ---
@@ -60,7 +60,7 @@ If you haven't checked the releases from the `hummingbird` branch, here is a fea
 - A new language has been added, French
 - The program can now run from the system tray
 - The program no longer freezes when creating an installer
-- The external commands do not show the command input anymore
+- Fixed a bug that showed `´╗┐` when running external commands (1.0 builds)
 - The program now detects missing components and warns you about them
 - The program now remembers the installers that were going to be used previously, and gives you a chance of continuing with them
 
@@ -78,7 +78,12 @@ If you come from `hummingbird` releases, here are the bugfixes and features:
 - Fade animations can now be used when loading external panels
 - The REGTWEAK script now sets the title
 - Added the ability to cancel installer creation when closing the program
+- The program can now append a colon (:) if not specified on the target installer parh's drive letter
 
 #### **Removed features**
 
 - The ability to cancel the installer creation without closing the program has been removed due to a lack of reliable functionality
+
+**NOTE**: to view the release notes from the `hummingbird` branch, please check the [Hummingbird branch release notes][hrels]
+
+[hrels]: https://github.com/CodingWonders/win11minst/blob/hummingbird/relnotes.md
