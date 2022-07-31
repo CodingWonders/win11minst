@@ -21,6 +21,7 @@
 :: ------------------------------------------------------------------------------------------------
 
 @echo off
+title Windows 11 Manual Installer - REGTWEAK script
 setlocal EnableDelayedExpansion
 if "%1%"=="/bypassnro" (set bypassnro=1)
 :: Let's do the fun stuff!
