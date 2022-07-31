@@ -125,7 +125,7 @@ Public Class UpdateCheckPreLoadPanel
                 Using LATEST As New WebClient()
                     ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
                     Try
-                        LATEST.DownloadFile("https://raw.githubusercontent.com/CodingWonders/win11minst/latest", ".\latest")
+                        LATEST.DownloadFile("https://raw.githubusercontent.com/CodingWonders/win11minst/stable/latest", ".\latest")
                         File.Delete(".\latest_old")
                     Catch ex As Exception
                         If File.Exists(".\latest") Then
@@ -171,7 +171,7 @@ Public Class UpdateCheckPreLoadPanel
                 Using LATEST As New WebClient()
                     ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
                     Try
-                        LATEST.DownloadFile("https://raw.githubusercontent.com/CodingWonders/win11minst/latest", ".\latest")
+                        LATEST.DownloadFile("https://raw.githubusercontent.com/CodingWonders/win11minst/stable/latest", ".\latest")
                         Try
                             TextBox1.Text = My.Computer.FileSystem.ReadAllText(".\version")
                         Catch ex As Exception
@@ -228,7 +228,7 @@ Public Class UpdateCheckPreLoadPanel
         Using Win11MinstDown As New WebClient()
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
             Try
-                Win11MinstDown.DownloadFile("https://github.com/CodingWonders/win11minst/blob/bin/Debug/win11minst.exe?raw=true", ".\win11minst_new.exe")
+                Win11MinstDown.DownloadFile("https://github.com/CodingWonders/win11minst/blob/stable/bin/Debug/win11minst.exe?raw=true", ".\win11minst_new.exe")
             Catch ex As Exception
                 If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Or MainForm.ComboBox4.SelectedItem = "Anglais" Then
                     MsgBox("We could not download the new version for you. You will have to do this manually. You can still use the current version.", vbOKOnly + vbCritical, "Update download failure")

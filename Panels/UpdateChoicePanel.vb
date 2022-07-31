@@ -11,7 +11,7 @@ Public Class UpdateChoicePanel
         Using Win11MinstDown As New WebClient()
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
             Try
-                Win11MinstDown.DownloadFile("https://github.com/CodingWonders/win11minst/blob/bin/Debug/win11minst.exe?raw=true", ".\win11minst_new.exe")
+                Win11MinstDown.DownloadFile("https://github.com/CodingWonders/win11minst/blob/stable/bin/Debug/win11minst.exe?raw=true", ".\win11minst_new.exe")
             Catch ex As Exception
                 If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Or MainForm.ComboBox4.SelectedItem = "Anglais" Then
                     MsgBox("We could not download the new version for you. You will have to do this manually. You can still use the current version.", vbOKOnly + vbCritical, "Update download failure")
@@ -54,7 +54,7 @@ Public Class UpdateChoicePanel
         Using PUCSUpdate As New WebClient()
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
             Try
-                PUCSUpdate.DownloadFile("https://github.com/CodingWonders/win11minst/blob/upd/PassiveUpdateCheckSys/Win11Minst/upd.exe?raw=true", ".\upd.exe")
+                PUCSUpdate.DownloadFile("https://github.com/CodingWonders/win11minst/blob/stable/upd/PassiveUpdateCheckSys/Win11Minst/upd.exe?raw=true", ".\upd.exe")
             Catch ex As Exception
                 If MainForm.ComboBox4.SelectedItem = "English" Or MainForm.ComboBox4.SelectedItem = "Inglés" Or MainForm.ComboBox4.SelectedItem = "Anglais" Then
                     MsgBox("We could not download the new version for you. You will have to do this manually. You can still use the current version.", vbOKOnly + vbCritical, "Update download failure")
@@ -222,6 +222,6 @@ Public Class UpdateChoicePanel
     End Sub
 
     Private Sub RelNotesLink_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles RelNotesLink.LinkClicked
-        Process.Start("https://github.com/CodingWonders/win11minst/blob/relnotes.md")
+        Process.Start("https://github.com/CodingWonders/win11minst/blob/stable/relnotes.md")
     End Sub
 End Class

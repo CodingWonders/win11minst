@@ -8217,7 +8217,7 @@ Public Class MainForm
                 Using LATEST As New WebClient()
                     ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
                     Try
-                        LATEST.DownloadFile("https://raw.githubusercontent.com/CodingWonders/win11minst/latest", ".\latest")
+                        LATEST.DownloadFile("https://raw.githubusercontent.com/CodingWonders/win11minst/stable/latest", ".\latest")
                         File.Delete(".\latest_old")
                     Catch ex As Exception
                         If File.Exists(".\latest") Then
@@ -8254,7 +8254,7 @@ Public Class MainForm
                 Using LATEST As New WebClient()
                     ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
                     Try
-                        LATEST.DownloadFile("https://raw.githubusercontent.com/CodingWonders/win11minst/latest", ".\latest")
+                        LATEST.DownloadFile("https://raw.githubusercontent.com/CodingWonders/win11minst/stable/latest", ".\latest")
                         UpdateChoicePanel.TextBox1.Text = My.Computer.FileSystem.ReadAllText(".\version")
                         UpdateChoicePanel.TextBox2.Text = My.Computer.FileSystem.ReadAllText(".\latest")
                         If UpdateChoicePanel.TextBox1.Text = UpdateChoicePanel.TextBox2.Text Then
