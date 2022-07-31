@@ -1,5 +1,6 @@
 ﻿Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.ControlChars
+Imports System.IO
 
 Public Class InstallerIssuesPanel
 
@@ -375,13 +376,29 @@ Public Class InstallerIssuesPanel
     End Sub
 
     Sub GatherIssues()
-        If MainForm.TextBox1.ForeColor = Color.Crimson Then
+        If MainForm.TextBox1.ForeColor = Color.Crimson And Not MainForm.TextBox1.Text = MainForm.TextBox2.Text Then
             Field1IsWrong = True
+        ElseIf MainForm.TextBox1.ForeColor = Color.Crimson And MainForm.TextBox1.Text = MainForm.TextBox2.Text Then
+            If File.Exists(MainForm.TextBox1.Text) Then
+                Field1IsWrong = False
+                Field5IsWrong = True
+            Else
+                Field1IsWrong = True
+                Field5IsWrong = True
+            End If
         Else
             Field1IsWrong = False
         End If
-        If MainForm.TextBox2.ForeColor = Color.Crimson Then
+        If MainForm.TextBox2.ForeColor = Color.Crimson And Not MainForm.TextBox2.Text = MainForm.TextBox1.Text Then
             Field2IsWrong = True
+        ElseIf MainForm.TextBox2.ForeColor = Color.Crimson And MainForm.TextBox2.Text = MainForm.TextBox1.Text Then
+            If File.Exists(MainForm.TextBox2.Text) Then
+                Field2IsWrong = False
+                Field5IsWrong = True
+            Else
+                Field2IsWrong = True
+                Field5IsWrong = True
+            End If
         Else
             Field2IsWrong = False
         End If
@@ -448,13 +465,29 @@ Public Class InstallerIssuesPanel
     End Sub
 
     Sub CheckFixedIssues()
-        If MainForm.TextBox1.ForeColor = Color.Crimson Then
+        If MainForm.TextBox1.ForeColor = Color.Crimson And Not MainForm.TextBox1.Text = MainForm.TextBox2.Text Then
             Field1IsWrong = True
+        ElseIf MainForm.TextBox1.ForeColor = Color.Crimson And MainForm.TextBox1.Text = MainForm.TextBox2.Text Then
+            If File.Exists(MainForm.TextBox1.Text) Then
+                Field1IsWrong = False
+                Field5IsWrong = True
+            Else
+                Field1IsWrong = True
+                Field5IsWrong = True
+            End If
         Else
             Field1IsWrong = False
         End If
-        If MainForm.TextBox2.ForeColor = Color.Crimson Then
+        If MainForm.TextBox2.ForeColor = Color.Crimson And Not MainForm.TextBox2.Text = MainForm.TextBox1.Text Then
             Field2IsWrong = True
+        ElseIf MainForm.TextBox2.ForeColor = Color.Crimson And MainForm.TextBox2.Text = MainForm.TextBox1.Text Then
+            If File.Exists(MainForm.TextBox2.Text) Then
+                Field2IsWrong = False
+                Field5IsWrong = True
+            Else
+                Field2IsWrong = True
+                Field5IsWrong = True
+            End If
         Else
             Field2IsWrong = False
         End If
