@@ -48,7 +48,8 @@ Module Module1
             Thread.Sleep(3000)
             Process.Start(".\win11minst.exe")
             Console.WriteLine(CrLf & _
-                              "  The update process has completed. Launching the Windows 11 Manual Installer, version " & NewVerStr & "...")
+                              "The update process has completed. Launching the Windows 11 Manual Installer, version " & NewVerStr & "...")
+            Thread.Sleep(2000)
             End
         Catch ex As Exception
             Console.WriteLine(CrLf & _
