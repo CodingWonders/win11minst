@@ -3276,7 +3276,9 @@ Public Class MainForm
             End If
         End If
         Label67.Text = TextBox1.Text
-        Label68.Text = TextBox2.Text
+        If Not ComboBox5.SelectedItem = "REGTWEAK" Then
+            Label68.Text = TextBox2.Text
+        End If
         drInfo = New DriveInfo(Path.GetPathRoot(TextBox4.Text))
         drLetter = Path.GetPathRoot(TextBox4.Text)
         GBSpace = drInfo.AvailableFreeSpace / (1024 ^ 3)
