@@ -284,6 +284,12 @@
     <Compile Include="Panels\UpdateChoicePanel.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Panels\Win11OSPanel.Designer.vb">
+      <DependentUpon>Win11OSPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\Win11OSPanel.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Panels\x86_ProcessorPanel.Designer.vb">
       <DependentUpon>x86_ProcessorPanel.vb</DependentUpon>
     </Compile>
@@ -410,6 +416,9 @@
     <EmbeddedResource Include="Panels\UpdateChoicePanel.resx">
       <DependentUpon>UpdateChoicePanel.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Panels\Win11OSPanel.resx">
+      <DependentUpon>Win11OSPanel.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Panels\x86_ProcessorPanel.resx">
       <DependentUpon>x86_ProcessorPanel.vb</DependentUpon>
     </EmbeddedResource>
@@ -425,6 +434,12 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\topnavbar_win11_light.png" />
+    <None Include="Resources\topnavbar_win11_dark.png" />
+    <None Include="Resources\win11logo_colored.png" />
+    <None Include="Resources\settings_colored.png" />
+    <None Include="Resources\win11logo_light.png" />
+    <None Include="Resources\win11logo_dark.png" />
     <None Include="Resources\restdownbox_win10.png" />
     <None Include="Resources\restdownbox_focus_win10.png" />
     <None Include="Resources\restdownbox_down_win10.png" />
@@ -486,6 +501,8 @@
     <Content Include="icon3.ico" />
     <None Include="Resources\htmlfile_cms.png" />
     <None Include="Resources\csvfile_cms.png" />
+    <None Include="Resources\adminmode_dark.png" />
+    <None Include="Resources\adminmode_light.png" />
     <Content Include="Resources\HTMLHelp\HelpPage_DM.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
