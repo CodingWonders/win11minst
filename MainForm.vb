@@ -12,7 +12,7 @@ Imports System.Threading
 Public Class MainForm
     Private isMouseDown As Boolean = False
     Private mouseOffset As Point
-    Public VerStr As String = "2.0.0100_220731"    ' Reported version. Change this when 'latest' has been committed and published to the repository, to avoid update confusion
+    Public VerStr As String = "2.0.0101_220807"    ' Reported version. Change this when 'latest' has been committed and published to the repository, to avoid update confusion
     Public AVerStr As String = My.Application.Info.Version.ToString()     ' Assembly version
     Dim VDescStr As String = ""
     Dim OffEcho As String = "@echo off"
@@ -175,32 +175,6 @@ Public Class MainForm
 
     ' Left mouse button released, form should stop moving
     Private Sub ProgramTitleLabel_MouseUp(sender As Object, e As MouseEventArgs) Handles ProgramTitleLabel.MouseUp
-        If e.Button = Windows.Forms.MouseButtons.Left Then
-            isMouseDown = False
-        End If
-    End Sub
-    ' Left mouse button pressed
-    Private Sub AdminLabel_MouseDown(sender As Object, e As MouseEventArgs) Handles AdminLabel.MouseDown
-        If e.Button = Windows.Forms.MouseButtons.Left Then
-            ' Get the new position
-            mouseOffset = New Point(-e.X, -e.Y)
-            ' Set that left button is pressed
-            isMouseDown = True
-        End If
-    End Sub
-
-    ' MouseMove used to check if mouse cursor is moving
-    Private Sub AdminLabel_MouseMove(sender As Object, e As MouseEventArgs) Handles AdminLabel.MouseMove
-        If isMouseDown Then
-            Dim mousePos As Point = Control.MousePosition
-            ' Get the new form position
-            mousePos.Offset(mouseOffset.X, mouseOffset.Y)
-            Location = mousePos
-        End If
-    End Sub
-
-    ' Left mouse button released, form should stop moving
-    Private Sub AdminLabel_MouseUp(sender As Object, e As MouseEventArgs) Handles AdminLabel.MouseUp
         If e.Button = Windows.Forms.MouseButtons.Left Then
             isMouseDown = False
         End If
@@ -685,6 +659,32 @@ Public Class MainForm
         TableLayoutPanel2.ColumnCount = 3
     End Sub
 
+    Sub ControlAdditionalTitleBarButtons()
+        If My.User.IsInRole(ApplicationServices.BuiltInRole.Administrator) Then
+            If Environment.Is64BitOperatingSystem = False Then
+                AdminPic.Visible = True
+                x86_Pic.Visible = True
+                AdminPic.Left = Width - (Width - x86_Pic.Left) - x86_Pic.Width
+            Else
+                If My.Computer.Info.OSFullName.Contains("Windows 11") Then          ' Windows 11 is only 64 bit
+                    AdminPic.Visible = True
+                    Win11Pic.Visible = True
+                    AdminPic.Left = Width - (Width - Win11Pic.Left) - Win11Pic.Width
+                Else
+                    AdminPic.Visible = True
+                End If
+            End If
+        Else
+            If Environment.Is64BitOperatingSystem = False Then
+                x86_Pic.Visible = True
+            Else
+                If My.Computer.Info.OSFullName.Contains("Windows 11") Then
+                    Win11Pic.Visible = True
+                End If
+            End If
+        End If
+    End Sub
+
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Control.CheckForIllegalCrossThreadCalls = False
         If File.Exists(".\upd.exe") Then
@@ -792,11 +792,9 @@ Public Class MainForm
         MessageCount = 0
         If My.User.IsAuthenticated = True Then
             If My.User.IsInRole(ApplicationServices.BuiltInRole.Administrator) Then
-                AdminLabel.Visible = True
                 Text = "Windows 11 Manual Installer (administrator mode)"
             Else
                 Button13.Visible = False
-                AdminLabel.Visible = False
                 ComboBox5.Items.Clear()
                 ComboBox5.Items.Add("WIMR")
                 ComboBox5.Items.Add("DLLR")
@@ -1118,8 +1116,7 @@ Public Class MainForm
         End If
         CenterToScreen()        ' This is done to prevent a bug where it would not center to the screen!
         If Environment.Is64BitOperatingSystem = False Then
-            x86_Pic.Visible = True
-            AdminLabel.Left = 832
+            'x86_Pic.Visible = True
             TopNavbar_x86_Pic.Visible = True
         End If
         If InstHistPanel.InstallerListView.Items.Count = 0 Then
@@ -1137,21 +1134,8 @@ Public Class MainForm
             DisclaimerPanel.DialogResult = Windows.Forms.DialogResult.OK
         End If
         If My.Computer.Info.OSFullName.Contains("Windows 11") Then
-            If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
-                MsgBox("This computer (or device) is already running Windows 11. You will not be able to use this tool to upgrade to/install Windows 11 on your system, but you can still use it to upgrade to/install Windows 11 on other systems.", vbOKOnly + vbInformation, "Already running Windows 11")
-            ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
-                MsgBox("Este ordenador (o dispositivo) ya está ejecutando Windows 11. No será posible usar la herramienta para actualizar a/instalar Windows 11 en su sistema, pero todavía puede usarlo para actualizar a/instalar Windows 11 en otros sistemas.", vbOKOnly + vbInformation, "Ya se está ejecutando Windows 11")
-            ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
-                MsgBox("Cet ordinateur (ou appareil) exécute déjà Windows 11. Vous ne pourrez pas utiliser cet outil pour mettre à niveau vers/installer Windows 11 sur votre système, mais vous pouvez toujours l'utiliser pour mettre à niveau vers/installer Windows 11 sur d'autres systèmes.", vbOKOnly + vbInformation, "Vous utilisez déjà Windows 11")
-            ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
-                If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
-                    MsgBox("This computer (or device) is already running Windows 11. You will not be able to use this tool to upgrade to/install Windows 11 on your system, but you can still use it to upgrade to/install Windows 11 on other systems.", vbOKOnly + vbInformation, "Already running Windows 11")
-                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
-                    MsgBox("Este ordenador (o dispositivo) ya está ejecutando Windows 11. No será posible usar la herramienta para actualizar a/instalar Windows 11 en su sistema, pero todavía puede usarlo para actualizar a/instalar Windows 11 en otros sistemas.", vbOKOnly + vbInformation, "Ya se está ejecutando Windows 11")
-                ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
-                    MsgBox("Cet ordinateur (ou appareil) exécute déjà Windows 11. Vous ne pourrez pas utiliser cet outil pour mettre à niveau vers/installer Windows 11 sur votre système, mais vous pouvez toujours l'utiliser pour mettre à niveau vers/installer Windows 11 sur d'autres systèmes.", vbOKOnly + vbInformation, "Vous utilisez déjà Windows 11")
-                End If
-            End If
+            Win11Pic.Visible = True
+            TopNavbar_Win11Pic.Visible = True
         End If
 
         ' Windows Server (Nickel) and Server (Copper) builds still don't check servers to meet system reqs (tested build 25083).
@@ -1173,6 +1157,7 @@ Public Class MainForm
 
         ' It ALSO looks like, at the time of writing this comment (thx for reading), MS released build 25115 of WINDOWS 11 (Copper). Right now,
         ' it does not add more system requirement blockades (but that does not mean they won't add them later)
+        ControlAdditionalTitleBarButtons()
     End Sub
 
     Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
@@ -1625,6 +1610,10 @@ Public Class MainForm
             ForeColor = Color.White
             Panel_Border_Pic.Image = New Bitmap(My.Resources.panel_corner_black)
             x86_Pic.Image = New Bitmap(My.Resources.x86_dark)
+            TopNavbar_x86_Pic.Image = New Bitmap(My.Resources.x86_dark)
+            Win11Pic.Image = New Bitmap(My.Resources.win11logo_dark)
+            TopNavbar_Win11Pic.Image = New Bitmap(My.Resources.win11logo_dark)
+            AdminPic.Image = New Bitmap(My.Resources.adminmode_dark)
             minBox.Image = New Bitmap(My.Resources.minBox_dark)
             If My.Computer.Info.OSFullName.Contains("Windows 10") Then          ' Detect operating system and change maximize buttons accordingly
                 If WindowState = FormWindowState.Maximized Then
@@ -1831,6 +1820,10 @@ Public Class MainForm
             ForeColor = Color.Black
             Panel_Border_Pic.Image = New Bitmap(My.Resources.panel_corner_white)
             x86_Pic.Image = New Bitmap(My.Resources.x86_light)
+            TopNavbar_x86_Pic.Image = New Bitmap(My.Resources.x86_light)
+            Win11Pic.Image = New Bitmap(My.Resources.win11logo_light)
+            TopNavbar_Win11Pic.Image = New Bitmap(My.Resources.win11logo_light)
+            AdminPic.Image = New Bitmap(My.Resources.adminmode_light)
             minBox.Image = New Bitmap(My.Resources.minBox)
             If My.Computer.Info.OSFullName.Contains("Windows 10") Then          ' Detect operating system and change maximize buttons accordingly
                 If WindowState = FormWindowState.Maximized Then
@@ -2048,6 +2041,10 @@ Public Class MainForm
                         ForeColor = Color.White
                         Panel_Border_Pic.Image = New Bitmap(My.Resources.panel_corner_black)
                         x86_Pic.Image = New Bitmap(My.Resources.x86_dark)
+                        TopNavbar_x86_Pic.Image = New Bitmap(My.Resources.x86_dark)
+                        Win11Pic.Image = New Bitmap(My.Resources.win11logo_dark)
+                        TopNavbar_Win11Pic.Image = New Bitmap(My.Resources.win11logo_dark)
+                        AdminPic.Image = New Bitmap(My.Resources.adminmode_dark)
                         minBox.Image = New Bitmap(My.Resources.minBox_dark)
                         If My.Computer.Info.OSFullName.Contains("Windows 10") Then          ' Detect operating system and change maximize buttons accordingly
                             If WindowState = FormWindowState.Maximized Then
@@ -2233,6 +2230,10 @@ Public Class MainForm
                         ForeColor = Color.Black
                         Panel_Border_Pic.Image = New Bitmap(My.Resources.panel_corner_white)
                         x86_Pic.Image = New Bitmap(My.Resources.x86_light)
+                        TopNavbar_x86_Pic.Image = New Bitmap(My.Resources.x86_light)
+                        Win11Pic.Image = New Bitmap(My.Resources.win11logo_light)
+                        TopNavbar_Win11Pic.Image = New Bitmap(My.Resources.win11logo_light)
+                        AdminPic.Image = New Bitmap(My.Resources.adminmode_light)
                         If My.Computer.Info.OSFullName.Contains("Windows 10") Then          ' Detect operating system and change maximize buttons accordingly
                             If WindowState = FormWindowState.Maximized Then
                                 maxBox.Image = New Bitmap(My.Resources.restdownbox_win10)
@@ -3558,7 +3559,7 @@ Public Class MainForm
         End If
     End Sub
 
-    Private Sub AdminLabel_MouseHover(sender As Object, e As EventArgs) Handles AdminLabel.MouseHover
+    Private Sub AdminPic_MouseHover(sender As Object, e As EventArgs) Handles AdminPic.MouseHover
         If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             ConglomerateToolTip.SetToolTip(sender, "This program is running with administrative privileges")
         ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
@@ -6095,7 +6096,6 @@ Public Class MainForm
             End If
             Label92.Text = "Ésta es la información detallada de los componentes usados por el programa:"
             Label97.Text = "Todos los componentes mostrados aquí son protegidos por sus propios términos de licencia, y este programa SOLO puede redistribuir componentes de código abierto."
-            AdminLabel.Text = "MODO DE ADMINISTRADOR"
             ProgramTitleLabel.Text = "Instalador manual de Windows 11"
             Last_Created_Inst_Label.Text = "Último instalador creado a las:"
 
@@ -6459,7 +6459,6 @@ Public Class MainForm
             End If
             Label92.Text = "Here is detailed information for components used by the program:"
             Label97.Text = "All components shown herein are covered by their own license terms, and this program can ONLY redistribute open-source components."
-            AdminLabel.Text = "ADMINISTRATOR MODE"
             ProgramTitleLabel.Text = "Windows 11 Manual Installer"
             Last_Created_Inst_Label.Text = "Last installer created on:"
 
@@ -6825,7 +6824,6 @@ Public Class MainForm
             End If
             Label92.Text = "Vous trouverez ici des informations détaillées sur les composants utilisés par le programme :"
             Label97.Text = "Tous les composants présentés ici sont couverts par leurs propres termes de licence, et ce programme peut UNIQUEMENT redistribuer redistribuer des composants open-source."
-            AdminLabel.Text = "MODE ADMINISTRATEUR"
             ProgramTitleLabel.Text = "Installateur manuel de Windows 11"
             Last_Created_Inst_Label.Text = "Dernier installateur créé le :"
 
@@ -7191,7 +7189,6 @@ Public Class MainForm
                 End If
                 Label92.Text = "Ésta es la información detallada de los componentes usados por el programa:"
                 Label97.Text = "Todos los componentes mostrados aquí son protegidos por sus propios términos de licencia, y este programa SOLO puede redistribuir componentes de código abierto."
-                AdminLabel.Text = "MODO DE ADMINISTRADOR"
                 ProgramTitleLabel.Text = "Instalador manual de Windows 11"
                 Last_Created_Inst_Label.Text = "Último instalador creado a las:"
 
@@ -7549,7 +7546,6 @@ Public Class MainForm
                 End If
                 Label92.Text = "Here is detailed information for components used by the program:"
                 Label97.Text = "All components shown herein are covered by their own license terms, and this program can ONLY redistribute open-source components."
-                AdminLabel.Text = "ADMINISTRATOR MODE"
                 ProgramTitleLabel.Text = "Windows 11 Manual Installer"
                 Last_Created_Inst_Label.Text = "Last installer created on:"
 
@@ -7908,7 +7904,6 @@ Public Class MainForm
                 End If
                 Label92.Text = "Vous trouverez ici des informations détaillées sur les composants utilisés par le programme :"
                 Label97.Text = "Tous les composants présentés ici sont couverts par leurs propres termes de licence, et ce programme peut UNIQUEMENT redistribuer redistribuer des composants open-source."
-                AdminLabel.Text = "MODE ADMINISTRATEUR"
                 ProgramTitleLabel.Text = "Installateur manuel de Windows 11"
                 Last_Created_Inst_Label.Text = "Dernier installateur créé le :"
 
@@ -8998,6 +8993,13 @@ Public Class MainForm
                     UpdateChoicePanel.OK_Button.ForeColor = Color.White
                     UpdateChoicePanel.PictureBox1.Image = New Bitmap(My.Resources.update_screen_light)
                     UpdateChoicePanel.RelNotesLink.LinkColor = Color.FromArgb(1, 92, 186)
+                ElseIf Win11OSPanel.Visible = True Then
+                    Win11OSPanel.BackColor = Color.White
+                    Win11OSPanel.ForeColor = Color.Black
+                    Win11OSPanel.Panel1.BackColor = Color.FromArgb(243, 243, 243)
+                    Win11OSPanel.OK_Button.BackColor = Color.FromArgb(1, 92, 186)
+                    Win11OSPanel.OK_Button.ForeColor = Color.White
+                    Win11OSPanel.LinkLabel1.LinkColor = Color.FromArgb(1, 92, 186)
                 ElseIf x86_ProcessorPanel.Visible = True Then
                     x86_ProcessorPanel.BackColor = Color.White
                     x86_ProcessorPanel.ForeColor = Color.Black
@@ -9188,6 +9190,13 @@ Public Class MainForm
                     UpdateChoicePanel.OK_Button.BackColor = Color.FromArgb(76, 194, 255)
                     UpdateChoicePanel.OK_Button.ForeColor = Color.Black
                     UpdateChoicePanel.PictureBox1.Image = New Bitmap(My.Resources.update_screen_dark)
+                ElseIf Win11OSPanel.Visible = True Then
+                    Win11OSPanel.BackColor = Color.FromArgb(43, 43, 43)
+                    Win11OSPanel.ForeColor = Color.White
+                    Win11OSPanel.Panel1.BackColor = Color.FromArgb(32, 32, 32)
+                    Win11OSPanel.OK_Button.BackColor = Color.FromArgb(76, 194, 255)
+                    Win11OSPanel.OK_Button.ForeColor = Color.Black
+                    Win11OSPanel.LinkLabel1.LinkColor = Color.FromArgb(76, 194, 255)
                 ElseIf x86_ProcessorPanel.Visible = True Then
                     x86_ProcessorPanel.BackColor = Color.FromArgb(43, 43, 43)
                     x86_ProcessorPanel.ForeColor = Color.White
@@ -10343,6 +10352,46 @@ Public Class MainForm
                         UpdateChoicePanel.TextBox2.Width = 657
                     End If
                 End If
+            ElseIf Win11OSPanel.Visible = True Then
+                If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+                    Win11OSPanel.Label1.Text = "This system is already running Windows 11"
+                    Win11OSPanel.Label2.Text = "The program has detected that your computer (or device) is already running Windows 11. You should not use custom installers to install or upgrade to Windows 11 on your system, but may use them to install or upgrade to Windows 11 on unsupported systems."
+                    Win11OSPanel.OK_Button.Text = "OK"
+                    Win11OSPanel.LinkLabel1.Text = "To view more detailed operating system information, click here."
+                    Win11OSPanel.LinkLabel1.LinkArea = New LinkArea(58, 4)
+                ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+                    Win11OSPanel.Label1.Text = "Este sistema ya está ejecutando Windows 11"
+                    Win11OSPanel.Label2.Text = "El programa ha detectado que su ordenador (o dispositivo) ya está ejecutando Windows 11. Usted no debería utilizar instaladores modificados para instalar o actualizar a Windows 11 en su sistema, pero puede utilizarlos para instalar o actualizar a Windows 11 en sistemas no soportados."
+                    Win11OSPanel.OK_Button.Text = "Aceptar"
+                    Win11OSPanel.LinkLabel1.Text = "Para ver información más detallada del sistema operativo, haga clic aquí."
+                    Win11OSPanel.LinkLabel1.LinkArea = New LinkArea(68, 4)
+                ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+                    Win11OSPanel.Label1.Text = "Ce système fonctionne déjà sous Windows 11"
+                    Win11OSPanel.Label2.Text = "Le programme a détecté que votre ordinateur (ou périphérique) exécute déjà Windows 11. Vous ne devez pas utiliser les installateurs personnalisés pour installer ou mettre à niveau Windows 11 sur votre système, mais vous pouvez les utiliser pour installer ou mettre à niveau Windows 11 sur des systèmes non pris en charge."
+                    Win11OSPanel.OK_Button.Text = "OK"
+                    Win11OSPanel.LinkLabel1.Text = "Pour afficher des informations plus détaillées sur le système opérationnel, cliquez ici."
+                    Win11OSPanel.LinkLabel1.LinkArea = New LinkArea(84, 3)
+                ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+                    If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                        Win11OSPanel.Label1.Text = "This system is already running Windows 11"
+                        Win11OSPanel.Label2.Text = "The program has detected that your computer (or device) is already running Windows 11. You should not use custom installers to install or upgrade to Windows 11 on your system, but may use them to install or upgrade to Windows 11 on unsupported systems."
+                        Win11OSPanel.OK_Button.Text = "OK"
+                        Win11OSPanel.LinkLabel1.Text = "To view more detailed operating system information, click here."
+                        Win11OSPanel.LinkLabel1.LinkArea = New LinkArea(58, 4)
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                        Win11OSPanel.Label1.Text = "Este sistema ya está ejecutando Windows 11"
+                        Win11OSPanel.Label2.Text = "El programa ha detectado que su ordenador (o dispositivo) ya está ejecutando Windows 11. Usted no debería utilizar instaladores modificados para instalar o actualizar a Windows 11 en su sistema, pero puede utilizarlos para instalar o actualizar a Windows 11 en sistemas no soportados."
+                        Win11OSPanel.OK_Button.Text = "Aceptar"
+                        Win11OSPanel.LinkLabel1.Text = "Para ver información más detallada del sistema operativo, haga clic aquí."
+                        Win11OSPanel.LinkLabel1.LinkArea = New LinkArea(68, 4)
+                    ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                        Win11OSPanel.Label1.Text = "Ce système fonctionne déjà sous Windows 11"
+                        Win11OSPanel.Label2.Text = "Le programme a détecté que votre ordinateur (ou périphérique) exécute déjà Windows 11. Vous ne devez pas utiliser les installateurs personnalisés pour installer ou mettre à niveau Windows 11 sur votre système, mais vous pouvez les utiliser pour installer ou mettre à niveau Windows 11 sur des systèmes non pris en charge."
+                        Win11OSPanel.OK_Button.Text = "OK"
+                        Win11OSPanel.LinkLabel1.Text = "Pour afficher des informations plus détaillées sur le système opérationnel, cliquez ici."
+                        Win11OSPanel.LinkLabel1.LinkArea = New LinkArea(84, 3)
+                    End If
+                End If
             ElseIf x86_ProcessorPanel.Visible = True Then
                 If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
                     x86_ProcessorPanel.Label1.Text = "Incompatible installer architecture"
@@ -10411,6 +10460,7 @@ Public Class MainForm
             NonExistentTargetDirPanel.Text = NonExistentTargetDirPanel.Label1.Text
             PrefResetPanel.Text = PrefResetPanel.Label1.Text
             UpdateChoicePanel.Text = UpdateChoicePanel.Label1.Text
+            Win11OSPanel.Text = Win11OSPanel.Label1.Text
             x86_ProcessorPanel.Text = x86_ProcessorPanel.Label1.Text
         End If
         If MiniModeDialog.Visible = True Then
@@ -10563,7 +10613,7 @@ Public Class MainForm
         End If
     End Sub
 
-    Private Sub x86_Pic_MouseHover(sender As Object, e As EventArgs) Handles x86_Pic.MouseHover, TopNavbar_x86_Pic.Click
+    Private Sub x86_Pic_MouseHover(sender As Object, e As EventArgs) Handles x86_Pic.MouseHover
         If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
             ConglomerateToolTip.SetToolTip(sender, "This system contains a 32-bit processor or operating system. Click here to learn more.")
         ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
@@ -10756,5 +10806,77 @@ Public Class MainForm
 
     Private Sub Label10_MouseUp(sender As Object, e As MouseEventArgs) Handles Label10.MouseUp
         Label10.ForeColor = ForeColor
+    End Sub
+
+    Private Sub Win11Pic_Click(sender As Object, e As EventArgs) Handles Win11Pic.Click
+        BringToFront()
+        BackSubPanel.Show()
+        Win11OSPanel.ShowDialog()
+        Win11OSPanel.Visible = True
+        Win11OSPanel.Visible = False
+        BringToFront()
+    End Sub
+
+    Private Sub Win11Pic_MouseHover(sender As Object, e As EventArgs) Handles Win11Pic.MouseHover, AdminPic.MouseHover
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+            ConglomerateToolTip.SetToolTip(sender, "This system is already running Windows 11. Click here to learn more.")
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+            ConglomerateToolTip.SetToolTip(sender, "Este sistema ya está ejecutando Windows 11. Haga clic aquí para saber más.")
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            ConglomerateToolTip.SetToolTip(sender, "Ce système fonctionne déjà sous Windows 11. Cliquez ici pour savoir plus.")
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                ConglomerateToolTip.SetToolTip(sender, "This system is already running Windows 11. Click here to learn more.")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                ConglomerateToolTip.SetToolTip(sender, "Este sistema ya está ejecutando Windows 11. Haga clic aquí para saber más.")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                ConglomerateToolTip.SetToolTip(sender, "Ce système fonctionne déjà sous Windows 11. Cliquez ici pour savoir plus.")
+            End If
+        End If
+    End Sub
+
+    Private Sub TopNavbar_Win11Pic_Click(sender As Object, e As EventArgs) Handles TopNavbar_Win11Pic.Click
+        BringToFront()
+        BackSubPanel.Show()
+        Win11OSPanel.ShowDialog()
+        Win11OSPanel.Visible = True
+        Win11OSPanel.Visible = False
+        BringToFront()
+    End Sub
+
+    Private Sub TopNavbar_x86_Pic_MouseHover(sender As Object, e As EventArgs) Handles TopNavbar_x86_Pic.MouseHover
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+            ConglomerateToolTip.SetToolTip(sender, "This system contains a 32-bit processor or operating system. Click here to learn more.")
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+            ConglomerateToolTip.SetToolTip(sender, "Este sistema contiene un procesador o sistema operativo de 32 bits. Haga clic aquí para saber más.")
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            ConglomerateToolTip.SetToolTip(sender, "Ce système contient un processeur ou un système opérationnel 32 bits. Cliquez ici pour en savoir plus.")
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                ConglomerateToolTip.SetToolTip(sender, "This system contains a 32-bit processor or operating system. Click here to learn more.")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                ConglomerateToolTip.SetToolTip(sender, "Este sistema contiene un procesador o sistema operativo de 32 bits. Haga clic aquí para saber más.")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                ConglomerateToolTip.SetToolTip(sender, "Ce système contient un processeur ou un système opérationnel 32 bits. Cliquez ici pour en savoir plus.")
+            End If
+        End If
+    End Sub
+
+    Private Sub TopNavbar_Win11Pic_MouseHover(sender As Object, e As EventArgs) Handles TopNavbar_Win11Pic.MouseHover
+        If ComboBox4.SelectedItem = "English" Or ComboBox4.SelectedItem = "Inglés" Or ComboBox4.SelectedItem = "Anglais" Then
+            ConglomerateToolTip.SetToolTip(sender, "This system is already running Windows 11. Click here to learn more.")
+        ElseIf ComboBox4.SelectedItem = "Spanish" Or ComboBox4.SelectedItem = "Español" Or ComboBox4.SelectedItem = "Espagnol" Then
+            ConglomerateToolTip.SetToolTip(sender, "Este sistema ya está ejecutando Windows 11. Haga clic aquí para saber más.")
+        ElseIf ComboBox4.SelectedItem = "French" Or ComboBox4.SelectedItem = "Francés" Or ComboBox4.SelectedItem = "Français" Then
+            ConglomerateToolTip.SetToolTip(sender, "Ce système fonctionne déjà sous Windows 11. Cliquez ici pour savoir plus.")
+        ElseIf ComboBox4.SelectedItem = "Automatic" Or ComboBox4.SelectedItem = "Automático" Or ComboBox4.SelectedItem = "Automatique" Then
+            If My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ENG" Then
+                ConglomerateToolTip.SetToolTip(sender, "This system is already running Windows 11. Click here to learn more.")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "ESN" Then
+                ConglomerateToolTip.SetToolTip(sender, "Este sistema ya está ejecutando Windows 11. Haga clic aquí para saber más.")
+            ElseIf My.Computer.Info.InstalledUICulture.ThreeLetterWindowsLanguageName = "FRA" Then
+                ConglomerateToolTip.SetToolTip(sender, "Ce système fonctionne déjà sous Windows 11. Cliquez ici pour savoir plus.")
+            End If
+        End If
     End Sub
 End Class
