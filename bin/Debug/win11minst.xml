@@ -15,6 +15,14 @@ win11minst
   Reemplaza la propiedad CurrentUICulture del subproceso actual para todas las
   búsquedas de recursos mediante esta clase de recurso fuertemente tipado.
 </summary>
+</member><member name="P:Windows_11_Manual_Installer.My.Resources.Resources.adminmode_dark">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer.My.Resources.Resources.adminmode_light">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
 </member><member name="P:Windows_11_Manual_Installer.My.Resources.Resources.automatic">
 	<summary>
   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
@@ -543,6 +551,10 @@ win11minst
 	<summary>
   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
 </summary>
+</member><member name="P:Windows_11_Manual_Installer.My.Resources.Resources.settings_colored">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
 </member><member name="P:Windows_11_Manual_Installer.My.Resources.Resources.settings_dark">
 	<summary>
   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
@@ -560,6 +572,14 @@ win11minst
   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
 </summary>
 </member><member name="P:Windows_11_Manual_Installer.My.Resources.Resources.tb_White">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer.My.Resources.Resources.topnavbar_win11_dark">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer.My.Resources.Resources.topnavbar_win11_light">
 	<summary>
   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
 </summary>
@@ -604,6 +624,18 @@ win11minst
   Busca un recurso adaptado de tipo System.IO.UnmanagedMemoryStream similar a System.IO.MemoryStream.
 </summary>
 </member><member name="P:Windows_11_Manual_Installer.My.Resources.Resources.win11inst_pic">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer.My.Resources.Resources.win11logo_colored">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer.My.Resources.Resources.win11logo_dark">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Windows_11_Manual_Installer.My.Resources.Resources.win11logo_light">
 	<summary>
   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
 </summary>
