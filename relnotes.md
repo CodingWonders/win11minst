@@ -27,6 +27,28 @@ If updates are found:
 
 Congratulations, you have updated the program. If no updates are found, the program will continue startup.
 
+### 2.0.0101_220807
+---
+
+This is a minor update to version 2.0.0100 with some new under-the-hood features. This is also released to test the update system on the `stable` branch.
+
+#### Bugfixes
+
+- Fixed a bug that didn't pick the change to REGTWEAK on the setting review screen
+
+#### Features
+
+- Revamped additional title bar controls.
+
+	- The "ADMINISTRATOR MODE" label got replaced by an icon
+	- The program no longer shows a dialog when run on Windows 11, and shows an icon instead
+
+- When the new Windows 11 title bar icon is clicked, it will not show a dialog, but a new panel
+
+	> This new panel also gives you a way to access more detailed system information
+
+- Updated the user agent of the download web component to `Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.114 Safari/537.36`
+
 ### 2.0.0100_220731
 ---
 
