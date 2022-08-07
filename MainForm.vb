@@ -10785,7 +10785,11 @@ Public Class MainForm
     End Sub
 
     Private Sub Label61_MouseDown(sender As Object, e As MouseEventArgs) Handles Label61.MouseDown
-        Label61.ForeColor = Color.LightGray
+        If BackColor = Color.FromArgb(243, 243, 243) Then
+            Label61.ForeColor = Color.FromArgb(138, 133, 132)
+        Else
+            Label61.ForeColor = Color.FromArgb(152, 149, 148)
+        End If
     End Sub
 
     Private Sub Label61_MouseUp(sender As Object, e As MouseEventArgs) Handles Label61.MouseUp
@@ -10793,7 +10797,11 @@ Public Class MainForm
     End Sub
 
     Private Sub Label18_MouseDown(sender As Object, e As MouseEventArgs) Handles Label18.MouseDown
-        Label18.ForeColor = Color.LightGray
+        If BackColor = Color.FromArgb(243, 243, 243) Then
+            Label18.ForeColor = Color.FromArgb(138, 133, 132)
+        Else
+            Label18.ForeColor = Color.FromArgb(152, 149, 148)
+        End If
     End Sub
 
     Private Sub Label18_MouseUp(sender As Object, e As MouseEventArgs) Handles Label18.MouseUp
@@ -10801,7 +10809,11 @@ Public Class MainForm
     End Sub
 
     Private Sub Label10_MouseDown(sender As Object, e As MouseEventArgs) Handles Label10.MouseDown
-        Label10.ForeColor = Color.LightGray
+        If BackColor = Color.FromArgb(243, 243, 243) Then
+            Label10.ForeColor = Color.FromArgb(138, 133, 132)
+        Else
+            Label10.ForeColor = Color.FromArgb(152, 149, 148)
+        End If
     End Sub
 
     Private Sub Label10_MouseUp(sender As Object, e As MouseEventArgs) Handles Label10.MouseUp
