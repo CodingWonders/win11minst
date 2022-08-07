@@ -26,6 +26,7 @@ Partial Class MainForm
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
         Me.titlePanel = New System.Windows.Forms.Panel()
         Me.TitleBar = New System.Windows.Forms.Panel()
+        Me.AdminPic = New System.Windows.Forms.PictureBox()
         Me.Win11Pic = New System.Windows.Forms.PictureBox()
         Me.x86_Pic = New System.Windows.Forms.PictureBox()
         Me.minBox = New System.Windows.Forms.PictureBox()
@@ -365,9 +366,9 @@ Partial Class MainForm
         Me.InstCreationBW = New System.ComponentModel.BackgroundWorker()
         Me.OSCDIMGBW = New System.ComponentModel.BackgroundWorker()
         Me.FileDeletionBW = New System.ComponentModel.BackgroundWorker()
-        Me.AdminPic = New System.Windows.Forms.PictureBox()
         Me.titlePanel.SuspendLayout()
         Me.TitleBar.SuspendLayout()
+        CType(Me.AdminPic, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Win11Pic, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.x86_Pic, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.minBox, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -486,7 +487,6 @@ Partial Class MainForm
         CType(Me.PictureBox30, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.NotifyIconCMS.SuspendLayout()
         Me.AdditionalToolsCMS.SuspendLayout()
-        CType(Me.AdminPic, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'titlePanel
@@ -515,6 +515,18 @@ Partial Class MainForm
         Me.TitleBar.Name = "TitleBar"
         Me.TitleBar.Size = New System.Drawing.Size(1024, 48)
         Me.TitleBar.TabIndex = 4
+        '
+        'AdminPic
+        '
+        Me.AdminPic.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.AdminPic.Image = Global.Windows_11_Manual_Installer.My.Resources.Resources.adminmode_light
+        Me.AdminPic.Location = New System.Drawing.Point(842, 0)
+        Me.AdminPic.Name = "AdminPic"
+        Me.AdminPic.Size = New System.Drawing.Size(46, 32)
+        Me.AdminPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.AdminPic.TabIndex = 11
+        Me.AdminPic.TabStop = False
+        Me.AdminPic.Visible = False
         '
         'Win11Pic
         '
@@ -979,8 +991,8 @@ Partial Class MainForm
         Me.bodyPanel.Controls.Add(Me.SettingReviewPanel)
         Me.bodyPanel.Controls.Add(Me.Settings_FunctionalityPanel)
         Me.bodyPanel.Controls.Add(Me.Settings_PersonalizationPanel)
-        Me.bodyPanel.Controls.Add(Me.InfoPanel)
         Me.bodyPanel.Controls.Add(Me.InstCreatePanel)
+        Me.bodyPanel.Controls.Add(Me.InfoPanel)
         Me.bodyPanel.Dock = System.Windows.Forms.DockStyle.Fill
         Me.bodyPanel.Location = New System.Drawing.Point(48, 48)
         Me.bodyPanel.Name = "bodyPanel"
@@ -3481,7 +3493,7 @@ Partial Class MainForm
         Me.Label93.Name = "Label93"
         Me.Label93.Size = New System.Drawing.Size(277, 20)
         Me.Label93.TabIndex = 0
-        Me.Label93.Text = "PUCS (Passive Update Check System): 1.0"
+        Me.Label93.Text = "PUCS (Passive Update Check System): 1.1"
         '
         'Label97
         '
@@ -4339,18 +4351,6 @@ Partial Class MainForm
         Me.FileDeletionBW.WorkerReportsProgress = True
         Me.FileDeletionBW.WorkerSupportsCancellation = True
         '
-        'AdminPic
-        '
-        Me.AdminPic.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.AdminPic.Image = Global.Windows_11_Manual_Installer.My.Resources.Resources.adminmode_light
-        Me.AdminPic.Location = New System.Drawing.Point(842, 0)
-        Me.AdminPic.Name = "AdminPic"
-        Me.AdminPic.Size = New System.Drawing.Size(46, 32)
-        Me.AdminPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.AdminPic.TabIndex = 11
-        Me.AdminPic.TabStop = False
-        Me.AdminPic.Visible = False
-        '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -4371,6 +4371,7 @@ Partial Class MainForm
         Me.titlePanel.ResumeLayout(False)
         Me.TitleBar.ResumeLayout(False)
         Me.TitleBar.PerformLayout()
+        CType(Me.AdminPic, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Win11Pic, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.x86_Pic, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.minBox, System.ComponentModel.ISupportInitialize).EndInit()
@@ -4527,7 +4528,6 @@ Partial Class MainForm
         CType(Me.PictureBox30, System.ComponentModel.ISupportInitialize).EndInit()
         Me.NotifyIconCMS.ResumeLayout(False)
         Me.AdditionalToolsCMS.ResumeLayout(False)
-        CType(Me.AdminPic, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
