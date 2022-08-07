@@ -215,7 +215,7 @@ Public Class UpdateCheckPreLoadPanel
                 End Using
             End If
         End If
-        VerTag = TextBox2.Text.Replace("2.0.0100_", "stable_").ToString()
+        VerTag = TextBox2.Text.Replace("2.0.0101_", "stable_").ToString()
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click

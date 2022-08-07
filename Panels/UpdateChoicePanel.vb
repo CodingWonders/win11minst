@@ -109,7 +109,7 @@ Public Class UpdateChoicePanel
     End Sub
 
     Private Sub UpdateChoicePanel_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        VerTag = TextBox2.Text.Replace("2.0.0100_", "stable_").ToString()
+        VerTag = TextBox2.Text.Replace("2.0.0101_", "stable_").ToString()
         Label1.Parent = PictureBox1
         Label1.BackColor = Color.Transparent
         Label2.Parent = PictureBox1
