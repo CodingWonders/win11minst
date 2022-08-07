@@ -1,18 +1,32 @@
 ﻿Imports Microsoft.VisualBasic.ControlChars
 Imports System.IO
 Imports System.Threading
+Imports System.Net
+Imports System.Text.Encoding
+
 Module Module1
 
-    Sub Main()
+
+    Dim OldVer As FileVersionInfo
+    Dim OldVerStr As String
+    Dim NewVer As FileVersionInfo
+    Dim NewVerStr As String
+    Dim VerTag As String
+    Dim VerForm As New VerTag()
+
+    Public Sub Main()
         Console.Title = "Passive Update Check System"
         Console.WriteLine("Passive Update Check System (PUCS) version {0}", My.Application.Info.Version.ToString() & ", for the Windows 11 Manual Installer")
         Console.WriteLine(CrLf & _
                           "  Beginning program update. Please wait...")
+        If Not Directory.Exists(".\new") Or Not File.Exists(".\win11minst_new.exe") Then
+            DownloadNewWin11MInstVersion()
+        End If
         Try
-            Dim OldVer As FileVersionInfo = FileVersionInfo.GetVersionInfo(".\win11minst.exe")
-            Dim OldVerStr As String = OldVer.FileVersion.ToString()
-            Dim NewVer As FileVersionInfo = FileVersionInfo.GetVersionInfo(".\win11minst_new.exe")
-            Dim NewVerStr As String = NewVer.FileVersion.ToString()
+            OldVer = FileVersionInfo.GetVersionInfo(".\win11minst.exe")
+            OldVerStr = OldVer.FileVersion.ToString()
+            NewVer = FileVersionInfo.GetVersionInfo(".\win11minst_new.exe")
+            NewVerStr = NewVer.FileVersion.ToString()
             Console.WriteLine(CrLf & _
                               "    Old version: " & OldVerStr & CrLf & _
                               "    New version: " & NewVerStr)
@@ -53,12 +67,69 @@ Module Module1
             End
         Catch ex As Exception
             Console.WriteLine(CrLf & _
-                              "An exception ocurred. Please read the exception details below" & CrLf & _
-                              "Exception: {0}", ex.GetType().ToString() & CrLf & _
+                              "An error has ocurred. Please read the details below" & CrLf & _
+                              "Error: {0}", ex.GetType().ToString() & CrLf & _
+                              "       " & Err.Description & CrLf & _
                               "No changes have been made.")
             Console.ReadKey()
             End
         End Try
+    End Sub
+
+    Public Sub DownloadNewWin11MInstVersion()      ' Call this subprocedure if the .\new folder (with the new version of win11minst) does not exist
+        Console.WriteLine("  Some update files were not found. Attempting to download them now...")
+        Try
+            VerForm.Validate()
+            VerForm.TextBox1.Text = File.ReadAllText(".\latest").ToString()
+            If VerForm.TextBox1.Text.Contains("2.0.0100_") Then
+                VerForm.TextBox1.Text = VerForm.TextBox1.Text.Replace("2.0.0100_", "stable_").Trim()
+            ElseIf VerForm.TextBox1.Text.Contains("2.0.0101_") Then
+                VerForm.TextBox1.Text = VerForm.TextBox1.Text.Replace("2.0.0101_", "stable_").Trim()
+            End If
+            VerTag = VerForm.TextBox1.Text
+            If Not File.Exists(".\win11minst_new.exe") Then
+                Using Win11MinstDown As New WebClient()
+                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
+                    Win11MinstDown.DownloadFile("https://github.com/CodingWonders/win11minst/blob/stable/bin/Debug/win11minst.exe?raw=true", ".\win11minst_new.exe")
+                End Using
+            End If
+            If Not Directory.Exists(".\new") Then
+                Using NewVersionDown As New WebClient()
+                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
+                    If File.Exists(".\new.zip") Then
+                        File.Delete(".\new.zip")
+                    End If
+                    NewVersionDown.DownloadFile("https://github.com/CodingWonders/win11minst/releases/download/" & VerTag & "/win11minst.zip", ".\new.zip")
+                    File.SetAttributes(".\new.zip", FileAttributes.Hidden)
+                    Try
+                        Process.Start(".\prog_bin\7z", "x .\new.zip -o.\new").WaitForExit()
+                    Catch ex As Exception
+                        File.WriteAllText(".\ex.bat", "@echo off" & CrLf & ".\prog_bin\7z x .\new.zip -o.\new", ASCII)
+                        Process.Start(".\ex.bat").WaitForExit()
+                        File.Delete(".\ex.bat")
+                    End Try
+                    File.Delete(".\new.zip")
+                End Using
+            End If
+        Catch ex As Exception
+            Console.WriteLine(CrLf & _
+                              "An error has ocurred. Please read the details below" & CrLf & _
+                              "Error: {0}", ex.GetType().ToString() & CrLf & _
+                              "       " & Err.Description & CrLf & _
+                              "No changes have been made.")
+            Console.ReadKey()
+            UndoChanges()
+            End
+        End Try
+    End Sub
+
+    Public Sub UndoChanges()
+        If File.Exists(".\win11minst_new.exe") Then
+            File.Delete(".\win11minst_new.exe")
+        End If
+        If File.Exists(".\win11minst_old_v" & OldVerStr & ".exe") Then
+            File.Move(".\win11minst_old_v" & OldVerStr & ".exe", ".\win11minst.exe")
+        End If
     End Sub
 
     Sub BackUpSettings()
