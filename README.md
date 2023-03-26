@@ -22,7 +22,7 @@ Required step: clone the repository - `git clone https://github.com/CodingWonder
 > If you don't have Visual Studio installed, please go to *visualstudio.microsoft.com* to download Visual Studio Community 2019 or 2022.
 >> Make sure your computer meets the system requirements for Visual Studio.
 
-> If you open the solution without installing the .NET Framework 4.6.2 Developer Pack, you will have an error loading the solution.
+> If you open the solution without installing the .NET Framework 4.8 Developer Pack, you will have an error loading the solution.
 
 2. Change the build target from *Debug* to ***Release***
 
