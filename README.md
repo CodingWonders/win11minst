@@ -8,8 +8,7 @@ Version 2.0 has new features and tricks up its sleeve.
 - Redesigned user interface, which makes the program look like a modern Windows application
 - New method: REGTWEAK
 
-And more features you can look at in the release notes: [View release notes][relnotes]
-[relnotes]: https://github.com/CodingWonders/win11minst/blob/stable/relnotes.md
+And more features you can look at in the release notes: [View](https://github.com/CodingWonders/win11minst/blob/stable/relnotes.md)
 
 ## Building the software
 To make a build of this software, you need to do the following:
