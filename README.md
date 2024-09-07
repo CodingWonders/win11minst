@@ -1,3 +1,5 @@
+# NOTE: THIS REPOSITORY HAS BEEN ARCHIVED FOR HISTORIC PURPOSES. NO DEVELOPMENT WILL BE DONE. Feel free to do whatever you want with it - other than contribute to it!
+
 # Windows 11 Manual Installer (Hummingbird release)
 This is the beta version for the future of the Windows 11 Manual Installer.
 
