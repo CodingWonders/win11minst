@@ -1,5 +1,7 @@
 # NOTE: THIS REPOSITORY HAS BEEN ARCHIVED FOR HISTORIC PURPOSES. NO DEVELOPMENT WILL BE DONE. Feel free to do whatever you want with it - other than contribute to it!
 
+This tool has been archived to let you see how I made programs back in 2022! I made a cleanup of the repo for you to enjoy. This tool has been referenced in [Part 1 of the DISMTools Fortnight for 2024](https://www.reddit.com/r/DISMTools/comments/1efwaqa/the_start_of_this_project/)
+
 # Windows 11 Manual Installer
 The tool that helps you install Windows 11 on unsupported systems
 
